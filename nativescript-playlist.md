@@ -25,6 +25,8 @@ Many amazing code samples are [here](https://docs.nativescript.org/angular/code-
 
 When open a dialog modal, you should declare the component both in `declaration` and `entryComponent` property in the `@NgModule` in `app.module.ts`.
 
+`ScrollView` can not be nested!
+
 # Best practice:
 
 - [Amazing Plugins](#amazing-plugins)
@@ -43,6 +45,7 @@ When open a dialog modal, you should declare the component both in `declaration`
 - [Build on iOS](#build-on-ios)
 - [Routing in NS-Ng](#routing-in-ns-ng)
 - [Forms in Ng](#forms-in-ng)
+- [TabView](#tabview)
 
 ## global
 Sometimes we need the `global` to accomplish something. What NativeScript offers us is `Application Resources` which can be referred as the following ways:
@@ -274,6 +277,9 @@ Getting data passed in via the route parameters, importing `PageRoute` from `@na
      .forEach(params => { id = +params["id"]; });
 ```
 
+**Note:** It seems routing to the children component won't change the router path.
+Redirect don't change either.
+
 [top](#best-practice)
 
 ## Forms in Ng
@@ -292,6 +298,57 @@ The property in Native UI components when using `[(ngModle)]`
 
 
 [top](#best-practice)
+
+## Tabview
+
+Find two ways to create tabview in the app without writing too much code in the same file.
+
+Code examples:
+
+- using child route, giving a `outlet` name to the child route, [code from here](https://discourse.nativescript.org/t/can-we-have-a-child-router-outlet-in-a-tabview/342/3)
+
+```xml
+<TabView (selectedIndexChanged)="onHomeSelectedIndexChanged($event)" [selectedIndex]="homeSelectedIndex"
+         selectedColor="#1083BF">
+    <StackLayout *tabItem="{title: 'First'}">
+        <router-outlet name="first"></router-outlet>
+    </StackLayout>
+    <StackLayout *tabItem="{title: 'Second'}">
+        <router-outlet name="second"></router-outlet>
+    </StackLayout>
+</TabView>
+```
+```ts
+// routing.ts
+{
+    path: 'home', component: HomeComponent,
+    children: [
+        {path: '', redirectTo: 'social', pathMatch: 'full'},
+        {path: 'first', component: FirstComponent, outlet: 'first'},
+        {path: 'second', component: SecondComponent, outlet: 'second'},
+    ]
+},
+```
+
+- using selector, write every component, [code from here](https://github.com/jlooper/Yowwlr/blob/master/app/home/home.html).
+
+```xml
+<TabView #tabview [selectedIndex]="tabindex" class="tab-view" selectedColor="#4099FF">
+    
+    <StackLayout align="top" *tabItem="{title: 'Home', iconSource:'res://home'}">
+        <home-tab></home-tab>
+    </StackLayout>
+    <StackLayout *tabItem="{title: 'Explore', iconSource:'res://explore'}">
+        <Label class="border" borderWidth="5" borderColor="black" text="hey"></Label>
+    </StackLayout>
+    <StackLayout *tabItem="{title: 'Notifications', iconSource:'res://notifications'}"> </StackLayout>
+    <StackLayout *tabItem="{title: 'Messages', iconSource:'res://messages'}">
+        <chat-tab></chat-tab>
+    </StackLayout>
+    <StackLayout *tabItem="{title: 'Me', iconSource:'res://me'}"> </StackLayout>
+   
+</TabView>
+```
 
 [top](#best-practice)
 
