@@ -5,9 +5,10 @@ A short summary of playlists on different interesting things. Updating from time
 # The play list, for learning or practising
 
 * [React](https://github.com/AkatQuas/react-playlist)
+* [Python](https://github.com/AkatQuas/python-playlist)
 * [VueJS](https://github.com/AkatQuas/vue-playlist), [VueTry](https://github.com/AkatQuas/vuetry)
 * [Node](https://github.com/AkatQuas/node-playlist)
-* [Python](https://github.com/AkatQuas/python-playlist)
+* [NextJs](https://github.com/AkatQuas/nextjs-playlist)
 * And more to go ...
 
 # Deprecated playlists, may not touch them anymore...  
