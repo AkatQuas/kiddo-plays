@@ -8,6 +8,7 @@ A short summary of playlists on different interesting things. Updating from time
 * [Python](https://github.com/AkatQuas/python-playlist)
 * [VueJS](https://github.com/AkatQuas/vue-playlist), [VueTry](https://github.com/AkatQuas/vuetry)
 * [Node](https://github.com/AkatQuas/node-playlist)
+* [Wechat Mini Programme](https://github.com/AkatQuas/wxma-playlist)
 * [NextJs](https://github.com/AkatQuas/nextjs-playlist)
 * And more to go ...
 
