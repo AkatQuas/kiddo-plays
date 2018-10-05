@@ -2,7 +2,7 @@
 
 A short summary of playlists on different interesting things. Updating from time to time.
 
-# The play list, for learning or practising
+# The play list, learning or practising
 
 * [React](https://github.com/AkatQuas/react-playlist)
 * [Python](https://github.com/AkatQuas/python-playlist)
@@ -10,7 +10,13 @@ A short summary of playlists on different interesting things. Updating from time
 * [Node](https://github.com/AkatQuas/node-playlist)
 * [Wechat Mini Programme](https://github.com/AkatQuas/wxma-playlist)
 * [NextJs](https://github.com/AkatQuas/nextjs-playlist)
+* [jQuery](https://github.com/AkatQuas/jQuery-playlist)
+* [Gulp, Grunt](https://github.com/AkatQuas/task-runners)
 * And more to go ...
+
+# Hacking demos
+
+* [Build-Your-own-X](https://github.com/AkatQuas/build-your-own-x)
 
 # Deprecated playlists, may not touch them anymore...  
 
