@@ -1,0 +1,6 @@
+{
+    "integrates_react-i18next": "CNCNCNDieses Beispiel integriert react-i18next für einfache Übersetzung.",
+    "pureComponent": "CNCNCNCEntweder t Funktion an Komponente via props weiterreichen.",
+    "extendedComponent": "CNCNCNOder die Komponente erneut mit dem translate hoc erweiteren.",
+    "transComponent": "SCNCNCNonst können Sie auch die Komponente <1>Trans</1> verwenden."
+  }

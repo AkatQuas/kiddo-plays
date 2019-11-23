@@ -1,0 +1,16 @@
+<p>
+  http works!
+</p>
+<p>In this case, don't have the real response form server, so just check out the code in the <i>http.component.ts</i> and <i>http.service.ts</i>, sometimes you can find something in the console.</p>
+<p>The Observable may do something very useful in the http request, dive deeply into it when necessary!</p>
+<label for="username">Username</label>
+<input type="text" id="username" #username>
+<label for="email">Email</label>
+<input type="text" id="email" #email>
+<button (click)="onSubmit(username.value, email.value)">Send</button>
+<hr>
+<button (click)="onGetData()">Get Data</button>
+<ul>
+  <li *ngFor="let item of items">{{item}}</li>
+</ul>
+<p>magic async pipe in fetching data, {{asyncString | async}}</p>

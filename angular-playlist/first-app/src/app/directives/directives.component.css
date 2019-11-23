@@ -1,0 +1,13 @@
+.border {
+    border: 3px solid orangered;
+}
+
+.background {
+    background-color: green;
+}
+
+div {
+    display: inline-block;
+    width: 150px;
+    height: 100px;
+}

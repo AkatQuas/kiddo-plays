@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/common.css">
+</head>
+
+<body>
+    <ul>
+            @@loop('head.html',[
+                { "link": "/about", "label": "About" },
+                { "link": "/home", "label": "Home Link" }
+            ])
+    </ul>
+    <div>
+        @@include('var.html', { "title": "an h1 title adding something", "art": { "one": " two and becomes and one is back three" } }) }}
+    </div>
+    <script src="/static/js/common.js"></script>
+</body>
+
+
+</html>

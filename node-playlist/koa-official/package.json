@@ -1,0 +1,22 @@
+{
+  "name": "koa-official",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "DEBUG=koa* nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Koa",
+    "Node"
+  ],
+  "author": "AkatQuas",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-static": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}

@@ -1,0 +1,55 @@
+<h1>Template Driven</h1>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div>
+        <p>using <i>[ngModel]</i> you can initialize the input value but it is not a 2-way binding, using
+            <i>[(ngModel)]</i> you can make it 2-way data binding!</p>
+        <p>the Object <i>user</i> can get the data in this form, but it can not manage the status of the form,
+            validation status for example! Be careful whilst using</p>
+        <p><i>ngModelGroup</i> groups some data into one Object</p>
+        <div ngModelGroup="userData">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text"
+                       class="form-control"
+                       id="username"
+                       [(ngModel)]="user.username"
+                       name="username"
+                       required
+                >
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="text"
+                       class="form-control"
+                       id="email"
+                       [(ngModel)]="user.email"
+                       name="email"
+                       required
+                       pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+                       #email="ngModel"
+                >
+                <div *ngIf="!email.valid">Invalid Email</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password"
+                   class="form-control"
+                   id="password"
+                   [(ngModel)]="user.password"
+                   name="password"
+                   required
+            >
+        </div>
+        <div class="radio" *ngFor="let g of genders">
+            <label>
+                <input type="radio"
+                       name="gender"
+                       [(ngModel)]="user.gender"
+                       [value]="g"
+                >{{g}}
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+    </div>
+</form>

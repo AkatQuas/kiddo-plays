@@ -1,0 +1,18 @@
+<ant-back-header title="Charge Now"></ant-back-header>
+<div class="wrapper">
+  <p class="note">Choose the amount:</p>
+  <div class="choices" *ngIf="choices.length > 0">
+    <div class="choice" *ngFor="let item of choices">
+      <button nz-button nzType="default" nzBlock (click)="confirmCharge(item.value)">$ {{item.value}}</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper" *ngIf="histories.length > 0">
+  <p class="note">Recent charge history:</p>
+  <div class="history">
+    <div class="history-item" *ngFor="let item of histories">
+      <ant-history-item [time]="item.time" [value]="item.value"></ant-history-item>
+    </div>
+  </div>
+</div>

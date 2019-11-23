@@ -1,0 +1,25 @@
+page {
+    height: 100%;
+}
+.index {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    padding: 100rpx 0;
+
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    .func-button {
+        width: 40%;
+        color: rgb(255, 0, 0);
+        border-radius: 10rpx;
+        border: 1rpx solid #e60012;
+        display: inline-block;
+        text-align: center;
+        padding: 20rpx 0;
+    }
+
+}

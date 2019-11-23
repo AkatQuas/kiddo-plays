@@ -1,0 +1,58 @@
+{
+  "name": "egg-boilerplate",
+  "version": "1.0.0",
+  "description": "egg-boilerplate, haha, a demo",
+  "private": true,
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "egg": "^2.2.1",
+    "egg-scripts": "^2.5.0",
+    "egg-sequelize": "^4.2.0",
+    "egg-validate": "^2.0.2",
+    "ioredis": "^4.3.0",
+    "jsonwebtoken": "^8.4.0",
+    "mysql2": "^1.6.4",
+    "next": "^7.0.2",
+    "node-sass": "^4.11.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "styled-jsx-plugin-postcss": "^2.0.0",
+    "styled-jsx-plugin-sass": "^1.0.0"
+  },
+  "devDependencies": {
+    "autod": "^3.0.1",
+    "autod-egg": "^1.0.0",
+    "autoprefixer": "^9.4.2",
+    "egg-bin": "^4.3.5",
+    "egg-ci": "^1.8.0",
+    "egg-mock": "^3.14.0",
+    "eslint": "^4.11.0",
+    "eslint-config-egg": "^6.0.0",
+    "postcss-pxtorem": "^4.0.1",
+    "webstorm-disable-index": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-2018-annual-meeting",
+    "stop": "egg-scripts stop --title=egg-server-2018-annual-meeting",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "AkatQuas <295140755@qq.com>",
+  "license": "MIT"
+}

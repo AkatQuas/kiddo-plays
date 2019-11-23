@@ -1,0 +1,16 @@
+<h1>{{title}}</h1>
+<nav>
+    <a *ngFor="let nav of navs" [routerLink]="nav" routerLinkActive="active"
+       [routerLinkActiveOptions]="{exact:true}">{{nav}}</a>
+    <br>
+
+</nav>
+<p>
+    <span>In <i>[routerLink]</i>, which receives an array of route segments,using '/' in the beginning will make the route an absuolute one, otherwise it will just append to the current route</span>
+    <span>routerLinkActive is a directives that used to style the active route</span>
+    <a [routerLink]="['/detail',15]" [queryParams]="{ana:100}">without a slash will crash in this case</a>
+    <span>in Tags specifying the <i>routerLink</i> and <i>queryParams</i></span>
+    <br>
+    <button class="btn btn-info" (click)="onNav()">Go to link by programming</button>
+</p>
+<router-outlet></router-outlet>

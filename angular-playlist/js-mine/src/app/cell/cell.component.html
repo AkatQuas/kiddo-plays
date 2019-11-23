@@ -1,0 +1,6 @@
+<span *ngIf="cell.open; else not">
+  {{label}}
+</span>
+<ng-template #not>
+  <span>🈳️</span>
+</ng-template>

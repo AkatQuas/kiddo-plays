@@ -1,0 +1,17 @@
+{
+  "name": "mysql-app",
+  "version": "1.0.0",
+  "description": "learning manipulating mysql in nodeJS",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": [
+    "mysql"
+  ],
+  "author": "AkatQuas<295140755@qq.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.5.0",
+    "mysql": "^2.15.0"
+  }
+}

@@ -1,0 +1,29 @@
+<ActionBar [title]="page.title ? page.title : 'New Page' " class="action-bar">
+    <ActionItem (tap)="onSave()" ios.position="right" android.position="actionBar">
+        <Button text="Save" class="action-item"></Button>
+    </ActionItem>
+</ActionBar>
+
+<ScrollView>
+    <StackLayout class="form">
+        <StackLayout class="input-field">
+          <Label class="label" text="Name:" textWrap="true"></Label>
+          <TextField hint="Enter a name..." [(ngModel)]="page.title" class="input"></TextField> 
+        </StackLayout> 
+        <StackLayout class="input-field">
+          <Label class="label" [text]="'Birth date: ' + ( page.birthDate ? page.age + ' years old' : '')" textWrap="true"></Label>
+          <TextField [text]="page.birthDate | date:'shortDate' " (tap)="onBirthDate()" class="input" editable="false" hint="Enter a birth date..."></TextField> 
+        </StackLayout>
+        <StackLayout class="input-field">
+          <Label text="Gender: " class="label" textWrap="true"></Label> 
+          <TextField class="input" hint="Select a gender..." [text]="page.gender" editable="false" (tap)="onGender()"></TextField> 
+        </StackLayout> 
+        <StackLayout class="input-field"> 
+          <Label class="label" text="Image:" textWrap="true"></Label> 
+          <Image [src]="page.Image" stretch="none"></Image>
+         <Label class="footnote" [text]="(page.lat && page.long) ? 'Pic taken at  '+ page.lat + ',' + page.long : '' " textWrap="true"></Label> 
+        </StackLayout>
+        <Button text="Add Image" (tap)="onAddImage()" class="btn btn-primary btn-rounded-sm btn-actve"></Button>
+        
+    </StackLayout> 
+</ScrollView>

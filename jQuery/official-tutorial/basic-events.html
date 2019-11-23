@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Basic - Events</title>
+    <style>
+        p.hover {
+            color: aquamarine;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <p id="one">click one
+            <span>item</span>
+
+            the item span has delegate its click event to its parent p tag, also with extra params 
+        </p>
+
+        <p id="two">register many events listeners using object</p>
+
+        <p id="once">function executation only once</p>
+
+        <p id="hover">hover to change the color</p>
+    </div>
+
+    <script src="jquery.js"></script>
+    <script>
+        $(document).ready(function (e) {
+            
+            $('#one').on('click', 'span', { foo: 'bark' }, function (e) {
+                e.stopPropagation()
+                e.preventDefault();
+                console.log(e.pageX, e.pageY)
+                console.log(e.type)
+                console.log(e.data)
+                console.log($(this))
+                console.log('click p#one')
+            });
+
+            $('#two').on({
+                'click': function (e) {
+                    console.log('p#two clicked')
+                },
+                'mouseover': function (e) {
+                    alert('p#two hovered')
+                }
+            })
+
+            $('#once').one('click', function () {
+                console.log('this log only responds to the click event once')
+            })
+
+            $('#hover').hover(function () {
+                $(this).toggleClass('hover')
+            })
+        })
+
+    </script>
+</body>
+
+</html>

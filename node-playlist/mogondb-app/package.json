@@ -1,0 +1,16 @@
+{
+  "name": "mogondb-app",
+  "version": "0.0.1",
+  "description": "learning on mongodb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": [],
+  "author": "AkatQuas<295140755@qq.com>",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.5.0",
+    "mongodb": "^2.2.33"
+  }
+}

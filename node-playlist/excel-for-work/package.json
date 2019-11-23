@@ -1,0 +1,27 @@
+{
+  "name": "excel-for-work",
+  "version": "0.0.2",
+  "description": "writing an excel for work",
+  "main": "bin/efw.js",
+  "files": [
+    "bin/*",
+    "utils/*"
+  ],
+  "bin": {
+    "efw": "./bin/efw.js"
+  },
+  "scripts": {
+    "test": "node utils/test.js"
+  },
+  "author": "AkatQuas",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.18.0",
+    "exceljs": "^1.6.2",
+    "fs-extra": "^7.0.0",
+    "inquirer": "^6.2.0",
+    "painting-table": "^0.2.1"
+  }
+}

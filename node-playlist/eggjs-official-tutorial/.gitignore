@@ -1,0 +1,9 @@
+.idea
+.vscode
+coverage/
+
+run/
+logs/
+log*
+
+upload/*

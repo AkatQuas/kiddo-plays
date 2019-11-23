@@ -1,0 +1,18 @@
+/**index.wxss**/
+.container {
+  padding: 25rpx;
+}
+.avatar {
+  margin: 0rpx auto;
+}
+.avatar image {
+  width: 700rpx;
+  height: 700rpx;
+}
+.info {
+
+}
+.info .author {
+  text-align: center;
+  padding: 10rpx 0
+}

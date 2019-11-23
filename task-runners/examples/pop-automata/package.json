@@ -1,0 +1,24 @@
+{
+  "name": "pop-automata",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "popup automata"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "crypto": "^1.0.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-shell": "^0.6.5",
+    "gulp-zip": "^4.2.0",
+    "minimist": "^1.2.0"
+  }
+}

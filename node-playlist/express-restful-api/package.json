@@ -1,0 +1,22 @@
+{
+  "name": "express-rest-api",
+  "version": "0.0.1",
+  "description": "a learning on REST API with express & Node & MongoDB",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "server": "node src/server.js",
+    "debug": "DEBUG=express:* node src/server.js",
+    "mock": "node src/seed/ninjas-seeder.js",
+    "nodemon": "node_modules/.bin/nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.0",
+    "nodemon": "^1.12.1"
+  }
+}

@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <nz-card [nzHoverable]="true">
+    <img class="full-width" src="/assets/logo.png" />
+    <input nz-input placeholder="username" [(ngModel)]="username">
+    <br />
+    <br />
+    <input nz-input placeholder="password" [(ngModel)]="password" type="password">
+    <br />
+    <br />
+    <button class="full-width" nz-button nzType="primary" (click)="handleLogin()">Login</button>
+  </nz-card>
+</div>

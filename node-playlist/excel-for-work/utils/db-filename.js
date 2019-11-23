@@ -1,0 +1,1 @@
+module.exports = ({ year, quarter }) => `${year}-q${quarter}.json`;

@@ -1,0 +1,12 @@
+.charge-choice {
+
+}
+.charge-choice .charge-choice-item {
+    padding: 10px;
+    margin: 0 auto 20px;
+    text-align: center;
+    width: 200px;
+    border: 1px solid #999;
+    border-radius: 10px;
+    cursor: pointer;
+}

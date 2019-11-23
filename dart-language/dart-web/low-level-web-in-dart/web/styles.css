@@ -1,0 +1,55 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+  margin: 15px;
+  font-family: 'Open Sans', sans-serif;
+  background-color: whitesmoke;
+  color: black;
+}
+
+#to-do-input {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 5px 0 5px 5px;
+  width: 200px;
+  border: 1px solid silver;
+  background-color: white;
+}
+
+#to-do-list {
+  padding: 0;
+  margin: 0;
+  list-style-position: inside;
+}
+
+#to-do-list li {
+  padding: 5px 0 5px 5px;
+  border-bottom: 1px dotted silver;
+}
+#to-do-list li:hover {
+  color: red;
+  cursor: pointer;
+}
+
+#delete-all {
+  margin-top: 8px;
+  background-color: #F8F8F8;
+  border: 1px dotted #ccc;
+  border-radius: 1em;
+}
+
+#delete-all:hover {
+  background-color: #ddd;
+}
+
+
+.letter {
+  width: 48px;
+  height: 48px;
+  font-size: 32px;
+  background-color: Lavender;
+  color: purple;
+  border: 1px solid black;
+  margin: 2px 2px 2px 2px;
+}

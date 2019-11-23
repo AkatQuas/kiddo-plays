@@ -1,0 +1,4 @@
+<h2>Recent Charge History:</h2>
+<div *ngFor="let item of histories">
+    <my-history-item [time]="item.time" [value]="item.value"></my-history-item>
+</div>

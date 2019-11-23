@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Effects</title>
+    <style>
+        .funtimes {
+            border: 1px solid #999;
+            width: 200px;
+            background-color: red;
+            height: 200px;
+            margin: 0 auto;
+            color: aliceblue;
+            text-align: center;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <p>hide show</p>
+        <p>hide or show with arguments <i>slow, normal, fast</i></p>
+        <p>hide or show with millisecond, <i>500, 1200, etc</i></p>
+
+        <p>slideUp or slideDown</p>
+
+        <p>fadeIn or fadeOut</p>
+
+        <hr>
+
+        <p>toggle </p>
+        <p>fadeToggle</p>
+        <p>slideToggle</p>
+
+        <hr>
+        <p>stop or delay with millisecond </p>
+        <div class="funtimes"></div>
+    </div>
+
+    <script src="jquery.js"></script>
+    <script>
+        $(document).ready(function (k) {
+            $("div.funtimes").animate(
+                {
+                    width: ["+=50", 'swing'],
+                    opacity: [0.25,'linear']
+                },
+
+                // Duration
+                800,
+
+                // Callback to invoke when the animation is finished
+                function () {
+                    $('div.funtimes').animate(
+                        {height: '+= 50'},
+                        500
+                    ).queue(function (next) {
+                        $(this).text('funtimes queue');
+                        $(this).dequeue();
+
+                        // or call next to dequeue automatically
+                        // next();
+                    });
+                }
+            );
+        })
+
+    </script>
+</body>
+
+</html>

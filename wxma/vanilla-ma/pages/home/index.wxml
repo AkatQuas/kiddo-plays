@@ -1,0 +1,14 @@
+<import src="../../components/tips.wxml"/>
+
+<view class="container">
+  <view class="avatar">
+    <image src="{{avatar}}"></image>
+  </view>
+  <view class="info">
+    <view class="author">{{author}}</view>
+    <view>
+      <button bindtap="goGitHub">去GitHub看看</button>
+    </view>
+    <template is="tips" data="{{ message: 'dada'}}" />
+  </view>
+</view>

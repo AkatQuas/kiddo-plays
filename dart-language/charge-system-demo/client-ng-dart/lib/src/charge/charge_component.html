@@ -1,0 +1,8 @@
+<h2>Charge now:</h2>
+<div class="charge-choice">
+    <div class="charge-choice-item" *ngFor="let item of choices" (click)="confirmCharge(item.value)"> $ {{item.value}} </div>
+</div>
+<h2>Recent 4 Charges</h2>
+<div *ngFor="let item of histories">
+    <my-history-item [time]="item.time" [value]="item.value"></my-history-item>
+</div>

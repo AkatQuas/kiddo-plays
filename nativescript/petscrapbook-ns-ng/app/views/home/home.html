@@ -1,0 +1,15 @@
+<ActionBar title="" icon="" class="action-bar">
+</ActionBar>
+<ScrollView>
+    <StackLayout>
+        <Label class="h1" text="Pet Scrapbook" textWrap="true" horizontalAlignment="center"></Label>
+        <Image src="~/images/apple.jpg"></Image>
+        <Label class="footnote text-center m-y-10" text="Brosteins ©2016" textWrap="true"></Label>
+        <StackLayout orientation="horizontal" horizontalAlignment="center">
+            <Button class="btn btn-primary btn-rounded-sm btn-active m-r-20" text="About" [nsRouterLink]="['/about']"></Button>
+            <Button class="btn btn-primary btn-rounded-sm btn-active m-l-20" text="Continue" (tap)="onContinueTap()"></Button> 
+        </StackLayout> 
+        <Label class="btn btn-rounded-sm btn-primary" text="test button" (tap)="logIt('hello')" textWrap="true" horizontalAlignment="center"></Label>
+        
+    </StackLayout>
+</ScrollView>

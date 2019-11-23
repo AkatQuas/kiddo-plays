@@ -1,0 +1,17 @@
+<import src="../../components/tips.wxml"/>
+<!--index.wxml-->
+<view class="container">
+  <button bindtap="seedTodo">Seed Todos</button>
+  <view class="inputs">
+    <input bindinput="handleInput" value="{{inputValue}}" placeholder="write some todos?" />
+    <button type="" size="mini" bindtap="addTodo">Add Todo</button>
+  </view>
+  <view>
+    <view wx:if="{{todos.length}}" class="tip">
+      <template is="tips" data="{{ message: 'click to toggle status'}}" />
+    </view>
+    <block wx:for="{{todos}}" wx:key="{{index}}">
+      <view class="{{ 'item ' + (item.complete ? 'done' : '')}}" data-index="{{index}}" bindtap="toggleTodo">{{index}} -> {{item.label}}</view>
+    </block>
+  </view>
+</view>

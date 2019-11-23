@@ -1,0 +1,18 @@
+<Page loaded="onLoaded">
+<Page.actionBar>
+    <ActionBar title="scrapbook">
+        <ActionItem tap="onAddTap" ios.position="right" text="Add" android.position="actionBar">
+        </ActionItem>
+    </ActionBar>
+</Page.actionBar>
+    <StackLayout>
+        <ListView items="{{ pages }}" itemTap="onItemTap" row="0">
+            <ListView.itemTemplate>
+                <StackLayout orientation="horizontal">
+                    <Image src="{{ image }}" width="40"></Image>
+                    <Label text="{{ title ? title + ' Scrapbook Page' : 'No-Name Page' }}"></Label>
+                </StackLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </StackLayout>
+</Page>

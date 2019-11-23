@@ -1,0 +1,28 @@
+<Page loaded="onLoaded">
+<ActionBar>
+    <ActionItem ios.position="right" ios.systemIcon="3" tap="onSave"></ActionItem>
+</ActionBar>
+<ScrollView>
+    <StackLayout>
+        <Label text="{{ title ? 'Title:' + title : 'no title' }} " />
+        <TextField class="header" text="{{title}}" />
+        <Label text="Age: " />
+        <DatePicker date="{{ date }}" />
+        <Label textWrap="true" text='Another way is to use something like <DatePicker year="{{year}}" month="{{month}}" day="{{day}}">'></Label>
+        <Label text="Gender: " />
+        <ListPicker items="{{ genders }}" selectedIndex="{{ gender }}" />
+
+        <Label class="divider"></Label> 
+
+        <Label class="header" text="{{ header }}"></Label>
+        <Label id="title" text="placeholder"></Label>
+        <Label text="{{ Name || 'default'}}"></Label>
+        <Label text="{{ Age }}"></Label> 
+        <Label class="footer" text="{{ footer }}"></Label>
+        <StackLayout orientation="horizontal" horizontalAlignment="center" >
+            <Button class="marginRight" text="About" />
+            <Button class="margineLeft" text="Continue" />
+        </StackLayout>
+    </StackLayout>
+</ScrollView>
+</Page>
