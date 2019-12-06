@@ -1,0 +1,21 @@
+{
+  "name": "my-git-cmd",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "my-git-cmd": "bin/my-git-cmd"
+  },
+  "scripts": {
+    "my-git-cmd": "node bin/my-git-cmd.js"
+  },
+  "keywords": [
+    "common-bin",
+    "command",
+    "git"
+  ],
+  "author": "AkatQuas",
+  "license": "MIT",
+  "dependencies": {
+    "common-bin": "^2.8.2"
+  }
+}
