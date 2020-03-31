@@ -11,8 +11,9 @@ And
 1. `Zone` (`NgZone`) plays an important role during change detection. `Zone` provides a context for the running functions. [example 1](./src/app/progress/progress.component.ts#L23), [example 2](./src/app/zone-svg/zone-svg.component.ts#L49), [contrary to zone example, which is very slow and UI-slutter](./src/app/svg-box/svg-box.component.ts#L56).
 
 
+I made some attempts on [SSR](https://github.com/angular/angular-cli/wiki/stories-universal-rendering) at Mon Mar 30 12:11:25 CST 2020, but it seems failed.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+You can get the complete universal example at [here](https://angular.io/generated/zips/universal/universal.zip).
 
 ## Development server
 

@@ -1,0 +1,40 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Date custom scalar type"""
+scalar Date
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+type Mutation {
+  addRecipe(newRecipeData: RecipeInput!): Recipe!
+  removeRecipe(id: String!): Boolean!
+}
+
+type Query {
+  recipe(id: String!): Recipe!
+  recipes(skip: Int = 0, limit: Int = 25): [Recipe!]!
+}
+
+type Recipe {
+  id: ID!
+  title: String!
+  desciption: String
+  creationDate: Date!
+  ingredients: [String!]!
+}
+
+input RecipeInput {
+  title: String!
+  description: String
+  ingredients: [String!]!
+}
+
+type Subscription {
+  recipeAdded: Recipe!
+  subscribeUserJoin(userId: String!): JSONObject
+}

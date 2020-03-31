@@ -30,9 +30,9 @@ import { ZoneBoxComponent } from './zone-svg/zone-box.component';
     ZoneBoxComponent,
   ],
   imports: [
-    BrowserModule,
     ReactiveFormsModule,
     FormsModule,
+    BrowserModule.withServerTransition({ appId: 'custom' }),
   ],
   providers: [
     ModalService,

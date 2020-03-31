@@ -1,0 +1,15 @@
+title = "TOML Example"
+
+[ application ]
+port = 3300
+
+[ mongo ]
+uri = "mongodb://localhost/test_database"
+
+[ redis ]
+host = "localhost"
+port = 6379
+url = "redis://localhost:6379"
+
+[ third-party ]
+baseUrl = "https://api.third-party"
