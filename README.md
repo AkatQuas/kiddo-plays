@@ -16,6 +16,8 @@ A collection of my plays in programming.
 
   - [Dart Angualr Demo](./dart-language/charge-system-demo)
 
+* [Flutter](./flutter_playlist)
+
 * [GraphQL language](./graphql-language)
 
 * [Gulp, Grunt](./task-runners)
@@ -23,6 +25,8 @@ A collection of my plays in programming.
 * [jQuery](./jQuery)
 
 * [NextJs](./nextjs-playlist)
+
+* [Nestjs](./nest-playlist)
 
 * [Node](./node-playlist)
 
