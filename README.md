@@ -60,6 +60,8 @@ A collection of my plays in programming.
 
 # Some boilerplates
 
+- [fullstack-starter](./fullstack-starter): Fullstack project using Angular and Nest.
+
 - [vue-js](https://github.com/AkatQuas/vue-boilerplate)
 
 - [cocos2dx-js](https://github.com/AkatQuas/cocos-js-boilerplate)

@@ -1,0 +1,8 @@
+**/node_modules
+**/test
+**/static
+.babelrc
+.gitignore
+.git
+Dockerfile
+proxychains.conf
