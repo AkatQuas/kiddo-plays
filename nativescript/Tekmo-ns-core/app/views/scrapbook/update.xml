@@ -1,0 +1,21 @@
+<Page loaded="onLoaded">
+<ActionBar>
+    <ActionItem ios.position="right" ios.systemIcon="3" text="Save" tap="onUpdate">
+    </ActionItem>
+</ActionBar>
+<ScrollView>
+    <StackLayout class="form">
+        <StackLayout class="input-field">
+            <Label text="{{ title ? title + ' Page' : 'No Page' }}"></Label> 
+            <TextField class="header" text="{{title}}" hint="Enter title..." />
+        </StackLayout>
+        <Label class="label" textWrap="true" text="{{ (birthDate), 'Birth date: '+ ( birthDate === null ? '': 'Age: '+calcAge(birthDate) + ' years old')}}"></Label>
+        <TextField class="input" editable="false" text="{{ birthDate, birthDate | dateConverter(dateFormat) }}" tap="onBirthDateTap" hint="Enter a birth date..." />
+        <Label text="Gender: "></Label>
+        <TextField class="input" editable="false" text="{{ gender }}" tap="onGenderSelect" hint="Select the gender" />
+        <Image src="{{ image }}" stretch="none" ></Image>
+        <Label text="{{ (lat,long), (lat === undefined || long === undefined ) ? '' : 'Picture taken at '+ lat + ', '+ long}}"></Label>
+        <Button tap="onAddImageTap" text="Add Image"></Button>
+    </StackLayout>
+</ScrollView>
+</Page>

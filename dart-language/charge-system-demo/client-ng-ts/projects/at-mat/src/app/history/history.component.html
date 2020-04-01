@@ -1,0 +1,9 @@
+<app-back-header title="History Recap"></app-back-header>
+<div class="wrapper" *ngIf="histories.length > 0">
+  <p class="note">Recent charge history:</p>
+  <div class="history">
+    <div class="history-item" *ngFor="let item of histories">
+      <app-history-item [time]="item.time" [value]="item.value"></app-history-item>
+    </div>
+  </div>
+</div>

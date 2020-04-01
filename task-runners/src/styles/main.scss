@@ -1,0 +1,10 @@
+.a {
+    color: red;
+    transform: rotateY(-20px);
+
+    .b {
+        background-color: #fff;
+        display: flex;
+        justify-content: flex-start;
+    }
+}

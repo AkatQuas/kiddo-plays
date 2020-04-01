@@ -1,0 +1,10 @@
+# this config would be generated in kubernetes
+title = "TOML at Production"
+
+[ mongo ]
+uri = "mongodb://192.168.3.13:12020/test"
+
+[ redis ]
+host = "localhost"
+port = 6379
+url = "redis://localhost:6379"

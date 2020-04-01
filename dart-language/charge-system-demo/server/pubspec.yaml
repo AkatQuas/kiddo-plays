@@ -1,0 +1,15 @@
+name: charge_system_server
+description: A web server built using the Jaguar package.
+author: akatquas <295140755@qq.com>
+
+environment:
+  sdk: '>=2.1.0 <3.0.0'
+
+dependencies:
+  args: ^1.4.2
+  jaguar: ^2.4.26
+  dartis: ^0.3.0
+  path: ^1.6.0
+  jaguar_cors: ^2.4.4
+  jaguar_session_jwt: ^2.4.2
+  jaguar_reflect: ^2.4.5

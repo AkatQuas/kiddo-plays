@@ -1,0 +1,24 @@
+{
+  "name": "parcel-test",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel src/*.html",
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.0.0",
+    "fs-extra": "^7.0.1",
+    "parcel-bundler": "^1.12.3",
+    "sass": "^1.20.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.5.1",
+    "postcss-modules": "^1.4.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.8.6",
+    "vue": "^2.6.10",
+    "vue-hot-reload-api": "^2.3.3"
+  }
+}

@@ -1,0 +1,12 @@
+<mat-card class="login-container">
+  <img mat-card-image src="/assets/logo.png" />
+  <mat-form-field class="full-width">
+    <input matInput placeholder="username" [(ngModel)]="username" />
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="password" type="password" [(ngModel)]="password" />
+  </mat-form-field>
+
+  <button mat-stroked-button color="primary" class="full-width" (click)="handleLogin()">Login</button>
+</mat-card>

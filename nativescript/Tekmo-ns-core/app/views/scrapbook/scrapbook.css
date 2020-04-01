@@ -1,0 +1,10 @@
+Label {
+    text-align: center;
+    margin-top: 10;
+    margin-bottom: 10;
+}
+
+Image {
+    height: 50;
+    width: 50;
+}

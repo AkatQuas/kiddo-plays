@@ -1,0 +1,13 @@
+.view {
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #efefef;
+    border: 1px solid #eee;
+}
+.news-view {
+    padding-left: 20px;
+}
+
+.news-view .item {
+    list-style: none;
+}

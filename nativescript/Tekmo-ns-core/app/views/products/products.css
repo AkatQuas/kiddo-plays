@@ -1,0 +1,19 @@
+.tile {
+    background-color: #FFFFFF;
+    margin: 2;
+    color: skyblue;
+}
+
+.attrs {
+    margin-top: 10;
+    margin-bottom: 20;
+    background-color: #66ccff;
+    border-radius: 5;
+}
+.attrs .a-name {
+    color: #ffffff;
+    font-size: 20;
+}
+.attrs .a-value {
+    color: red;
+}

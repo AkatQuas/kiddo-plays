@@ -1,0 +1,33 @@
+{
+  "name": "i18next-play",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next -p 7002",
+    "dev:s": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "i18next": "^11.5.0",
+    "i18next-browser-languagedetector": "^2.2.3",
+    "i18next-express-middleware": "^1.2.1",
+    "i18next-node-fs-backend": "^1.2.1",
+    "i18next-xhr-backend": "^1.5.1",
+    "next": "^6.1.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-i18next": "^7.10.1"
+  },
+  "devDependencies": {
+    "postcss-nested": "^3.0.0",
+    "styled-jsx": "^3.0.2",
+    "styled-jsx-plugin-postcss": "^0.1.3"
+  }
+}

@@ -1,0 +1,164 @@
+@mixin dot {
+    display: inline-block;
+    margin: 2rpx;
+    width: 12rpx;
+    height: 12rpx;
+    background-color: #da3a00;
+    border-radius: 50%;
+}
+.inv-cal {
+
+    .ym-title {
+        background-color: #da3a00;
+        color: #fff;
+        padding: 25rpx 160rpx;
+        display: flex;
+        justify-items: space-around;
+        text-align: center;
+
+        .ym-title__l {
+            width: 80rpx;
+            padding-top: 8rpx;
+            image {
+                width: 20rpx;
+                height: 36rpx;
+            }
+        }
+        
+        .ym-title__m {
+            flex: 1;
+        }
+        
+        .ym-title__r {
+            width: 80rpx;
+            padding-top: 8rpx;
+            transform: rotateY(180deg);
+            image {
+                width: 20rpx;
+                height: 36rpx;
+            }
+        }
+    }
+
+
+    .month-summary {
+        padding: 30rpx 0;
+        display: flex;
+        justify-items: space-around;
+        text-align: center;
+
+        .month-summary__item { 
+            flex: 1;
+
+            .label{ 
+                font-size: 24rpx;
+                color: #999;
+            }
+
+            .value{ 
+                color: #333;
+                font-size: 30rpx;
+                font-weight: 600;
+            }
+        }
+    }
+    .calendar {
+        background-color: #f6f6f6;
+        color: #999;
+        padding: 0 25rpx;
+        border-top: 1rpx solid #ddd;
+        border-bottom: 1rpx solid #ddd;
+        font-size: 24rpx;
+
+        .calendar-title {
+            display: flex;
+            justify-content: space-around;
+            align-content: center;
+            .calendar-title-item {
+                padding: 15rpx 0;
+            }
+        }
+        .calendar-dates {
+            .calendar-line {
+                display: flex;
+                border-top: 1rpx solid #ddd;
+                .calendar-dates-item {
+                    height: 90rpx;
+                    padding-top: 5rpx;
+                    flex: 1;
+                    text-align: center;
+
+                    .calendar-dates-item_date {
+                        width: 46rpx;
+                        height: 46rpx;
+                        margin: 0 auto;
+                        border-radius: 50%;
+                        line-height: 46rpx;
+
+                        &.today {
+                            color: #fff;
+                            background-color: #ccc;
+                        }
+
+                        &.selected {
+                            color: #fff;
+                            background-color: #dc3a00;
+                        }
+                    }
+
+                    .calendar-dates-item_dots {
+                        .calendar-dates-item_dots_signed {
+                            @include dot;
+                        }
+                    }
+
+                    &.grey {
+                        color: #ccc;
+                    }
+                }
+            }
+        }
+    }
+
+    .day-summary {
+        padding: 0 40rpx;
+        display: flex;
+        justify-content: space-between;
+        .day-summary-sign {
+            position: relative;
+
+            .day-summary-sign_dot {
+                position: absolute;
+                top: 40rpx;
+                left: 15rpx;
+                @include dot;
+            }
+        }
+        
+      
+        .day-summary-item {
+            padding: 30rpx 0 25rpx 40rpx;
+            .day-summary-item_name {
+                font-size: 32rpx;
+                color: #333;
+            }
+            .day-summary-item_desc {
+                color: #999;
+                font-size: 24rpx;
+            }
+        }
+        .sign-btn {
+            width: 90rpx;
+            height: 90rpx;
+            border-radius: 50rpx;
+            border: 3rpx solid rgb(255, 102, 0);
+            background-color: #be0000;
+            line-height:  90rpx;
+            font-size: 30rpx;
+            color: #fff;
+            margin: 40rpx ;
+            text-align: center;
+        }
+    }
+
+}

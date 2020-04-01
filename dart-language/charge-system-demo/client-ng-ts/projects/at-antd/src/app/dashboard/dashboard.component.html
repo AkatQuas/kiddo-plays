@@ -1,0 +1,10 @@
+<div class="welcome">Welcome <br /> {{username}}</div>
+<div class="menu">
+  <div class="btn">
+    <button nz-button nzType="primary" nzBlock (click)="navCharge()">Charge</button>
+  </div>
+  <div class="btn">
+    <button nz-button nzType="default" nzBlock (click)="navHistory()">History</button>
+  </div>
+</div>
+<div class="logout"><button  nz-button nzType="danger" nzBlock (click)="logOut()">Log Out</button></div>

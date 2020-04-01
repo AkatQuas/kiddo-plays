@@ -1,0 +1,16 @@
+{
+  "name": "crawler-app",
+  "version": "1.0.0",
+  "description": "A play on cheerio, puppeteer",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo 0 & exit 0",
+    "example": "node src/main"
+  },
+  "author": "AkatQuas",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "puppeteer": "^0.12.0"
+  }
+}

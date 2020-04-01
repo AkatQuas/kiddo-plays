@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>DOM</title>
+    <style>
+        a.test {
+            font-weight: bold;
+        }
+        .content {
+            margin:  20px 0 ;
+            padding: 15px;
+            border: 1px solid #999;
+            border-radius: 12px;
+        }
+        .append {
+            padding: 20px;
+            background-color: antiquewhite;
+            color:cadetblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content" class="content">
+        <a href="http://jquery.com/" title="old title">jQuery</a>
+        <h1>hh</h1>
+        <h1>hh</h1>
+        <h1>hh</h1>
+        <hr>
+        <h3>old h3 title</h3>
+        <h3>old h3 title</h3>
+        <h3>old h3 title</h3>
+        <h3>old h3 title</h3>
+        <hr>
+        <div id="strip">
+            <p>to be stripped</p>
+        </div>
+        <hr>
+        <div id="grow">
+            <p>a child, the native one</p>
+        </div>
+        <hr>
+        <ul id="my-list">
+            <li>native list 01</li>
+            <li>native list 02</li>
+            <li>native list 03</li>
+        </ul>
+
+        <div id="data">
+            <p>data container</p>
+        </div>
+
+    </div>
+
+    <script src="jquery.js"></script>
+    <script>
+        $(document).ready(function (k) {
+            console.log(k)
+            var aTag = $('a')
+            aTag.click(function (e) {
+                e.preventDefault();
+                alert('thanks from visiting' + $(this).attr('title'))
+                // $(this).hide('slow')
+                $(this).attr({
+                    title: 'A new title for a tay',
+                })
+                alert('after attr setting' + $(this).attr('title'))
+            })
+            aTag.addClass('test')
+
+            console.log('a', $('a'))
+            console.log('p', $('p'))
+
+            $('h1:gt(0)').text('rwo')
+            // this will get all text in all h1 tag
+            console.log('getiing the text from h1', $('h1').text())
+
+            // this will get only the html content in the first h1 tag
+            console.log('getiing the html from the first h1', $('h1').html())
+
+
+            $('#content').find('h3')
+                .eq(2).text('new text for the third h3')
+                .end() // Restores the selection to all h3s in #content
+                .eq(0).text('new text for the FIRST h3')
+
+            $('#strip').html('<span> new html child to replace the original html children</span>')
+            console.log('stripped html', $('#strip').html())
+
+
+            $('<p>a new orphan </p>').appendTo('#grow');
+
+                ; (function () {
+                    var i = 4;
+                    var items = [];
+
+                    for (; i < 10; i++) {
+                        items.push('<li> jq item ' + i + '</li>')
+                    }
+                    $('#my-list').append(items)
+
+                })()
+
+            $('#data').data('key', { foo: 'bar' })
+            console.log($('#data').data())
+
+            var arr = [ 'foo', 'bar', 'baz' ];
+            $.each(arr, function(item , idx) {
+                console.log(' in $.each, we have item ->' + item + ' with index -> ' + idx)
+            })
+            var mapRes = $.map(arr, function(item , index ) {
+                return {
+                    item: item,
+                    index: index
+                }
+            })
+            console.log('with $.map we have a new array ->', mapRes)
+
+            var firstObject = { foo: 'foo', a: 'b' }
+            var secondObject = { foo: 'baz', c: 'qqq' }
+
+            var newObject = $.extend({},firstObject, secondObject)
+            console.log('new ', newObject);
+            console.log('first ', firstObject);
+            console.log('second ', secondObject);
+
+            $.each(newObject, function (key, value) {
+                console.log('iterating the object: key -> ' + key + ', value -> ' + value)
+            })
+            var myFunction = function(ca) {
+                console.log(this)
+                console.log(ca)
+            }
+
+            myFunction('ca one')
+
+            var myProxy = $.proxy(myFunction, {
+                foo: 'bar'
+            })
+            myProxy('proxy')
+            console.log('with $.proxy we change the this context in the function')
+
+            var funObject = {
+                myFn: function () {
+                    console.log(this)
+                }
+            }
+
+            funObject.myFn()
+
+            $('#data').click($.proxy(funObject.myFn, funObject));
+
+            $('<div />').attr({ 'class': 'append' }).text('an appended div').appendTo('#content');
+
+            $('<div />').attr({ 'class': 'append' }).text('an insert before div').insertBefore('#content');
+
+            $('<div />').attr({ 'class': 'append' }).text('an insert after div').insertAfter('#content');
+
+            $('#content').append($('<div />').attr('class', 'append').text('parent called append'));
+        })
+
+    </script>
+</body>
+
+</html>

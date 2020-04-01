@@ -1,0 +1,18 @@
+{
+    "key1": "this is CN message1",
+    "nested": {
+        "message1": "this is  CNNNN CNCN nested message1"
+    },
+    "errors": [
+        "this is 0 error CNCNCN code message",
+        {
+            "internal1": "this is internal 1 error CNCNCNC  message"
+        },
+        [
+            "this is nested CNCNCN  array error 1"
+        ]
+    ],
+    "the_world": "the CN world",
+    "dio": "DIO CN :",
+    "linked": "@:rd.dio @:rd.the_world !!!!"
+}

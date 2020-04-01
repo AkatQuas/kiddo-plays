@@ -1,0 +1,30 @@
+.gifts {
+
+    .card-wrapper {
+        padding: 20rpx; 
+        .gift-card {
+            padding: 20rpx;
+            display: flex;
+            border: 1px solid #da3a00;
+            margin-bottom: 20rpx;
+            border-radius: 12rpx;
+            .image {
+                width: 170rpx;
+                height: 130rpx;;
+            }
+            .info {
+                padding-left: 20rpx;
+                .label {
+                    font-weight: 600;
+                }
+                .price {
+                    color: #da3a00;
+                }
+            }
+            &.chosen {
+                border-color: rgb(19, 208, 241);
+            }
+        }
+
+    }
+}

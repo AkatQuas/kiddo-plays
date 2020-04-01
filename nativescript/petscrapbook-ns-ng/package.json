@@ -1,0 +1,41 @@
+{
+	"description": "NativeScript Application",
+	"license": "SEE LICENSE IN <your-license-filename>",
+	"readme": "NativeScript Application",
+	"repository": "<fill-your-repository-here>",
+	"nativescript": {
+		"id": "com.xuanxiangkeji.petng",
+		"tns-ios": {
+			"version": "3.3.0"
+		},
+		"tns-android": {
+			"version": "3.3.1"
+		}
+	},
+	"dependencies": {
+		"@angular/animations": "~4.4.5",
+		"@angular/common": "~4.4.5",
+		"@angular/compiler": "~4.4.5",
+		"@angular/core": "~4.4.5",
+		"@angular/forms": "~4.4.5",
+		"@angular/http": "~4.4.5",
+		"@angular/platform-browser": "~4.4.5",
+		"@angular/router": "~4.4.5",
+		"nativescript-angular": "~4.4.1",
+		"nativescript-camera": "^3.2.1",
+		"nativescript-geolocation": "^4.2.1",
+		"nativescript-theme-core": "~1.0.4",
+		"reflect-metadata": "~0.1.8",
+		"rxjs": "~5.4.2",
+		"tns-core-modules": "~3.1.1",
+		"zone.js": "~0.8.2"
+	},
+	"devDependencies": {
+		"babel-traverse": "6.26.0",
+		"babel-types": "6.26.0",
+		"babylon": "6.18.0",
+		"lazy": "1.0.11",
+		"nativescript-dev-typescript": "~0.5.0",
+		"typescript": "~2.4.2"
+	}
+}

@@ -1,0 +1,25 @@
+<div>
+    <h2> Pipes works! </h2>
+    <p>without pipe, {{myValue}}</p>
+    <p>using pipe, {{myValue | uppercase}}</p>
+    <p>date pipe, {{myDate | date}}</p>
+    <p>date pipe with parametrizing parameters, {{myDate | date:'dd/MM/yy hh:mm:ss'}}</p>
+    <p>slice some letters, {{myValue | slice:2:7}}</p>
+    <p>pipes can be chained, {{myValue | slice:2:7 | uppercase}}</p>
+    <h3>Custom Pipe</h3>
+    <p>in <i>pipe.ts</i> file, the function <i>PipeTransform</i> would be executed every time using that pipe.</p>
+    <input type="text" #pipeValue (keyup)="0">
+    <p>{{pipeValue.value | double}}</p>
+    <p>filter pipes can filter the array. It seems that pipes works before <i>*ngFor</i></p>
+    <input type="text" #newItem>
+    <button (click)="values.push(newItem.value)" class="btn btn-sm btn-info">Add To Array</button>
+    <button class="btn btn-sm btn-primary" (click)="updateValues(newItem.value)">Pure way to change Views</button>
+    <ul>
+        <li *ngFor="let item of values | filter:'ea'">{{item}}</li>
+    </ul>
+    <p>A pure pipe only changes the UI when the reference changes, even the element in the array changes, the VIEWS won't change accordingly.</p>
+    <p>We can create an `Impure` pipe.</p>
+    <h3>The Async Pipe</h3>
+    <p>the async pipe is here, {{asyncValue | async}}</p>
+</div>
+

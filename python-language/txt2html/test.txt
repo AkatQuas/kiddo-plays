@@ -1,0 +1,20 @@
+Welcome to AkatQuas
+
+AkatQuas is learning Python which is a wonderful language in the world.
+
+Course
+
+-Basic Course
+
+-Project Course
+
+-Evaluation Course
+
+Contact us
+
+-Web:http://github.com/AkatQuas
+
+-QQ: 295140755
+
+-E-mail:email@github.com
+

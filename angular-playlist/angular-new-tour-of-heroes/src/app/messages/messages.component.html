@@ -1,0 +1,8 @@
+<img src="assets/logo.png" alt="">
+<img [src]="icon" alt="An icon">
+<div class="test-icon"></div>
+<div *ngIf="messageService.messages.length">
+  <h2>Message</h2>
+  <button class="clear" (click)="messageService.clear()">Clear Message</button>
+  <div *ngFor="let message of messageService.messages">{{message}}</div>
+</div>

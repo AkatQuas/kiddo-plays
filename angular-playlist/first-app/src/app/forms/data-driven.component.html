@@ -1,0 +1,60 @@
+<h1>Data Driven Forms</h1>
+<p>There are a lot of similarities in the template-driven and data-driven forms, whilst template-driven is much
+    easier!</p>
+<p>You can create the form using formBuilder which is kind of a syntax sugar. Check the code.</p>
+<p>Custom Validator is kind of weird because the returned <i>null</i> means valid, the Object you returned makes the form invalid. Maybe you want to change the logic!</p>
+<p>An amazing about the angular form is you can set the asyncValidator in just angular js. In vue js, you have to implement that yourself.</p>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div formGroupName="userData">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text"
+                   class="form-control"
+                   id="username"
+                   formControlName="username"
+            >
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text"
+                   class="form-control"
+                   id="email"
+                   formControlName="email"
+            >
+            <div *ngIf="!myForm.controls['userData'].controls['email'].valid">Invalid Email</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="text"
+               class="form-control"
+               id="password"
+               formControlName="password"
+        >
+    </div>
+    <div class="radio" *ngFor="let g of genders">
+        <label>
+            <input type="radio"
+                   formControlName="gender"
+                   [value]="g"
+            >
+            {{g}}
+        </label>
+    </div>
+    <div formArrayName="hobbies">
+        <h3>Hobbies</h3>
+        <div class="form-group clearfix" *ngFor="let hobby of myForm.controls['hobbies'].controls; let idx = index">
+            <div class="col-xs-8">
+                <input type="text"
+                       class="form-control"
+                       formControlName="{{idx}}"
+                >
+            </div>
+            <div class="col-xs-4">
+                <button class="btn btn-danger" (click)="onDeleteHobby(idx)">Delete</button>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-default" (click)="onAddHobby()">Add Hobby</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+</form>

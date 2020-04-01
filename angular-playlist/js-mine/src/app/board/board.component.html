@@ -1,0 +1,12 @@
+<div>
+  <div>height: <input type="number" [(ngModel)]="height"></div>
+  <div>mines: <input type="number" [(ngModel)]="mines"></div>
+  <button (click)="prepareBoard()">restart game</button>
+  <hr>
+  <div>Score: {{score}}</div>
+  <div class="board">
+    <div *ngFor="let item of cells;" (click)="cellClick(item)">
+      <app-cell [cell]="item"></app-cell>
+    </div>
+  </div>
+</div>

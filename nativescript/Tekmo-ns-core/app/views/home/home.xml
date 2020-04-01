@@ -1,0 +1,23 @@
+<Page>
+    <StackLayout>
+        <Label textWrap="true" text="welcome to the Tekmo Tutorial App! Long text long text" class="title"></Label>
+        <Label textWrap="true" text="using different transitions when navigating to about page"></Label>
+        <ScrollView>
+            <StackLayout>
+                <Button text="to Product" tap="toProduct"></Button>
+                <Button text="to Observable" tap="toObservable"></Button>
+                <Button text="to Observable book" tap="toObservableBook"></Button>
+                <Button text="fade" tap="toAboutPage"></Button>
+                <Button text="flipRight" tap="toAboutPage"></Button>
+                <Button text="flipLeft" tap="toAboutPage"></Button>
+                <Button text="slideLeft" tap="toAboutPage"></Button>
+                <Button text="slideRight" tap="toAboutPage"></Button>
+                <Button text="slideTop" tap="toAboutPage"></Button>
+                <Button text="slideBottom" tap="toAboutPage"></Button>
+                <Button text="curlUp" tap="toAboutPage"></Button>
+                <Button text="curlDown" tap="toAboutPage"></Button>
+                <Button text="explode" tap="toAboutPage"></Button>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</Page>

@@ -1,0 +1,5 @@
+<template name="tips">
+  <view>
+    This is a tip from template with message : {{message}}
+  </view>
+</template>

@@ -1,0 +1,7 @@
+.idea
+dist*/
+.vscode
+.sass-cache/
+log*
+temp
+gen/*

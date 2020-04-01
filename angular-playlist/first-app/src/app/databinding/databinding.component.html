@@ -1,0 +1,20 @@
+<h1>String interpolation</h1>
+<p>
+  Data binding works!
+  {{stringInterpolation}}
+  {{numberInterpolation}}
+</p>
+<hr>
+<h1>Property binding</h1>
+<input type="text" [(ngModel)]="stringInterpolation">
+<input type="text" [(ngModel)]="numberInterpolation">
+<p [ngClass]="{redBorder:componentFunc()}">is it styled?</p>
+<p [ngStyle]="{color:'blue'}">is it styled?</p>
+<h3>Custom Property Binding</h3>
+<app-property-binding [result]="numberInterpolation"></app-property-binding>
+<h3>Custom Event Binding</h3>
+<app-event-binding (clicked)="UpClick($event)"></app-event-binding>
+<h3>Custom 2-way Binding</h3>
+<p>using <i>[(ngModel)]</i> for 2 way data binding</p>
+<app-two-way-binding *ngIf="!delete"></app-two-way-binding>
+<button (click)="delete = true">click to delete</button>

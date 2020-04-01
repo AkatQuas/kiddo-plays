@@ -1,0 +1,23 @@
+{
+  "name": "nuxt-from-scratch",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "fs-extra": "^7.0.0",
+    "nuxt": "^1.4.2",
+    "vue-i18n": "^8.0.0",
+    "vue-notifications": "^0.9.0",
+    "vuex": "^3.0.1"
+  }
+}

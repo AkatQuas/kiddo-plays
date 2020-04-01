@@ -1,0 +1,19 @@
+<ActionBar title="Scrapbook" class="action-bar">
+    <ActionItem (tap)="onAddTap()" text="Add" ios.position="right" android.position="actionBar">
+    </ActionItem>
+</ActionBar>
+
+<ScrollView>
+    <GridLayout rows="*" columns="*">
+        <ListView [items]="pages" (itemTap)="onItemTap($event)" class="list-group">
+            <ng-template let-item="item" let-odd="odd" let-even="even">
+                <StackLayout class="list-group-item">
+                    <Image class="thumb img-circle" [src]="item.image"></Image>
+
+                    <Label [text]="(item.title ? item.title : 'New') + 'Scrapbook Page' " class="list-group-item-text"></Label>
+
+                </StackLayout>
+            </ng-template>
+        </ListView>
+    </GridLayout>
+</ScrollView>

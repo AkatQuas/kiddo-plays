@@ -1,0 +1,9 @@
+<ant-back-header title="History Recap"></ant-back-header>
+<div class="wrapper" *ngIf="histories.length > 0">
+  <p class="note">Recent charge history:</p>
+  <div class="history">
+    <div class="history-item" *ngFor="let item of histories">
+      <ant-history-item [time]="item.time" [value]="item.value"></ant-history-item>
+    </div>
+  </div>
+</div>

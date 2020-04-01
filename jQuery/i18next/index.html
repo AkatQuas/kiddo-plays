@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Example</title>
+    <style>
+        #languages .lang-item {
+            color: #999;
+            margin: 0 10px;
+        }
+
+        #languages .lang-item.active {
+            color: aqua;
+            margin: 0 10px;
+        }
+    </style>
+    <script src="./jquery.min.js"></script>
+    <script src="./i18next.min.js"></script>
+    <script src="./j-i18next.min.js"></script>
+    <script src="./i18nextXHRBackend.min.js"></script>
+</head>
+
+<body>
+    <p id="languages">
+
+
+    </p>
+    <ul class="nav">
+        <li><a href="#" data-i18n="nav:home"></a></li>
+        <li><a href="#" data-i18n="nav:page1"></a></li>
+        <li><a href="#" data-i18n="nav:page2"></a></li>
+    </ul>
+    <div class="content">
+        <input type="text" data-i18n="[placeholder]translation:input.placeholder;[title]translation:input.title">
+
+    </div>
+    <div class="outer" data-i18n="outer:inner" data-i18n-target=".inner">
+        <span class="inner"></span>
+    </div>
+
+    <p>An awkward thing is that you have to call the <i>$(elements)</i> to localize after changing the language</p>
+    <script>
+        i18next
+            .use(i18nextXHRBackend)
+            .init({
+                lng: 'en',
+                debug: true,
+                fallbackLng: 'en',
+                ns: ['translation', 'nav', 'outer'],
+                backend: {
+                    loadPath: '/locales/{{lng}}/{{ns}}.json',
+                    addPath: 'locales/add/{{lng}}/{{ns}}',
+                    crossDomain: true
+                },
+            }, function (err, t) {
+                jqueryI18next.init(i18next, $);
+
+                $('.nav').localize();
+                $('.content').localize();
+                $('.outer').localize();
+            });
+        $(document).ready(function () {
+            var langs = [
+                {
+                    l: 'en',
+                    t: 'English'
+                }, {
+                    l: 'cn',
+                    t: 'CHINESE'
+                }
+            ];
+
+            var spans = $.map(langs, function (item, index) {
+                var span = $('<span />').attr('class','lang-item').text(item.t).on('click', item, function (e) {
+                    i18next.changeLanguage(e.data.l, function (err, t) {
+                        if (err) return console.log('something wrong with the translating', err);
+
+                        // update the translation manually
+                        $('.nav').localize();
+                        $('.content').localize();
+                        $('.outer').localize();
+                    });
+
+                });
+                return span;
+            });
+
+            $('#languages').append(spans)
+        });
+    </script>
+</body>
+
+</html>

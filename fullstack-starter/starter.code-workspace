@@ -1,0 +1,45 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "client",
+			"path": "projects/client"
+		},
+		{
+			"name": "server",
+			"path": "projects/server"
+		},
+		{
+			"name": "shared",
+			"path": "projects/shared"
+		}
+	],
+	"settings": {
+		"statusbarerror.wholeLine.show": true,
+		"vetur.format.enable": true,
+		"vetur.format.defaultFormatterOptions": {
+			"prettier": {
+				// Prettier option here
+				"semi": false,
+				"printWidth": 160,
+			}
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			// basic
+			"2gua.rainbow-brackets",
+			"christian-kohler.path-intellisense",
+			"cssho.vscode-svgviewer",
+			"aaron-bond.better-comments",
+			"joeberria.statusbarerror",
+			"bungcip.better-toml",
+			"humao.rest-client",
+			// git
+			"mhutchie.git-graph",
+			"eamodio.gitlens",
+		]
+	}
+}

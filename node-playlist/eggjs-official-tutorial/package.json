@@ -1,0 +1,24 @@
+{
+  "name": "eggjs-official-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "egg-bin dev --port 8080",
+    "test": "egg-bin test",
+    "cov": "egg-bin cov"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "egg": "^2.9.1",
+    "egg-validate": "^1.0.0",
+    "egg-view-nunjucks": "^2.2.0",
+    "mz-modules": "^2.1.0",
+    "stream-wormhole": "^1.0.4"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.7.1",
+    "egg-mock": "^3.17.3"
+  }
+}

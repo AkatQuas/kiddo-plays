@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Plugins</title>
+    <style>
+        .red {
+            color: brown;
+        }
+        .high {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #999;
+            text-align: center;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <p class="red">red</p>
+        <p class="red" id="tobeGreen">red</p>
+        <ul>
+            <li><a href="ajax.html">ajax</a></li>
+            <li> <a href="dom.html">dom</a></li>
+            <li> <a href="basic-events.html">basic</a></li>
+            <li> <a href="effects.html">effects</a></li>
+        </ul>
+        <button id="showLinks">show links page detail</button>
+
+        <div id="high" class="high">the color is black </div>
+
+        <div id="high2" class="high">the color is black </div>
+
+    </div>
+
+    <script src="jquery.js"></script>
+    <script>
+        (function ($) {
+
+            // plugin customizable by accepting options and extend the options with default
+            $.fn.greenify = function (options) {
+
+                // This is the easiest way to have default options.
+                var settings = $.extend({
+                    // These are the defaults.
+                    color: "#556b2f",
+                    backgroundColor: "white"
+                }, options);
+
+                // Greenify the collection based on the settings variable.
+                return this.css({
+                    color: settings.color,
+                    backgroundColor: settings.backgroundColor
+                });
+
+            };
+
+            // bad
+            $.fn.openPopup = function () {
+                // Open popup code.
+            };
+
+            $.fn.closePopup = function () {
+                // Close popup code.
+            };
+
+            // good
+            $.fn.popup = function (action) {
+
+                if (action === "open") {
+                    // Open popup code.
+                }
+
+                if (action === "close") {
+                    // Close popup code.
+                }
+
+            };
+
+            // when references to any number of DOM elements,
+            $.fn.myNewPlugin = function () {
+
+                return this.each(function () {
+                    // Do something to each element here.
+                });
+
+            };
+
+            $.fn.showLinkLocation = function () {
+
+                /*
+                // ok
+                this.filter("a").each(function () {
+                    var link = $(this);
+                    link.append(" -> " + link.attr("href"));
+                });
+                */
+
+                // better
+                this.filter('a').append(function () {
+                    return " -> " + this.href;
+                })
+
+                return this;
+
+            };
+
+            // Plugin defaults – added as a property on our plugin function.
+            $.fn.hilight.defaults = {
+                foreground: "red",
+                background: "yellow"
+            };
+
+            $.fn.hilight = function (options) {
+
+                // Extend our default options with those provided.
+                // Note that the first argument to extend is an empty
+                // object – this is to keep from overriding our "defaults" object.
+                var opts = $.extend({}, $.fn.hilight.defaults, options);
+
+                // Our plugin implementation code goes here.
+                this.css({
+                    color: opts.foreground,
+                    backgroundColor: opts.background
+                })
+            };
+
+        }(jQuery));
+        // This needs only be called once and does not
+        // have to be called from within a "ready" block
+        $.fn.hilight.defaults.foreground = "blue";
+        $(document).ready(function ($) {
+            $('#tobeGreen').greenify().text('greenified from ');
+            $('#showLinks').click(function () {
+                $('a').showLinkLocation();
+            });
+
+            $("#high").hilight();
+            $("#high2").hilight({
+                foreground: 'purple',
+                background: 'green'
+            });
+        });
+
+    </script>
+</body>
+
+</html>

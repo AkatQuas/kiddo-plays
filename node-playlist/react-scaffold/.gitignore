@@ -1,0 +1,35 @@
+coverage/
+
+*.sw*
+*.un~
+
+
+.vscode
+# IDEA Config
+/.idea/
+
+# temporary
+/Blog/public/temporary/
+
+# log
+/logs/
+/log/
+/yylog/
+*.log
+*.pid
+
+# node_modules
+/node_modules/
+npm-debug.log
+yarn-error.log
+
+# mac
+/.DS_Store/
+
+# gulp-rev
+/rev/
+
+#build
+run/
+dev/
+dist/

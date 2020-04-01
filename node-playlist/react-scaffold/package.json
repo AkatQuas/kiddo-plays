@@ -1,0 +1,29 @@
+{
+  "name": "dtt-react-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "bin": {
+    "dtt-react-cli": "dtt-react-cli-create.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "commander": "^2.15.1",
+    "download-git-repo": "^1.0.2",
+    "glob": "^7.1.2",
+    "handlebars": "^4.0.11",
+    "inquirer": "^6.0.0",
+    "metalsmith": "^2.3.0",
+    "rimraf": "^2.6.2",
+    "consolidate": "^0.15.1"
+  },
+  "devDependencies": {
+    "chalk": "^2.4.1",
+    "ora": "^2.1.0"
+  },
+  "license": "MIT"
+}

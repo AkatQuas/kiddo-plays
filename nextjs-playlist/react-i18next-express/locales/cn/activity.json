@@ -1,0 +1,21 @@
+{
+    "activities": [
+        {
+            "name": "CNCNC act 1",
+            "time": "2018 08 08"
+        },
+        {
+            "name": "CNCNC act 2",
+            "time": "2018 08 18"
+        },
+        {
+            "name": "CNCNC act 3",
+            "time": "2018 08 28"
+        }
+    ],
+    "staff": [
+        "Joe",
+        "Mark",
+        "{{em}}"
+    ] 
+}

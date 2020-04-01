@@ -1,0 +1,29 @@
+<h3>Please sign up to use all features</h3>
+<form [formGroup]="myForm" (ngSubmit)="onSignup()">
+    <div class="input-group">
+        <label for="email">Email</label>
+        <input formControlName="email" type="email" id="email" #email>
+        <span *ngIf="!email.pristine && email.errors != null && email.errors['noEmail']">Invalid Email</span>
+    </div>
+    <div class="input-group">
+        <label for="password">Password</label>
+        <input formControlName="password" type="password" id="password">
+    </div>
+    <div class="input-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input formControlName="confirmPassword" type="password" id="confirm-password" #confirmPassword>
+        <span *ngIf="!confirmPassword.pristine && confirmPassword.errors != null && confirmPassword.errors['passwordNotMatch']">password not match</span>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!myForm.valid">Sign Up</button>
+</form>
+<button class="btn btn-info" type="button" [disabled]="!myForm.valid" (click)="onSignin()">Sign In</button>
+<button class="btn btn-warning" (click)="onLogout()">Log out</button>
+<p>signed users</p>
+<ul>
+    <li *ngFor="let user of sign_users">{{user.email}}</li>
+</ul>
+<p>authed users</p>
+<ul>
+    <li *ngFor="let user of auth_users">{{user.email}}</li>
+</ul>
+

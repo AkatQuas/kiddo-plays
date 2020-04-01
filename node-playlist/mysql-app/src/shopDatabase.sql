@@ -1,0 +1,23 @@
+DROP TABLE IF EXISTS customers; 
+
+CREATE TABLE customers 
+(
+    id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    address VARCHAR(200),
+    city VARCHAR(50),
+    state CHAR(2),
+    zip CHAR(5),
+    account MEDIUMINT(8) UNSIGNED
+
+) ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS items;
+
+CREATE TABLE items
+(
+    id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    cost MEDIUMINT(8),
+    seller_id MEDIUMINT(8)
+) ENGINE = InnoDB;

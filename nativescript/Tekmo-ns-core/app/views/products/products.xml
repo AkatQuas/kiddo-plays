@@ -1,0 +1,35 @@
+<Page>
+<ScrollView>
+    <StackLayout>
+        <GridLayout rows="*,*" columns="*,*" width="300" height="200" class="attrs">
+            <StackLayout row="0" col="0">
+                <Label class="a-name" text="Height"></Label>
+                <Label class="a-value" text="2' 04&#34;"></Label>
+            </StackLayout>
+            <StackLayout row="0" col="1">
+                <Label class="a-name" text="Category"></Label>
+                <Label class="a-value" text="Seed"></Label>
+            </StackLayout>
+            <StackLayout row="1" col="0">
+                <Label class="a-name" text="Weight"></Label>
+                <Label class="a-value" text="15.2 lbs"></Label>
+            </StackLayout>
+        </GridLayout>
+        <GridLayout rows="*,*,*,*" columns="*,*" width="300" height="450">
+            <StackLayout row="0" col="0" rowSpan="1" colSpan="2" class="tile">
+                <Label text="Couch Commander Longer" textWrap="true"/>
+                <Label text="Couch Commander Longer" textWrap="true"/>
+            </StackLayout>
+            <Label row="3" col="0" text="Super Marshmallow Man, the right is empty " textWrap="true" class="tile"/>
+            <StackLayout row="1" col="0" class="tile">
+                <Label text="Pyro Robots" textWrap="true"/>
+                <Label text="Pyro Robots, the bottom is empty" textWrap="true"/>
+            </StackLayout>
+            <StackLayout row="1" col="1" rowSpan="2" colSpan="1" class="tile">
+                <Label text="Rescue Pups" textWrap="true"/>
+                <Label text="Vampire Valkyrie" textWrap="true"/>
+            </StackLayout>
+        </GridLayout>
+    </StackLayout>
+</ScrollView>
+</Page>

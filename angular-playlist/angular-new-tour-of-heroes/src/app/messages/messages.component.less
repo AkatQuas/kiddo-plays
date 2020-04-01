@@ -1,0 +1,29 @@
+h2 {
+    color: red;
+    font-weight: lighter;
+}
+button {
+    &.clear {
+        background-color: #eee;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: #888;
+        margin-bottom: 12px;
+    }
+    &:hover {
+        background-color: #cfd8dc;
+    }
+    &:disabled {
+        background-color: #eee;
+        color: #aaa;
+        cursor: auto;
+    }
+}
+.test-icon {
+    width: 100px;
+    height: 100px;
+    background: transparent url('../icon/icon.jpg') no-repeat center;
+    background-size: 100% auto;
+}

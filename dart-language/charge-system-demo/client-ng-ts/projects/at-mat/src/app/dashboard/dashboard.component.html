@@ -1,0 +1,14 @@
+<div class="welcome"> Welcome <br /> {{username}} </div>
+
+<div class="menu">
+  <div class="btn">
+    <button mat-raised-button color="primary" (click)="navCharge()">Charge</button>
+  </div>
+  <div class="btn">
+    <button mat-raised-button (click)="navHistory()">Histroy</button>
+  </div>
+</div>
+
+<div class="logout">
+  <button mat-flat-button color="warn" (click)="logOut()">Log Out</button>
+</div>

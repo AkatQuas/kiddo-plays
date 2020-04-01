@@ -1,0 +1,40 @@
+<Page>
+<ActionBar title="About us">
+    <ActionItem ios.systemIcon="9" android.systemIcon="ic_dialog_alert_holo_ligh" android.position="actionBar" ios.position="right" tap="feedBack">
+    </ActionItem>
+
+</ActionBar>
+<StackLayout>
+    <Label text="hello test try" class="title"></Label>
+<ScrollView>
+    <StackLayout>
+        <Button text="Home" tap="backHome"></Button>
+        <Label textWrap="true" text="small company that wants to bring you the best in retro gaming!"> </Label>  
+        <Label text="Come visit us in Louisville, KY"> </Label>  
+        <Label textWrap="true" text="About Us" class="sub-title"/>
+        <Label textWrap="true" text="Tekmo is a small online retailer...Tekmo is a small online retailer..." /> 
+        <Label textWrap="true" text="Our Mission" /> 
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+        <Label textWrap="true" text="We exist to Tekmo is a small online retailer...Tekmo is a small online retailer..." />
+    
+    </StackLayout>
+</ScrollView>
+</StackLayout>
+</Page>

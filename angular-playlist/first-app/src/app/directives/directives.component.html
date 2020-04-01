@@ -1,0 +1,51 @@
+<h1>Attribute Directives</h1>
+<h2>ngClass / ngStyle</h2>
+<div [ngClass]="{border:false,background:true}"></div>
+<div [ngClass]="{border:true,background:true}"></div>
+<div [class.border]="true"></div>
+<div [class.background]="true"></div>
+<div [ngStyle]="{'background-color': 'red'}"></div>
+<hr>
+<h2>Custom Attribute Directive</h2>
+<div [appHighlight]="'pink'" [defaultColor]="'purple'">Some text! Move mouse over here!</div>
+<hr>
+<h1>Structural Directives</h1>
+<h2>*ngIf / *ngFor</h2>
+<div *ngIf="cond" style="width: 200px;">
+    <ul>
+        <li *ngFor="let item of items; let i = index">{{item}} - (Index: {{i}}) </li>
+    </ul>
+    Conditional Text
+</div>
+<ng-template [ngIf]="cond">
+    <div>[ngIf] attribute</div>
+</ng-template>
+<button (click)="onSwitch()">switch it!</button>
+<hr>
+<h2>ngSwitch</h2>
+<div [ngSwitch]="value">
+    sugar -> ngSwitch
+    <p *ngSwitchCase="10">10</p>
+    <p *ngSwitchCase="100">100</p>
+    <p *ngSwitchDefault>default</p>
+</div>
+<div [ngSwitch]="value">
+    raw -> ngSwitch
+    <ng-template [ngSwitchCase]="10">10</ng-template>
+    <ng-template [ngSwitchCase]="100">100</ng-template>
+    <ng-template ngSwitchDefault>default</ng-template>
+</div>
+<p><i>value</i> is being send and now is: {{value}}</p>
+
+<hr>
+<h2>Unless Directive - Custom one</h2>
+<div *appUnless="cond">Conditional Text</div>
+<hr>
+<h2>Service</h2>
+<div>
+    <input type="text" #input>
+    <button (click)="onLog(input.value)">Log</button>
+    <button (click)="onStore(input.value)">Store</button>
+    <button (click)="onGet()">Get data</button>
+    <button (click)="onSend(input.value)">Send</button>
+</div>
