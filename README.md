@@ -60,7 +60,7 @@ A collection of my plays in programming.
 
 # Some boilerplates
 
-- [fullstack-starter](./fullstack-starter): Fullstack project using Angular and Nest.
+- [fullstack-starter](./fullstack-starter): Fullstack project using Angular and Nest. However, I do recommend [Nrwl/Nx](https://github.com/nrwl/nx) for you, which is just an amazing tool for monorepo projects. 
 
 - [vue-js](https://github.com/AkatQuas/vue-boilerplate)
 
