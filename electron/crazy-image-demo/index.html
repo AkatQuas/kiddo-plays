@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Hello Images!</title>
+    <script src="./assets/angular.min.js"></script>
+    <script src="./assets/angular-route.min.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <header ng-controller="headerController">
+        <div class="option" ng-click="minimize()">_</div>
+        <div class="option" ng-click="maximize()">&#x1f5d6;</div>
+        <div class="option" ng-click="close()">&#x2716;</div>
+      </header>
+      <div id="content" ng-view></div>
+    </div>
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>
