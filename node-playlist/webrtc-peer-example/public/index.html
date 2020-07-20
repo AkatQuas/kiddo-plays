@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple WebRTC through Node.js Signaling server</title>
+    <script src="./socket.io.js"></script>
+    <script src="./utils.js"></script>
+  </head>
+  <body>
+    <div id="mainDiv">
+      <table>
+        <thead>
+          <tr>
+            <th>Local Video</th>
+            <th>Remote Video</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><video id="localVideo" autoplay></video></td>
+            <td><video id="remoteVideo" autoplay></video></td>
+          </tr>
+          <tr>
+            <td>
+              <textarea
+                cols="60"
+                rows="4"
+                id="dataChannelSend"
+                placeholder="This will be enabled once the data channel is up..."
+                disabled
+              ></textarea>
+            </td>
+            <td>
+              <textarea
+                rows="4"
+                cols="60"
+                id="dataChannelReceive"
+                disabled
+              ></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button id="sendButton" disabled>Send</button>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="./client.js"></script>
+  </body>
+</html>
