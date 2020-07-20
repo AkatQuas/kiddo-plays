@@ -1,0 +1,18 @@
+{
+  "name": "webo",
+  "version": "1.0.0",
+  "description": "A electron demo project",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "9.0.5"
+  },
+  "dependencies": {
+    "image-size": "^0.8.3"
+  }
+}
