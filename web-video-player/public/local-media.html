@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>getUserMedia very naive demo</title>
+    <script src="./media-device-polyfill.js"></script>
+  </head>
+  <body>
+    <div id="mainDiv">
+      <h1><code>getUserMedia()</code> very naive demo</h1>
+      <p>
+        With this example, we simply call <code>getUserMedia()</code> and
+        display the received stream inside an HTML5 &lt;video&gt; elment
+      </p>
+      <p>View page source to access both HTML and JavaScript code ...</p>
+      <video id="mainVideo" autoplay></video>
+      <button id="startMedia">get media stream</button>
+      <button id="stopMedia">stop media stream</button>
+    </div>
+    <script>
+      window.onload = function () {
+        var constraints = {
+          audio: false,
+          video: {
+            frameRate: { ideal: 30, max: 60 },
+            width: 400,
+            height: 300,
+          },
+        };
+
+        function successCallback(stream) {
+          var video = document.querySelector('#mainVideo');
+          // Note: make the returned stream available to console for inspection
+          window.stream = stream;
+
+          // Older browsers may not have srcObject
+          if ('srcObject' in video) {
+            video.srcObject = stream;
+          } else {
+            // Avoid using this in new browsers, as it is going away.
+            video.src = window.URL.createObjectURL(stream);
+          }
+          video.onloadedmetadata = function (e) {
+            video.play();
+          };
+        }
+
+        function errorCallback(error) {
+          console.error('navigator.getUserMedia error: ', error);
+        }
+
+        const button = document.querySelector('#startMedia');
+
+        button.addEventListener('click', function () {
+          navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(successCallback)
+            .catch(errorCallback);
+        });
+
+        const stopButton = document.querySelector('#stopMedia');
+        stopButton.addEventListener('click', function () {
+          var video = document.querySelector('#mainVideo');
+          const stream = video.srcObject;
+          if (!stream) {
+            return;
+          }
+          const tracks = stream.getTracks();
+
+          tracks.forEach(function (track) {
+            track.stop();
+          });
+
+          video.srcObject = null;
+        });
+      };
+    </script>
+  </body>
+</html>

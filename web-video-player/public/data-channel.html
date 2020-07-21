@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataChannel simple example</title>
+    <script src="./media-device-polyfill.js"></script>
+  </head>
+  <body>
+    <textarea
+      rows="5"
+      cols="50"
+      id="dataChannelSend"
+      placeholder="1: Press Start; 2: Enter text; 3: Press Send."
+    ></textarea>
+    <textarea rows="5" cols="50" id="dataChannelReceive"></textarea>
+    <div id="buttons">
+      <button id="start">Start</button>
+      <button id="send">Send</button>
+      <button id="stop">Stop</button>
+    </div>
+    <script>
+      function log(...args) {
+        const time = (performance.now() / 1000).toFixed(3);
+        console.log('At time: ' + time + '---> ', ...args);
+      }
+      function error(...args) {
+        const time = (performance.now() / 1000).toFixed(3);
+        console.error('At time: ' + time + ' error: ---> ', ...args);
+      }
+      function onSignalingError(e) {
+        error('Failed to create signaling message : ' + e.name);
+      }
+      window.onload = function () {
+        // JS variables associated with send and receive channels
+        let sendChannel, receiveChannel;
+        let localPeerConnection, remotePeerConnection;
+
+        const startButton = document.querySelector('#start');
+        const sendButton = document.querySelector('#send');
+        const stopButton = document.querySelector('#stop');
+        const dataChannelSend = document.querySelector('#dataChannelSend');
+        const dataChannelReceive = document.querySelector(
+          '#dataChannelReceive'
+        );
+
+        startButton.disabled = false;
+        sendButton.disabled = true;
+        stopButton.disabled = true;
+
+        startButton.addEventListener('click', function createConnection() {
+          // This is an optional configuration string
+          // associated with NAT traversal setup
+          const servers = null;
+
+          // proper configuration of an RTCPeerConnection object:
+          // use DTLS/SRTP
+          const pc_constraints = {
+            optional: [
+              {
+                DtlsSrtpKeyAgreement: true,
+              },
+            ],
+          };
+
+          // Create the local PeerConnection
+          localPeerConnection = new RTCPeerConnection(servers, pc_constraints);
+          log('Created local peer connection object, with Data Channel');
+
+          try {
+            sendChannel = localPeerConnection.createDataChannel(
+              'sendDataChannel',
+              { reliable: true }
+            );
+            log('Created reliable send data channel');
+          } catch (e) {
+            window.alert('Failed to create data channel');
+            error(
+              'createDataChannel() failed with the following message: ' +
+                e.message
+            );
+            return;
+          }
+          // handling with peer connection ICE events
+          localPeerConnection.onicecandidate = gotLocalCandidate;
+          // send data channel events
+          sendChannel.onopen = handleSendChannelStateChange;
+          sendChannel.onclose = handleSendChannelStateChange;
+
+          // mimic a remote peer connection
+          remotePeerConnection = new RTCPeerConnection(servers, pc_constraints);
+          log('Created remote peer connection object, with DataChannel');
+
+          remotePeerConnection.onicecandidate = gotRemoteIceCandidate;
+          // This callback is actually activated as soon as the pseudosignaling phase successfully completes.
+          // Such a phase is triggered by the call `localPeerConnection.createOffer(gotLocalDescription,onSignalingError)`,
+          // which initiates the aforementioned call flow involving the gathering of ICE protocol candidates,
+          // as well as the exchanging of session descriptions.
+          remotePeerConnection.ondatachannel = gotReceiveChannel;
+
+          localPeerConnection.createOffer(
+            gotLocalDescription,
+            onSignalingError
+          );
+
+          startButton.disabled = true;
+          stopButton.disabled = false;
+        });
+
+        sendButton.addEventListener('click', function sendData() {
+          const data = dataChannelSend.value;
+          sendChannel.send(data);
+          log('Send data: ', data);
+        });
+
+        stopButton.addEventListener('click', function stopDataChannels() {
+          log('Closing data channels');
+
+          sendChannel.close();
+          log('Close data channel with label: ', sendChannel.label);
+
+          receiveChannel.close();
+          log('Close data channel with label: ', receiveChannel.label);
+
+          localPeerConnection.close();
+          remotePeerConnection.close();
+
+          localPeerConnection = null;
+          remotePeerConnection = null;
+
+          log('Closed Peer Connection');
+
+          startButton.disabled = false;
+          sendButton.disabled = true;
+          stopButton.disabled = true;
+          dataChannelSend.value = '';
+          dataChannelReceive.value = '';
+          dataChannelSend.disabled = true;
+          dataChannelSend.placeholder =
+            '1: Press Start; 2: Enter text;  3: Press Send.';
+        });
+
+        function gotLocalCandidate(ev) {
+          log('Local ice callback');
+          if (ev.candidate) {
+            remotePeerConnection.addIceCandidate(ev.candidate);
+            log('Local ICE candidate: \n' + ev.candidate.candidate);
+          }
+        }
+
+        function gotRemoteIceCandidate(ev) {
+          log('remote ice callback');
+          if (ev.candidate) {
+            localPeerConnection.addIceCandidate(ev.candidate);
+            log('Remote ICE candidate: \n', ev.candidate.candidate);
+          }
+        }
+
+        function gotReceiveChannel(ev) {
+          log('Receive Channel Callback: event -->', ev);
+          receiveChannel = ev.channel;
+
+          receiveChannel.onopen = handleReceiveChannelStateChange;
+          receiveChannel.onmessage = handleMessage;
+          receiveChannel.onclose = handleReceiveChannelStateChange;
+        }
+
+        function gotLocalDescription(desc) {
+          // set local SDP as the right (local/remote) description for both local
+          // and remote parties
+          localPeerConnection.setLocalDescription(desc);
+          log('LocalPeerConnection SDP: ', desc.sdp);
+
+          remotePeerConnection.setRemoteDescription(desc);
+
+          // create answer from the remote party, based on the local SDP
+          remotePeerConnection.createAnswer(
+            gotRemoteDescription,
+            onSignalingError
+          );
+        }
+        function gotRemoteDescription(desc) {
+          remotePeerConnection.setLocalDescription(desc);
+
+          log('Answer from remotePeerConnection SDP: \n', desc.sdp);
+          localPeerConnection.setRemoteDescription(desc);
+        }
+
+        // Message event handler
+        function handleMessage(ev) {
+          log('Received message: ' + ev.data);
+          // Show message in the HTML5 page
+          dataChannelReceive.value += `${ev.data}\n`;
+          // Clean 'Send' text area in the HTML page
+          dataChannelSend.value = '';
+        }
+
+        function handleSendChannelStateChange() {
+          const readyState = sendChannel.readyState;
+          log('Send channel state is: ', readyState);
+          if (readyState === 'open') {
+            dataChannelSend.disabled = false;
+            dataChannelSend.focus();
+            dataChannelSend.placeholder = '';
+
+            sendButton.disabled = false;
+            stopButton.disabled = false;
+          } else {
+            dataChannelSend.disabled = true;
+            sendButton.disabled = true;
+            stopButton.disabled = true;
+          }
+        }
+
+        function handleReceiveChannelStateChange() {
+          const readyState = receiveChannel.readyState;
+          log('Receive channel state is: ', readyState);
+        }
+      };
+    </script>
+  </body>
+</html>
