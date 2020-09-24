@@ -18,6 +18,8 @@ A collection of my plays in programming.
 
 * [Flutter](./flutter_playlist)
 
+* [Golang](./golanger)
+
 * [GraphQL language](./graphql-language)
 
 * [Gulp, Grunt](./task-runners)
