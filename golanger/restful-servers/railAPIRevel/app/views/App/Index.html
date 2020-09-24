@@ -1,0 +1,27 @@
+{{set . "title" "Home"}} {{template "header.html" .}}
+
+<header class="jumbotron" style="background-color: #a9f16c;">
+  <div class="container">
+    <div class="row">
+      <h1>It now works again!</h1>
+      <p></p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+
+<form action="/App/Hello" method="GET">
+  {{with $field := field "myName" .}}
+  <input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" /><br />
+  {{end}}
+  <input type="submit" value="Say hello!" />
+</form>
+
+{{template "footer.html" .}}
