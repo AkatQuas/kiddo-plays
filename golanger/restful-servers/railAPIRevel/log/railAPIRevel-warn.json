@@ -1,0 +1,6 @@
+{"caller":"server_adapter_go.go:94","error":"http: Server closed","lvl":"WARN","module":"revel","msg":"Server exiting:","section":"server","t":"2020-08-09T20:20:36.63+08:00"}
+{"caller":"server_adapter_go.go:94","error":"http: Server closed","lvl":"WARN","module":"revel","msg":"Server exiting:","section":"server","t":"2020-08-09T20:21:37.470208+08:00"}
+{"caller":"server_adapter_go.go:94","error":"http: Server closed","lvl":"WARN","module":"revel","msg":"Server exiting:","section":"server","t":"2020-08-09T20:22:29.860459+08:00"}
+{"caller":"server_adapter_go.go:94","error":"http: Server closed","lvl":"WARN","module":"revel","msg":"Server exiting:","section":"server","t":"2020-08-09T20:23:04.056715+08:00"}
+{"caller":"server_adapter_go.go:94","error":"http: Server closed","lvl":"WARN","module":"revel","msg":"Server exiting:","section":"server","t":"2020-08-09T20:23:15.478381+08:00"}
+{"caller":"server_adapter_go.go:94","error":"http: Server closed","lvl":"WARN","module":"revel","msg":"Server exiting:","section":"server","t":"2020-08-09T20:24:08.552303+08:00"}

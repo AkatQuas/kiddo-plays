@@ -1,0 +1,32 @@
+package main
+
+import (
+  "fmt"
+  "net/http"
+)
+
+func middleware(handler http.Handler) http.Handler {
+  return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+    fmt.Println("Executing middleware before request phase!")
+    // pass control back to the handler
+    handler.ServeHTTP(w, r)
+    fmt.Println("Executing middleware after response phase!")
+  })
+}
+
+func mainLogic(w http.ResponseWriter, r *http.Request) {
+  // business logic goes here
+  fmt.Println("Executing mainHandler...")
+  w.Write([]byte("OK"))
+}
+
+func main() {
+  // HandlerFunc returns an HTTP Handler
+  mainLogicHandler := http.HandlerFunc(mainLogic)
+  http.Handle("/", middleware(mainLogicHandler))
+  /*
+  curl --location --request GET 'localhost:9090'
+  */
+  http.ListenAndServe(":9090", nil)
+}
+
