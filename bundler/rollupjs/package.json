@@ -1,0 +1,20 @@
+{
+  "name": "rollupjs",
+  "version": "1.0.0",
+  "description": "A project using rollup",
+  "private": true,
+  "scripts": {
+    "build": "rollup --config",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rollup"
+  ],
+  "author": "AkatQuas",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-json": "~4.1.0",
+    "rollup": "~2.26.11",
+    "rollup-plugin-terser": "~7.0.2"
+  }
+}
