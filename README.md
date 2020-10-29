@@ -1,58 +1,66 @@
 # Kiddo plays
 
-A collection of my plays in programming.
+My explorations in Computer Science, frontend & web, JS/Go/Python, docker & kubernetes, etc
 
 # The play list, learning or practising
 
-* [Angular](./angular-playlist)
+- [Angular](./angular-playlist)
 
-* [Assembly](./assembly)
+- [Assembly](./assembly)
 
-* [Bundler](./bundler)
+- [Bundler](./bundler)
 
-* Dart language:
+- [Computer Graphics](https://github.com/AkatQuas/webgl-playlist)
+
+- Containers:
+
+  - [Docker](./docker)
+
+- Dart language:
+
+  - [Dart the language](./dart-language)
 
   - [Dart web](./dart-language/dart-web)
 
   - [Dart Angualr Demo](./dart-language/charge-system-demo)
 
-* [Flutter](./flutter_playlist)
+- [Flutter](./flutter_playlist)
 
-* [Golang](./golanger)
+- [Golang](./golanger)
 
-* [GraphQL language](./graphql-language)
+- [GraphQL language](./graphql-language)
 
-* [Gulp, Grunt](./task-runners)
+- [Gulp, Grunt](./task-runners)
 
-* [jQuery](./jQuery)
+- [jQuery](./jQuery)
 
-* [NextJs](./nextjs-playlist)
+- [NextJs](./nextjs-playlist)
 
-* [Nestjs](./nest-playlist)
+- [Nestjs](./nest-playlist)
 
-* [Node](./node-playlist)
+- [Node](./node-playlist)
 
-* [React](https://github.com/AkatQuas/react-playlist)
+- [React](https://github.com/AkatQuas/react-playlist)
 
-* [React stores](./react-stores)
+- [React stores](./react-stores)
 
-* [Python Language](./python-language)
+- [Python Language](./python-language)
 
-* [Test-Driven Development and Behavior-Driven Development](./tdd-and-bdd)
+- [Test-Driven Development and Behavior-Driven Development](./tdd-and-bdd)
 
-* [VueJS](./vuejs)
+- [VueJS](./vuejs)
 
-* [Wechat Mini Programme](./wxma)
+- [Wechat Mini Programme](./wxma)
 
-* And more to go ...
+- And more to go ...
 
 # Hacking demos
 
-* [Build-Your-own-X](https://github.com/AkatQuas/build-your-own-x)
+- [Build-Your-own-X](https://github.com/AkatQuas/build-your-own-x)
 
 # Deprecated playlists, may not touch them anymore...
 
-* [NativeScript](./nativescript/README.md)
+- [NativeScript](./nativescript/README.md)
 
   - [petscrapbook-ns-ng](./nativescript/petscrapbook-ns-ng)
 
@@ -62,7 +70,7 @@ A collection of my plays in programming.
 
 # Some boilerplates
 
-- [fullstack-starter](./fullstack-starter): Fullstack project using Angular and Nest. However, I do recommend [Nrwl/Nx](https://github.com/nrwl/nx) for you, which is just an amazing tool for monorepo projects. 
+- [fullstack-starter](./fullstack-starter): Fullstack project using Angular and Nest. However, I do recommend [Nrwl/Nx](https://github.com/nrwl/nx) for you, which is just an amazing tool for monorepo projects.
 
 - [vue-js](https://github.com/AkatQuas/vue-boilerplate)
 
