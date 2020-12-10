@@ -1,8 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga');
 
-const links = [
-  { id: 'link-0', url: 'www.howto.com', description: 'a link 0' }
-];
+const links = [{ id: 'link-0', url: 'www.howto.com', description: 'a link 0' }];
 let idCount = links.length;
 /*
 The `resolvers` object is the actual implementation of the GraphQL schema. Notice how its structure is identical to the structure of the type definition inside `typeDefs`: `Query.info`.
@@ -26,14 +24,14 @@ const resolvers = {
         }
       }
       return null;
-    }
+    },
   },
   Mutation: {
     post: (parent, args) => {
       const link = {
         id: `link-${idCount++}`,
         description: args.description,
-        url: args.url
+        url: args.url,
       };
       links.push(link);
       return link;
@@ -57,7 +55,7 @@ const resolvers = {
       el.description = description || el.description;
       el.url = url || el.url;
       return el;
-    }
+    },
   },
   Link: {
     id: (parent, args, ctx, info) => {
@@ -68,8 +66,8 @@ const resolvers = {
       return parent.id;
     },
     description: parent => parent.description,
-    url: parent => parent.url
-  }
+    url: parent => parent.url,
+  },
 };
 
 /*
@@ -77,7 +75,7 @@ Finally, the schema and resolvers are bundled and passed to the `GraphQLServer` 
  */
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
-  resolvers
+  resolvers,
 });
 
 server.start(() => console.log(`Server is running at http://localhost:4000`));

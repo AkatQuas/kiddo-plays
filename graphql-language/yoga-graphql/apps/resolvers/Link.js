@@ -3,10 +3,10 @@ function postedBy(parent, args, ctx) {
 }
 
 function votes(parent, args, ctx) {
-  return ctx.prisma.link({id: parent.id}).votes();
+  return ctx.prisma.link({ id: parent.id }).votes();
 }
 
 module.exports = {
   postedBy,
-  votes
-}
+  votes,
+};

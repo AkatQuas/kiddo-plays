@@ -5,7 +5,6 @@ endpoint: https://us1.prisma.sh/akat-c44879/hackernews-node/dev
 # HTTP:  https://us1.prisma.sh/akat-c44879/hackernews-node/dev
 # WS:    wss://us1.prisma.sh/akat-c44879/hackernews-node/dev
 
-
 # Points to the file that contains the datamodel
 datamodel: datamodel.prisma
 
@@ -16,4 +15,4 @@ generate:
 
 hooks:
   post-deploy:
-   - prisma generate
+    - prisma generate

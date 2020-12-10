@@ -13,7 +13,7 @@ const PORT = 3000;
 app.use(koaBody());
 const graphqlInstance = graphqlKoa({ schema });
 
-router.get('/hello', (ctx) => {
+router.get('/hello', ctx => {
   ctx.body = 'world';
 });
 router.get('/world', ctx => {
@@ -25,9 +25,12 @@ router.get('/graphql', graphqlInstance);
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-router.get('/graphiql', graphiqlKoa({
-  endpointURL: '/graphql'
-}));
+router.get(
+  '/graphiql',
+  graphiqlKoa({
+    endpointURL: '/graphql',
+  })
+);
 
 app.listen(PORT, () => {
   console.log(`🚀 listening at http://localhost:${PORT}/`);

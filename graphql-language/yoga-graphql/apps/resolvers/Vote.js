@@ -9,4 +9,4 @@ function user(parent, args, ctx) {
 module.exports = {
   link,
   user,
-}
+};

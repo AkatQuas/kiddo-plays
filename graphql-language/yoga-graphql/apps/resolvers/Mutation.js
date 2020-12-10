@@ -10,7 +10,7 @@ async function signup(parent, args, ctx, info) {
   return {
     token,
     user,
-  }
+  };
 }
 
 async function login(parent, args, ctx, info) {
@@ -28,7 +28,7 @@ async function login(parent, args, ctx, info) {
   return {
     token,
     user,
-  }
+  };
 }
 
 async function vote(parent, args, ctx, info) {
@@ -43,8 +43,8 @@ async function vote(parent, args, ctx, info) {
   }
   return ctx.prisma.createVote({
     user: { connect: { id: userId } },
-    link: { connect: { id: linkId } }
-  })
+    link: { connect: { id: linkId } },
+  });
 }
 
 function post(parent, args, ctx, info) {
@@ -52,13 +52,13 @@ function post(parent, args, ctx, info) {
   return ctx.prisma.createLink({
     url: args.url,
     description: args.description,
-    postedBy: { connect: { id: userId } }
-  })
+    postedBy: { connect: { id: userId } },
+  });
 }
 
 module.exports = {
   signup,
   login,
   post,
-  vote
-}
+  vote,
+};

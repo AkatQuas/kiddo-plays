@@ -4,4 +4,4 @@ function links(parent, args, ctx) {
 
 module.exports = {
   links,
-}
+};
