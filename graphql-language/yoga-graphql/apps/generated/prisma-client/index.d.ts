@@ -2,13 +2,8 @@
 // Please don't change this file manually but run `prisma generate` to update it.
 // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-import { DocumentNode } from "graphql";
-import {
-  makePrismaClientClass,
-  BaseClientOptions,
-  Model
-} from "prisma-client-lib";
-import { typeDefs } from "./prisma-schema";
+import { DocumentNode } from 'graphql';
+import { BaseClientOptions, Model } from 'prisma-client-lib';
 
 export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
@@ -39,74 +34,62 @@ export interface Prisma {
    */
 
   link: (where: LinkWhereUniqueInput) => LinkPromise;
-  links: (
-    args?: {
-      where?: LinkWhereInput;
-      orderBy?: LinkOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<Link>;
-  linksConnection: (
-    args?: {
-      where?: LinkWhereInput;
-      orderBy?: LinkOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => LinkConnectionPromise;
+  links: (args?: {
+    where?: LinkWhereInput;
+    orderBy?: LinkOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Link>;
+  linksConnection: (args?: {
+    where?: LinkWhereInput;
+    orderBy?: LinkOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => LinkConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserPromise;
-  users: (
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<User>;
-  usersConnection: (
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => UserConnectionPromise;
+  users: (args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<User>;
+  usersConnection: (args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => UserConnectionPromise;
   vote: (where: VoteWhereUniqueInput) => VotePromise;
-  votes: (
-    args?: {
-      where?: VoteWhereInput;
-      orderBy?: VoteOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<Vote>;
-  votesConnection: (
-    args?: {
-      where?: VoteWhereInput;
-      orderBy?: VoteOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => VoteConnectionPromise;
+  votes: (args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Vote>;
+  votesConnection: (args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => VoteConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -114,48 +97,47 @@ export interface Prisma {
    */
 
   createLink: (data: LinkCreateInput) => LinkPromise;
-  updateLink: (
-    args: { data: LinkUpdateInput; where: LinkWhereUniqueInput }
-  ) => LinkPromise;
-  updateManyLinks: (
-    args: { data: LinkUpdateManyMutationInput; where?: LinkWhereInput }
-  ) => BatchPayloadPromise;
-  upsertLink: (
-    args: {
-      where: LinkWhereUniqueInput;
-      create: LinkCreateInput;
-      update: LinkUpdateInput;
-    }
-  ) => LinkPromise;
+  updateLink: (args: {
+    data: LinkUpdateInput;
+    where: LinkWhereUniqueInput;
+  }) => LinkPromise;
+  updateManyLinks: (args: {
+    data: LinkUpdateManyMutationInput;
+    where?: LinkWhereInput;
+  }) => BatchPayloadPromise;
+  upsertLink: (args: {
+    where: LinkWhereUniqueInput;
+    create: LinkCreateInput;
+    update: LinkUpdateInput;
+  }) => LinkPromise;
   deleteLink: (where: LinkWhereUniqueInput) => LinkPromise;
   deleteManyLinks: (where?: LinkWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
-  updateUser: (
-    args: { data: UserUpdateInput; where: UserWhereUniqueInput }
-  ) => UserPromise;
-  updateManyUsers: (
-    args: { data: UserUpdateManyMutationInput; where?: UserWhereInput }
-  ) => BatchPayloadPromise;
-  upsertUser: (
-    args: {
-      where: UserWhereUniqueInput;
-      create: UserCreateInput;
-      update: UserUpdateInput;
-    }
-  ) => UserPromise;
+  updateUser: (args: {
+    data: UserUpdateInput;
+    where: UserWhereUniqueInput;
+  }) => UserPromise;
+  updateManyUsers: (args: {
+    data: UserUpdateManyMutationInput;
+    where?: UserWhereInput;
+  }) => BatchPayloadPromise;
+  upsertUser: (args: {
+    where: UserWhereUniqueInput;
+    create: UserCreateInput;
+    update: UserUpdateInput;
+  }) => UserPromise;
   deleteUser: (where: UserWhereUniqueInput) => UserPromise;
   deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
   createVote: (data: VoteCreateInput) => VotePromise;
-  updateVote: (
-    args: { data: VoteUpdateInput; where: VoteWhereUniqueInput }
-  ) => VotePromise;
-  upsertVote: (
-    args: {
-      where: VoteWhereUniqueInput;
-      create: VoteCreateInput;
-      update: VoteUpdateInput;
-    }
-  ) => VotePromise;
+  updateVote: (args: {
+    data: VoteUpdateInput;
+    where: VoteWhereUniqueInput;
+  }) => VotePromise;
+  upsertVote: (args: {
+    where: VoteWhereUniqueInput;
+    create: VoteCreateInput;
+    update: VoteUpdateInput;
+  }) => VotePromise;
   deleteVote: (where: VoteWhereUniqueInput) => VotePromise;
   deleteManyVotes: (where?: VoteWhereInput) => BatchPayloadPromise;
 
@@ -187,40 +169,40 @@ export interface ClientConstructor<T> {
  */
 
 export type LinkOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "url_ASC"
-  | "url_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'url_ASC'
+  | 'url_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC';
 
 export type VoteOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC';
 
 export type UserOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "password_ASC"
-  | "password_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'email_ASC'
+  | 'email_DESC'
+  | 'password_ASC'
+  | 'password_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC';
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+export type MutationType = 'CREATED' | 'UPDATED' | 'DELETED';
 
 export interface UserUpdateOneWithoutLinksInput {
   create?: UserCreateWithoutLinksInput;
@@ -887,28 +869,24 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  links: <T = FragmentableArray<Link>>(
-    args?: {
-      where?: LinkWhereInput;
-      orderBy?: LinkOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  votes: <T = FragmentableArray<Vote>>(
-    args?: {
-      where?: VoteWhereInput;
-      orderBy?: VoteOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  links: <T = FragmentableArray<Link>>(args?: {
+    where?: LinkWhereInput;
+    orderBy?: LinkOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  votes: <T = FragmentableArray<Vote>>(args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserSubscription
@@ -918,28 +896,24 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  links: <T = Promise<AsyncIterator<LinkSubscription>>>(
-    args?: {
-      where?: LinkWhereInput;
-      orderBy?: LinkOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-  votes: <T = Promise<AsyncIterator<VoteSubscription>>>(
-    args?: {
-      where?: VoteWhereInput;
-      orderBy?: VoteOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  links: <T = Promise<AsyncIterator<LinkSubscription>>>(args?: {
+    where?: LinkWhereInput;
+    orderBy?: LinkOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  votes: <T = Promise<AsyncIterator<VoteSubscription>>>(args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface AggregateVote {
@@ -1119,17 +1093,15 @@ export interface LinkPromise extends Promise<Link>, Fragmentable {
   description: () => Promise<String>;
   url: () => Promise<String>;
   postedBy: <T = UserPromise>() => T;
-  votes: <T = FragmentableArray<Vote>>(
-    args?: {
-      where?: VoteWhereInput;
-      orderBy?: VoteOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  votes: <T = FragmentableArray<Vote>>(args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface LinkSubscription
@@ -1140,17 +1112,15 @@ export interface LinkSubscription
   description: () => Promise<AsyncIterator<String>>;
   url: () => Promise<AsyncIterator<String>>;
   postedBy: <T = UserSubscription>() => T;
-  votes: <T = Promise<AsyncIterator<VoteSubscription>>>(
-    args?: {
-      where?: VoteWhereInput;
-      orderBy?: VoteOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  votes: <T = Promise<AsyncIterator<VoteSubscription>>>(args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface PageInfo {
@@ -1251,7 +1221,7 @@ export interface VoteEdgeSubscription
 }
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
 
@@ -1289,17 +1259,17 @@ export type Boolean = boolean;
 
 export const models: Model[] = [
   {
-    name: "Link",
-    embedded: false
+    name: 'Link',
+    embedded: false,
   },
   {
-    name: "User",
-    embedded: false
+    name: 'User',
+    embedded: false,
   },
   {
-    name: "Vote",
-    embedded: false
-  }
+    name: 'Vote',
+    embedded: false,
+  },
 ];
 
 /**

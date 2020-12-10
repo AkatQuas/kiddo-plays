@@ -13,5 +13,5 @@ function getUserId(ctx) {
 
 module.exports = {
   APP_SECRET,
-  getUserId
-}
+  getUserId,
+};

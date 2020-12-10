@@ -1,0 +1,2 @@
+server: cd server && yarn start
+client: cd client && yarn start

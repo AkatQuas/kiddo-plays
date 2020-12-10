@@ -1,8 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga');
 
-const links = [
-  { id: 'link-0', url: 'www.howto.com', description: 'a link 0' }
-];
+const links = [{ id: 'link-0', url: 'www.howto.com', description: 'a link 0' }];
 
 /*
 The `typeDefs` constant defines your GraphQL schema (more about this in a bit). Here, it defines a simple `Query` type with one field called `info`. This field has the type `String!`. The exclamation mark in the type definition means that this field can never be `null`.
@@ -22,8 +20,7 @@ type Link {
   description: String!
   url: String!
 }
-`
-  ;
+`;
 /*
 The `resolvers` object is the actual implementation of the GraphQL schema. Notice how its structure is identical to the structure of the type definition inside `typeDefs`: `Query.info`.
  */
@@ -36,7 +33,7 @@ const resolvers = {
       console.log('ctx -> ', ctx);
       console.log('info -> ', info);
       return links;
-    }
+    },
   },
   Link: {
     id: (parent, args, ctx, info) => {
@@ -47,8 +44,8 @@ const resolvers = {
       return parent.id;
     },
     description: parent => parent.description,
-    url: parent => parent.url
-  }
+    url: parent => parent.url,
+  },
 };
 
 /*
@@ -56,7 +53,7 @@ Finally, the schema and resolvers are bundled and passed to the `GraphQLServer` 
  */
 const server = new GraphQLServer({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 server.start(() => console.log(`Server is running at http://localhost:4000`));

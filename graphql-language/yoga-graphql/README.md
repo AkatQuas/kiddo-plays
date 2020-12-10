@@ -2,7 +2,7 @@
 
 A project on GraphQL, [tutorial](https://www.howtographql.com/graphql-js/1-getting-started/).
 
-Main dependencies: [graphql-yoga](https://github.com/prisma/graphql-yoga/), [prisma](https://www.prisma.io/). 
+Main dependencies: [graphql-yoga](https://github.com/prisma/graphql-yoga/), [prisma](https://www.prisma.io/).
 
 ## Installation
 
@@ -66,7 +66,7 @@ mutation {
 
 So remember this:
 
->  In general, when adding a new feature to the API, the process will look pretty similar every time:
+> In general, when adding a new feature to the API, the process will look pretty similar every time:
 >
 > Extend the GraphQL schema definition with a new root field (and new data types, if needed)
 > Implement corresponding resolver functions for the added fields

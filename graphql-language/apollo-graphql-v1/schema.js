@@ -30,7 +30,7 @@ const resolvers = {
     books: (_, args, ctx, __) => {
       console.log(args);
       return books;
-    }
+    },
   },
   Mutation: {
     addBook: (_, args, ctx, __) => {
@@ -38,13 +38,13 @@ const resolvers = {
       const item = { title, author };
       books.push(item);
       return item;
-    }
-  }
+    },
+  },
 };
 
 const schema = makeExecutableSchema({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 module.exports = schema;
