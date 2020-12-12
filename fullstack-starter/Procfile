@@ -1,0 +1,3 @@
+nginx: exec nginx -c $PWD/nginx.conf -p $PWD
+client: cd projects/client && npm run start
+server: cd projects/server && proxychains4 npm run start:dev

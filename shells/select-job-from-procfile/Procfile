@@ -1,0 +1,7 @@
+
+# job1
+job1-f: cd job1-website/ && yarn startClient
+job1-s: cd job1-server/ && yarn startServer
+
+# job2
+job2: cd job2-monitor && job2.sh

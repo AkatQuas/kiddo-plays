@@ -1,42 +1,43 @@
 #!/bin/bash
 set -e
 
-function with_green() {
-  echo -e "\e[32m$(eval $@)\e[0m"
+function echo_green() {
+  echo -e "\033[1;32m$@\033[0m"
 }
-function with_yellow() {
-  echo -e "\e[93m$(eval $@)\e[0m"
+function echo_yellow() {
+  echo -e "\033[93m$@\033[0m"
 }
 
 # prerequisites
 
 # commitizen for git commit
 if ! command -v git-cz > /dev/null; then
-  with_yellow echo "installing commitizen"
+  echo_yellow "installing commitizen"
   npm install -g commitizen
   npm install -g cz-conventional-changelog
   echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
-  with_green echo "You can use \"git cz\" instead of \"git commit\" and you will find the commitizen prompt."
+  echo_green  "You can use \"git cz\" instead of \"git commit\" and you will find the commitizen prompt."
 fi
 
 # nginx
 if ! command -v nginx > /dev/null; then
-  with_yellow echo "installing nginx"
+  echo_yellow "installing nginx"
   brew install nginx
-  with_green echo "nginx installed successfully"
+  echo_green "nginx installed successfully"
 fi
 
 # pm2
 if ! command -v pm2 > /dev/null; then
-  with_yellow echo "installing pm2"
+  echo_yellow "installing pm2"
   npm i -g pm2;
-  with_green echo "pm2 installed successfully"
+  echo_green "pm2 installed successfully"
 fi
 
 # proxychains4
 if ! command -v proxychains4 > /dev/null; then
-  echo proxychains4 not installed
+  echo_yellow "proxychains4 not installed"
   brew install proxychains-ng
+  echo_green "proxychains4 installed successfully"
 fi
 
 # check node_modules
