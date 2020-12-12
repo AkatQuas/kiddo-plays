@@ -1,0 +1,10 @@
+{
+  "name": "makefiles",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/develop.js",
+    "build": "./build.sh"
+  },
+  "license": "MIT"
+}

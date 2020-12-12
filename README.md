@@ -4,13 +4,13 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & kube
 
 # The play list, learning or practising
 
-- [Angular](./angular-playlist)
+- [Angular](./angular-playlist): several web projects using the AWESOME frontend framework Angular.
 
 - [Assembly](./assembly)
 
 - [Bundler](./bundler)
 
-- [Computer Graphics](https://github.com/AkatQuas/webgl-playlist)
+- [Computer Graphics](https://github.com/AkatQuas/webgl-playlist): A quick guid to Computer Graphics, examples listed.
 
 - Containers:
 
@@ -42,15 +42,17 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & kube
 
 - [React](https://github.com/AkatQuas/react-playlist)
 
-- [React stores](./react-stores)
+- [React stores](./react-stores): react store using Flux, Mobx, Redux.
 
 - [Python Language](./python-language)
 
+- [shell scripts](./shells): scripts in shell
+
 - [Test-Driven Development and Behavior-Driven Development](./tdd-and-bdd)
 
-- [VueJS](./vuejs)
+- [VueJS](./vuejs): several web projects using vuejs.
 
-- [Wechat Mini Programme](./wxma)
+- [Wechat Mini Programme](./wxma): 微信小程序
 
 - And more to go ...
 
