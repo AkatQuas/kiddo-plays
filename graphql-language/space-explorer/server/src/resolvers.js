@@ -1,7 +1,41 @@
+const { GraphQLScalarType } = require('graphql');
 const debug = require('debug')('gql:resolver');
 const { paginateResults } = require('./utils');
+
 module.exports = {
+  Date: new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    parseValue(value) {
+      return new Date(value); // value from the client
+    },
+    /**
+     * @param {Date} value
+     */
+    serialize(value) {
+      return value.toISOString(); // value sent to the client
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return parseInt(ast.value, 10); // ast value is always in string format
+      }
+      return null;
+    },
+  }),
   Query: {
+    author: async (_, { name, ...rest }) => {
+      return {
+        name,
+        big: 'nothing big',
+      };
+    },
+    authorWithBook: async (_, { name, ...rest }) => {
+      console.log('awb-> ', name, rest);
+      return {
+        author: { name },
+      };
+    },
+
     launches: async (_, { pageSize = 6, after }, { dataSources }) => {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
       // in reverse chronological order
@@ -25,6 +59,43 @@ module.exports = {
     launch: (_, { id }, { dataSources }) =>
       dataSources.launchAPI.getLaunchById({ launchId: id }),
     me: (_, __, { dataSources }) => dataSources.userAPI.findOrCreateUser(),
+  },
+  Author: {
+    name: (parent, args) => {
+      console.log('Author-> ', parent, args);
+      return 'Author📝:' + parent.name;
+    },
+  },
+  AuthorWithBook: {
+    author: (parent, args) => {
+      console.log('awk/author', parent, args);
+      return {
+        name: parent.author.name + ' is a hacked author',
+      };
+    },
+
+    // nested query args should be got
+    books: (parent, args) => {
+      console.log('awk/books->', args);
+      const { query } = args;
+      let size = query.limit;
+      const result = [];
+      while (size > 0) {
+        result.push({
+          name: 'book📚' + size,
+          publish: new Date(),
+        });
+        size -= 1;
+      }
+      return result;
+    },
+  },
+  /* This has the same level as Query */
+  Book: {
+    name: (parent, args) => {
+      console.log('Book-> ', parent, args);
+      return 'bookname📒:' + parent.name;
+    },
   },
 
   /* This has the same level as Query */
@@ -83,7 +154,7 @@ module.exports = {
           results.length === launchIds.length
             ? 'trips booked successfully'
             : `the following launches couldn't be booked: ${launchIds.filter(
-                id => !results.includes(id)
+                (id) => !results.includes(id)
               )}`,
       };
     },
