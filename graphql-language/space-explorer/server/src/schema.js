@@ -2,6 +2,7 @@ const { gql } = require('apollo-server');
 
 // Schema
 const typeDefs = gql`
+  scalar Date
   interface BaseResponse {
     success: Boolean!
     message: String
@@ -45,6 +46,27 @@ const typeDefs = gql`
     launches: [Launch]!
   }
 
+  type Book {
+    name: String
+    publish: Date
+  }
+
+  input BookQueryInput {
+    start: Int
+    limit: Int
+    name: String
+  }
+
+  type Author {
+    name: String!
+  }
+
+  type AuthorWithBook {
+    author: Author!
+    # this qurey does not work, but why
+    books(query: BookQueryInput): [Book]
+  }
+
   type Query {
     launchesList: [Launch]!
     launches(
@@ -60,6 +82,8 @@ const typeDefs = gql`
     ): LaunchCollection!
     launch(id: ID!): Launch
     me: User
+    author(name: String!): Author
+    authorWithBook(name: String!): AuthorWithBook
   }
 
   type Mutation {

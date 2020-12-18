@@ -2,6 +2,90 @@
 
 Learning the GraphQL.
 
+## Quick notes
+
+<details>
+<summary>
+
+Each `type` in schema should have a corresponding field definition in resolver. Those _Scalar_ type could be omitted unless you want to do some introspection.
+
+</summary>
+
+```graphql
+## in schema
+type Parent {
+  name: String!
+  children: [Child!]
+}
+
+type Child {
+  name: String!
+  toys: [Toy]
+}
+
+type Toy {
+  name: String!
+  createdAt: Date
+}
+
+type Query {
+  parent(name: String!): Parent
+  child(name: String!): Child
+  toy(name: String!): Toy
+}
+```
+
+```js
+// in reslovers
+module.exports = {
+  // Query is defined in the top type level
+  Query: {
+    // there is a field `parent` in the type Query
+    parent: (root, args) => {
+      return new Parent(/* params */);
+    },
+    // there is a field `child` in the type Query
+    child: (root, args) => {
+      return new Child(/* params */);
+    },
+    // there is a field `toy` in the type Query
+    toy: (root, args) => {
+      return new Toy(/* params */);
+    },
+  },
+
+  // Parent is defined in the top type level
+  Parent: {
+    /* optional for scalar type */
+    name: (root, args) => root.name,
+
+    /* the children field is used for query for the list of child, and it's recommend to declare it */
+    children: (root, args) => {
+      /* do something with the nested args */
+      return [new Child(), new Child()];
+    },
+  },
+
+  // Child is defined in the top type level
+  Child: {
+    toys: (parent, args) => {
+      /* do something with the nested args */
+      return [new Toy(), new Toy()];
+    },
+  },
+
+  // Toy is defined in the top type level
+  Toy: {
+    createdAt: (parent, args) => {
+      /* do something with the nested args */
+      return new Date();
+    },
+  },
+};
+```
+
+</details>
+
 ## Example Projects
 
 [quick-apollo](./quick-apollo): Use `@apollo/client` with `React`, focusing on frontend usage.
