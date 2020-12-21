@@ -3,6 +3,44 @@ const { gql } = require('apollo-server');
 // Schema
 const typeDefs = gql`
   scalar Date
+  scalar JSON
+  scalar MyCustomScalar
+
+  directive @deprecated(
+    reason: String = "No longer supported"
+  ) on FIELD_DEFINITION | ENUM_VALUE
+
+  directive @upper on FIELD_DEFINITION
+  directive @rest(url: String) on FIELD_DEFINITION
+  directive @date(format: String) on FIELD_DEFINITION
+
+  enum Role {
+    ADMIN
+    REVIEWER
+    USER
+    UNKNOWN
+  }
+
+  type ExampleType {
+    newField: String
+    oldField: String @deprecated(reason: "Use 'newField'.")
+  }
+
+  enum AllowedColor {
+    RED
+    GREEN
+    BLUE
+  }
+  "Description for the type"
+  type MyObjectType {
+    """
+    Description for field
+    Supports **multi-line** description
+    """
+    myField: String!
+
+    otherField("Description for argument" arg: Int): Int
+  }
   interface BaseResponse {
     success: Boolean!
     message: String
@@ -49,6 +87,7 @@ const typeDefs = gql`
   type Book {
     name: String
     publish: Date
+    edited: Date @date(format: "mmmm d, yyyy")
   }
 
   input BookQueryInput {
@@ -58,7 +97,7 @@ const typeDefs = gql`
   }
 
   type Author {
-    name: String!
+    name: String! @upper
   }
 
   type AuthorWithBook {
@@ -68,6 +107,10 @@ const typeDefs = gql`
   }
 
   type Query {
+    """
+    example usage for rest directive
+    """
+    # people: [Person] @rest(url: "/api/v1/people")
     launchesList: [Launch]!
     launches(
       """
