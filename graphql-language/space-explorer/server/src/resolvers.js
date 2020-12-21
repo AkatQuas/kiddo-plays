@@ -1,8 +1,38 @@
-const { GraphQLScalarType } = require('graphql');
+const { GraphQLScalarType, Kind } = require('graphql');
+const GraphQLJSON = require('graphql-type-json');
 const debug = require('debug')('gql:resolver');
 const { paginateResults } = require('./utils');
 
 module.exports = {
+  JSON: GraphQLJSON,
+  MyCustomScalar: new GraphQLScalarType({
+    name: 'MyCustomScalar',
+    description: 'Description of my custom scalar type',
+    serialize(value) {
+      let result;
+      // Implement custom behavior by setting the 'result' variable
+      return result;
+    },
+    parseValue(value) {
+      let result;
+      // Implement custom behavior here by setting the 'result' variable
+      return result;
+    },
+    parseLiteral(ast) {
+      switch (ast.kind) {
+        case Kind.Int:
+          return 10;
+        // return a literal value, such as 1 or 'static string'
+      }
+      return null;
+    },
+  }),
+  AllowedColor: {
+    // resolve the enum to other value
+    RED: '#f00',
+    GREEN: '#0f0',
+    BLUE: '#00f',
+  },
   Date: new GraphQLScalarType({
     name: 'Date',
     description: 'Date custom scalar type',
@@ -77,13 +107,14 @@ module.exports = {
     // nested query args should be got
     books: (parent, args) => {
       console.log('awk/books->', args);
-      const { query } = args;
-      let size = query.limit;
+      const { query = {} } = args;
+      let size = query.limit || 5;
       const result = [];
       while (size > 0) {
         result.push({
           name: 'book📚' + size,
           publish: new Date(),
+          edited: new Date(),
         });
         size -= 1;
       }

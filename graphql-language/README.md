@@ -86,17 +86,81 @@ module.exports = {
 
 </details>
 
+<details>
+
+<summary>
+
+[Builtin directives](https://www.apollographql.com/docs/apollo-server/schema/directives/#default-directives)
+
+[Custom directives](https://www.apollographql.com/docs/apollo-server/schema/creating-directives/)
+
+</summary>
+
+```js
+const { ApolloServer, gql, SchemaDirectiveVisitor } = require('apollo-server');
+const { defaultFieldResolver } = require('graphql');
+
+// Create (or import) a custom schema directive
+class UpperCaseDirective extends SchemaDirectiveVisitor {
+  visitFieldDefinition(field) {
+    const { resolve = defaultFieldResolver } = field;
+    field.resolve = async function (...args) {
+      const result = await resolve.apply(this, args);
+      if (typeof result === 'string') {
+        return result.toUpperCase();
+      }
+      return result;
+    };
+  }
+}
+
+// Construct a schema, using GraphQL schema language
+const typeDefs = gql`
+  directive @upper on FIELD_DEFINITION
+
+  type Query {
+    hello: String @upper
+  }
+`;
+
+// Provide resolver functions for your schema fields
+const resolvers = {
+  Query: {
+    hello: (parent, args, context) => {
+      return 'Hello world!';
+    },
+  },
+};
+
+// Add directive to the ApolloServer constructor
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  schemaDirectives: {
+    upper: UpperCaseDirective,
+  },
+});
+```
+
+</details>
+
+[Authorization via Custom Directives](https://www.apollographql.com/docs/apollo-server/security/authentication/#authorization-via-custom-directives)
+
 ## Example Projects
 
-[quick-apollo](./quick-apollo): Use `@apollo/client` with `React`, focusing on frontend usage.
-
 [space-explorer](./space-explorer): Full-stack apps with Apollo, `React` in frontend, `sqlite`, and `apollo-server` in the backend.
+
+[quick-apollo](./quick-apollo): Use `@apollo/client` with `React`, focusing on frontend usage.
 
 ## Useful Links
 
 - [Official GraphQL document](https://graphql.org/learn/).
 
 - [Apollo graphql](https://www.apollographql.com/).
+
+  - [subscription](https://www.apollographql.com/docs/apollo-server/data/subscriptions/)
+
+  - [uploading file](https://www.apollographql.com/docs/apollo-server/data/file-uploads/)
 
   - [writing a sceham](https://www.apollographql.com/docs/apollo-server/essentials/schema.html)
 
