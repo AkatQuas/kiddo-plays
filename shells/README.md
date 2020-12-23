@@ -6,9 +6,58 @@ A collection of shell scripts. Updating aperiodically.
 
 - [Makefiles](./makefiles): Several Makefile templates.
 
+  - [跟我一起写 makefile.pdf](https://github.com/huyubing/books-pdf/blob/master/%E8%B7%9F%E6%88%91%E4%B8%80%E8%B5%B7%E5%86%99makefile.pdf)
+
+  - [GNU Automake](https://github.com/huyubing/books-pdf/blob/master/automake.pdf)
+
 - [Shell checks](https://github.com/koalaman/shellcheck)
 
+- [Shell quick tutorials (Simplified Chinese)](https://wangdoc.com/bash/intro.html)
+
+- [Shell 脚本学习指南.pdf (Simplified Chinese)](https://github.com/huyubing/books-pdf/blob/master/Shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97.pdf)
+
+- [Explain shell](https://www.explainshell.com/)
+
+- [tldr manpage for command](https://github.com/tldr-pages/tldr)
+
 - [Shell basic 101](https://missing.csail.mit.edu/2020/shell-tools/)
+
+  `sed`, `awk`, `grep`, `printf`, `head`, `tail`, `sort`, `cut`, `tr`, `wc`.
+
+  `bg`, `fg`, `jobs`, `kill`, `command`, `read`, `times`, `sleep`.
+
+  `gzip`, `tar`.
+
+  `mktemp`, `find`, `locate`.
+
+  `ps`, `top`, `crontab`.
+
+  `kill` ( `ABRT`, `HUP`, `KILL`, `TERM` ), `trap`.
+
+  `set`, `shopt`, `getopts`.
+
+  <details>
+  <summary>Expansion</summary>
+
+  ```bash
+  # $varname exist and not null, using $varname
+  # #varname undefined, using `word`
+  ${varname:-word}
+  ```
+
+  ```bash
+  # $varname exist and not null, using $varname
+  # #varname undefined, using `word`
+  ${varname:=word}
+  ```
+
+  ```bash
+  # $varname exist and not null, using $varname
+  # #varname undefined, script exit with error message `message`
+  ${varname:?message}
+  ```
+
+  </details>
 
   > _How should you organize your dotfiles?_ They should be in their own folder, under version control, and symlinked into place using a script.
 

@@ -1,5 +1,3 @@
-# Copyright 2020 AkatQuas
-#
 # The old school Makefile, following are required targets. The Makefile is written
 # to allow building multiple images. You are free to add more targets or change
 # existing implementations, as long as the semantics are preserved.

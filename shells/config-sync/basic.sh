@@ -1,4 +1,4 @@
-#! /usr/env bash
+#! /usr/bin/env bash
 
 cNone='\033[00m'
 cRed='\033[01;31m'
