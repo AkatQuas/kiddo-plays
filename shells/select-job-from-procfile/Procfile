@@ -1,7 +1,7 @@
 
 # job1
-job1-f: cd job1-website/ && yarn startClient
-job1-s: cd job1-server/ && yarn startServer
+job1-f: [ -d "job1-website" ] && cd job1-website/ && yarn startClient
+job1-s: [ -d "job1-server" ] && cd job1-server/ && yarn startServer
 
 # job2
-job2: cd job2-monitor && job2.sh
+job2: [ -d "job2-monitor" ] && cd job2-monitor && job2.sh

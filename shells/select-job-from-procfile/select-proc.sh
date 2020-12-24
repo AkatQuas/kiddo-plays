@@ -55,7 +55,7 @@ function prompt_for_multiselect {
     done
 
     # determine current screen position for overwriting the options
-    local lastrow=`get_cursor_row`
+    local lastrow=$(get_cursor_row)
     local startrow=$(($lastrow - ${#options[@]}))
 
     # ensure cursor and input echoing back on upon a ctrl+c during read -s
@@ -82,18 +82,18 @@ function prompt_for_multiselect {
         done
 
         # user key control
-        case `key_input` in
+        case $(key_input) in
             space)  toggle_option selected $active;;
             enter)  break;;
             up)     ((active--));
-                    if [ $active -lt 0 ]; then active=$((${#options[@]} - 1)); fi;;
+                    if [ "$active" -lt 0 ]; then active=$((${#options[@]} - 1)); fi;;
             down)   ((active++));
-                    if [ $active -ge ${#options[@]} ]; then active=0; fi;;
+                    if [ "$active" -ge ${#options[@]} ]; then active=0; fi;;
         esac
     done
 
     # cursor position back to normal
-    cursor_to $lastrow
+    cursor_to "$lastrow"
     printf "\n"
     cursor_blink_on
 
