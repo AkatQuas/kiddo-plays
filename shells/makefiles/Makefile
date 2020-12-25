@@ -32,9 +32,12 @@ EMAIL = example@bt.com
 
 SHELL:=/bin/bash
 .DEFAULT_GOAL:=help
+targets = help groupdhelp start-redis start-mongo start-redmon stop-redis stop-mongo stop-redmon clean-redmon develop build clean
+
 
 # All targets.
-.PHONY:
+.SILENT: $(targets)
+.PHONY: $(targets)
 
 help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n\nTargets:\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -45,34 +48,39 @@ groupdhelp:  ## Display this help
 ##@ Utils
 
 start-redis: ## start redis in docker
-	@sh -c 'docker run -d --name $(REDIS) -p 6379:6379 -v /data/redis:/data redis:latest'
+	{\
+		if docker container ps -a | grep $(REDIS) &> /dev/null; then \
+			sh -c "docker container start $(REDIS)"; \
+		else \
+			sh -c "docker run -d --name $(REDIS) -p 6379:6379 -v /data/redis:/data redis:latest"; \
+		fi \
+	}
 
 start-mongo: ## start mongo in docker
-	@sh -c 'docker run -d --name $(MONGO) -p 27017:27017 -v /data/mongo:/data/db mongo:latest'
+	sh -c 'docker run -d --name $(MONGO) -p 27017:27017 -v /data/mongo:/data/db mongo:latest'
 
 start-redmon: start-redis start-mongo ## start redis and mongo
-	@echo "mongo and redis started"
+	echo "mongo and redis started"
 
 stop-redis: ## stop redis
-	@sh -c 'docker container stop $(REDIS)'
+	sh -c 'docker container stop $(REDIS)'
 
 stop-mongo: ## stop mongo
-	@sh -c 'docker container stop $(MONGO)'
+	sh -c 'docker container stop $(MONGO)'
 
 stop-redmon: stop-redis stop-mongo ## stop redis and mongo
-	@echo "mongo stoped, redis stoped"
+	echo "mongo stoped, redis stoped"
 
 clean-redmon: stop-redmon ## remove redis and mongo containers
-	@sh -c 'docker container rm $(REDIS)' && \
-	sh -c 'docker container rm $(MONGO)'
+	sh -c 'docker container rm $(REDIS) && docker container rm $(MONGO)'
 
-##@ Development
+## Development
 
 develop:  ## using Procfile to start development
-	@sh -c 'yarn start'
+	sh -c 'yarn start'
 
 build:
-	@sh -c './build.sh'
+	sh -c './build.sh'
 
 ##@ Cleanup
 
