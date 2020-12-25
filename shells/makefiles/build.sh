@@ -1,15 +1,15 @@
-#/bin/bash
+#! /usr/bin/env bash
 #
 
 function echo_info {
-  echo "\033[93m$@\033[0m"
+  printf  "\033[93m%s\033[0m\n" "$@"
 }
 function echo_success {
-  echo "\033[1;32m$(eval $@)\033[0m"
+  printf "\033[1;32m%s\033[0m\n" "$@"
 }
 
 echo_info "build using shell scripts"
 
 sleep 2
 
-echo_success echo "build done"
+echo_success "build done"
