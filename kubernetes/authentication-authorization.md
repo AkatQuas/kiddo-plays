@@ -8,14 +8,18 @@ Before the server will accept (and subsequently act) on the request. Each of the
 
 ## User
 
+Every request that comes to Kubernetes is associated with some identity. Even a request with no identity is associated with the `system:unauthenticated` group.
+
 The term `users` pertains to how you and I (and maybe even your continuous delivery tooling) connect and gain access to the Kubernetes API.
 
 There are many kinds of access to the Kubernetes API:
 
 - `kubectl` command-line interface
 - custom scripts
+- static token files on the host
 - controllers
 - the web user interface
+- authentication webhooks
 
 The users are not a top-level supported resource, which are not manipulated directly by way of the Kubernetes API, but are defined in an external user identity management system.
 
@@ -105,6 +109,12 @@ The RBAC module, shorted for role-based access control, allows for the implement
 
 Put succinctly, Kubernetes maps the attributes of the `UserInfo` object to the resources and verbs that the user should have access to.
 
+A _role_ is a set of abstract capabilities.
+
+A _role binding_ is an assignment of a role to one or more identities.
+
+> For example, the _appdev_ role might represent the ability to create Pods and services. Thus, binding the _appdev_ role to the user identity _alice_ indicates that Alice has the ability to create Pods and services.
+
 **Role and ClusterRole**
 
 With the RBAC module, authorization to perform an action on a resource is defined with the `Role` or `ClusterRole` resource types.
@@ -130,11 +140,38 @@ The `apiGroups` field of each rule simply indicates to the API server the namesp
 
 In the next two fields, `resources` and `verbs`, we encounter those REST constructs we discussed earlier. And, in the case of RBAC, we explicitly allow these types of API requests for a user with this `web-rw-deployment` role. Since rules is an array, we may add as many combinations of permissions as are appropriate. All of these permissions are additive. With RBAC, we can only `grant` actions, and this module otherwise denies by default.
 
+| Verb     | HTTP method | Description                                         |
+| :------- | :---------- | :-------------------------------------------------- |
+| `create` | `POST`      | Create a new resource                               |
+| `delete` | `DELETE`    | Delete an existing resource                         |
+| `get`    | `GET`       | Get a resource                                      |
+| `list`   | `GET`       | List a collection of resources                      |
+| `patch`  | `PATCH`     | Modify an existing resource via partial change      |
+| `update` | `PUT`       | Modify an existing resource via a complete object   |
+| `watch`  | `GET`       | Watch for streaming updates to a resource           |
+| `proxy`  | `GET`       | Connect to resource via a streaming WebSocket proxy |
+
 `Role` and `ClusterRole` are identical in functionality and differ only in their scope. The previous example policy is bound to the resources in the `some-web-app-ns` namespaces.
 
 If we want to grant a permission that has cross-namespace capabilities, we use the ClusterRole resource. This resource, in the same manner, grants fine-grained control but on a cluster-wide basis.
 
 `ClusterRoles` are typically employed for two primary use cases—to easily grant cluster administrators a wide degree of freedom or to grant very specific permissions to a Kubernetes controller.
+
+```bash
+# built-in cluster roles
+kubectl get clusterroles
+
+# view cluster-role-bindings
+kubectl get clusterrolebindings
+```
+
+While most of these built-in roles are for system utilities, four are designed for
+generic end users:
+
+- The `cluster-admin` role provides complete access to the entire cluster.
+- The `admin` role provides complete access to a complete namespace.
+- The `edit` role allows an end user to modify things in a namespace.
+- The `view` role allows for read-only access to a namespace.
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -149,6 +186,10 @@ rules:
     resources: ['ingresses']
     verbs: ['get', 'watch', 'list']
 ```
+
+When the Kubernetes API server starts up, it automatically installs a number of default `ClusterRoles` that are defined in the code of the API server itself. This means that if you modify any built-in cluster role, those modifications are _transient_. Whenever the API server is restarted (e.g., for an upgrade) your changes will be overwritten.
+
+To prevent this from happening, before you make any other modifications you need to add the `rbac.authorization.kubernetes.io/autoupdate` annotation with a value of `false` to the built-in `ClusterRole` resource.
 
 **RoleBinding and ClusterRoleBinding**
 
@@ -192,6 +233,17 @@ subjects:
   - kind: ServiceAccount
   name: external-dns
   namespace: default
+```
+
+**Testing Authorization with can-i**
+
+The first useful tool is the `auth can-i` command for `kubectl`.
+
+```bash
+kubectl auth can-i create pod
+
+# subresourec flag
+kubectl auth can-i get pod --subresource=log
 ```
 
 ## Admission Control

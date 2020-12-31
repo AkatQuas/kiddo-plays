@@ -1,5 +1,9 @@
 [Back to Top](./README.md)
 
+```bash
+kubectl <action> <resource> <object> [options]
+```
+
 # Cheatsheet for Kubernetes
 
 - Install Docker and the core Kubernetes
@@ -55,3 +59,9 @@
       kubectl applay -f <some pod configuration yaml file>
 
       kubectl describe pods/<pods-name>
+
+- Coping Files to and from Containers
+
+      kubectl cp <pod-name>:/path/to/file /host/path/to/file
+
+      kubectl cp /host/path/to/file <pod-name>:/path/to/file
