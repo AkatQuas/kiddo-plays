@@ -16,15 +16,23 @@ In addition to connecting a container to a network, CNI has capabilities for IP 
 
 **kube-proxy**
 
-With the `Service` resource, we assign a virtual IP for network services exposed by a collection of Pods. The backing Pods are discovered and connected using a Pod selector.
+With the `Service` resource, we assign a virtual IP for network services exposed by a collection of Pods. Cluster IPs are stable virtual IPs that load-balance traffic across all of the endpoints in a service.
 
-`kube-proxy` typically runs as a privileged container process, and it is responsible for managing the connectivity for these virtual Service IP addresses. `kube-proxy` is simply manipulating iptables rules on every node. These rules redirect traffic that is destined for a Service IP to any one of the backing endpoint IPs.
+`kube-proxy` typically runs as a privileged container process, and it is responsible for managing the connectivity for these virtual Service IP addresses.
+
+The `kube-proxy` watches for new services in the cluster via the API server. It then programs a set of _iptables_ rules in the kernel of that host to rewrite the destinations of packets so they are directed at one of the endpoints for that service. If the set of endpoints for a service changes (due to Pods coming and going or due to a failed readiness check), the set of _iptables_ rules is rewritten.
 
 > Since `kube-proxy` is a controller, it watches for state changes and reconciles to the appropriate state upon any modifications.
 
 In this way, every Pod on every node is able to communicate with defined `Services` by way of the `kube-proxy` daemon’s manipulation of iptables rules.
 
-## Sevvice Discorvery
+## Endpoints
+
+Some applications (and the system itself) want to be able to use services without using a cluster IP.
+
+This is done with another type of object called an Endpoints object. For every Service object, Kubernetes creates a buddy Endpoints object that contains the IP addresses for that service.
+
+## Service Discovery
 
 In any environment where there is a high degree of dynamic process scheduling, we want a means by which to reliably discover where Service endpoints are located.
 
@@ -39,6 +47,14 @@ Although there are no native DNS controllers within the Kubernetes componentry i
 These controllers watch the Pod and Service state from the API server and, in turn, automatically define a number of different DNS records.
 
 Every Service, upon creation, gets a DNS A record associated with the virtual Service IP, which takes the form of `<service name>.<namespace>.svc.cluster.local`.
+
+**Manual Service Discovery**
+
+Kubernetes services are built on top of label selectors over Pods.
+
+Using labels selector to filter pods, and you can dig out the IP addresses in the results.
+
+But keeping the correct set of labels to use in sync can be tricky. This is why the Service object was created.
 
 ## Network Policy
 
@@ -147,21 +163,31 @@ spec:
   type: NodePort
 ```
 
-Similar to the external load balancer type, `NodePort` is exposing your service externally using ports on the nodes. This could be useful if, for example, you want to use your own load balancer in front of the nodes.
+> Every node in the cluster then forwards traffic to _that port_ to the service.
+
+With this feature, if you can reach any node in the cluster you can contact a service. You use the NodePort without knowing where any of the Pods for that service are running.
+
+Similar to the external load balancer type, `NodePort` is exposing your service externally using ports on the nodes.
+
+The `LoadBalancer` type. This builds on the NodePort type by additionally configuring the cloud to create a new load balancer and direct it at nodes in your cluster.
 
 ## Cross-node proxy
 
 Remember that `kube-proxy` is running on all the nodes, so, even if the pod is not running there, the traffic will be given a proxy to the appropriate host.
 
-> A user makes a request to an external IP or URL. The request is serviced by Node in this case. However, the pod does not happen to run on this node. This is not a problem because the pod IP addresses are routable. So, `kube-proxy` or `iptables` simply passes traffic onto the pod IP for this service. The network routing then completes on Node 2, where the requested application lives.
+> A user makes a request to an external IP or URL. The request is serviced by Node in this case. However, the pod does not happen to run on this node. This is not a problem because the pod IP addresses are routable. So, `kube-proxy` or _iptables_ simply passes traffic onto the pod IP for this service. The network routing then completes on Node 2, where the requested application lives.
 
 ## Ingress
 
 Although `Service` objects provide a great way to do simple TCP-level load balancing, proxying traffic to backing pod distributed throughout the cluster, they don’t provide an application-level way to do load balancing and routing.
 
+> Service object operates at Layer 4 (according to the OSI model1). This means that it only forwards TCP and UDP connections and doesn’t look inside of those connections.
+
 The truth is that most of the applications that users deploy using containers and Kubernetes are HTTP web-based applications. These are better served by a load balancer that understands HTTP.
 
 Kubernetes has added an `Ingress` resource, which represents a path and host-based HTTP load balancer and router.
+
+> There is no _standard_ Ingress controller that is built into Kubernetes, so the user must install one of many optional implementations.
 
 When you create an Ingress object, it receives a virtual IP address just like a Service, but instead of the one-to-one relationship between a Service IP address and a set of Pods, _an Ingress can use the content of an HTTP request to route requests to different Services_.
 
@@ -173,7 +199,7 @@ Just as an application has a service and backing pods, the Ingress resource need
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: whale-ingress
+  name: whale-host-ingress
 spec:
   rules:
     - host: a.whale.hey
@@ -183,6 +209,13 @@ spec:
             backend:
               serviceName: whale-svc-a
               servicePort: 80
+          # When there are multiple paths on
+          # the same host listed in the Ingress system,
+          # the longest prefix matches.
+          - path: '/monitor/'
+            backend:
+              serviceName: whale-svc-monitor
+              servicePort: 8080
     - host: b.whale.hey
       http:
         paths:
@@ -192,10 +225,70 @@ spec:
               servicePort: 80
 ```
 
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: whale-ingress
+spec:
+  backend:
+    serviceName: alpaca
+    servicePort: 8080
+```
+
 ```bash
 kubectl get ingress
 
 curl --resolve a.whale.hey:80:<ip> http://a.whale.hey/
 
 curl --resolve b.whale.hey:80:<ip> http://b.whale.hey/
+```
+
+**Running Multiple Ingress Controllers**
+
+Oftentimes, you may want to run multiple Ingress controllers on a single cluster. In that case, you specify which Ingress object is meant for which Ingress controller using the `kubernetes.io/ingress.class` annotation. The value should be a string that specifies which Ingress controller should look at this object. The Ingress controllers themselves, then, should be configured with that same string and should only respect those Ingress objects with the correct annotation.
+
+**Multiple Ingress Objects**
+
+If you specify multiple Ingress objects, the Ingress controllers should read them all and try to merge them into a coherent configuration. However, if you specify duplicate and conflicting configurations, the behavior is undefined.
+
+**Path Rewriting**
+
+Some Ingress controller implementations support, optionally, doing path rewriting.
+
+For example, if we were using the NGINX Ingress controller, we could specify an annotation of `nginx.ingress.kubernetes.io/rewrite-target: /`. This can sometimes make upstream services work on a subpath even if they weren’t built to do so.
+
+> There are multiple implementations that not only implement path rewriting, but also support regular expressions when specifying the path. For example, the NGINX controller allows regular expressions to capture parts of the path and then use that captured content when doing rewriting. How this is done (and what variant of regular expressions is used) is implementation-specific.
+
+**Serving TLS**
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: tls-secret-name
+type: kubernetes.io/tls
+data:
+  tls.crt: <base64 encoded certificate>
+  tls.key: <base64 encoded private key>
+```
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tls-ingress
+spec:
+  tls:
+    - hosts:
+        - alpaca.example.com
+      secretName: tls-secret-name
+  rules:
+    - host: alpaca.example.com
+      http:
+        paths:
+          - backend:
+              serviceName: alpaca
+              servicePort: 8080
 ```
