@@ -141,6 +141,8 @@ kubectl delete rc/node-js-scale-a
 
 ## Application autoscaling
 
+> Kubernetes makes a distinction between _horizontal scaling_, which involves creating additional replicas of a Pod, and _vertical scaling_, which involves increasing the resources required for a particular Pod (e.g., increasing the CPU required for the Pod).
+
 **Horizontal Pod Autoscaler**: This resource type is really useful as it gives us a way to automatically set thresholds (CPU/QPS/Memory) for scaling our application.
 
 ```yaml
