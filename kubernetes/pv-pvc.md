@@ -118,7 +118,9 @@ spec:
             pdName: mysite-volume-1
             fsType: ext4
             readOnly: true
+```
 
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -145,31 +147,162 @@ We need some way for the application to specify and request storage without bein
 
 `PersistentVolumeClaims` allows us to specify the details of the storage needed. We can defined the amount of storage as well as the access type such as `ReadWriteOnce` (read and write by one node), `ReadOnlyMany` (read-only by multiple nodes), and `ReadWriteMany` (read and write by many nodes).
 
-Kubernetes provides two other methods for specifying certain groupings or types of storage volumes:
+<details>
+<summary>
 
-- selectors: labels can be applied to storage volumes and then claims can reference these labels to further filter the volume they are provided.
+A small exmaple to use PV and PVC.
 
-- StorageClass: it allows us to specify a storage provisioner and parameters for the type of volumes it provisions.
+</summary>
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: database
+  labels:
+    volume: my-volume
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 1Gi
+  nfs:
+    server: 192.168.0.1
+    path: '/exports'
+```
 
 ```yaml
 # this request "1Gi" of storage in "ReadWriteOnce" mode
 # with a StorageClass of "solidstate" and label of "aws-storage".
 apiVersion: v1
-kind: PersistentVolumeClain
+kind: PersistentVolumeClaim
 metadata:
   name: demo-claim
   annotations:
     volume.beta.kubernetes.io/storage-class: 'solidstate'
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
   selector:
     matchLabels:
       release: 'aws-storage'
+      volume: my-volume
 ```
+
+```yaml
+# using PVC in ReplicaSets
+apiVersion: extensions/v1
+kind: ReplicaSet
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    sepc:
+      containers:
+        - name: database
+          image: mysql
+          resources:
+            requests:
+              cpu: 1
+              memory: 2Gi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: some-password
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: database
+              mountPath: '/var/lib/mysql'
+      volumes:
+        - name: database
+          persistentVolumeClaim:
+            claimName: demo-claim
+```
+
+```yaml
+# expose mysql ReplicaSet as a Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  ports:
+    - port: 3306
+      protocol: TCP
+  selector:
+    app: mysql
+```
+
+</details>
+
+Kubernetes provides two other methods for specifying certain groupings or types of storage volumes:
+
+- selectors: labels can be applied to storage volumes and then claims can reference these labels to further filter the volume they are provided.
+
+- StorageClass: it allows us to specify a storage provisioner and parameters for the type of volumes it provisions.
+
+**Dynamic Volume Provisioning**
+
+Many clusters also include _dynamic volume provisioning_. With dynamic volume provisioning, the cluster operator creates one or more `StorageClass` objects.
+
+```yaml
+# a default storage class that automatically
+# provisions disk objects on the Microsoft Azure platform.
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: default
+  annotations:
+    storageclass.beta.kubernetes.io/is-default-class: 'true'
+  labels:
+    kubernetes.io/cluster-service: 'true'
+provisioner: kubernetes.io/azure-disk
+```
+
+Once a storage class has been created for a cluster, you can refer to this storage class in your persistent volume claim, rather than referring to any specific persistent volume.
+
+When the dynamic provisioner sees this storage claim, it uses the appropriate volume driver to create the volume and bind it to your persistent volume claim.
+
+<details>
+
+<summary>
+
+An example of a `PersistentVolumeClaim` that uses the default storage class to claim a newly created persistent volume.
+
+</summary>
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-claim
+  annotations:
+    # this links the claim back up to the storage class
+    volume.beta.kubernetes.io/storage-class: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+```
+
+</details>
 
 ## StatefulSets
 
@@ -208,7 +341,7 @@ parameters:
   zone: sea-central1-c
 
 # a StatefulSet with storage claims
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: whaleset
@@ -263,3 +396,223 @@ Using `kubectl get pv` to show the PersistentVolumes.
 `kubectl get pvc` to show the PersistentVolumesClaims.
 
 </details>
+
+<details>
+<summary>
+
+Stateful Mongo Pods, automated initialization.
+
+</summary>
+
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  serviceName: 'mongo'
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongodb
+          image: mongodb:3.4.1
+          command:
+            - mongod
+            - --replSet
+            - rs0
+          ports:
+            - containerPort: 27017
+              name: peer
+```
+
+Once the StatefulSet is created, we also need to create a “headless” service to manage the DNS entries for the StatefulSet. In Kubernetes a service is called “headless” if it doesn’t have a cluster virtual IP address. Since with StatefulSets each Pod has a unique identity, it doesn’t really make sense to have a load-balancing IP address for the replicated service. You can create a headless service using `clusterIP: None` in the service specification
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+spec:
+  ports:
+    - port: 27017
+      name: peer
+  clusterIP: None
+  selector:
+    app: mongo
+```
+
+Once you create that service, there are usually four DNS entries that are populated. As usual, `mongo.default.svc.cluster.local` is created, but unlike with a standard service, doing a DNS lookup on this hostname provides all the addresses in the StatefulSet. In addition, entries are created for `mongo-0.mongo.default.svc.cluster.local` as well as `mongo-1.mongo` and `mongo-2.mongo`. Each of these resolves to the specific IP address of the replica index in the StatefulSet.
+
+We’ll choose `mongo-0.mongo` to be our initial primary. Run the `mongo` tool in that Pod:
+
+```bash
+kubectl exec -it mongo-0 mongo
+
+# primary replica
+> rs.initiate( {
+    _id: "rs0",
+    members:[ { _id: 0, host: "mongo-0.mongo:27017" } ] });
+# OK
+
+# adding the remaining replicas
+> rs.add("mongo-1.mongo:27017");
+> rs.add("mongo-2.mongo:27017");
+```
+
+However, we can automate the deployment of adding shards in the MongoDB by using an additional container in the Pods manifest to perform the initialization.
+
+```yaml
+# refine the previous mongodb Pod manifest
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  serviceName: 'mongo'
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongodb
+          image: mongodb:3.4.1
+          command:
+            - mongod
+            - --replSet
+            - rs0
+          ports:
+            - containerPort: 27017
+              name: web
+        - name: init-mongo
+          image: mongo:3.4.1
+          command:
+            - bash
+            - /config/init.sh
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: 'mongo-init'
+```
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-init
+data:
+  init.sh: |
+    #! /bin/bash
+
+    # Need to wait for the readiness health check to pass so that the
+    # mongo names resolve. This is kind of wonky.
+    until ping -c 1 ${HOSTNAME}.mongo; do
+      echo "waiting for DNS (${HOSTNAME}.mongo)..."
+      sleep 2
+    done
+
+    until /usr/bin/mongo --eval 'printjson(db.serverStatus())'; do
+      echo "connecting to local mongo..."
+      sleep 2
+    done
+    echo "connected to local."
+
+    HOST=mongo-0.mongo.27017
+
+    until /usr/bin/mongo --host=${HOST} --eval 'printjson(db.serverStatus())'; do
+      echo "connecting to remote mongo..."
+      sleep 2
+    done
+    echo "connected to remone."
+
+    if [[ "${HOSTNAME}" != 'mongo-0' ]]; then
+      until /usr/bin/mongo --host=${HOST} --eval="printjson(rs.status())" \
+            | grep -v "no replset config has been received"; do
+        echo "waiting for replication set initialization"
+        sleep 2
+      done
+
+      echo "adding self ${HOSTNAME} to ${HOST}"
+      /usr/bin/mongo --host=${HOST} \
+          --eval="printjson(rs.add('${HOSTNAME}.mongo'))"
+    fi
+
+    if [[ "${HOSTNAME}" == 'mongo-0' ]]; then
+      echo "initializing replica set"
+      /usr/bin/mongo --eval="printjson(rs.initiate(\
+        {'_id':'rs0', 'members': [{ '_id': 0, \
+         'host': 'mongo-0.mongo:27017' }]}))"
+    fi
+    echo "initialized"
+
+    while true; do
+      sleep 3600
+    done
+```
+
+> This script (`init.sh`) currently sleeps forever after initializing the cluster. Every container in a Pod has to have the same RestartPolicy. Since we do not want our main Mongo container to be restarted, we need to have our initialization container run forever too, or else Kubernetes might think our Mongo Pod is unhealthy.
+
+```bash
+kubectl apply -f mongo-config-map.yaml
+kubectl apply -f mongo-service.yaml
+kubectl apply -f mongo.yaml
+```
+
+</details>
+
+<details>
+<summary>Readiness Probe</summary>
+Add liveness checks to the StatefulSet object
+
+```yaml
+# ...
+livenessProbe:
+  exec:
+    command:
+      - /usr/bin/mongo
+      - --eval
+      - db.serverStatus()
+  initialDelaySeconds: 10
+  timeoutSeconds: 10
+# ...
+```
+
+</details>
+
+## Persistent Volumes and StatefulSets
+
+For persistent storage, you need to mount a persistent volume into the `/data/db` directory. In the Pod template, you need to update it to mount a persistent volume claim to that directory:
+
+```yaml
+# ...
+volumeMounts:
+  - name: database
+    mountPath: /data/db
+```
+
+While this approach is similar to the one we saw with reliable singletons, because the StatefulSet replicates more than one Pod you cannot simply reference a persistent volume claim. Instead, you need to add a _persistent volume claim template_.
+
+You need to add the following onto the bottom of your StatefulSet definition:
+
+```yaml
+volumeClaimTemplates:
+  - metadata:
+    name: database
+    annotations:
+      volume.alpha.kubernetes.io/storage-class: anything
+    spec:
+      accessModes: ['ReadWriteOnce']
+      resources:
+        requests:
+          storage: 100Gi
+```
+
+When you add a volume claim template to a StatefulSet definition, each time the StatefulSet controller creates a Pod that is part of the StatefulSet it will create a persistent volume claim based on this template as part of that Pod.

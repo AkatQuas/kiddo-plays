@@ -10,6 +10,8 @@
 
 1. [Kubernetes: Up and Running by Joe Beda, Kelsey Hightower, Brendan Burns](https://www.oreilly.com/library/view/kubernetes-up-and/9781491935668/)
 
+1. [Kubernetes: Up and Running (2nd Edition) - Dive into the Future of Infrastructure, by Joe Beda, Kelsey Hightower, Brendan Burns](https://www.oreilly.com/library/view/kubernetes-up-and/9781492046523/)
+
 1. [Getting Started with Kubernetes - Third Edition](https://www.packtpub.com/product/getting-started-with-kubernetes-third-edition/9781788994729)
 
 ## Kubernetes Architecture
@@ -39,6 +41,10 @@
 ## Deployments, Jobs, and DaemonSets
 
 [Types of workloads that Kubernetes supports: Deployments, Jobs, and DaemonSets](./workloads.md)
+
+## ConfigMaps and Secrets
+
+[ConfigMaps, Secrets](./configmap-secret.md)
 
 ## Storage and Running Stateful Applications
 
