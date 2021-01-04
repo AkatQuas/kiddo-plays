@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "name": "home",
+      "path": "./nextjs-home"
+    },
+    {
+      "name": "blog",
+      "path": "./nextjs-blog"
+    },
+    {
+      "name": "workspace",
+      "path": "."
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "eamodio.gitlens",
+      "irongeek.vscode-env",
+      "esbenp.prettier-vscode"
+    ]
+  }
+}

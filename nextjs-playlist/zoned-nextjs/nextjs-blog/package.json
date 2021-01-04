@@ -1,0 +1,26 @@
+{
+  "name": "nextjs-blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "PORT=3031 && next dev -p $PORT",
+    "build": "next build",
+    "start": "PORT=3031 && next start -p $PORT"
+  },
+  "dependencies": {
+    "apollo-server-micro": "^2.19.1",
+    "classnames": "^2.2.6",
+    "cookie": "^0.4.1",
+    "cors": "^2.8.5",
+    "date-fns": "^2.16.1",
+    "graphql": "^15.4.0",
+    "gray-matter": "^4.0.2",
+    "next": "10.0.4",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "remark": "^13.0.0",
+    "remark-html": "^13.0.1",
+    "sass": "^1.32.0",
+    "swr": "^0.3.11"
+  }
+}
