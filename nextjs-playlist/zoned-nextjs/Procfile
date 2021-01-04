@@ -1,0 +1,2 @@
+dev: cd nextjs-home && npx next dev -p 3030
+dev-blog: cd nextjs-blog && npx next dev -p 3031
