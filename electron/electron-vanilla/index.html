@@ -1,0 +1,883 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello Vanilla!</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self';style-src 'self' 'unsafe-inline'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self';style-src 'self' 'unsafe-inline'"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section>
+      <h2>Hello World!</h2>
+      <p>
+        We are using Node.js <span id="node-version"></span>, Chromium
+        <span id="chrome-version"></span>, and Electron
+        <span id="electron-version"></span>.
+      </p>
+    </section>
+
+    <section>
+      <div>
+        <h3>Asynchronous messages</h3>
+        <i>Supports: Win, macOS, Linux <span>|</span> Process: Both</i>
+        <button id="sync-msg">Ping</button>
+        <button id="sync-reply">no message</button>
+      </div>
+      <div>
+        <h3>Asynchronous messages</h3>
+        <i>Supports: Win, macOS, Linux <span>|</span> Process: Both</i>
+        <div>
+          <button id="async-msg">Ping</button>
+          <button id="async-reply">no message</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Take a Screenshot</h3>
+      <i>Supports: Win, macOS, Linux <span>|</span> Process: Rendere</i>
+      <button id="screen-shot">View Demo</button>
+      <button id="screenshot-path">no path</button>
+      <p>
+        This demo uses the <code>desktopCapturer</code> module to gather screens
+        in use and select the entire screen and take a snapshot of what is
+        visible.
+      </p>
+    </section>
+
+    <section>
+      <h2>Customize Menus</h2>
+
+      <p>
+        The <code>Menu</code> and <code>MenuItem</code> modules can be used to
+        create custom native menus.
+      </p>
+
+      <p>
+        There are two kinds of menus: the application (top) menu and context
+        (right-click) menu.
+      </p>
+
+      <p>
+        Open the
+        <a href="https://electronjs.org/docs/api/menu"
+          >full API documentation<span>(opens in new window)</span></a
+        >
+        in your browser.
+      </p>
+      <h2>Create an application menu</h2>
+      <div>
+        <p>
+          The <code>Menu</code> and <code>MenuItem</code> modules allow you to
+          customize your application menu. If you don't set any menu, Electron
+          will generate a minimal menu for your app by default.
+        </p>
+
+        <p>
+          If you click the 'View' option in the application menu and then the
+          'App Menu Demo', you'll see an information box displayed.
+        </p>
+
+        <div>
+          <h3>ProTip</h3>
+          <strong>Know operating system menu differences.</strong>
+          <p>
+            When designing an app for multiple operating systems it's important
+            to be mindful of the ways application menu conventions differ on
+            each operating system.
+          </p>
+          <p>
+            For instance, on Windows, accelerators are set with an
+            <code>&amp;</code>. Naming conventions also vary, like between
+            "Settings" or "Preferences". Below are resources for learning
+            operating system specific standards.
+          </p>
+          <ul>
+            <li>
+              <a
+                href="https://developer.apple.com/macos/human-interface-guidelines/menus/menu-anatomy/"
+                >macOS<span>(opens in new window)</span></a
+              >
+            </li>
+            <li>
+              <a
+                href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb226797(v=vs.85).aspx"
+                >Windows<span>(opens in new window)</span></a
+              >
+            </li>
+            <li>
+              <a href="https://developer.gnome.org/hig/stable/menu-bars.html.en"
+                >Linux<span>(opens in new window)</span></a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Create a context menu</h3>
+          <div>
+            <div>
+              <div>
+                <button id="context-menu">View Demo</button>
+              </div>
+              <p>
+                A context, or right-click, menu can be created with the
+                <code>Menu</code> and <code>MenuItem</code> modules as well. You
+                can right-click anywhere in this app or click the demo button to
+                see an example context menu.
+              </p>
+
+              <p>
+                In this demo we use the <code>ipcRenderer</code> module to show
+                the context menu when explicitly calling it from the renderer
+                process.
+              </p>
+              <p>
+                See the full
+                <a
+                  href="https://electronjs.org/docs/api/web-contents/#event-context-menu"
+                  >context-menu event documentation</a
+                >
+                for all the available properties.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div>
+        <h1>Keyboard Shortcuts</h1>
+
+        <h3>
+          The <code>globalShortcut</code> and <code>Menu</code> modules can be
+          used to define keyboard shortcuts.
+        </h3>
+
+        <p>
+          In Electron, keyboard shortcuts are called accelerators. They can be
+          assigned to actions in your application's Menu, or they can be
+          assigned globally so they'll be triggered even when your app doesn't
+          have keyboard focus.
+        </p>
+
+        <p>
+          Open the full documentation for the
+          <a href="https://electronjs.org/docs/api/menu">Menu</a>,
+          <a href="https://electronjs.org/docs/api/accelerator">Accelerator</a>,
+          and
+          <a href="https://electronjs.org/docs/api/global-shortcut"
+            >globalShortcut</a
+          >
+          APIs in your browser.
+        </p>
+      </div>
+
+      <div>
+        <p>
+          To try this demo, press <kbd>CommandOrControl+Alt+K</kbd> on your
+          keyboard.
+        </p>
+
+        <p>
+          Global shortcuts are detected even when the app doesn't have keyboard
+          focus, and they must be registered after the app's `ready` event is
+          emitted.
+        </p>
+
+        <div>
+          <h2>ProTip</h2>
+          <strong>Avoid overriding system-wide keyboard shortcuts.</strong>
+          <p>
+            When registering global shortcuts, it's important to be aware of
+            existing defaults in the target operating system, so as not to
+            override any existing behaviors. For an overview of each operating
+            system's keyboard shortcuts, view these documents:
+          </p>
+
+          <ul>
+            <li>
+              <a
+                href="https://developer.apple.com/library/mac/documentation/UserExperience/Conceptual/OSXHIGuidelines/Keyboard.html"
+                >macOS</a
+              >
+            </li>
+            <li>
+              <a
+                href="http://windows.microsoft.com/en-us/windows-10/keyboard-shortcuts"
+                >Windows</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://developer.gnome.org/hig/stable/keyboard-input.html.en"
+                >Linux</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>Create and Manage Windows</h1>
+
+      <h3>
+        The <code>BrowserWindow</code> module in Electron allows you to create a
+        new browser window or manage an existing one.
+      </h3>
+
+      <p>
+        Each browser window is a separate process, known as the renderer
+        process. This process, like the main process that controls the life
+        cycle of the app, has full access to the Node.js APIs.
+      </p>
+
+      <p>
+        Open the
+        <a href="https://electronjs.org/docs/api/browser-window">
+          full API documentation (opens in new window)
+        </a>
+        in your browser.
+      </p>
+
+      <h2>Window events</h2>
+      <div>
+        <div>
+          <button id="listen-to-window">View Demo</button>
+          <button id="focus-on-modal-window">Focus on Demo</button>
+        </div>
+        <p>
+          In this demo, we create a new window and listen for
+          <code>blur</code> event on it. Click the demo button to create a new
+          modal window, and switch focus back to the parent window by clicking
+          on it. You can click the <i>Focus on Demo</i> button to switch focus
+          to the modal window again.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h1>Create a frameless window</h1>
+      <i>Supports: Win, macOS, Linux <span>|</span> Process: Main</i>
+      <div>
+        <p>
+          A frameless window is a window that has no <i>"chrome"</i>, such as
+          toolbars, title bars, status bars, borders, etc. You can make a
+          browser window frameless by setting <code>frame</code> to
+          <code>false</code> when creating the window.
+        </p>
+        <div>
+          <button id="frameless-window">View Demo</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>Create and Manage Windows</h1>
+
+      <h3>
+        The <code>BrowserWindow</code> module in Electron allows you to create a
+        new browser window or manage an existing one.
+      </h3>
+
+      <p>
+        Each browser window is a separate process, known as the renderer
+        process. This process, like the main process that controls the life
+        cycle of the app, has full access to the Node.js APIs.
+      </p>
+
+      <p>
+        Open the
+        <a href="https://electronjs.org/docs/api/browser-window">
+          full API documentation (opens in new window)
+        </a>
+        in your browser.
+      </p>
+
+      <h2>Manage window state</h2>
+      <div>
+        <div>
+          <button id="manage-window">View Demo</button>
+          <span id="manage-window-reply"></span>
+        </div>
+        <p>
+          In this demo we create a new window and listen for
+          <code>move</code> and <code>resize</code> events on it. Click the demo
+          button, change the new window and see the dimensions and position
+          update here, above.
+        </p>
+        <p>
+          There are a lot of methods for controlling the state of the window
+          such as the size, location, and focus status as well as events to
+          listen to for window changes. Visit the
+          <a href="https://electronjs.org/docs/api/browser-window">
+            documentation (opens in new window)
+          </a>
+          for the full list.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div>
+        <h1>Clipboard copy</h1>
+        <i>Supports: Win, macOS, Linux <span>|</span> Process: Both</i>
+        <div>
+          <div>
+            <button id="copy-to">Copy</button>
+            <input
+              id="copy-to-input"
+              aria-label="Click copy"
+              placeholder="Click copy."
+              value="empty-no-data-really"
+            />
+          </div>
+          <p>
+            In this example we copy a phrase to the clipboard. After clicking
+            'Copy' use the text area to paste (CMD + V or CTRL + V) the phrase
+            from the clipboard.
+          </p>
+        </div>
+        <h1>Clipboard paste</h1>
+        <i>Supports: Win, macOS, Linux <span>|</span> Process: Both</i>
+        <div>
+          <div>
+            <button id="paste-to">Paste</button>
+            <span id="paste-from"></span>
+          </div>
+          <p>
+            In this example we copy a string to the clipboard and then paste the
+            results into a message above.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>App Information</h1>
+      <div>
+        <div>
+          <button id="app-info">View Demo</button>
+          <span id="got-app-info"
+            >This app is located at:
+            /Volumes/work/playground/electron-vanilla</span
+          >
+        </div>
+        <p>
+          The main process <code>app</code> module can be used to get the path
+          at which your app is located on the user's computer.
+        </p>
+        <p>
+          In this example, to get that information from the renderer process, we
+          use the <code>ipc</code> module to send a message to the main process
+          requesting the app's path.
+        </p>
+        <p>
+          See the
+          <a id="electron-docs" href="https://electronjs.org/docs/api/app"
+            >app module documentation<span class="u-visible-to-screen-reader"
+              >(opens in new window)</span
+            ></a
+          >
+          for more.
+        </p>
+      </div>
+    </section>
+    <section>
+      <header>
+        <h1>Protocol Handler</h1>
+        <h3>
+          The <code>app</code> module provides methods for handling protocols.
+        </h3>
+        <p>
+          These methods allow you to set and unset the protocols your app should
+          be the default app for. Similar to when a browser asks to be your
+          default for viewing web pages.
+        </p>
+
+        <p>
+          Open the
+          <a href="https://electronjs.org/docs/api/app"
+            >full app API documentation<span class="u-visible-to-screen-reader"
+              >(opens in new window)</span
+            ></a
+          >
+          in your browser.
+        </p>
+      </header>
+
+      <div>
+        <button
+          id="open-in-browser"
+          class="js-container-target demo-toggle-button"
+        >
+          Launch current page in browser
+          <div class="demo-meta u-avoid-clicks">
+            Supports: Win, macOS
+            <span class="demo-meta-divider">|</span> Process: Main
+          </div>
+        </button>
+        <section id="open-app-link" style="display: none">
+          <a href="electron-api-demos://open"
+            >Now... launch the app from a web link</a
+          >
+        </section>
+        <div>
+          <p>
+            You can set your app as the default app to open for a specific
+            protocol. For instance, in this demo we set this app as the default
+            for <code>electron-api-demos://</code>. The demo button above will
+            launch a page in your default browser with a link. Click that link
+            and it will re-launch this app.
+          </p>
+          <h5>Packaging</h5>
+          <p>
+            This feature will only work on macOS when your app is packaged. It
+            will not work when you're launching it in development from the
+            command-line. When you package your app you'll need to make sure the
+            macOS <code>plist</code> for the app is updated to include the new
+            protocol handler. If you're using
+            <code>electron-packager</code> then you can add the flag
+            <code>--extend-info</code> with a path to the
+            <code>plist</code> you've created. The one for this app is below.
+          </p>
+          <h5>Renderer Process</h5>
+          <pre><code>
+            const {shell} = require('electron')
+            const path = require('path')
+            const protocolHandlerBtn = document.getElementById('protocol-handler')
+            protocolHandlerBtn.addEventListener('click', () =&gt; {
+                const pageDirectory = __dirname.replace('app.asar', 'app.asar.unpacked')
+                const pagePath = path.join('file://', pageDirectory, '../../sections/system/protocol-link.html')
+                shell.openExternal(pagePath)
+            })
+          </code></pre>
+          <h5>Main Process</h5>
+          <pre><code>
+            const {app, dialog} = require('electron')
+            const path = require('path')
+
+            if (process.defaultApp) {
+                if (process.argv.length &gt;= 2) {
+                    app.setAsDefaultProtocolClient('electron-api-demos', process.execPath, [path.resolve(process.argv[1])])
+                }
+            } else {
+                app.setAsDefaultProtocolClient('electron-api-demos')
+            }
+
+            app.on('open-url', (event, url) =&gt; {
+                dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`)
+            })
+
+          </code></pre>
+          <h5>macOS plist</h5>
+          <pre><code>
+            <!--?xml version="1.0" encoding="UTF-8"?-->
+
+                    <plist version="1.0">
+                        <dict>
+                            <key>CFBundleURLTypes</key>
+                            <array>
+                                <dict>
+                                    <key>CFBundleURLSchemes</key>
+                                    <array>
+                                        <string>electron-api-demos</string>
+                                    </array>
+                                    <key>CFBundleURLName</key>
+                                    <string>Electron API Demos Protocol</string>
+                                </dict>
+                            </array>
+                            <key>ElectronTeamID</key>
+                            <string>VEKTX9H2N7</string>
+                        </dict>
+                    </plist>
+                </code>
+            </pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>Get version information</h1>
+      <i>Supports: Win, macOS, Linux <span>|</span> Process: Both</i>
+      <div>
+        <div>
+          <button id="version-info">View Demo</button>
+          <span id="got-version-info"></span>
+        </div>
+        <p>
+          The <code>process</code> module is built into Node.js (therefore you
+          can use this in both the main and renderer processes) and in Electron
+          apps this object has a few more useful properties on it.
+        </p>
+        <p>The example below gets the version of Electron in use by the app.</p>
+        <p>
+          See the
+          <a href="https://electronjs.org/docs/api/process"
+            >process documentation <span>(opens in new window)</span></a
+          >
+          for more.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h1>Drag and drop files</h1>
+      <div>Supports: Win, macOS, Linux <span>|</span> Process: Both</div>
+      <h3>
+        Electron supports dragging files and content out from web content into
+        the operating system's world.
+      </h3>
+
+      <p>
+        Open the
+        <a href="https://electronjs.org/docs/tutorial/native-file-drag-drop">
+          full API documentation (opens in new window)
+        </a>
+        in your browser.
+      </p>
+      <h2>Dragging files</h2>
+      <div>
+        <a href="#" id="drag-file-link">Drag Demo</a>
+        <p>
+          Click and drag the link above to copy the renderer process javascript
+          file on to your machine.
+        </p>
+
+        <p>
+          In this demo, the <code>webContents.startDrag()</code> API is called
+          in response to the <code>ondragstart</code> event.
+        </p>
+        <h5>Renderer Process</h5>
+        <pre><code>
+const {ipcRenderer} = require('electron')
+
+const dragFileLink = document.getElementById('drag-file-link')
+
+dragFileLink.addEventListener('dragstart', (event) =&gt; {
+event.preventDefault()
+ipcRenderer.send('ondragstart', __filename)
+})
+      </code></pre>
+        <h5>Main Process</h5>
+        <pre>            <code>
+const {ipcMain} = require('electron')
+const path = require('path')
+
+ipcMain.on('ondragstart', (event, filepath) =&gt; {
+const iconName = 'codeIcon.png'
+event.sender.startDrag({
+  file: filepath,
+  icon: path.join(__dirname, iconName)
+})
+})
+          </code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h1>Use system dialogs</h1>
+
+      <h3>
+        The <code>dialog</code> module in Electron allows you to use native
+        system dialogs for opening files or directories, saving a file or
+        displaying informational messages.
+      </h3>
+
+      <p>
+        This is a main process module because this process is more efficient
+        with native utilities and it allows the call to happen without
+        interrupting the visible elements in your page's renderer process.
+      </p>
+
+      <p>
+        Open the
+        <a href="https://electronjs.org/docs/api/dialog/">
+          full API documentation (opens in new window)
+        </a>
+        in your browser.
+      </p>
+
+      <div>
+        <div>
+          <h2>Open a File or Directory</h2>
+          <div>
+            <div>
+              <button id="select-directory">View Demo (File/Directory)</button>
+              <button id="select-directory-file">View Demo (File)</button>
+              <span id="selected-file"></span>
+            </div>
+            <p>
+              In this demo, the <code>ipc</code> module is used to send a
+              message from the renderer process instructing the main process to
+              launch the open file (or directory) dialog. If a file is selected,
+              the main process can send that information back to the renderer
+              process.
+            </p>
+            <h5>Renderer Process</h5>
+            <pre>          <code>
+const {ipcRenderer} = require('electron')
+
+const selectDirBtn = document.getElementById('select-directory')
+
+selectDirBtn.addEventListener('click', (event) =&gt; {
+ipcRenderer.send('open-file-dialog')
+})
+
+ipcRenderer.on('selected-directory', (event, path) =&gt; {
+document.getElementById('selected-file').innerHTML = `You selected: ${path}`
+})
+        </code>
+      </pre>
+            <h5>Main Process</h5>
+            <pre>          <code>
+const {ipcMain, dialog} = require('electron')
+
+ipcMain.on('open-file-dialog', (event) =&gt; {
+dialog.showOpenDialog({
+  properties: ['openFile', 'openDirectory']
+}, (files) =&gt; {
+  if (files) {
+    event.sender.send('selected-directory', files)
+  }
+})
+})
+        </code>
+      </pre>
+
+            <div>
+              <h2>ProTip</h2>
+              <strong>The sheet-style dialog on macOS.</strong>
+              <p>
+                On macOS you can choose between a "sheet" dialog or a default
+                dialog. The sheet version descends from the top of the window.
+                To use sheet version, pass the <code>window</code> as the first
+                argument in the dialog method.
+              </p>
+              <pre><code class="language-js">const ipc = require('electron').ipcMain
+const dialog = require('electron').dialog
+const BrowserWindow = require('electron').BrowserWindow
+
+
+ipc.on('open-file-dialog-sheet', function (event) {
+const window = BrowserWindow.fromWebContents(event.sender)
+const files = dialog.showOpenDialog(window, { properties: [ 'openFile' ]})
+})</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>Use system dialogs</h1>
+
+      <h3>
+        The <code>dialog</code> module in Electron allows you to use native
+        system dialogs for opening files or directories, saving a file or
+        displaying informational messages.
+      </h3>
+
+      <p>
+        This is a main process module because this process is more efficient
+        with native utilities and it allows the call to happen without
+        interrupting the visible elements in your page's renderer process.
+      </p>
+
+      <p>
+        Open the
+        <a href="https://electronjs.org/docs/api/dialog/">
+          full API documentation (opens in new window)
+        </a>
+        in your browser.
+      </p>
+
+      <div>
+        <div>
+          <h2>Save Dialog</h2>
+          <div>
+            <div>
+              <button button="" id="save-dialog">View Demo</button>
+              <span id="file-saved"></span>
+            </div>
+            <p>
+              In this demo, the <code>ipc</code> module is used to send a
+              message from the renderer process instructing the main process to
+              launch the save dialog. It returns the path selected by the user
+              which can be relayed back to the renderer process.
+            </p>
+            <h5>Renderer Process</h5>
+            <pre>            <code>
+const {ipcRenderer} = require('electron')
+
+const saveBtn = document.getElementById('save-dialog')
+
+saveBtn.addEventListener('click', (event) =&gt; {
+ipcRenderer.send('save-dialog')
+})
+
+ipcRenderer.on('saved-file', (event, path) =&gt; {
+if (!path) path = 'No path'
+document.getElementById('file-saved').innerHTML = `Path selected: ${path}`
+})
+          </code>
+        </pre>
+            <h5>Main Process</h5>
+            <pre>            <code>
+const {ipcMain, dialog} = require('electron')
+
+ipcMain.on('save-dialog', (event) =&gt; {
+const options = {
+  title: 'Save an Image',
+  filters: [
+    { name: 'Images', extensions: ['jpg', 'png', 'gif'] }
+  ]
+}
+dialog.showSaveDialog(options, (filename) =&gt; {
+  event.sender.send('saved-file', filename)
+})
+})
+          </code>
+        </pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>Use system dialogs</h1>
+
+      <h3>
+        The <code>dialog</code> module in Electron allows you to use native
+        system dialogs for opening files or directories, saving a file or
+        displaying informational messages.
+      </h3>
+
+      <p>
+        This is a main process module because this process is more efficient
+        with native utilities and it allows the call to happen without
+        interrupting the visible elements in your page's renderer process.
+      </p>
+
+      <p>
+        Open the
+        <a href="https://electronjs.org/docs/api/dialog/">
+          full API documentation (opens in new window)
+        </a>
+        in your browser.
+      </p>
+
+      <h2>Information Dialog</h2>
+      <div>
+        <div>
+          <button id="information-dialog">View Demo</button>
+          <span id="info-selection"></span>
+        </div>
+        <p>
+          In this demo, the <code>ipc</code> module is used to send a message
+          from the renderer process instructing the main process to launch the
+          information dialog. Options may be provided for responses which can
+          then be relayed back to the renderer process.
+        </p>
+
+        <p>Note: The <code>title</code> property is not displayed in macOS.</p>
+
+        <p>
+          An information dialog can contain an icon, your choice of buttons,
+          title and message.
+        </p>
+        <h5>Renderer Process</h5>
+        <pre>              <code>
+const {ipcRenderer} = require('electron')
+
+const informationBtn = document.getElementById('information-dialog')
+
+informationBtn.addEventListener('click', (event) =&gt; {
+  ipcRenderer.send('open-information-dialog')
+})
+
+ipcRenderer.on('information-dialog-selection', (event, index) =&gt; {
+  let message = 'You selected '
+  if (index === 0) message += 'yes.'
+  else message += 'no.'
+  document.getElementById('info-selection').innerHTML = message
+})
+            </code>
+          </pre>
+        <h5>Main Process</h5>
+        <pre>              <code>
+const {ipcMain, dialog} = require('electron')
+
+ipcMain.on('open-information-dialog', (event) =&gt; {
+  const options = {
+    type: 'info',
+    title: 'Information',
+    message: "This is an information dialog. Isn't it nice?",
+    buttons: ['Yes', 'No']
+  }
+  dialog.showMessageBox(options, (index) =&gt; {
+    event.sender.send('information-dialog-selection', index)
+  })
+})
+            </code>
+          </pre>
+      </div>
+      <h2>Error Dialog</h2>
+      <div>
+        <div>
+          <button id="error-dialog">View Demo</button>
+        </div>
+        <p>
+          In this demo, the <code>ipc</code> module is used to send a message
+          from the renderer process instructing the main process to launch the
+          error dialog.
+        </p>
+
+        <p>
+          You can use an error dialog before the app's
+          <code>ready</code> event, which is useful for showing errors upon
+          startup.
+        </p>
+        <h5>Renderer Process</h5>
+        <pre>
+          <code>
+const {ipcRenderer} = require('electron')
+
+const errorBtn = document.getElementById('error-dialog')
+
+errorBtn.addEventListener('click', (event) => {
+  ipcRenderer.send('open-error-dialog')
+})
+          </code></pre>
+        <h5>Main Process</h5>
+        <pre>
+          <code>
+const {ipcMain, dialog} = require('electron')
+
+ipcMain.on('open-error-dialog', (event) => {
+  dialog.showErrorBox('An Error Message', 'Demonstrating an error message.')
+})
+          </code>
+        </pre>
+      </div>
+    </section>
+
+    <section>
+      <h1>Hello World!</h1>
+      <p>Current theme source: <strong id="theme-source">System</strong></p>
+
+      <button id="toggle-dark-mode">Toggle Dark Mode</button>
+      <button id="reset-to-system">Reset to System Theme</button>
+    </section>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
