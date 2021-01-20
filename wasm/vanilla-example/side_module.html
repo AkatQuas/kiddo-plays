@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <p>HTML page I created for my WebAssembly side module.</p>
+
+    <script>
+      function isWebAssemblySupported() {
+        try {
+          if (typeof WebAssembly === 'object') {
+            const module = new WebAssembly.Module(
+              new Uint8Array([0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00])
+            );
+            if (module instanceof WebAssembly.Module) {
+              const instance = new WebAssembly.Instance(module);
+              return instance instanceof WebAssembly.Instance;
+            }
+          }
+        } catch (error) {}
+        return false;
+      }
+
+      function importObjectFactory() {
+        const memory = new WebAssembly.Memory({ initial: 256, maximum: 256 });
+
+        return {
+          env: {
+            abortStackOverflow: () => {
+              throw new Error('overflow');
+            },
+            table: new WebAssembly.Table({
+              initial: 0,
+              maximum: 0,
+              element: 'anyfunc',
+            }),
+            __table_base: 0,
+            memory: memory,
+            __memory_base: 1024,
+            STACKTOP: 0,
+            STACK_MAX: memory.buffer.byteLength,
+          },
+          imports: {
+            imported_func: function (arg) {
+              console.log(arg);
+            },
+          },
+        };
+      }
+
+      async function initWasm(path) {
+        const importObject = importObjectFactory();
+        const result = await window.fetch(path);
+        const bytes = await result.arrayBuffer();
+        return WebAssembly.instantiate(bytes, importObject);
+      }
+
+      async function initWasmStreaming(path) {
+        const importObject = importObjectFactory();
+        return WebAssembly.instantiateStreaming(
+          window.fetch(path, importObject)
+        );
+      }
+
+      function main() {
+        if (isWebAssemblySupported()) {
+          initWasm('./side_module.wasm').then((result) => {
+            const value = result.instance.exports.Increment(41);
+            const value2 = result.instance.exports.Decrement(43);
+            console.group('side_module');
+            console.log('increment', value.toString());
+            console.log('decrement', value2.toString());
+            console.groupEnd('side_module');
+          });
+          initWasm(
+            'https://mdn.github.io/webassembly-examples/js-api-examples/simple.wasm'
+          ).then((result) => {
+            console.group('simple wasm');
+            result.instance.exports.exported_func();
+            console.groupEnd('simple wasm');
+          });
+        }
+      }
+
+      main();
+    </script>
+  </body>
+</html>
