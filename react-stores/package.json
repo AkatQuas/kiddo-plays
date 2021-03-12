@@ -10,7 +10,7 @@
     "prop-types": "^15.6.2",
     "randomstring": "^1.1.5",
     "react": "^16.4.1",
-    "react-dev-utils": "^5.0.1",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
