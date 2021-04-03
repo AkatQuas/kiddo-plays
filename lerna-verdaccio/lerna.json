@@ -1,0 +1,16 @@
+{
+  "npmClient": "yarn",
+  "command": {
+    "publish": {
+      "ignoreChanges": ["*.md"],
+      "message": "chore(release): publish",
+      "registry": "http://localhost:4873/"
+    },
+    "bootstrap": {
+      "ignore": [],
+      "npmClientArgs": []
+    }
+  },
+  "packages": ["packages/*"],
+  "version": "independent"
+}

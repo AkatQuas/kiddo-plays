@@ -1,0 +1,37 @@
+{
+  "name": "@fa/lib",
+  "version": "1.0.3",
+  "description": "library functions",
+  "author": "",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/lib.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "dependencies": {
+    "@rollup/plugin-typescript": "^8.2.1"
+  },
+  "devDependencies": {
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
+  }
+}
