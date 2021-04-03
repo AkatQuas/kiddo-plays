@@ -1,0 +1,57 @@
+version: '3.1'
+
+services:
+  verdaccio:
+    image: verdaccio/verdaccio:4
+    container_name: 'verdaccio'
+    networks:
+      - node-network
+    environment:
+      - VERDACCIO_PORT=4873
+    ports:
+      - '4873:4873'
+    volumes:
+      - './dist/verdaccio/storage:/verdaccio/storage'
+      - './dist/verdaccio/plugins:/verdaccio/plugins'
+      - './dist/verdaccio/logs:/verdaccio/logs'
+      - './verdaccio-config/:/verdaccio/conf'
+  web:
+    image: gitea/gitea:1.12.4
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - HTTP_PORT=7000
+      - DB_TYPE=mysql
+      - DB_HOST=db:3306
+      - DB_NAME=gitea
+      - DB_USER=gitea
+      - DB_PASSWD=gitea
+      - APP_NAME="my git with Gitea"
+      - RUN_MODE=prod
+    volumes:
+      - ./dist/gitea/data:/data
+    ports:
+      - '7000:7000'
+      - '2221:22'
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - node-network
+  db:
+    image: mariadb:10
+    container_name: db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=gitea
+      - MYSQL_DATABASE=gitea
+      - MYSQL_USER=gitea
+      - MYSQL_PASSWORD=gitea
+    volumes:
+      - ./dist/gitea/db/:/var/lib/mysql
+    networks:
+      - node-network
+networks:
+  node-network:
+    driver: bridge

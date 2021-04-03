@@ -1,0 +1,27 @@
+storage: /verdaccio/storage
+plugins: /verdaccio/plugins
+auth:
+  htpasswd:
+    file: ./htpasswd
+uplinks:
+  taobao:
+    url: https://registry.npm.taobao.org
+  npmjs:
+    url: https://registry.npmjs.org/
+packages:
+  '@*/*':
+    access: $all
+    publish: $authenticated
+    proxy: taobao
+  '**':
+    # necessary for uplinks
+    access: $all
+    publish: $authenticated
+    proxy: taobao
+logs:
+  - { type: stdout, format: pretty, level: http }
+web:
+  enable: true
+  title: MyVerdaccio
+  scope:
+url_prefix: /

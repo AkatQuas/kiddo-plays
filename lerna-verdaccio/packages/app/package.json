@@ -1,0 +1,32 @@
+{
+  "name": "@fa/app",
+  "version": "1.0.3",
+  "description": "app",
+  "author": "",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/app.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@fa/base": "^1.0.3",
+    "@fa/lib": "^1.0.3",
+    "@fa/log": "^1.0.3"
+  },
+  "devDependencies": {}
+}

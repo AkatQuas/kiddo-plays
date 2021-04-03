@@ -1,0 +1,28 @@
+{
+  "name": "@fa/log",
+  "version": "1.0.3",
+  "description": "logger for all",
+  "author": "",
+  "homepage": "",
+  "license": "MIT",
+  "main": "lib/log.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
