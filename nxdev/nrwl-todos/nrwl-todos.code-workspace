@@ -1,0 +1,47 @@
+{
+  "folders": [
+    {
+      "path": "./apps/admin"
+    },
+    {
+      "path": "./apps/admin-e2e"
+    },
+    {
+      "path": "./apps/api"
+    },
+    {
+      "path": "./libs/data"
+    },
+    {
+      "path": "./libs/ui"
+    },
+    {
+      "path": "./apps/tenant"
+    },
+    {
+      "path": "./apps/tenant-e2e"
+    },
+    {
+      "path": "./apps/tenant-api"
+    },
+    {
+      "path": "./libs/data-access"
+    },
+    {
+      "path": "./libs/feature-sets"
+    },
+    {
+      "name": "workspace",
+      "path": "./"
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "nrwl.angular-console",
+      "esbenp.prettier-vscode",
+      "firsttris.vscode-jest-runner",
+      "irongeek.vscode-env",
+      "coenraads.bracket-pair-colorizer-2"
+    ]
+  }
+}

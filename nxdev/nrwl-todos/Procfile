@@ -1,0 +1,8 @@
+admin-api: nx run api:serve
+admin: until lsof -i -P -n | grep "3333.*LISTEN" > /dev/null 2>&1 ; do sleep 3; done && nx run admin:serve
+admin-e2e: until lsof -i -P -n | grep "3333.*LISTEN" > /dev/null 2>&1 ; do sleep 3; done && nx run admin-e2e:e2e --watch
+
+tenant-gql: nx run data-access:generate_watch
+tenant-api: PORT=4444 nx run tenant-api:serve
+tenant: until lsof -i -P -n | grep "4444.*LISTEN" > /dev/null 2>&1 ; do sleep 3; done && nx run tenant:serve
+tenant-e2e: until lsof -i -P -n | grep "4444.*LISTEN" > /dev/null 2>&1 ; do sleep 3; done && nx run tenant-e2e:e2e
