@@ -1,0 +1,27 @@
+{
+  "implicitDependencies": {
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    ".eslintrc.json": "*"
+  },
+  "affected": { "defaultBase": "master" },
+  "npmScope": "nrwl-todos",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+    }
+  },
+  "projects": {
+    "admin": { "tags": [] },
+    "admin-e2e": { "tags": [], "implicitDependencies": ["admin"] },
+    "api": { "tags": [] },
+    "tenant": { "tags": [] },
+    "tenant-e2e": { "tags": [], "implicitDependencies": ["tenant"] },
+    "tenant-api": { "tags": [] },
+    "data": { "tags": [] },
+    "ui": { "tags": [] },
+    "api-interfaces": { "tags": [] },
+    "feature-sets": { "tags": [] },
+    "data-access": { "tags": [] }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@nrwl-todos/data": ["libs/data/src/index.ts"],
+      "@nrwl-todos/ui": ["libs/ui/src/index.ts"],
+      "@nrwl-todos/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@nrwl-todos/feature-sets": ["libs/feature-sets/src/index.ts"],
+      "@nrwl-todos/data-access": ["libs/data-access/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
