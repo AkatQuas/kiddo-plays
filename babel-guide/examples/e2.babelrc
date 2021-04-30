@@ -1,0 +1,3 @@
+{
+  "plugins": [["replace-plugin", { "useless": false, "time": 42 }]]
+}
