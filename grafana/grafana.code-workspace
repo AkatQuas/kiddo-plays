@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "name": "workspace",
+      "path": "./"
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "coenraads.bracket-pair-colorizer-2",
+      "irongeek.vscode-env",
+      "ms-azuretools.vscode-docker",
+      "esbenp.prettier-vscode",
+      "bungcip.better-toml",
+      "benspaulding.procfile"
+    ]
+  }
+}
