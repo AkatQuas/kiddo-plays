@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US">
+  <file id="ngi18n" original="ng.template">
+    <unit id="392942015236586892">
+      <notes>
+        <note category="location">src/app/app.component.html:308</note>
+      </notes>
+      <segment>
+        <source>Angular logo</source>
+      </segment>
+    </unit>
+    <unit id="2077201021623808633">
+      <notes>
+        <note category="location">src/app/app.component.html:314</note>
+        <note category="description">An introduction header for this sample</note>
+        <note category="meaning">site header</note>
+      </notes>
+      <segment>
+        <source>Hello i18n!</source>
+      </segment>
+    </unit>
+    <unit id="5206857922697139278">
+      <notes>
+        <note category="location">src/app/app.component.html:315</note>
+      </notes>
+      <segment>
+        <source>I don&apos;t output any element</source>
+      </segment>
+    </unit>
+    <unit id="6716937612351341980">
+      <notes>
+        <note category="location">src/app/app.component.html:316</note>
+      </notes>
+      <segment>
+        <source>i18n text is development!</source>
+      </segment>
+    </unit>
+    <unit id="702273782248450975">
+      <notes>
+        <note category="location">src/app/app.component.html:317</note>
+      </notes>
+      <segment>
+        <source><ph id="0" equiv="INTERPOLATION" disp="{{ title }}"/> app is running!</source>
+      </segment>
+    </unit>
+    <unit id="4606963464835766483">
+      <notes>
+        <note category="location">src/app/app.component.html:319,320</note>
+      </notes>
+      <segment>
+        <source>Updated <ph id="0" equiv="ICU" disp="{count, plural, =0 {just now} =1 {one minute ago} other
+    {{{count}} minutes ago}}"/></source>
+      </segment>
+    </unit>
+    <unit id="2002272803511843863">
+      <notes>
+        <note category="location">src/app/app.component.html:319,320</note>
+      </notes>
+      <segment>
+        <source>{VAR_PLURAL, plural, =0 {just now} =1 {one minute ago} other {<ph id="0" equiv="INTERPOLATION"/> minutes ago}}</source>
+      </segment>
+    </unit>
+    <unit id="3560311772637911677">
+      <notes>
+        <note category="location">src/app/app.component.html:323,324</note>
+      </notes>
+      <segment>
+        <source>The author is <ph id="0" equiv="ICU" disp="{gender, select, male {male} female {female} other
+    {other}}"/></source>
+      </segment>
+    </unit>
+    <unit id="7670372064920373295">
+      <notes>
+        <note category="location">src/app/app.component.html:323,324</note>
+      </notes>
+      <segment>
+        <source>{VAR_SELECT, select, male {male} female {female} other {other}}</source>
+      </segment>
+    </unit>
+    <unit id="3990133897753911565">
+      <notes>
+        <note category="location">src/app/app.component.ts:18</note>
+        <note category="location">src/app/app.component.ts:29</note>
+      </notes>
+      <segment>
+        <source>Created by <ph id="0" equiv="PH" disp="this.gender"/></source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

@@ -10,6 +10,22 @@ The three projects, [first-app](./first-app), [module-evolve](./module-evolve) a
 
 [custom-modal](./custom-modal) is about something deep in Angular, `NgZone`, ` ComponentFactoryResolver`.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+**Table of Contents**
+
+- [Concepts recap](#concepts-recap)
+- [Angular CLI](#angular-cli)
+- [In APP development](#in-app-development)
+- [Build](#build)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Concepts recap
+
+An _i18n localized_ demo project with more [details(./rangle.io-ng).
+
 # Angular CLI
 
 The official document is [here](https://github.com/angular/angular-cli/wiki), so you can find the all commands available.
@@ -21,6 +37,7 @@ The official document is [here](https://github.com/angular/angular-cli/wiki), so
 It is recommended to config the `.angular-cli.json` file in advance. A personal practice is [here](./angular-cli.json). In Angular 6 or later, the `angular-cli.json` schema has changed a lot, so this file is kind of out-of-date. You'd better configure properly.
 
 config in `package.json`
+
 ```bash
 # production build
 npm run build ---> ng build --prod
@@ -65,4 +82,3 @@ Search in the [API document](https://angular.io/api/) to find the interface of t
 - `ng build --base-href` helps you to define the `js` refered when the `index.html` is not in the website root folder. And the `image assets` should be written in relative mode like `assets/a.img` rather than beginning with `/` which is an absolute path.
 
 - `ng build --prod` to build production with `--aot` in default.
-
