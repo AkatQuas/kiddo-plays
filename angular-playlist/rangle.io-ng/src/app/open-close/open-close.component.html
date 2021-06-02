@@ -1,0 +1,10 @@
+<button (click)="toggle()">Toggle Open/Close</button>
+
+<div
+  [@openClose]="openState"
+  class="open-close-container"
+  (@openClose.start)="_animationStart($event)"
+  (@openClose.done)="_animationDone($event)"
+>
+  <p>The box is now {{ openState }} !</p>
+</div>
