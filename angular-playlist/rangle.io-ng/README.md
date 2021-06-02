@@ -20,6 +20,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - [NgModule](#ngmodule)
   - [Directive duplication](#directive-duplication)
 - [I18n](#i18n)
+- [Animation](#animation)
+- [Universal Rendering](#universal-rendering)
+- [Web worker](#web-worker)
 - [Development server](#development-server)
 - [Code scaffolding](#code-scaffolding)
 - [Build](#build)
@@ -528,6 +531,22 @@ However, HMR in development is not supported. The development procedure looks li
 └──────────────────┘         │ ng build with locale │        └────────────┘
                              └──────────────────────┘
 ```
+
+## Animation
+
+[Built in Animation Support](https://angular.io/guide/animations)
+
+Angular's animation system is built on CSS functionality, which means you can animate any property that the browser considers animatable.
+
+[Route animation](https://angular.io/guide/route-animations)
+
+## Universal Rendering
+
+[Server-side rendering (SSR) with Angular Universal](https://angular.io/guide/universal)
+
+## Web worker
+
+[Background processing using web workers](https://angular.io/guide/web-worker)
 
 ---
 
