@@ -98,3 +98,72 @@ A collection of shell scripts. Updating aperiodically.
   ```
 
   </details>
+
+## Commands for network
+
+1. ifconfig / ipconfig
+
+   This command outputs your current networking configuration, including your computer’s assigned IP address, its default gateway, and information about your DNS server.
+
+   ```bash
+   # show the whole network configuration
+   $ ifconfig
+
+   # show the configuration for ethernet adapter "en0"
+   $ ifconfig en0
+
+   # show the current ip for the host machine
+   $ ifconfig en0 | awk '/inet [0-9\.]+ netmask / {print $2}'
+   ```
+
+1. nslookup
+
+   This command looks up IP addresses assigned to website domain names.
+
+   ```bash
+   $ nslookup cn.bing.com
+   Server:		192.168.1.1
+   Address:	192.168.112.1#53
+
+   Non-authoritative answer:
+   cn.bing.com	canonical name = cn-bing-com.cn.a-0001.a-msedge.net.
+   cn-bing-com.cn.a-0001.a-msedge.net	canonical name = a-0001.a-msedge.net.
+   Name:	a-0001.a-msedge.net
+   Address: 204.79.197.200
+   Name:	a-0001.a-msedge.net
+   Address: 13.107.21.200
+   ```
+
+1. ping
+
+   This command sends ICMP ECHO_REQUEST packets to network hosts.
+
+   ```bash
+   $ ping -c 2 13.107.21.200
+   PING 13.107.21.200 (13.107.21.200): 56 data bytes
+   64 bytes from 13.107.21.200: icmp_seq=0 ttl=98 time=123.313 ms
+   64 bytes from 13.107.21.200: icmp_seq=1 ttl=98 time=116.461 ms
+
+   --- 13.107.21.200 ping statistics ---
+   2 packets transmitted, 2 packets received, 0.0% packet loss
+   round-trip min/avg/max/stddev = 116.461/119.887/123.313/3.426 ms
+
+   $ ping -c 2 cn.bing.com
+   PING a-0001.a-msedge.net (13.107.21.200): 56 data bytes
+   64 bytes from 13.107.21.200: icmp_seq=0 ttl=96 time=118.015 ms
+   64 bytes from 13.107.21.200: icmp_seq=1 ttl=96 time=118.431 ms
+
+   --- a-0001.a-msedge.net ping statistics ---
+   2 packets transmitted, 2 packets received, 0.0% packet loss
+   round-trip min/avg/max/stddev = 118.015/118.223/118.431/0.208 ms
+   ```
+
+1. traceroute / tracert
+
+   This command sends packets to each router along the path between your computer and the destination you want your traffic to reach.
+
+   These packets provide information about the stops (or hops) your traffic makes on its way to its destination, using a feature called Time to Live (TTL).
+
+   ```bash
+   $ traceroute 13.107.21.200
+   ```
