@@ -205,7 +205,7 @@ export class AppComponent {
   // selector by class
   @ViewChild(AlertComponent) alert: AlertComponent;
   // selector by anchor
-  @ViewChild('second') alert: NoticeComponent;
+  @ViewChild('notice') alert: NoticeComponent;
 
   showAlert() {
     this.alert.show();
