@@ -1,6 +1,6 @@
 # Web App in Dart
 
-A collection of Web Apps projects in Dart.
+A collection of Web Apps projects on Dart.
 
 # TL; DR
 
