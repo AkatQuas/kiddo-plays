@@ -30,7 +30,7 @@ CURRENT_DIR = $(shell pwd)
 
 SHELL:=/bin/bash
 .DEFAULT_GOAL:=help
-TARGETS = help groupdhelp list-help check-docker start-grafana clean
+TARGETS = help groupdhelp list-help _check-docker start-grafana clean
 
 
 .SILENT: $(TARGETS)
@@ -49,17 +49,15 @@ list-help: ## List all commands
 
 ##@ Utils
 
-check-docker: ## wait docker up-running
+_check-docker: ## wait docker up-running
 	echo "waiting for docker..." && until docker system info > /dev/null 2>&1; do sleep 3; done
 
-start-grafana: check-docker ## start redis in docker
-	{\
-		if docker container ps -a | grep $(GRAFANA_CONTAINER) &> /dev/null; then \
-			sh -c "docker container start $(GRAFANA_CONTAINER)"; \
-		else \
-			sh -c "docker run -d --user $(USER_ID) --name $(GRAFANA_CONTAINER) -v $(DATA_ROOT)/grafana:/var/lib/grafana -v $(CURRENT_DIR)/conf:/etc/grafana  -p 4400:3000 $(GRAFANA_IMAGE) && open http://localhost:4400"; \
-		fi \
-	}
+start-grafana: _check-docker ## start redis in docker
+	if docker container ps -a | grep $(GRAFANA_CONTAINER) &> /dev/null; then \
+		sh -c "docker container start $(GRAFANA_CONTAINER)"; \
+	else \
+		sh -c "docker run -d --user $(USER_ID) --name $(GRAFANA_CONTAINER) -v $(DATA_ROOT)/grafana:/var/lib/grafana -v $(CURRENT_DIR)/conf:/etc/grafana  -p 4400:3000 $(GRAFANA_IMAGE) && open http://localhost:4400"; \
+	fi
 
 ##@ Development
 

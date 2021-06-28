@@ -18,6 +18,7 @@ NODE_DIR := node_modules
 #
 # These variables should not need tweaking.
 #
+CURRENT_DIR=$(shell pwd)
 
 #
 # Define all targets. At least the following commands are required:
@@ -39,28 +40,24 @@ groupdhelp:  ## Display this help
 ##@ Installation
 
 install: ## install required modules
-	{ \
-		if [ ! -d "client/${NODE_DIR}" ]; then \
-			sh -c 'cd client && yarn'; \
+	for f in client server; do \
+		target=$${f}/$(NODE_DIR); \
+		if [ ! -d $${target} ]; then \
+			echo $${f}; \
+			pushd $${f} && yarn && popd; \
 		fi; \
-		if [ ! -d "server/${NODE_DIR}" ]; then \
-			sh -c 'cd server && yarn'; \
-		fi; \
-		echo "Installation Complete"; \
-	}
+	done; \
+	echo "Installation Complete";
 
 cleanup: ## clean up node_modules
-	{ \
-		if [ -d "client/${NODE_DIR}" ]; then \
-			echo "cleaning in client"; \
-			sh -c 'rm -rf "client/${NODE_DIR}"'; \
-		fi; \
-		if [ -d "server/${NODE_DIR}" ]; then \
-			echo "cleaning in server"; \
-			sh -c 'rm -rf "server/${NODE_DIR}"'; \
+	for f in client server; do \
+		target=$${f}/$(NODE_DIR); \
+		if [ -d $${target} ]; then \
+		 	echo "cleaning in $${f}"; \
+		 	rm -rf $${target}; \
 		fi; \
 		echo "Cleanup Complete"; \
-	}
+	done
 
 ##@ Development
 

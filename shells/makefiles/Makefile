@@ -37,7 +37,7 @@ EMAIL = example@bt.com
 
 SHELL:=/bin/bash
 .DEFAULT_GOAL:=help
-targets = help groupdhelp list-help check-docker start-redis start-mongo start-redmon stop-redis stop-mongo stop-redmon clean-redmon develop build clean
+targets = help groupdhelp list-help _check_docker _start-redis _start-mongo start-redmon _stop-redis _stop-mongo stop-redmon clean-redmon develop build clean
 
 
 # All targets.
@@ -55,37 +55,38 @@ list-help: ## List all commands
 
 ##@ Utils
 
-check-docker: ## wait docker up-running
+_check_docker: ## wait docker up-running
 	echo "connecting to docker..." && until docker system info > /dev/null 2>&1; do sleep 2; done
 
-start-redis: check-docker ## start redis in docker
-	{\
-		if docker container ps -a | grep $(REDIS) &> /dev/null; then \
-			sh -c "docker container start $(REDIS)"; \
-		else \
-			sh -c "docker run -d --name $(REDIS) -p 6379:6379 -v $(DATA_ROOT)/redis:/data $(REDIS_IMAGE)"; \
-		fi \
-	}
+_list_images: ## list the images
+	for image in $(REDIS_IMAGE) $(MONGO_IMAGE); do \
+		echo $${image}; \
+	done
 
-start-mongo: check-docker  ## start mongo in docker
-	{\
-		if docker container ps -a | grep $(MONGO) &> /dev/null; then \
-			sh -c "docker container start $(MONGO)"; \
-		else \
-			sh -c 'docker run -d --name $(MONGO) -p 27017:27017 -v $(DATA_ROOT)/mongo:/data/db $(MONGO_IMAGE)'
-		fi \
-	}
+_start-redis: _check_docker ## start redis in docker
+	if docker container ps -a | grep $(REDIS) &> /dev/null; then \
+		sh -c "docker container start $(REDIS)"; \
+	else \
+		sh -c "docker run -d --name $(REDIS) -p 6379:6379 -v $(DATA_ROOT)/redis:/data $(REDIS_IMAGE)"; \
+	fi
 
-start-redmon: start-redis start-mongo ## start redis and mongo
+_start-mongo: _check_docker  ## start mongo in docker
+	if docker container ps -a | grep $(MONGO) &> /dev/null; then \
+		sh -c "docker container start $(MONGO)"; \
+	else \
+		sh -c 'docker run -d --name $(MONGO) -p 27017:27017 -v $(DATA_ROOT)/mongo:/data/db $(MONGO_IMAGE)'
+	fi
+
+start-redmon: _start-redis _start-mongo ## start redis and mongo
 	echo "mongo and redis started"
 
-stop-redis: ## stop redis
+_stop-redis: ## stop redis
 	sh -c 'docker container stop $(REDIS)'
 
-stop-mongo: ## stop mongo
+_stop-mongo: ## stop mongo
 	sh -c 'docker container stop $(MONGO)'
 
-stop-redmon: stop-redis stop-mongo ## stop redis and mongo
+stop-redmon: _stop-redis _stop-mongo ## stop redis and mongo
 	echo "mongo stoped, redis stoped"
 
 clean-redmon: stop-redmon ## remove redis and mongo containers
@@ -96,7 +97,7 @@ clean-redmon: stop-redmon ## remove redis and mongo containers
 develop: ## using Procfile to start development
 	sh -c 'yarn start'
 
-build: check-docker ## build the distribution
+build: _check_docker ## build the distribution
 	sh -c './build.sh'
 
 test: ## just for test makefile commands
