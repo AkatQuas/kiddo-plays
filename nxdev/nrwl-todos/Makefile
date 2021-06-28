@@ -56,22 +56,18 @@ check-docker: ## wait docker up-running
 	echo "waiting for docker..." && until docker system info > /dev/null 2>&1; do sleep 3; done
 
 start-redis: check-docker ## start redis in docker
-	{\
-		if docker container ps -a | grep $(REDIS) &> /dev/null; then \
-			sh -c "docker container start $(REDIS)"; \
-		else \
-			sh -c "docker run -d --name $(REDIS) -p 6379:6379 -v $(DATA_ROOT)/redis:/data $(REDIS_IMAGE)"; \
-		fi \
-	}
+	if docker container ps -a | grep $(REDIS) &> /dev/null; then \
+		sh -c "docker container start $(REDIS)"; \
+	else \
+		sh -c "docker run -d --name $(REDIS) -p 6379:6379 -v $(DATA_ROOT)/redis:/data $(REDIS_IMAGE)"; \
+	fi
 
 start-mongo: check-docker ## start mongo in docker
-	{\
-		if docker container ps -a | grep $(MONGO) &> /dev/null; then \
-			sh -c "docker container start $(MONGO)"; \
-		else \
-			sh -c "docker run -d --name $(MONGO) -p 27017:27017 -v $(DATA_ROOT)/mongo:/data/db $(MONGO_IMAGE)"; \
-		fi \
-	}
+	if docker container ps -a | grep $(MONGO) &> /dev/null; then \
+		sh -c "docker container start $(MONGO)"; \
+	else \
+		sh -c "docker run -d --name $(MONGO) -p 27017:27017 -v $(DATA_ROOT)/mongo:/data/db $(MONGO_IMAGE)"; \
+	fi
 
 start-redmon: start-redis start-mongo ## start redis and mongo
 	echo "mongo and redis started"
