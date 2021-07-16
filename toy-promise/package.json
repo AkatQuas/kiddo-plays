@@ -1,0 +1,28 @@
+{
+  "name": "toy-promise",
+  "version": "1.0.0",
+  "main": "dist/toy-promise.cjs.js",
+  "module": "dist/toy-promise.esm.js",
+  "browser": "dist/toy-promise.umd.js",
+  "dependencies": {},
+  "devDependencies": {
+    "rollup": "^1.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-typescript": "^1.0.0",
+    "esm": "^3.2.25",
+    "mocha": "^6.2.2",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
+    "typescript": "^3.2.2"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "mocha --ui qunit --require esm",
+    "pretest": "npm run build"
+  },
+  "files": [
+    "dist"
+  ]
+}
