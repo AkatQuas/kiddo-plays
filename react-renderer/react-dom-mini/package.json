@@ -1,0 +1,15 @@
+{
+  "name": "react-dom-mini",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ReactDOMMini.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react-reconciler": "~0.26.2"
+  }
+}
