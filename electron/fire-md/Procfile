@@ -1,0 +1,2 @@
+app: until lsof -i -P -n | grep "8080.*LISTEN" > /dev/null 2>&1 ; do sleep 3; done  && rm -rf .webpack && npx electron-forge start -l
+server: PORT=8080 node server.js
