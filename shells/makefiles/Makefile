@@ -7,6 +7,12 @@
 #
 
 #
+# These variables should not need tweaking.
+#
+USER_ID=$(shell id -u)
+CURRENT_DIR = $(shell pwd)
+
+#
 # Tweak the variables based on your project.
 #
 DATA_ROOT=/data
@@ -23,14 +29,17 @@ VERSION_BY_DATE = $(shell date +v"%Y%m%d")
 # using git tags
 VERSION_IN_GIT = $(shell git describe --tags --always --dirty)
 
-#
-# These variables should not need tweaking.
-#
-USER_ID=$(shell id -u)
-CURRENT_DIR = $(shell pwd)
-
 AUTHOR = AkatQuas
 EMAIL = example@bt.com
+
+define ensure_yarn
+cd $(1) && if [ ! -d "node_modules" ];then yarn;fi
+endef
+
+define fetch_latest
+cd $(1) && git fetch origin
+endef
+
 #
 # Define all targets. At least the following commands are required:
 #
@@ -101,7 +110,7 @@ build: _check_docker ## build the distribution
 	sh -c './build.sh'
 
 test: ## just for test makefile commands
-	echo $(USER_ID)
+	echo $(USER_ID) && $(call fetch_latest, "./")
 
 ##@ Cleanup
 

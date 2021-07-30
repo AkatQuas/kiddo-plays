@@ -1,8 +1,10 @@
 # Kiddo plays
 
-My explorations in Computer Science, frontend & web, JS/Go/Python, docker & kubernetes, etc
+My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kubernetes, etc.
 
 # The play list, learning or practising
+
+> Not all projects are listed. Checkout the sub-directory please.
 
 - [Angular](./angular-playlist): several web projects using the AWESOME frontend framework Angular.
 
