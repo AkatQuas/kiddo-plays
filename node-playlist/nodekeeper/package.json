@@ -1,0 +1,13 @@
+{
+  "name": "nodekeeper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {},
+  "bin": {
+    "nodekeeper": "./index.js"
+  },
+  "dependencies": {
+    "chokidar": "~3.5.2"
+  }
+}
