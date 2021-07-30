@@ -1,0 +1,7 @@
+{
+  "Print to console": {
+    "prefix": "time",
+    "body": ["console.time('$1');", "$0", "console.timeEnd('$1');"],
+    "description": "Log output to console"
+  }
+}

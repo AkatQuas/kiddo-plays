@@ -22,7 +22,7 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & kube
 
   - [Dart web](./dart-language/dart-web)
 
-  - [Dart Angualr Demo](./dart-language/charge-system-demo)
+  - [Dart Angular Demo](./dart-language/charge-system-demo)
 
 - [Flutter](./flutter_playlist)
 
@@ -34,9 +34,9 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & kube
 
 - [jQuery](./jQuery)
 
-- [NextJs](./nextjs-playlist)
+- [NextJS](./nextjs-playlist)
 
-- [Nestjs](./nest-playlist)
+- [NestJS](./nest-playlist)
 
 - [Node](./node-playlist)
 
@@ -50,7 +50,7 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & kube
 
 - [Test-Driven Development and Behavior-Driven Development](./tdd-and-bdd)
 
-- [VueJS](./vuejs): several web projects using vuejs.
+- [VueJS](./vuejs): several web projects using VueJS.
 
 - [Wechat Mini Programme](./wxma): 微信小程序
 

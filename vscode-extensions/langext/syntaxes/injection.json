@@ -1,0 +1,15 @@
+{
+  "scopeName": "todo-comment.injection",
+  "injectionSelector": "L:comment.line.double-slash,L:comment.block.documentation",
+  "patterns": [
+    {
+      "include": "#todo-keyword"
+    }
+  ],
+  "repository": {
+    "todo-keyword": {
+      "match": "TTDO",
+      "name": "keyword.todo"
+    }
+  }
+}
