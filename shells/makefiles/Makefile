@@ -10,7 +10,17 @@
 # These variables should not need tweaking.
 #
 USER_ID=$(shell id -u)
-CURRENT_DIR = $(shell pwd)
+VERSION_BY_DATE = $(shell date +v"%Y%m%d")
+CWD = $(shell pwd)
+
+NOFORMAT=$(shell tput sgr0)
+RED:=$(shell tput setaf 1)
+GREEN=$(shell tput setaf 2)
+YELLOW=$(shell tput setaf 3)
+BLUE=$(shell tput setaf 4)
+MAGENTA=$(shell tput setaf 5)
+CYAN=$(shell tput setaf 6)
+WHITE=$(shell tput setaf 7)
 
 #
 # Tweak the variables based on your project.
@@ -25,7 +35,6 @@ MONGO_IMAGE=mongo:latest
 
 # project version
 VERSION = 0.0.1
-VERSION_BY_DATE = $(shell date +v"%Y%m%d")
 # using git tags
 VERSION_IN_GIT = $(shell git describe --tags --always --dirty)
 
@@ -111,6 +120,14 @@ build: _check_docker ## build the distribution
 
 test: ## just for test makefile commands
 	echo $(USER_ID) && $(call fetch_latest, "./")
+	$(info $(RED)Message$(NOFORMAT))
+	$(info $(GREEN)Message$(NOFORMAT))
+	$(info $(YELLOW)Message$(NOFORMAT))
+	$(info $(BLUE)Message$(NOFORMAT))
+	$(info $(MAGENTA)Message$(NOFORMAT))
+	$(info $(CYAN)Message$(NOFORMAT))
+	$(info $(WHITE)Message$(NOFORMAT))
+	echo "$(BLUE)Message OK$(NOFORMAT)"
 
 ##@ Cleanup
 
