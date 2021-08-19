@@ -1,0 +1,11 @@
+# This is a Development configuration
+
+isDev = true
+isTest = false
+isProd = false
+NODE_ENV="development"
+
+JWT_TOKEN="tiebeibei"
+
+[store]
+mongo = "mongodb://localhost/nest"

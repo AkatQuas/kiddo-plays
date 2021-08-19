@@ -1,0 +1,11 @@
+# This is a Production configuration
+
+isDev = false
+isTest = false
+isProd = true
+NODE_ENV = "production"
+
+JWT_TOKEN="fengcheche"
+
+[store]
+mongo = "mongodb://mongo0/nest"

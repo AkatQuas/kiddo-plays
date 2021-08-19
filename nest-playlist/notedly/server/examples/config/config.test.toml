@@ -1,0 +1,6 @@
+# This is a Test configuration
+
+isDev = false
+isTest = true
+isProd = false
+NODE_ENV = "test"

@@ -1,0 +1,25 @@
+type User {
+  id: ID!
+  username: String!
+  password: String!
+  avatar: String
+  favorites: [Note!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Query {
+  user(username: String!): User
+  users: [User!]
+  me: User!
+}
+
+type Mutation {
+  # deprecated
+  # return JWT string
+  signUp(username: String!, password: String!): String!
+
+  # deprecated
+  # return JWT string
+  signIn(username: String!, password: String!): String!
+}

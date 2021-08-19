@@ -1,0 +1,1 @@
+server: cd server && PORT=9090 DEBUG=config* npx nest start --watch
