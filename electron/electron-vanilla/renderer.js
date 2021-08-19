@@ -354,3 +354,13 @@ const os = require('os');
 
   updateOnlineStatus();
 })();
+
+{
+  const marquee = ['log', 'warn', 'debug', 'error'];
+  let id = 0;
+  setInterval(() => {
+    id = (id + 1) % 4;
+    const method = marquee[id];
+    console[method](`${method} works`);
+  }, 500);
+}
