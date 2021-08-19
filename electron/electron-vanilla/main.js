@@ -405,6 +405,10 @@ function showNotification() {
   new Notification(notification).show();
 }
 
+const port = 8282;
+
+app.commandLine.appendSwitch('remote-debugging-port', `${port}`);
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -595,5 +599,5 @@ ipcMain.handle('dark-mode:toggle', () => {
 });
 
 ipcMain.handle('dark-mode:system', () => {
-  nativeTheme.themeSouce = 'system';
+  nativeTheme.themeSource = 'system';
 });
