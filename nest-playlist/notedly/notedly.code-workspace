@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "path": "./server"
+    },
+    {
+      "name": "workspace",
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "cSpell.words": ["Typegoose", "nestjs"]
+  },
+  "extensions": {
+    "recommendations": [
+      "bungcip.better-toml",
+      "coenraads.bracket-pair-colorizer-2",
+      "esbenp.prettier-vscode",
+      "vscodevim.vim",
+      "irongeek.vscode-env",
+      "streetsidesoftware.code-spell-checker",
+      "graphql.vscode-graphql",
+      "benspaulding.procfile"
+    ]
+  }
+}

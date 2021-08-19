@@ -1,0 +1,10 @@
+scalar JSON
+scalar Date
+scalar DateTime
+
+type Query {
+  hello: String
+  c: Date
+  b: DateTime
+  j: JSON
+}
