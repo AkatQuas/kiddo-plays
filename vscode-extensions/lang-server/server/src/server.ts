@@ -1,8 +1,8 @@
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import {
   CompletionItem,
-  CompletionItemKind,
   createConnection,
+  DefinitionParams,
   Diagnostic,
   DiagnosticSeverity,
   DidChangeWorkspaceFoldersNotification,
@@ -13,6 +13,7 @@ import {
   TextDocuments,
   TextDocumentSyncKind,
 } from 'vscode-languageserver/node';
+import { cssDocService } from './cssDocuments';
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -47,7 +48,9 @@ connection.onInitialize((params: InitializeParams) => {
       // Tell the client that this server supports code completion
       completionProvider: {
         resolveProvider: true,
+        triggerCharacters: ['"', "'"],
       },
+      definitionProvider: true,
     },
   };
   if (hasWorkspaceFolderCapability) {
@@ -107,34 +110,54 @@ connection.onDidChangeWatchedFiles((_change) => {
   connection.console.log('We received an file change event');
 });
 
+connection.onDidOpenTextDocument((params) => {
+  // A text document got opened in VS Code.
+  // params.uri uniquely identifies the document. For documents store on disk this is a file URI.
+  // params.text the initial full content of the document.
+});
+
+connection.onDidChangeTextDocument((params) => {
+  // The content of a text document did change in VS Code.
+  // params.uri uniquely identifies the document.
+  // params.contentChanges describe the content changes to the document.
+});
+
+connection.onDidCloseTextDocument((params) => {
+  // A text document got closed in VS Code.
+  // params.uri uniquely identifies the document.
+});
+
 // This handler provides the initial list of the completion items
 connection.onCompletion(
-  (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-    return [
-      {
-        label: 'TypeScript',
-        kind: CompletionItemKind.Text,
-        data: 1,
-      },
-      {
-        label: 'JavaScript',
-        kind: CompletionItemKind.Text,
-        data: 2,
-      },
-    ];
+  (params: TextDocumentPositionParams): CompletionItem[] => {
+    const d = documents.get(params.textDocument.uri.replace('.txt', '.css'));
+    if (d) {
+      const style = cssDocService.parseStylesheet(d);
+      const symbols = cssDocService.findDocumentSymbols(d, style);
+      console.info(symbols);
+
+      return symbols.map((symbol) => ({
+        label: symbol.name,
+      }));
+    }
+
+    return [];
   }
 );
+
+connection.onDefinition((p: DefinitionParams) => {
+  return [];
+});
 
 // This handler resolves additional information for the item selected
 // in the completion list
 connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
-  if (item.data === 1) {
-    item.detail = 'TypeScript details';
-    item.documentation = 'TypeScript documentation is not so detailed';
-  } else if (item.data === 2) {
-    item.detail = 'JavaScript details';
-    item.documentation = 'JavaScript documentation with a lot hhh';
-  }
+  item.detail = 'TypeScript details';
+  item.documentation = {
+    kind: 'markdown',
+    value:
+      'TypeScript documentation is not so detailed.\n\n[go here](https://cn.bing.com)',
+  };
   return item;
 });
 

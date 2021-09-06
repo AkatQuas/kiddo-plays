@@ -1,0 +1,30 @@
+{
+	"name": "dot-language-server",
+	"displayName": "dot-language-server",
+	"description": "Implementation of a Language server for Dot",
+	"version": "0.0.1",
+	"engines": {
+		"node": "*"
+	},
+	"scripts": {
+		"compile": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc -p ./",
+		"watch": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.59.0",
+		"@typescript-eslint/eslint-plugin": "^4.26.0",
+		"@typescript-eslint/parser": "^4.26.0",
+		"eslint": "^7.27.0",
+		"glob": "^7.1.7",
+		"mocha": "^8.4.0",
+		"typescript": "^4.3.2",
+		"vscode-test": "^1.5.2"
+	},
+	"dependencies": {
+		"node-fetch": "~3.0.0",
+		"vscode-languageserver": "~7.0.0"
+	}
+}

@@ -1,0 +1,21 @@
+{
+  "name": "mykt-language-server",
+  "description": "Example implementation of a language server in node.",
+  "version": "1.0.0",
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/vscode-extension-samples"
+  },
+  "dependencies": {
+    "file-uri-to-path": "~2.0.0",
+    "toy-kotlin-language-server": "https://github.com/Strumenta/article-antlr4-c3/releases/download/1.0.0/toy-kotlin-language-server-1.0.0.tgz",
+    "vscode-languageserver": "^7.0.0",
+    "vscode-languageserver-textdocument": "^1.0.1"
+  },
+  "scripts": {}
+}
