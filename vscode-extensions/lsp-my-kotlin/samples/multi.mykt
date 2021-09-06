@@ -1,0 +1,13 @@
+import vars
+// var is the keyword
+
+var someOtherVariable
+
+
+fun foo() {
+    val fooBar = 3;
+    val baz = fb //<-- Place the cursor here, just after the 'b', and press Ctrl + Space
+    val funny = sv //<-- or here as well, for a variable defined in another file
+    someVariable
+    someOtherVariable + 1;
+}

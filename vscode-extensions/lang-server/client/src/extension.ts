@@ -3,10 +3,12 @@ import * as vscode from 'vscode';
 import {
   LanguageClient,
   LanguageClientOptions,
+  RevealOutputChannelOn,
   ServerOptions,
   TransportKind,
 } from 'vscode-languageclient/node';
 
+const outputChannel = vscode.window.createOutputChannel('lang-server');
 let client: LanguageClient;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -39,10 +41,18 @@ export function activate(context: vscode.ExtensionContext) {
   // Options to control the language client
   let clientOptions: LanguageClientOptions = {
     // Register the server for plain text documents
-    documentSelector: [{ scheme: 'file', language: 'plaintext' }],
+    documentSelector: [
+      { scheme: 'file', language: 'plaintext' },
+      { scheme: 'file', language: 'css' },
+    ],
     synchronize: {
       // Notify the server about file changes to '.clientrc files contained in the workspace
       fileEvents: vscode.workspace.createFileSystemWatcher('**/.clientrc'),
+    },
+    revealOutputChannelOn: RevealOutputChannelOn.Never,
+    outputChannel: outputChannel,
+    initializationOptions: {
+      funny: true,
     },
   };
 

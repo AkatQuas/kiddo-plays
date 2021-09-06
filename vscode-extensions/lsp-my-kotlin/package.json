@@ -1,0 +1,46 @@
+{
+  "name": "mykt-language-service",
+  "description": "A language server for my kotlin",
+  "license": "MIT",
+  "version": "1.0.0",
+  "publisher": "akat",
+  "categories": [],
+  "keywords": [
+    "language server",
+    "kotlin"
+  ],
+  "engines": {
+    "vscode": "^1.43.0"
+  },
+  "activationEvents": [
+    "onLanguage:my-kotlin"
+  ],
+  "main": "./client/out/extension",
+  "contributes": {
+    "languages": [
+      {
+        "id": "my-kotlin",
+        "extensions": [
+          ".mykt"
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+    "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+    "test": "echo \"No test\""
+  },
+  "devDependencies": {
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^12.12.0",
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
+    "eslint": "^7.26.0",
+    "mocha": "^8.3.2",
+    "typescript": "^3.9.7"
+  }
+}
