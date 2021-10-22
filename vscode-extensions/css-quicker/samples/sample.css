@@ -1,0 +1,36 @@
+#id .afterId,
+#idAlone {
+}
+
+* {
+}
+div,
+.-b,
+#id,
+#uni,
+#uni .uni,
+div .sub,
+.container,
+.container .side,
+.article_author > image,
+.article_content img,
+.parent + .child,
+.sib1 ~ .sib2,
+.main[type='primary'] {
+  background-color: #222;
+}
+
+.article_content p:first-of-type,
+.comments_item [src=''],
+.author::after {
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -18em top;
+  }
+  100% {
+    background-position: 0em top;
+  }
+}

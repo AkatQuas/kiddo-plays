@@ -1,0 +1,86 @@
+body {
+  justify-content: center;
+  align-items: center;
+  margin: 1em 2em;
+  background-image: url(./light.png);
+  background-repeat: repeat;
+}
+
+body.vscode-dark {
+  background-image: url(./dark.png);
+}
+
+.lines {
+}
+
+.line {
+  display: flex;
+  border-radius: 5px;
+  background-color: var(--vscode-editor-background);
+  padding: 0.3em;
+  position: relative;
+  font-size: 1.5em;
+}
+.line + .line {
+  margin-top: 0.6em;
+}
+
+.line.comment {
+  font-style: italic;
+  color: var(--vscode-descriptionForeground);
+}
+.line.comment.empty-comment::before {
+  content: 'EMPTY LINE';
+  user-select: none;
+}
+
+.line.process {
+  display: flex;
+}
+
+.line.process .name {
+  color: var(--vscode-textLink-foreground);
+}
+
+.line.process .sep {
+  color: var(--vscode-descriptionForeground);
+  padding: 0 0.6em 0 0.3em;
+}
+.line.process .command {
+}
+
+.append-button {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.line .action {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0.3em;
+  align-items: center;
+  justify-content: space-between;
+  display: none;
+}
+
+.action-button {
+  width: 4em;
+}
+.action-button + .action-button {
+  margin-left: 0.5em;
+}
+
+.action-button:before {
+  content: attr(title);
+}
+
+.line:hover .action {
+  display: flex;
+}
+
+.error {
+  display: none;
+}

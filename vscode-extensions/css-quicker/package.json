@@ -1,0 +1,76 @@
+{
+  "name": "css-quicker",
+  "displayName": "css-quicker",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:html"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "CSS quicker",
+      "properties": {
+        "css-quicker.enableHover": {
+          "type": "boolean",
+          "default": true,
+          "description": "enable/disable hover features"
+        },
+        "css-quicker.enableCompletion": {
+          "type": "boolean",
+          "default": true,
+          "description": "enable/disable completion features"
+        },
+        "css-quicker.enableDefinition": {
+          "type": "boolean",
+          "default": true,
+          "description": "enable/disable definition features"
+        },
+        "css-quicker.enableCompletion2": {
+          "type": "boolean",
+          "default": true,
+          "description": "enable/disable completion features2"
+        },
+        "css-quicker.enableDefinition2": {
+          "type": "boolean",
+          "default": true,
+          "description": "enable/disable definition features2"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "14.x",
+    "@types/vscode": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "glob": "^7.1.7",
+    "mocha": "^8.4.0",
+    "typescript": "^4.3.2",
+    "vscode-test": "^1.5.2"
+  },
+  "dependencies": {
+    "@types/css": "0.0.33",
+    "css": "~3.0.0",
+    "vscode-css-languageservice": "~5.1.5",
+    "vscode-html-languageservice": "~4.0.8",
+    "vscode-languageserver-textdocument": "~1.0.1"
+  }
+}
