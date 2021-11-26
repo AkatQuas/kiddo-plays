@@ -45,8 +45,16 @@ define ensure_yarn
 cd $(1) && if [ ! -d "node_modules" ];then yarn;fi
 endef
 
+define ensure_npx
+if [ -x "$(shell command -v $(1))" ]; then echo "SUCCESS: $(1) is installed"; else echo "installing $(1) globally use npm" && npm install -g $(1); fi
+endef
+
+define clean_npx
+if command -v $(1) > /dev/null; then npm uninstall -g $(1); fi
+endef
+
 define fetch_latest
-cd $(1) && git fetch origin
+cd $(1) && git fetch origin && git remote prune origin
 endef
 
 #
