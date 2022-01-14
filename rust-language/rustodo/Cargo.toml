@@ -1,0 +1,15 @@
+[package]
+name = "rustodo"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0" # Concrete error type
+structopt = "0.3" # Command line arguments parse
+serde = { version = "1.0", features = ["derive"] } # serialization/deserialization
+serde_json = "1.0" # json serialization file format
+chrono = { version = "0.4", features = ["serde"] } # Date and time
+home = "0.5" # home directories
+
