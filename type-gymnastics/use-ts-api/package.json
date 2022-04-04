@@ -1,0 +1,11 @@
+{
+  "name": "use-ts-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "~17.0.0",
+    "ts-node": "~10.4.0",
+    "typescript": "~4.5.4"
+  }
+}
