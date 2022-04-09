@@ -1,0 +1,15 @@
+{
+  "root": "packages/cow",
+  "sourceRoot": "packages/cow",
+  "projectType": "application",
+  "implicitDependencies": ["messages"],
+  "targets": {
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "node index.js",
+        "cwd": "packages/cow"
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "root": "packages/messages",
+  "sourceRoot": "packages/messages",
+  "projectType": "library"
+}

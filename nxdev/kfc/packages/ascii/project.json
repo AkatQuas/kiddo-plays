@@ -1,0 +1,5 @@
+{
+  "root": "packages/ascii",
+  "sourceRoot": "packages/ascii/assets",
+  "projectType": "library"
+}
