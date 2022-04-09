@@ -1,0 +1,44 @@
+{
+  "folders": [
+    {
+      "name": "workspace",
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/*.code-search": true,
+      "**/miniprogram-ide/extensions": true,
+      "**/miniprogram-simulator/public": true,
+      "**/out": true,
+      "**/*.h": true,
+      "**/*.inc": true,
+      "**/*.gyp": true,
+      "**/*.gypi": true
+    },
+    "files.associations": {
+      "*.liquid": "handlebars",
+      "*.madgerc": "jsonc"
+    },
+    "cSpell.words": [
+      "cowsay",
+      "Eleventy",
+      "nrwl"
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "streetsidesoftware.code-spell-checker",
+      "irongeek.vscode-env",
+      "ms-azuretools.vscode-docker",
+      "esbenp.prettier-vscode",
+      "benspaulding.procfile",
+      "editorconfig.editorconfig"
+    ],
+    "unwantedRecommendations": []
+  },
+  "tasks": {
+  }
+}
