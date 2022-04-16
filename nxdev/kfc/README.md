@@ -1,6 +1,14 @@
-# Kfc
+# KFC
 
 This project was generated using [Nx](https://nx.dev) using preset `core`, starting from [here](https://nx.dev/core-tutorial/01-create-blog).
+
+<details>
+
+<summary>Dep graph</summary>
+
+![](./dep-graph.png)
+
+</details>
 
 ```bash
 $ npx create-nx-workspace --preset=core
