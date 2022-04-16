@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@acme/books/data-access": ["libs/books/data-access/src/index.ts"],
+      "@acme/books/feature": ["libs/books/feature/src/index.ts"],
+      "@acme/books/ui": ["libs/books/ui/src/index.ts"],
+      "@acme/cart/data-access": ["libs/cart/data-access/src/index.ts"],
+      "@acme/cart/feature": ["libs/cart/feature/src/index.ts"],
+      "@acme/shared-modules": ["libs/shared-modules/src/index.ts"],
+      "@acme/ui": ["libs/ui/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
