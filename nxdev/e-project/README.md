@@ -38,3 +38,7 @@ nx generate lib util-auth --directory shared --tags scope:shared,type:util
 
 nx generate lib ui-address --directory shared --tags scope:shared,type:ui
 ```
+
+Here's a great article for you [Mastering the Project Boundaries](https://blog.nrwl.io/mastering-the-project-boundaries-in-nx-f095852f5bf4)
+
+Eslint rules [source code](https://github.com/nrwl/nx/blob/master/packages/eslint-plugin-nx/src/rules/enforce-module-boundaries.ts).
