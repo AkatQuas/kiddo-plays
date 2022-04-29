@@ -15,7 +15,7 @@
   "dependencies": {
     "i18next": "^11.6.0",
     "isomorphic-unfetch": "^2.1.1",
-    "next": "^6.1.1",
+    "next": "^12.1.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-i18next": "^7.10.1"
