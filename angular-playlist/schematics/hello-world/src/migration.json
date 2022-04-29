@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "migration020": {
+      "version": "0.2.0",
+      "description": "Updates to 0.2.0",
+      "factory": "./ng-update/index#updateToV020"
+    }
+  }
+}
