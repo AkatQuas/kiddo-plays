@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "HelloNGAddSchematics",
+  "title": "Hello NG Add Schema",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Add Font-Awesome to specific Angular CLI workspace project"
+    }
+  },
+  "required": ["project"]
+}

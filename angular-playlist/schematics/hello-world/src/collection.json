@@ -1,0 +1,26 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "hello-world": {
+      "description": "A starter schematic.",
+      "factory": "./hello-world/index#helloWorld",
+      "schema": "./hello-world/schema.json",
+      "aliases": ["h"]
+    },
+    "hello-world-ng": {
+      "description": "A starter angular schematic.",
+      "factory": "./hello-world-ng/index#helloWorldNG",
+      "schema": "./hello-world-ng/schema.json"
+    },
+    "hello-world-simple": {
+      "description": "A simple hello schematic.",
+      "factory": "./hello-world-simple/index#helloWorldSimple",
+      "schema": "./hello-world-simple/schema.json",
+      "aliases": ["hs"]
+    },
+    "ng-add": {
+      "description": "Add FontAwesome to Angular Project",
+      "factory": "./ng-add/index#ngAdd"
+    }
+  }
+}
