@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline'"
+    />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>ImageShrink</title>
+  </head>
+  <body>
+    <div class="container center-align">
+      <h3><i class="fas fa-images"></i> ImageShrink</h3>
+      <p>Choose an image to resize</p>
+      <form id="image-form">
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>Browse</span>
+            <input type="file" accept="image/png,image/jpeg" id="img" />
+          </div>
+
+          <div class="file-path-wrapper">
+            <input
+              type="text"
+              class="file-path validate"
+              placeholder="Upload file"
+            />
+          </div>
+        </div>
+
+        <p>
+          <strong>Quality:</strong>
+          <em>The lower the quality, the smaller the file size</em>
+        </p>
+        <p class="range-field">
+          <input type="range" min="0" max="100" id="slider" />
+        </p>
+
+        <input type="submit" value="Resize" class="btn black" />
+      </form>
+
+      <div class="card output">
+        <div class="card-content">
+          <p>
+            Output folder:
+            <strong id="output-folder"></strong>.
+          </p>
+          <button class="btn-small green" id="show-file" style="display: none">
+            Show file
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/materialize.min.js"></script>
+    <script>
+      const { ipcRenderer } = require('electron');
+      let lastOutput = '';
+
+      ipcRenderer.invoke('image:output-folder').then((outputFolder) => {
+        document.querySelector('strong#output-folder').innerText = outputFolder;
+      });
+
+      document
+        .querySelector('form#image-form')
+        .addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const img = document.querySelector('input#img');
+          const slider = document.querySelector('input#slider');
+          requestImageCompress(img.files[0].path, slider.value);
+        });
+
+      function requestImageCompress(image, quality) {
+        ipcRenderer
+          .invoke('image:compress', {
+            image,
+            quality,
+          })
+          .then((result) => {
+            if (!result.output) {
+              M.toast({
+                html: `Failed to shrink image shrink. "${result.message}"`,
+                classes: 'red',
+              });
+              lastOutput = '';
+              return;
+            }
+            const slider = document.querySelector('input#slider');
+            document.querySelector('button#show-file').style.display =
+              'inline-block';
+            lastOutput = result.output;
+            M.toast({
+              html: `Image resized to ${result.output} with ${slider.value}% quality`,
+            });
+          });
+      }
+
+      document
+        .querySelector('button#show-file')
+        .addEventListener('click', () => {
+          if (lastOutput) {
+            ipcRenderer.send('image:show-output', lastOutput);
+          }
+        });
+    </script>
+  </body>
+</html>

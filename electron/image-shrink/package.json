@@ -1,0 +1,30 @@
+{
+  "name": "image-shrink",
+  "productName": "ImageShrink",
+  "version": "1.0.0",
+  "description": "App to optimize images",
+  "main": "main.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production electron ./",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=false --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ImageShrink\"",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/linux/icon.png --prune=false --out=release-builds"
+  },
+  "keywords": [
+    "image",
+    "compress",
+    "optimize"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "~18.2.0",
+    "electron-packager": "~15.5.1"
+  },
+  "dependencies": {
+    "cross-env": "~7.0.3",
+    "electron-log": "~4.4.7",
+    "imagemin": "^7.0.1",
+    "imagemin-mozjpeg": "~8.0.0",
+    "imagemin-pngquant": "~8.0.0"
+  }
+}
