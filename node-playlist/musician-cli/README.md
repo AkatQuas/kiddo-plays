@@ -114,6 +114,16 @@ EXAMPLES
 - Run `oclif readme` after `oclif manifest` to update this `README.md`. This command requires `oclif.manifest.json` to update the _commands_ section in README.md.
 - Remove `@oclif/plugin-plugins` under `oclif.plugins` in `package.json` to get rid of annoying plugins related commands in README.md. It's also possible to use `patch-package` to get rid of them.
 - `oclif/test` is easy to play with. I have some stub, nock, and custom test plugin in [download.test.ts](./test/commands/download.test.ts) for you.
+- Invoke `Config.load()` to get config programmatically when you're not inside `Command`.
+
+  ```ts
+  import { Config } from "@oclif/core";
+
+  export async function test() {
+    const config = await Config.load();
+    // play with config
+  }
+  ```
 
 # Acknowledgement
 

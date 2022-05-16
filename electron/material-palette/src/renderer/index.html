@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="toast" class="hidden"></div>
+      <section id="controls">
+        <div class="col">
+          <img src="./assets/icon-alt.png" />
+        </div>
+        <div class="col">
+          <div
+            id="mode-toggle"
+            class="clickable hint--bottom-left"
+            aria-label="Toggle modes"
+          >
+            <div id="current-output">HEX</div>
+            <div><i class="fa fa-retweet"></i></div>
+          </div>
+        </div>
+      </section>
+
+      <div id="key">
+        <div
+          class="color"
+          style="background-color: #fff; color: #000"
+          data-series=""
+        >
+          white
+        </div>
+        <div
+          class="color"
+          style="background-color: #000; color: #fff"
+          data-series=""
+        >
+          black
+        </div>
+      </div>
+
+      <div id="tooltip" class="hidden">Color</div>
+    </div>
+  </body>
+</html>

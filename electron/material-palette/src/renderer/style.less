@@ -1,0 +1,137 @@
+@import '~font-awesome/less/font-awesome';
+
+// @fa-font-path: '../node_modules/font-awesome/fonts';
+@cellHeight: 20px;
+@cellWidth: 20px;
+@gutterWidth: 90px;
+@headerHeight: 30px;
+@numCells: 14;
+@numColors: 19;
+@containerWidth: (@cellWidth * @numCells) + @gutterWidth;
+@containerHeight: (@numColors * @cellHeight) + @headerHeight;
+.flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  font-family: 'BlinkMacSystemFont', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  color: #fff;
+  font-size: 12px;
+  margin: 0;
+  width: @containerWidth;
+  max-width: @containerWidth;
+  height: @containerHeight;
+  overflow: hidden;
+}
+#container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+#key {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  height: 60px;
+  width: 80px;
+  right: 0;
+  bottom: 0;
+}
+#key > div {
+  .flex-center();
+  height: 100%;
+}
+
+#tooltip {
+  .flex-center();
+  flex-direction: column;
+  position: fixed;
+  min-width: 150px;
+  height: 40px;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  z-index: 2;
+}
+#toast {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  height: @headerHeight;
+  text-align: center;
+  font-size: 18px;
+  line-height: @headerHeight;
+  background-color: #00d45f;
+  color: #fff;
+}
+#controls {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #263238;
+  height: @headerHeight;
+  font-size: 18px;
+  padding: 2px;
+}
+
+#controls .col {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#controls .col * {
+  margin: 0 2px;
+}
+
+#mode-toggle {
+  display: flex;
+  user-select: none;
+}
+#mode-toggle:hover {
+  color: #00e5ff;
+}
+#current-output {
+  font-size: 18px;
+}
+
+.cell {
+  width: @cellHeight;
+  height: @cellWidth;
+  border: 0px solid rgba(0, 0, 0, 0.25);
+  line-height: 1.5em;
+}
+.cell:hover {
+  z-index: 1;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.row {
+  display: flex;
+  width: 100%;
+}
+.gutter.cell {
+  width: @gutterWidth;
+  text-align: center;
+}
+.color {
+  cursor: pointer;
+}
+.clickable {
+  cursor: pointer;
+}
+.hidden {
+  opacity: 0;
+  z-index: -1 !important;
+}

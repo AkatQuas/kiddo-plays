@@ -1,0 +1,4 @@
+renderer: echo "NODE_ENV=$NODE_ENV" && PORT=4200 npx webpack serve --config webpack.config.renderer.js
+main: echo "NODE_ENV=$NODE_ENV;START_ELECTRON=$START_ELECTRON" && npx webpack --config webpack.config.main.js
+
+electron: until [ -f build/index.js ] ; do sleep 5 ; done && npx electron build

@@ -1,0 +1,36 @@
+{
+  "name": "material-palette",
+  "productName": "MaterialPalette",
+  "version": "1.0.0",
+  "description": "Material Color Palette for macOS, Windows",
+  "scripts": {},
+  "keywords": [
+    "material",
+    "color palette",
+    "electron"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/lodash-es": "~4.17.6",
+    "@types/node": "~14.18.17",
+    "copy-webpack-plugin": "~10.2.4",
+    "css-loader": "~6.7.1",
+    "electron": "~18.2.3",
+    "esbuild-loader": "~2.18.0",
+    "html-webpack-plugin": "~5.5.0",
+    "less": "~4.1.2",
+    "less-loader": "~10.2.0",
+    "mini-css-extract-plugin": "~2.6.0",
+    "style-loader": "~3.3.1",
+    "webpack": "~5.72.1",
+    "webpack-cli": "~4.9.2",
+    "webpack-dev-server": "~4.9.0",
+    "webpack-merge": "~5.8.0"
+  },
+  "dependencies": {
+    "electron-is": "~3.0.0",
+    "font-awesome": "~4.7.0",
+    "hint.css": "~2.7.0",
+    "lodash-es": "~4.17.21"
+  }
+}
