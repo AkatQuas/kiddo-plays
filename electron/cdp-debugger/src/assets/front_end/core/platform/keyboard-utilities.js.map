@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/core/platform/keyboard-utilities.ts"],
+  "sourcesContent": ["// Copyright (c) 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport const enum ArrowKey {\n  UP = 'ArrowUp',\n  DOWN = 'ArrowDown',\n  LEFT = 'ArrowLeft',\n  RIGHT = 'ArrowRight',\n}\n\nexport const enum PageKey {\n  UP = 'PageUp',\n  DOWN = 'PageDown',\n}\n\nexport const ENTER_KEY = 'Enter';\nexport const ESCAPE_KEY = 'Escape';\nexport const TAB_KEY = 'Tab';\n\nexport const ARROW_KEYS = new Set<ArrowKey>([\n  ArrowKey.UP,\n  ArrowKey.DOWN,\n  ArrowKey.LEFT,\n  ArrowKey.RIGHT,\n]);\n\nexport function keyIsArrowKey(key: string): key is ArrowKey {\n  return ARROW_KEYS.has(key as ArrowKey);\n}\n"],
+  "mappings": "AAIO,WAAW,WAAX,kBAAW,cAAX;AACL,oBAAK;AACL,sBAAO;AACP,sBAAO;AACP,uBAAQ;AAJQ;AAAA;AAOX,WAAW,UAAX,kBAAW,aAAX;AACL,mBAAK;AACL,qBAAO;AAFS;AAAA;AAKX,aAAM,YAAY;AAClB,aAAM,aAAa;AACnB,aAAM,UAAU;AAEhB,aAAM,aAAa,oBAAI,IAAc;AAAA,EAC1C;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA;AAGK,8BAAuB,KAA8B;AAC1D,SAAO,WAAW,IAAI;AAAA;",
+  "names": []
+}

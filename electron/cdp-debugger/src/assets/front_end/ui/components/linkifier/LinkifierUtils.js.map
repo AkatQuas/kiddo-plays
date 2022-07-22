@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/linkifier/LinkifierUtils.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as Bindings from '../../../models/bindings/bindings.js';\nimport type * as Platform from '../../../core/platform/platform.js';\n\nexport function linkText(url: Platform.DevToolsPath.UrlString, lineNumber?: number): string {\n  if (url) {\n    const displayName = Bindings.ResourceUtils.displayNameForURL(url);\n    let text = `${displayName}`;\n    if (typeof lineNumber !== 'undefined') {\n      text += `:${lineNumber + 1}`;\n    }\n    return text;\n  }\n\n  throw new Error('New linkifier component error: don\\'t know how to generate link text for given arguments');\n}\n"],
+  "mappings": "AAIA;AAGO,yBAAkB,KAAsC,YAA6B;AAC1F,MAAI,KAAK;AACP,UAAM,cAAc,SAAS,cAAc,kBAAkB;AAC7D,QAAI,OAAO,GAAG;AACd,QAAI,OAAO,eAAe,aAAa;AACrC,cAAQ,IAAI,aAAa;AAAA;AAE3B,WAAO;AAAA;AAGT,QAAM,IAAI,MAAM;AAAA;",
+  "names": []
+}

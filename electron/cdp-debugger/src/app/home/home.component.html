@@ -1,0 +1,38 @@
+<div class="header">
+  <span class="title">
+    {{ "PAGES.HOME.TITLE" | translate }}
+  </span>
+  <div class="actions">
+    <button mat-icon-button aria-label="Refresh List" (click)="refreshList()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Add Debug Port" (click)="addPort()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Go to About Page" (click)="goAbout()">
+      <mat-icon>info</mat-icon>
+    </button>
+  </div>
+</div>
+<ng-container *ngFor="let item of list">
+  <mat-card>
+    <mat-card-title title="{{ item.title }}">{{
+      item.title | truncate
+    }}</mat-card-title>
+    <mat-card-subtitle>
+      ID: {{ item.id }}
+      <mat-chip-list aria-label="item.type">
+        <mat-chip color="primary">{{ item.type }}</mat-chip>
+      </mat-chip-list>
+    </mat-card-subtitle>
+    <mat-card-content>
+      {{ "PAGES.HOME.DESCRIPTION" | translate }}:
+      {{ item.description || "N/A" }}
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="accent" (click)="doDebug(item)">
+        Debug
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>

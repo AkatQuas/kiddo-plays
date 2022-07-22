@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/elements/StylePropertyUtils.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport type * as SDK from '../../core/sdk/sdk.js';\n\nexport function getCssDeclarationAsJavascriptProperty(declaration: SDK.CSSProperty.CSSProperty): string {\n  const {name, value} = declaration;\n  const declarationNameAsJs =\n      name.startsWith('--') ? `'${name}'` : name.replace(/-([a-z])/gi, (_str, group) => group.toUpperCase());\n  const declarationAsJs = `'${value.replaceAll('\\'', '\\\\\\'')}'`;\n  return `${declarationNameAsJs}: ${declarationAsJs}`;\n}\n"],
+  "mappings": "AAMO,sDAA+C,aAAkD;AACtG,QAAM,EAAC,MAAM,UAAS;AACtB,QAAM,sBACF,KAAK,WAAW,QAAQ,IAAI,UAAU,KAAK,QAAQ,cAAc,CAAC,MAAM,UAAU,MAAM;AAC5F,QAAM,kBAAkB,IAAI,MAAM,WAAW,KAAM;AACnD,SAAO,GAAG,wBAAwB;AAAA;",
+  "names": []
+}

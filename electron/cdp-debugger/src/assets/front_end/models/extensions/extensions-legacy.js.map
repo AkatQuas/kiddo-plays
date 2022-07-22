@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/models/extensions/extensions-legacy.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// @ts-nocheck\n\nimport * as ExtensionsModule from './extensions.js';\n\nself.Extensions = self.Extensions || {};\nExtensions = Extensions || {};\n\n/** @constructor */\nExtensions.ExtensionSidebarPane = ExtensionsModule.ExtensionPanel.ExtensionSidebarPane;\n\n/** @constructor */\nExtensions.ExtensionServer = ExtensionsModule.ExtensionServer.ExtensionServer;\n\n/** @enum {symbol} */\nExtensions.ExtensionServer.Events = ExtensionsModule.ExtensionServer.Events;\n\n/** @constructor */\nExtensions.ExtensionStatus = ExtensionsModule.ExtensionServer.ExtensionStatus;\n\n/** @constructor */\nExtensions.ExtensionTraceProvider = ExtensionsModule.ExtensionTraceProvider.ExtensionTraceProvider;\n\n/** @interface */\nExtensions.TracingSession = ExtensionsModule.ExtensionTraceProvider.TracingSession;\n"],
+  "mappings": "AAMA;AAEA,KAAK,aAAa,KAAK,cAAc;AACrC,aAAa,cAAc;AAG3B,WAAW,uBAAuB,iBAAiB,eAAe;AAGlE,WAAW,kBAAkB,iBAAiB,gBAAgB;AAG9D,WAAW,gBAAgB,SAAS,iBAAiB,gBAAgB;AAGrE,WAAW,kBAAkB,iBAAiB,gBAAgB;AAG9D,WAAW,yBAAyB,iBAAiB,uBAAuB;AAG5E,WAAW,iBAAiB,iBAAiB,uBAAuB;",
+  "names": []
+}

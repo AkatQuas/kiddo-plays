@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/third_party/lighthouse/report/report.ts"],
+  "sourcesContent": ["export * from './bundle.js';\n"],
+  "mappings": "AAAA;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/legacy/components/perf_ui/GCActionDelegate.ts"],
+  "sourcesContent": ["// Copyright 2016 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as SDK from '../../../../core/sdk/sdk.js';\nimport type * as UI from '../../legacy.js';\n\nlet gCActionDelegateInstance: GCActionDelegate;\n\nexport class GCActionDelegate implements UI.ActionRegistration.ActionDelegate {\n  static instance(opts: {\n    forceNew: boolean|null,\n  } = {forceNew: null}): GCActionDelegate {\n    const {forceNew} = opts;\n    if (!gCActionDelegateInstance || forceNew) {\n      gCActionDelegateInstance = new GCActionDelegate();\n    }\n\n    return gCActionDelegateInstance;\n  }\n\n  handleAction(_context: UI.Context.Context, _actionId: string): boolean {\n    for (const heapProfilerModel of SDK.TargetManager.TargetManager.instance().models(\n             SDK.HeapProfilerModel.HeapProfilerModel)) {\n      void heapProfilerModel.collectGarbage();\n    }\n    return true;\n  }\n}\n"],
+  "mappings": "AAIA;AAGA,IAAI;AAEG,8BAAuE;AAAA,SACrE,SAAS,OAEZ,EAAC,UAAU,QAAyB;AACtC,UAAM,EAAC,aAAY;AACnB,QAAI,CAAC,4BAA4B,UAAU;AACzC,iCAA2B,IAAI;AAAA;AAGjC,WAAO;AAAA;AAAA,EAGT,aAAa,UAA8B,WAA4B;AACrE,eAAW,qBAAqB,IAAI,cAAc,cAAc,WAAW,OAClE,IAAI,kBAAkB,oBAAoB;AACjD,WAAK,kBAAkB;AAAA;AAEzB,WAAO;AAAA;AAAA;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/third_party/diff/diff-legacy.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// @ts-nocheck\n\nimport * as DiffModule from './diff.js';\n\nself.Diff = self.Diff || {};\nDiff = Diff || {};\n\nDiff.Diff = DiffModule.Diff.DiffWrapper;\n\n/** @enum {number} */\nDiff.Diff.Operation = DiffModule.Diff.Operation;\n"],
+  "mappings": "AAMA;AAEA,KAAK,OAAO,KAAK,QAAQ;AACzB,OAAO,QAAQ;AAEf,KAAK,OAAO,WAAW,KAAK;AAG5B,KAAK,KAAK,YAAY,WAAW,KAAK;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/services/window_bounds/WindowBoundsService.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as Legacy from '../../ui/legacy/legacy.js';\n\nexport interface WindowBoundsService {\n  getDevToolsBoundingElement(): HTMLElement;\n}\n\nlet windowBoundsServiceImplInstance: WindowBoundsServiceImpl;\nexport class WindowBoundsServiceImpl implements WindowBoundsService {\n  static instance(opts: {\n    forceNew: boolean|null,\n  } = {forceNew: null}): WindowBoundsServiceImpl {\n    const {forceNew} = opts;\n    if (!windowBoundsServiceImplInstance || forceNew) {\n      windowBoundsServiceImplInstance = new WindowBoundsServiceImpl();\n    }\n\n    return windowBoundsServiceImplInstance;\n  }\n\n  getDevToolsBoundingElement(): HTMLElement {\n    return Legacy.InspectorView.InspectorView.maybeGetInspectorViewInstance()?.element || document.body;\n  }\n}\n"],
+  "mappings": "AAIA;AAMA,IAAI;AACG,qCAA6D;AAAA,SAC3D,SAAS,OAEZ,EAAC,UAAU,QAAgC;AAC7C,UAAM,EAAC,aAAY;AACnB,QAAI,CAAC,mCAAmC,UAAU;AAChD,wCAAkC,IAAI;AAAA;AAGxC,WAAO;AAAA;AAAA,EAGT,6BAA0C;AACxC,WAAO,OAAO,cAAc,cAAc,iCAAiC,WAAW,SAAS;AAAA;AAAA;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/legacy/components/utils/Reload.ts"],
+  "sourcesContent": ["// Copyright 2015 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as Host from '../../../../core/host/host.js';\nimport * as UI from '../../legacy.js';\n\nexport function reload(): void {\n  if (UI.DockController.DockController.instance().canDock() &&\n      UI.DockController.DockController.instance().dockSide() === UI.DockController.DockState.UNDOCKED) {\n    Host.InspectorFrontendHost.InspectorFrontendHostInstance.setIsDocked(true, function() {});\n  }\n  Host.InspectorFrontendHost.InspectorFrontendHostInstance.reattach(() => window.location.reload());\n}\n"],
+  "mappings": "AAIA;AACA;AAEO,yBAAwB;AAC7B,MAAI,GAAG,eAAe,eAAe,WAAW,aAC5C,GAAG,eAAe,eAAe,WAAW,eAAe,GAAG,eAAe,UAAU,UAAU;AACnG,SAAK,sBAAsB,8BAA8B,YAAY,MAAM,WAAW;AAAA;AAAA;AAExF,OAAK,sBAAsB,8BAA8B,SAAS,MAAM,OAAO,SAAS;AAAA;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/models/extensions/RecorderPluginManager.ts"],
+  "sourcesContent": ["// Copyright 2022 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport type {RecorderExtensionEndpoint} from './RecorderExtensionEndpoint.js';\n\nlet instance: RecorderPluginManager|null = null;\n\nexport class RecorderPluginManager {\n  #plugins: Set<RecorderExtensionEndpoint> = new Set();\n\n  static instance(): RecorderPluginManager {\n    if (!instance) {\n      instance = new RecorderPluginManager();\n    }\n    return instance;\n  }\n\n  addPlugin(plugin: RecorderExtensionEndpoint): void {\n    this.#plugins.add(plugin);\n  }\n\n  removePlugin(plugin: RecorderExtensionEndpoint): void {\n    this.#plugins.delete(plugin);\n  }\n\n  plugins(): RecorderExtensionEndpoint[] {\n    return Array.from(this.#plugins.values());\n  }\n}\n"],
+  "mappings": "AAMA,IAAI,WAAuC;AAEpC,mCAA4B;AAAA,aACU,oBAAI;AAAA,SAExC,WAAkC;AACvC,QAAI,CAAC,UAAU;AACb,iBAAW,IAAI;AAAA;AAEjB,WAAO;AAAA;AAAA,EAGT,UAAU,QAAyC;AACjD,kBAAc,IAAI;AAAA;AAAA,EAGpB,aAAa,QAAyC;AACpD,kBAAc,OAAO;AAAA;AAAA,EAGvB,UAAuC;AACrC,WAAO,MAAM,KAAK,cAAc;AAAA;AAAA;",
+  "names": []
+}

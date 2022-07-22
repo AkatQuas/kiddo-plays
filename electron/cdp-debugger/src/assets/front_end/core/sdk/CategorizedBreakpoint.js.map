@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/core/sdk/CategorizedBreakpoint.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport class CategorizedBreakpoint {\n  readonly #categoryInternal: string;\n  titleInternal: string;\n  enabledInternal: boolean;\n\n  constructor(category: string, title: string) {\n    this.#categoryInternal = category;\n    this.titleInternal = title;\n    this.enabledInternal = false;\n  }\n\n  category(): string {\n    return this.#categoryInternal;\n  }\n\n  enabled(): boolean {\n    return this.enabledInternal;\n  }\n\n  setEnabled(enabled: boolean): void {\n    this.enabledInternal = enabled;\n  }\n\n  title(): string {\n    return this.titleInternal;\n  }\n\n  setTitle(title: string): void {\n    this.titleInternal = title;\n  }\n}\n"],
+  "mappings": "AAIO,mCAA4B;AAAA;AAAA,EAEjC;AAAA,EACA;AAAA,EAEA,YAAY,UAAkB,OAAe;AAC3C,6BAAyB;AACzB,SAAK,gBAAgB;AACrB,SAAK,kBAAkB;AAAA;AAAA,EAGzB,WAAmB;AACjB,WAAO;AAAA;AAAA,EAGT,UAAmB;AACjB,WAAO,KAAK;AAAA;AAAA,EAGd,WAAW,SAAwB;AACjC,SAAK,kBAAkB;AAAA;AAAA,EAGzB,QAAgB;AACd,WAAO,KAAK;AAAA;AAAA,EAGd,SAAS,OAAqB;AAC5B,SAAK,gBAAgB;AAAA;AAAA;",
+  "names": []
+}

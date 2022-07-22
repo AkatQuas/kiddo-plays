@@ -1,0 +1,21 @@
+import * as MobileThrottlingModule from "./mobile_throttling.js";
+self.MobileThrottling = self.MobileThrottling || {};
+MobileThrottling = MobileThrottling || {};
+MobileThrottling.MobileThrottlingSelector = MobileThrottlingModule.MobileThrottlingSelector.MobileThrottlingSelector;
+MobileThrottling.NetworkPanelIndicator = MobileThrottlingModule.NetworkPanelIndicator.NetworkPanelIndicator;
+MobileThrottling.NetworkThrottlingSelector = MobileThrottlingModule.NetworkThrottlingSelector.NetworkThrottlingSelector;
+MobileThrottling.ThrottlingManager = MobileThrottlingModule.ThrottlingManager.ThrottlingManager;
+MobileThrottling.ThrottlingManager.ActionDelegate = MobileThrottlingModule.ThrottlingManager.ActionDelegate;
+MobileThrottling.throttlingManager = MobileThrottlingModule.ThrottlingManager.throttlingManager;
+MobileThrottling.CPUThrottlingRates = MobileThrottlingModule.ThrottlingPresets.CPUThrottlingRates;
+MobileThrottling.NoThrottlingConditions = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.getNoThrottlingConditions;
+MobileThrottling.OfflineConditions = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.getOfflineConditions;
+MobileThrottling.LowEndMobileConditions = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.getLowEndMobileConditions;
+MobileThrottling.MidTierMobileConditions = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.getMidTierMobileConditions;
+MobileThrottling.CustomConditions = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.getCustomConditions;
+MobileThrottling.mobilePresets = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.getMobilePresets;
+MobileThrottling.advancedMobilePresets = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.getAdvancedMobilePresets;
+MobileThrottling.networkPresets = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.networkPresets;
+MobileThrottling.cpuThrottlingPresets = MobileThrottlingModule.ThrottlingPresets.ThrottlingPresets.cpuThrottlingPresets;
+MobileThrottling.ThrottlingSettingsTab = MobileThrottlingModule.ThrottlingSettingsTab.ThrottlingSettingsTab;
+//# sourceMappingURL=mobile_throttling-legacy.js.map

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/components/docs/expandable_list/basic.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as FrontendHelpers from '../../../../../test/unittests/front_end/helpers/EnvironmentHelpers.js';\nimport * as LitHtml from '../../../lit-html/lit-html.js';\nimport * as ExpandableList from '../../expandable_list/expandable_list.js';\n\nawait FrontendHelpers.initializeGlobalVars();\n\nconst component = new ExpandableList.ExpandableList.ExpandableList();\n\nconst rows = [];\nrows.push(LitHtml.html`\n  <div>This is row 1. Click on the triangle icon to expand.</div>\n`);\n\nfor (let rowNumber = 2; rowNumber < 11; rowNumber++) {\n  rows.push(LitHtml.html`\n    <div>This is row ${rowNumber}.</div>\n  `);\n}\n\ncomponent.data = {\n  rows,\n};\n\ndocument.getElementById('container')?.appendChild(component);\n"],
+  "mappings": "AAIA;AACA;AACA;AAEA,MAAM,gBAAgB;AAEtB,MAAM,YAAY,IAAI,eAAe,eAAe;AAEpD,MAAM,OAAO;AACb,KAAK,KAAK,QAAQ;AAAA;AAAA;AAIlB,SAAS,YAAY,GAAG,YAAY,IAAI,aAAa;AACnD,OAAK,KAAK,QAAQ;AAAA,uBACG;AAAA;AAAA;AAIvB,UAAU,OAAO;AAAA,EACf;AAAA;AAGF,SAAS,eAAe,cAAc,YAAY;",
+  "names": []
+}

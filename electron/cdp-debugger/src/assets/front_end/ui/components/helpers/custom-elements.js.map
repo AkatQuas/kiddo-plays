@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/helpers/custom-elements.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n/*\n * Function to define a customElement and display an error if the element has already been defined.\n */\n\nexport function defineComponent(tagName: string, componentClass: CustomElementConstructor): void {\n  if (customElements.get(tagName)) {\n    console.error(`${tagName} already defined!`);\n    return;\n  }\n  // eslint-disable-next-line rulesdir/custom_element_component_definition\n  customElements.define(tagName, componentClass);\n}\n"],
+  "mappings": "AAQO,gCAAyB,SAAiB,gBAAgD;AAC/F,MAAI,eAAe,IAAI,UAAU;AAC/B,YAAQ,MAAM,GAAG;AACjB;AAAA;AAGF,iBAAe,OAAO,SAAS;AAAA;",
+  "names": []
+}

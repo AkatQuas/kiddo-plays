@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/tree_outline/tree_outline.ts"],
+  "sourcesContent": ["// Copyright (c) 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\nimport * as TreeOutline from './TreeOutline.js';\nimport * as TreeOutlineUtils from './TreeOutlineUtils.js';\n\nexport {\n  TreeOutline,\n  TreeOutlineUtils,\n};\n"],
+  "mappings": "AAGA;AACA;AAEA;AAAA;AAAA;AAAA;",
+  "names": []
+}

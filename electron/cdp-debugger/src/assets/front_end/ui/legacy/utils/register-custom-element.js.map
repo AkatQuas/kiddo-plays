@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/legacy/utils/register-custom-element.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport function registerCustomElement(\n    localName: string, typeExtension: string, definition: new () => HTMLElement): () => Element {\n  self.customElements.define(typeExtension, class extends definition {\n    constructor() {\n      // The JSDoc above does not allow the super call to have no params, but\n      // it seems to be the nearest to something both Closure and TS understand.\n      // @ts-ignore crbug.com/1011811: Fix after Closure has been removed.\n      super();\n      // TODO(einbinder) convert to classes and custom element tags\n      this.setAttribute('is', typeExtension);\n    }\n  }, {extends: localName});\n  return (): Element => document.createElement(localName, {is: typeExtension});\n}\n"],
+  "mappings": "AAIO,sCACH,WAAmB,eAAuB,YAAkD;AAC9F,OAAK,eAAe,OAAO,eAAe,cAAc,WAAW;AAAA,IACjE,cAAc;AAIZ;AAEA,WAAK,aAAa,MAAM;AAAA;AAAA,KAEzB,EAAC,SAAS;AACb,SAAO,MAAe,SAAS,cAAc,WAAW,EAAC,IAAI;AAAA;",
+  "names": []
+}

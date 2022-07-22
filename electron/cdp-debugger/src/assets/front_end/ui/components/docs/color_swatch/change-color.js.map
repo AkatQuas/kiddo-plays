@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/components/docs/color_swatch/change-color.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as FrontendHelpers from '../../../../../test/unittests/front_end/helpers/EnvironmentHelpers.js';\nimport * as InlineEditor from '../../../legacy/components/inline_editor/inline_editor.js';\nimport * as ComponentHelpers from '../../helpers/helpers.js';\n\nconst container = document.querySelector('#container');\nconst picker = document.querySelector<HTMLInputElement>('#picker');\n\nawait ComponentHelpers.ComponentServerSetup.setup();\nawait FrontendHelpers.initializeGlobalVars();\n\nconst component = new InlineEditor.ColorSwatch.ColorSwatch();\ndocument.getElementById('container')?.appendChild(component);\ncomponent.renderColor('#f06');\ncontainer?.insertBefore(component, picker);\n\npicker?.addEventListener('input', e => {\n  component.renderColor((e.target as HTMLInputElement).value);\n});\n\ncomponent.addEventListener(InlineEditor.ColorSwatch.ClickEvent.eventName, () => picker?.click());\n"],
+  "mappings": "AAIA;AACA;AACA;AAEA,MAAM,YAAY,SAAS,cAAc;AACzC,MAAM,SAAS,SAAS,cAAgC;AAExD,MAAM,iBAAiB,qBAAqB;AAC5C,MAAM,gBAAgB;AAEtB,MAAM,YAAY,IAAI,aAAa,YAAY;AAC/C,SAAS,eAAe,cAAc,YAAY;AAClD,UAAU,YAAY;AACtB,WAAW,aAAa,WAAW;AAEnC,QAAQ,iBAAiB,SAAS,OAAK;AACrC,YAAU,YAAa,EAAE,OAA4B;AAAA;AAGvD,UAAU,iBAAiB,aAAa,YAAY,WAAW,WAAW,MAAM,QAAQ;",
+  "names": []
+}

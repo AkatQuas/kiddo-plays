@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/text_editor/text_editor.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport * as Config from './config.js';\nexport * as JavaScript from './javascript.js';\nexport * as Position from './position.js';\nexport * as TextEditor from './TextEditor.js';\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;",
+  "names": []
+}

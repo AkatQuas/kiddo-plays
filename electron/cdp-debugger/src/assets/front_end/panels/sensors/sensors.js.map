@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/sensors/sensors.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as LocationsSettingsTab from './LocationsSettingsTab.js';\nimport * as SensorsView from './SensorsView.js';\n\nexport {\n  LocationsSettingsTab,\n  SensorsView,\n};\n"],
+  "mappings": "AAIA;AACA;AAEA;AAAA;AAAA;AAAA;",
+  "names": []
+}

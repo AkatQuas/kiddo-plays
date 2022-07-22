@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/text_editor/position.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport type * as CodeMirror from '../../../third_party/codemirror.next/codemirror.next.js';\n\nexport function toOffset(\n    doc: CodeMirror.Text, {lineNumber, columnNumber}: {lineNumber: number, columnNumber: number}): number {\n  const line = doc.line(Math.max(1, Math.min(doc.lines, lineNumber + 1)));\n  return Math.max(line.from, Math.min(line.to, line.from + columnNumber));\n}\n\nexport function toLineColumn(doc: CodeMirror.Text, offset: number): {lineNumber: number, columnNumber: number} {\n  offset = Math.max(0, Math.min(offset, doc.length));\n  const line = doc.lineAt(offset);\n  return {lineNumber: line.number - 1, columnNumber: offset - line.from};\n}\n"],
+  "mappings": "AAMO,yBACH,KAAsB,EAAC,YAAY,gBAAmE;AACxG,QAAM,OAAO,IAAI,KAAK,KAAK,IAAI,GAAG,KAAK,IAAI,IAAI,OAAO,aAAa;AACnE,SAAO,KAAK,IAAI,KAAK,MAAM,KAAK,IAAI,KAAK,IAAI,KAAK,OAAO;AAAA;AAGpD,6BAAsB,KAAsB,QAA4D;AAC7G,WAAS,KAAK,IAAI,GAAG,KAAK,IAAI,QAAQ,IAAI;AAC1C,QAAM,OAAO,IAAI,OAAO;AACxB,SAAO,EAAC,YAAY,KAAK,SAAS,GAAG,cAAc,SAAS,KAAK;AAAA;",
+  "names": []
+}

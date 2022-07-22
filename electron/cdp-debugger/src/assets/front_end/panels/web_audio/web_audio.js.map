@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/web_audio/web_audio.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as AudioContextContentBuilder from './AudioContextContentBuilder.js';\nimport * as AudioContextSelector from './AudioContextSelector.js';\nimport * as WebAudioModel from './WebAudioModel.js';\nimport * as WebAudioView from './WebAudioView.js';\n\nexport {\n  EdgeView,\n  GraphManager,\n  GraphStyle,\n  GraphView,\n  NodeRendererUtility,\n  NodeView,\n} from './graph_visualizer/graph_visualizer.js';\nexport {\n  AudioContextContentBuilder,\n  AudioContextSelector,\n  WebAudioModel,\n  WebAudioView,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAQA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

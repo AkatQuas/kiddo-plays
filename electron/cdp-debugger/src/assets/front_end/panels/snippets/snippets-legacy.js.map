@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/snippets/snippets-legacy.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// @ts-nocheck\n\nimport * as SnippetsModule from './snippets.js';\n\nself.Snippets = self.Snippets || {};\nSnippets = Snippets || {};\n\nSnippets.evaluateScriptSnippet = SnippetsModule.ScriptSnippetFileSystem.evaluateScriptSnippet;\nSnippets.isSnippetsUISourceCode = SnippetsModule.ScriptSnippetFileSystem.isSnippetsUISourceCode;\nSnippets.isSnippetsProject = SnippetsModule.ScriptSnippetFileSystem.isSnippetsProject;\n\n/**\n * @constructor\n */\nSnippets.SnippetsQuickOpen = SnippetsModule.SnippetsQuickOpen.SnippetsQuickOpen;\n\nSnippets.ScriptSnippetFileSystem = {};\nSnippets.ScriptSnippetFileSystem.findSnippetsProject = SnippetsModule.ScriptSnippetFileSystem.findSnippetsProject;\n"],
+  "mappings": "AAMA;AAEA,KAAK,WAAW,KAAK,YAAY;AACjC,WAAW,YAAY;AAEvB,SAAS,wBAAwB,eAAe,wBAAwB;AACxE,SAAS,yBAAyB,eAAe,wBAAwB;AACzE,SAAS,oBAAoB,eAAe,wBAAwB;AAKpE,SAAS,oBAAoB,eAAe,kBAAkB;AAE9D,SAAS,0BAA0B;AACnC,SAAS,wBAAwB,sBAAsB,eAAe,wBAAwB;",
+  "names": []
+}

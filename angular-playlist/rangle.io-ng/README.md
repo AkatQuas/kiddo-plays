@@ -150,6 +150,26 @@ class NgForComponent {
 </ng-template>
 ```
 
+### ng-template / ng-container with context
+
+See [NgTemplateOutlet](https://angular.io/api/common/NgTemplateOutlet) and https://stackoverflow.com/a/48515379 .
+
+```html
+<ng-container
+  [ngTemplateOutlet]="condition ? thenTpl : elseTpl"
+  [ngTemplateOutletContext]="{ $implicit: 'World', localIndex: index }"
+></ng-container>
+
+<!-- name is resolved to "$implicit" -->
+<ng-template #thenTpl let-name>
+  <p>Hello {{name}}!</p>
+</ng-template>
+
+<ng-template #elseTpl let-index="localIndex">
+  <p>Hello {{index}}!</p>
+</ng-template>
+```
+
 ### TemplateRef
 
 ```typescript

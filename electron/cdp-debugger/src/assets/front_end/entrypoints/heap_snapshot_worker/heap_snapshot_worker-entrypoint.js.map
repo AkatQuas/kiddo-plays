@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/entrypoints/heap_snapshot_worker/heap_snapshot_worker-entrypoint.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as HeapSnapshotWorker from './heap_snapshot_worker.js';\n\n// We need to force the worker context\n// eslint-disable-next-line @typescript-eslint/no-explicit-any\nconst ctxSelf = self as any as Worker;\nconst dispatcher = new HeapSnapshotWorker.HeapSnapshotWorkerDispatcher.HeapSnapshotWorkerDispatcher(\n    ctxSelf, (message: unknown) => self.postMessage(message));\n\nfunction installMessageEventListener(listener: EventListener): void {\n  ctxSelf.addEventListener('message', listener, false);\n}\n\n// @ts-ignore\ninstallMessageEventListener(dispatcher.dispatchMessage.bind(dispatcher));\n\nself.postMessage('workerReady');\n"],
+  "mappings": "AAIA;AAIA,MAAM,UAAU;AAChB,MAAM,aAAa,IAAI,mBAAmB,6BAA6B,6BACnE,SAAS,CAAC,YAAqB,KAAK,YAAY;AAEpD,qCAAqC,UAA+B;AAClE,UAAQ,iBAAiB,WAAW,UAAU;AAAA;AAIhD,4BAA4B,WAAW,gBAAgB,KAAK;AAE5D,KAAK,YAAY;",
+  "names": []
+}

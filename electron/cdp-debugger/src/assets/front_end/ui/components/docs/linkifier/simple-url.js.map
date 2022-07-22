@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/components/docs/linkifier/simple-url.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as ComponentHelpers from '../../helpers/helpers.js';\nimport * as Linkifier from '../../linkifier/linkifier.js';\nimport type * as Platform from '../../../../core/platform/platform.js';\n\nawait ComponentHelpers.ComponentServerSetup.setup();\n\nconst link = new Linkifier.Linkifier.Linkifier();\n\nlink.data = {\n  url: 'example.com' as Platform.DevToolsPath.UrlString,\n  lineNumber: 11,\n  columnNumber: 1,\n};\n\nconst container = document.getElementById('container');\n\ncontainer?.addEventListener('linkifieractivated', (event: Event) => {\n  const data = JSON.stringify((event as unknown as {data: unknown}).data, null, 2);\n  alert(`Linkifier click: ${data}`);\n});\ncontainer?.appendChild(link);\n"],
+  "mappings": "AAIA;AACA;AAGA,MAAM,iBAAiB,qBAAqB;AAE5C,MAAM,OAAO,IAAI,UAAU,UAAU;AAErC,KAAK,OAAO;AAAA,EACV,KAAK;AAAA,EACL,YAAY;AAAA,EACZ,cAAc;AAAA;AAGhB,MAAM,YAAY,SAAS,eAAe;AAE1C,WAAW,iBAAiB,sBAAsB,CAAC,UAAiB;AAClE,QAAM,OAAO,KAAK,UAAW,MAAqC,MAAM,MAAM;AAC9E,QAAM,oBAAoB;AAAA;AAE5B,WAAW,YAAY;",
+  "names": []
+}

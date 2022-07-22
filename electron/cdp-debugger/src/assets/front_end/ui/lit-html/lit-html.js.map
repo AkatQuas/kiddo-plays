@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/ui/lit-html/lit-html.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as LitHtml from '../../third_party/lit-html/lit-html.js';\nimport * as Static from './static.js';\nexport {Directive, type TemplateResult} from '../../third_party/lit-html/lit-html.js';\n\nconst {render, svg, Directives, nothing, noChange} = LitHtml;\nconst {html, literal, flattenTemplate} = Static;\n\ntype LitTemplate = LitHtml.TemplateResult|typeof nothing;\n\nexport {\n  render,\n  Directives,\n  nothing,\n  noChange,\n  svg,\n  html,\n  literal,\n  flattenTemplate,  // Exposed for unit testing.\n  type LitTemplate,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AAEA,MAAM,EAAC,QAAQ,KAAK,YAAY,SAAS,aAAY;AACrD,MAAM,EAAC,MAAM,SAAS,oBAAmB;AAIzC;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

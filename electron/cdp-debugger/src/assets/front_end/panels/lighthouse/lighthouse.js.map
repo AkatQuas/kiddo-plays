@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/lighthouse/lighthouse.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport '../../third_party/lighthouse/report-assets/report-generator.mjs';\n\nimport * as LighthouseController from './LighthouseController.js';\nimport * as LighthousePanel from './LighthousePanel.js';\nimport * as LighthouseProtocolService from './LighthouseProtocolService.js';\nimport * as LighthouseReporterTypes from './LighthouseReporterTypes.js';\nimport * as LighthouseReportRenderer from './LighthouseReportRenderer.js';\nimport * as LighthouseReportSelector from './LighthouseReportSelector.js';\nimport * as LighthouseStartView from './LighthouseStartView.js';\nimport * as LighthouseStatusView from './LighthouseStatusView.js';\nimport * as RadioSetting from './RadioSetting.js';\n\nexport {\n  LighthouseController,\n  LighthousePanel,\n  LighthouseProtocolService,\n  LighthouseReporterTypes,\n  LighthouseReportRenderer,\n  LighthouseReportSelector,\n  LighthouseStartView,\n  LighthouseStatusView,\n  RadioSetting,\n};\n"],
+  "mappings": "AAIA;AAEA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

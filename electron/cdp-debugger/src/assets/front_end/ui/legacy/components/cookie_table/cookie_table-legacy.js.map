@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/legacy/components/cookie_table/cookie_table-legacy.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// @ts-nocheck\n\nimport * as CookieTableModule from './cookie_table.js';\n\nself.CookieTable = self.CookieTable || {};\nCookieTable = CookieTable || {};\n\n/** @constructor */\nCookieTable.CookiesTable = CookieTableModule.CookiesTable.CookiesTable;\n\n/** @constructor */\nCookieTable.DataGridNode = CookieTableModule.CookiesTable.DataGridNode;\n"],
+  "mappings": "AAMA;AAEA,KAAK,cAAc,KAAK,eAAe;AACvC,cAAc,eAAe;AAG7B,YAAY,eAAe,kBAAkB,aAAa;AAG1D,YAAY,eAAe,kBAAkB,aAAa;",
+  "names": []
+}

@@ -1,0 +1,28 @@
+import * as i18n from "../../core/i18n/i18n.js";
+import * as UI from "../../ui/legacy/legacy.js";
+let loadedAccessibilityModule;
+const UIStrings = {
+  accessibility: "Accessibility",
+  shoAccessibility: "Show Accessibility"
+};
+const str_ = i18n.i18n.registerUIStrings("panels/accessibility/accessibility-meta.ts", UIStrings);
+const i18nLazyString = i18n.i18n.getLazilyComputedLocalizedString.bind(void 0, str_);
+async function loadAccessibilityModule() {
+  if (!loadedAccessibilityModule) {
+    loadedAccessibilityModule = await import("./accessibility.js");
+  }
+  return loadedAccessibilityModule;
+}
+UI.ViewManager.registerViewExtension({
+  location: UI.ViewManager.ViewLocationValues.ELEMENTS_SIDEBAR,
+  id: "accessibility.view",
+  title: i18nLazyString(UIStrings.accessibility),
+  commandPrompt: i18nLazyString(UIStrings.shoAccessibility),
+  order: 10,
+  persistence: UI.ViewManager.ViewPersistence.PERMANENT,
+  async loadView() {
+    const Accessibility = await loadAccessibilityModule();
+    return Accessibility.AccessibilitySidebarView.AccessibilitySidebarView.instance();
+  }
+});
+//# sourceMappingURL=accessibility-meta.js.map

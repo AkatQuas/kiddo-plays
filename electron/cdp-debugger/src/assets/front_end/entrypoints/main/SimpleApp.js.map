@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/entrypoints/main/SimpleApp.ts"],
+  "sourcesContent": ["// Copyright 2014 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport type * as Common from '../../core/common/common.js';\nimport * as UI from '../../ui/legacy/legacy.js';\n\nexport class SimpleApp implements Common.App.App {\n  presentUI(document: Document): void {\n    const rootView = new UI.RootView.RootView();\n    UI.InspectorView.InspectorView.instance().show(rootView.element);\n    rootView.attachToDocument(document);\n    rootView.focus();\n  }\n}\n\nlet simpleAppProviderInstance: SimpleAppProvider;\n\nexport class SimpleAppProvider implements Common.AppProvider.AppProvider {\n  static instance(opts: {\n    forceNew: boolean|null,\n  } = {forceNew: null}): SimpleAppProvider {\n    const {forceNew} = opts;\n    if (!simpleAppProviderInstance || forceNew) {\n      simpleAppProviderInstance = new SimpleAppProvider();\n    }\n\n    return simpleAppProviderInstance;\n  }\n\n  createApp(): Common.App.App {\n    return new SimpleApp();\n  }\n}\n"],
+  "mappings": "AAKA;AAEO,uBAA0C;AAAA,EAC/C,UAAU,UAA0B;AAClC,UAAM,WAAW,IAAI,GAAG,SAAS;AACjC,OAAG,cAAc,cAAc,WAAW,KAAK,SAAS;AACxD,aAAS,iBAAiB;AAC1B,aAAS;AAAA;AAAA;AAIb,IAAI;AAEG,+BAAkE;AAAA,SAChE,SAAS,OAEZ,EAAC,UAAU,QAA0B;AACvC,UAAM,EAAC,aAAY;AACnB,QAAI,CAAC,6BAA6B,UAAU;AAC1C,kCAA4B,IAAI;AAAA;AAGlC,WAAO;AAAA;AAAA,EAGT,YAA4B;AAC1B,WAAO,IAAI;AAAA;AAAA;",
+  "names": []
+}

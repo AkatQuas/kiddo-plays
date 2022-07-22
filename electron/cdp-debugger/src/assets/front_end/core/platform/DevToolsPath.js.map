@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/core/platform/DevToolsPath.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nclass UrlStringTag {\n  private urlTag: (string|undefined);\n}\n/**\n * File paths in DevTools that are represented as URLs\n * @example\n * \u201Cfile:///Hello%20World/file/js\u201D\n */\nexport type UrlString = string&UrlStringTag;\nexport const EmptyUrlString = '' as UrlString;\n\nclass RawPathStringTag {\n  private rawPathTag: (string|undefined);\n}\n/**\n * File paths in DevTools that are represented as unencoded absolute\n * or relative paths\n * @example\n * \u201C/Hello World/file.js\u201D\n */\nexport type RawPathString = string&RawPathStringTag;\nexport const EmptyRawPathString = '' as RawPathString;\n\nclass EncodedPathStringTag {\n  private encodedPathTag: (string|undefined);\n}\n/**\n * File paths in DevTools that are represented as encoded paths\n * @example\n * \u201C/Hello%20World/file.js\u201D\n */\nexport type EncodedPathString = string&EncodedPathStringTag;\nexport const EmptyEncodedPathString = '' as EncodedPathString;\n"],
+  "mappings": "AAIA,mBAAmB;AAAA,EACT;AAAA;AAQH,aAAM,iBAAiB;AAE9B,uBAAuB;AAAA,EACb;AAAA;AASH,aAAM,qBAAqB;AAElC,2BAA2B;AAAA,EACjB;AAAA;AAQH,aAAM,yBAAyB;",
+  "names": []
+}

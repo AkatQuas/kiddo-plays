@@ -1,0 +1,49 @@
+<div class="container">
+  <h1 class="title">
+    {{ "PAGES.ABOUT.TITLE" | translate }}
+  </h1>
+
+  <p>
+    Inspired by
+    <button
+      mat-button
+      color="primary"
+      aria-label="open https://github.com/auchenberg/chrome-devtools-app in new tab icon"
+      (click)="open('https://github.com/auchenberg/chrome-devtools-app')"
+    >
+      chrome-devtools-app <mat-icon>open_in_new</mat-icon>
+    </button>
+    , built with
+    <button
+      mat-button
+      color="primary"
+      aria-label="open https://github.com/maximegris/angular-electron in new tab icon"
+      (click)="open('https://github.com/maximegris/angular-electron')"
+    >
+      angular-electron <mat-icon>open_in_new</mat-icon>
+    </button>
+    and
+    <button
+      mat-button
+      color="primary"
+      aria-label="open https://material.angular.io/ in new tab icon"
+      (click)="open('https://material.angular.io/')"
+    >
+      @angular/material <mat-icon>open_in_new</mat-icon></button
+    >.
+  </p>
+  <p>You could only debug those CDP in localhost.</p>
+  <p>
+    Please check<button
+      mat-button
+      color="primary"
+      aria-label="open https://chromedevtools.github.io/devtools-protocol in new tab icon"
+      (click)="open('https://chromedevtools.github.io/devtools-protocol')"
+    >
+      chrome devtools protocol <mat-icon>open_in_new</mat-icon>
+    </button>
+    for more details.
+  </p>
+
+  <a routerLink="/">{{ "PAGES.ABOUT.BACK_TO_HOME" | translate }}</a>
+</div>

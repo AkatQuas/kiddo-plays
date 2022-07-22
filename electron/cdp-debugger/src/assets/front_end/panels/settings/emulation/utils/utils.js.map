@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/panels/settings/emulation/utils/utils.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as StructuredHeaders from './StructuredHeaders.js';\nimport * as UserAgentMetadata from './UserAgentMetadata.js';\n\nexport {\n  StructuredHeaders,\n  UserAgentMetadata,\n};\n"],
+  "mappings": "AAIA;AACA;AAEA;AAAA;AAAA;AAAA;",
+  "names": []
+}

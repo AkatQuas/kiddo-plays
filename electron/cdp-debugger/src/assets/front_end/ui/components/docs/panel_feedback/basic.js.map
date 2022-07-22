@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/components/docs/panel_feedback/basic.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as FrontendHelpers from '../../../../../test/unittests/front_end/helpers/EnvironmentHelpers.js';\nimport * as PanelFeedback from '../../../components/panel_feedback/panel_feedback.js';\nimport * as ComponentHelpers from '../../helpers/helpers.js';\nimport type * as Platform from '../../../../core/platform/platform.js';\n\nawait ComponentHelpers.ComponentServerSetup.setup();\nawait FrontendHelpers.initializeGlobalVars();\n\nconst component = new PanelFeedback.PanelFeedback.PanelFeedback();\n\ncomponent.data = {\n  feedbackUrl: 'https://www.example.com' as Platform.DevToolsPath.UrlString,\n  quickStartUrl: 'https://www.example.com' as Platform.DevToolsPath.UrlString,\n  quickStartLinkText: 'Quick start: get started with the Recorder',\n};\n\ndocument.getElementById('container')?.appendChild(component);\n"],
+  "mappings": "AAIA;AACA;AACA;AAGA,MAAM,iBAAiB,qBAAqB;AAC5C,MAAM,gBAAgB;AAEtB,MAAM,YAAY,IAAI,cAAc,cAAc;AAElD,UAAU,OAAO;AAAA,EACf,aAAa;AAAA,EACb,eAAe;AAAA,EACf,oBAAoB;AAAA;AAGtB,SAAS,eAAe,cAAc,YAAY;",
+  "names": []
+}
