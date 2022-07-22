@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/components/docs/computed_style_trace/basic.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as Elements from '../../../../panels/elements/components/components.js';\n\nconst component = new Elements.ComputedStyleTrace.ComputedStyleTrace();\n\nconst traceValue = document.createElement('span');\ntraceValue.textContent = 'block';\ntraceValue.slot = 'trace-value';\ncomponent.appendChild(traceValue);\n\nconst traceLink = document.createElement('span');\ntraceLink.textContent = 'user agent stylesheet';\ntraceLink.slot = 'trace-link';\ncomponent.appendChild(traceLink);\n\ndocument.getElementById('container')?.appendChild(component);\ncomponent.data = {\n  selector: 'body',\n  active: true,\n  onNavigateToSource: (): void => {},\n};\n"],
+  "mappings": "AAIA;AAEA,MAAM,YAAY,IAAI,SAAS,mBAAmB;AAElD,MAAM,aAAa,SAAS,cAAc;AAC1C,WAAW,cAAc;AACzB,WAAW,OAAO;AAClB,UAAU,YAAY;AAEtB,MAAM,YAAY,SAAS,cAAc;AACzC,UAAU,cAAc;AACxB,UAAU,OAAO;AACjB,UAAU,YAAY;AAEtB,SAAS,eAAe,cAAc,YAAY;AAClD,UAAU,OAAO;AAAA,EACf,UAAU;AAAA,EACV,QAAQ;AAAA,EACR,oBAAoB,MAAY;AAAA;AAAA;",
+  "names": []
+}

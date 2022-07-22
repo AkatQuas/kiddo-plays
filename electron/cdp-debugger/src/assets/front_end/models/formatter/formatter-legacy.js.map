@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/models/formatter/formatter-legacy.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// @ts-nocheck\n\nimport * as FormatterModule from './formatter.js';\n\nself.Formatter = self.Formatter || {};\nFormatter = Formatter || {};\n\n/** @constructor */\nFormatter.FormatterWorkerPool = FormatterModule.FormatterWorkerPool.FormatterWorkerPool;\n\nFormatter.formatterWorkerPool = FormatterModule.FormatterWorkerPool.formatterWorkerPool;\n\n/** @interface */\nFormatter.FormatterSourceMapping = FormatterModule.ScriptFormatter.FormatterSourceMapping;\n\n/** @constructor */\nFormatter.SourceFormatter = FormatterModule.SourceFormatter.SourceFormatter;\n"],
+  "mappings": "AAMA;AAEA,KAAK,YAAY,KAAK,aAAa;AACnC,YAAY,aAAa;AAGzB,UAAU,sBAAsB,gBAAgB,oBAAoB;AAEpE,UAAU,sBAAsB,gBAAgB,oBAAoB;AAGpE,UAAU,yBAAyB,gBAAgB,gBAAgB;AAGnE,UAAU,kBAAkB,gBAAgB,gBAAgB;",
+  "names": []
+}

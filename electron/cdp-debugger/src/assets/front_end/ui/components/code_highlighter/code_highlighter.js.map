@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/code_highlighter/code_highlighter.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as Style from './codeHighlighter.css.js';\nimport * as CodeHighlighter from './CodeHighlighter.js';\n\nexport {\n  CodeHighlighter,\n  Style,\n};\n"],
+  "mappings": "AAIA;AACA;AAEA;AAAA;AAAA;AAAA;",
+  "names": []
+}

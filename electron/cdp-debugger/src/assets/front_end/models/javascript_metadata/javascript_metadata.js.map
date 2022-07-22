@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/models/javascript_metadata/javascript_metadata.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport './NativeFunctions.js';\nimport './DOMPinnedProperties.js';\nimport './JavaScriptMetadata.js';\n\nimport * as DOMPinnedProperties from './DOMPinnedProperties.js';\nimport * as JavaScriptMetadata from './JavaScriptMetadata.js';\nimport * as NativeFunctions from './NativeFunctions.js';\n\nexport {\n  DOMPinnedProperties,\n  JavaScriptMetadata,\n  NativeFunctions,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AAEA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

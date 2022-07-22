@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/third_party/wasmparser/wasmparser.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as WasmDis from './package/dist/esm/WasmDis.js';\nimport * as WasmParser from './package/dist/esm/WasmParser.js';\n\nexport {\n  WasmDis,\n  WasmParser,\n};\n"],
+  "mappings": "AAIA;AACA;AAEA;AAAA;AAAA;AAAA;",
+  "names": []
+}

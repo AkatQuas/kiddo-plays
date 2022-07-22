@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/models/issues_manager/IssuesManagerEvents.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport const enum Events {\n  IssuesCountUpdated = 'IssuesCountUpdated',\n  IssueAdded = 'IssueAdded',\n  FullUpdateRequired = 'FullUpdateRequired',\n}\n"],
+  "mappings": "AAIO,WAAW,SAAX,kBAAW,YAAX;AACL,kCAAqB;AACrB,0BAAa;AACb,kCAAqB;AAHL;AAAA;",
+  "names": []
+}

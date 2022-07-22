@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/markdown_view/markdown_view.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as MarkdownImage from './MarkdownImage.js';\nimport * as MarkdownImagesMap from './MarkdownImagesMap.js';\nimport * as MarkdownLink from './MarkdownLink.js';\nimport * as MarkdownLinksMap from './MarkdownLinksMap.js';\nimport * as MarkdownView from './MarkdownView.js';\n\nexport {\n  MarkdownImage,\n  MarkdownImagesMap,\n  MarkdownLink,\n  MarkdownLinksMap,\n  MarkdownView,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

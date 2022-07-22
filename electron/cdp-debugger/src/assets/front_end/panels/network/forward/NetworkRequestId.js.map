@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/panels/network/forward/NetworkRequestId.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport type * as SDK from '../../../core/sdk/sdk.js';\n\nexport class NetworkRequestId {\n  requestId: string;\n  manager: SDK.NetworkManager.NetworkManager;\n\n  constructor(requestId: string, manager: SDK.NetworkManager.NetworkManager) {\n    this.requestId = requestId;\n    this.manager = manager;\n  }\n}\n"],
+  "mappings": "AAMO,8BAAuB;AAAA,EAC5B;AAAA,EACA;AAAA,EAEA,YAAY,WAAmB,SAA4C;AACzE,SAAK,YAAY;AACjB,SAAK,UAAU;AAAA;AAAA;",
+  "names": []
+}

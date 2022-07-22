@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/helpers/set-css-property.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport function set(component: HTMLElement, name: string, value: string): void {\n  /*\n   * TypeScript only types host as an Element, but within a ShadowRoot of a Custom Element it will be an HTMLElement so we can safely cast here.\n   */\n  component.style.setProperty(name, value);\n}\n"],
+  "mappings": "AAIO,oBAAa,WAAwB,MAAc,OAAqB;AAI7E,YAAU,MAAM,YAAY,MAAM;AAAA;",
+  "names": []
+}

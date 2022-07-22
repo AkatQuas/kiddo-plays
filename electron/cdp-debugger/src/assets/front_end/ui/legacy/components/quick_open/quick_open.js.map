@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/legacy/components/quick_open/quick_open.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as CommandMenu from './CommandMenu.js';\nimport * as FilteredListWidget from './FilteredListWidget.js';\nimport * as HelpQuickOpen from './HelpQuickOpen.js';\nimport * as QuickInput from './QuickInput.js';\nimport * as QuickOpen from './QuickOpen.js';\nimport * as QuickPick from './QuickPick.js';\n\nexport {\n  CommandMenu,\n  FilteredListWidget,\n  HelpQuickOpen,\n  QuickInput,\n  QuickOpen,\n  QuickPick,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

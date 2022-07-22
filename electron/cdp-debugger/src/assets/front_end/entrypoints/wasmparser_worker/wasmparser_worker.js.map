@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/entrypoints/wasmparser_worker/wasmparser_worker.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as WasmParserWorker from './WasmParserWorker.js';\n\nexport {\n  WasmParserWorker,\n};\n"],
+  "mappings": "AAIA;AAEA;AAAA;AAAA;",
+  "names": []
+}

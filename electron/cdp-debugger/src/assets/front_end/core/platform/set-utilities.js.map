@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/core/platform/set-utilities.ts"],
+  "sourcesContent": ["// Copyright (c) 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport const addAll = function<T>(set: Set<T>, iterable: Iterable<T>): void {\n  for (const item of iterable) {\n    set.add(item);\n  }\n};\n\nexport const isEqual = function<T>(setA: Set<T>, setB: Set<T>): boolean {\n  if (setA === setB) {\n    return true;\n  }\n  if (setA.size !== setB.size) {\n    return false;\n  }\n  for (const item of setA) {\n    if (!setB.has(item)) {\n      return false;\n    }\n  }\n  return true;\n};\n"],
+  "mappings": "AAIO,aAAM,SAAS,SAAY,KAAa,UAA6B;AAC1E,aAAW,QAAQ,UAAU;AAC3B,QAAI,IAAI;AAAA;AAAA;AAIL,aAAM,UAAU,SAAY,MAAc,MAAuB;AACtE,MAAI,SAAS,MAAM;AACjB,WAAO;AAAA;AAET,MAAI,KAAK,SAAS,KAAK,MAAM;AAC3B,WAAO;AAAA;AAET,aAAW,QAAQ,MAAM;AACvB,QAAI,CAAC,KAAK,IAAI,OAAO;AACnB,aAAO;AAAA;AAAA;AAGX,SAAO;AAAA;",
+  "names": []
+}

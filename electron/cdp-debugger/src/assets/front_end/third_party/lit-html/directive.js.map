@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/third_party/lit-html/directive.ts"],
+  "sourcesContent": ["export * from './package/directive.js';\n"],
+  "mappings": "AAAA;",
+  "names": []
+}

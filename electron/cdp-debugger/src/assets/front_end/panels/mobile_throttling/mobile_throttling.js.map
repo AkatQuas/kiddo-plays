@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/mobile_throttling/mobile_throttling.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport './ThrottlingPresets.js';\nimport './MobileThrottlingSelector.js';\nimport './NetworkPanelIndicator.js';\nimport './NetworkThrottlingSelector.js';\nimport './ThrottlingSettingsTab.js';\nimport './ThrottlingManager.js';\n\nimport * as MobileThrottlingSelector from './MobileThrottlingSelector.js';\nimport * as NetworkPanelIndicator from './NetworkPanelIndicator.js';\nimport * as NetworkThrottlingSelector from './NetworkThrottlingSelector.js';\nimport * as ThrottlingManager from './ThrottlingManager.js';\nimport * as ThrottlingPresets from './ThrottlingPresets.js';\nimport * as ThrottlingSettingsTab from './ThrottlingSettingsTab.js';\n\nexport {\n  MobileThrottlingSelector,\n  NetworkPanelIndicator,\n  NetworkThrottlingSelector,\n  ThrottlingManager,\n  ThrottlingPresets,\n  ThrottlingSettingsTab,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;AACA;AACA;AAEA;AACA;AACA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/components/docs/user_agent_client_hints/basic.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\nimport * as FrontendHelpers from '../../../../../test/unittests/front_end/helpers/EnvironmentHelpers.js';\nimport * as EmulationComponents from '../../../../panels/settings/emulation/components/components.js';\nimport * as ComponentHelpers from '../../helpers/helpers.js';\n\nawait ComponentHelpers.ComponentServerSetup.setup();\nawait FrontendHelpers.initializeGlobalVars();\n\nconst userAgentClientHintsContainer = document.getElementById('user-agent-client-hints-container');\n\nconst userAgentsForm = new EmulationComponents.UserAgentClientHintsForm.UserAgentClientHintsForm();\nuserAgentsForm.value = {\n  metaData: {\n    fullVersion: '',\n    platform: '',\n    platformVersion: '',\n    architecture: '',\n    model: '',\n    mobile: true,\n  },\n  showMobileCheckbox: true,\n};\n\nuserAgentClientHintsContainer?.appendChild(userAgentsForm);\n"],
+  "mappings": "AAGA;AACA;AACA;AAEA,MAAM,iBAAiB,qBAAqB;AAC5C,MAAM,gBAAgB;AAEtB,MAAM,gCAAgC,SAAS,eAAe;AAE9D,MAAM,iBAAiB,IAAI,oBAAoB,yBAAyB;AACxE,eAAe,QAAQ;AAAA,EACrB,UAAU;AAAA,IACR,aAAa;AAAA,IACb,UAAU;AAAA,IACV,iBAAiB;AAAA,IACjB,cAAc;AAAA,IACd,OAAO;AAAA,IACP,QAAQ;AAAA;AAAA,EAEV,oBAAoB;AAAA;AAGtB,+BAA+B,YAAY;",
+  "names": []
+}

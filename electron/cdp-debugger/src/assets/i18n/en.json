@@ -1,0 +1,15 @@
+{
+  "PAGES": {
+    "HOME": {
+      "TITLE": "Let's do some Debug!",
+      "DESCRIPTION": "Description"
+    },
+    "ABOUT": {
+      "TITLE": "About page !",
+      "BACK_TO_HOME": "Back to Home"
+    },
+    "NOT_FOUND": {
+      "BACK_TO_HOME": "Back to Home"
+    }
+  }
+}

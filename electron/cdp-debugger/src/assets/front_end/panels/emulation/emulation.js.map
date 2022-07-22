@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/emulation/emulation.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport './AdvancedApp.js';\nimport './InspectedPagePlaceholder.js';\nimport './MediaQueryInspector.js';\nimport './DeviceModeToolbar.js';\nimport './DeviceModeView.js';\nimport './DeviceModeWrapper.js';\n\nimport * as AdvancedApp from './AdvancedApp.js';\nimport * as DeviceModeToolbar from './DeviceModeToolbar.js';\nimport * as DeviceModeView from './DeviceModeView.js';\nimport * as DeviceModeWrapper from './DeviceModeWrapper.js';\nimport * as InspectedPagePlaceholder from './InspectedPagePlaceholder.js';\nimport * as MediaQueryInspector from './MediaQueryInspector.js';\n\nexport {\n  AdvancedApp,\n  DeviceModeToolbar,\n  DeviceModeView,\n  DeviceModeWrapper,\n  InspectedPagePlaceholder,\n  MediaQueryInspector,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;AACA;AACA;AAEA;AACA;AACA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

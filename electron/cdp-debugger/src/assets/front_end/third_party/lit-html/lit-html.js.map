@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/third_party/lit-html/lit-html.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport * from './package/lit-html.js';\nimport * as Directives from './directives.js';\nimport * as Directive from './directive.js';\n\nexport {Directives, Directive};\n"],
+  "mappings": "AAIA;AACA;AACA;AAEA;",
+  "names": []
+}

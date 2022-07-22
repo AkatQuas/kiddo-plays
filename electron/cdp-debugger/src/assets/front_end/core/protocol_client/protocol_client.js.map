@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/core/protocol_client/protocol_client.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as InspectorBackendCommands from '../../generated/InspectorBackendCommands.js';\nimport * as InspectorBackend from './InspectorBackend.js';\nimport * as NodeURL from './NodeURL.js';\n\nexport {\n  InspectorBackend,\n  NodeURL,\n};\n\n// Create the global here because registering commands will involve putting\n// items onto the global.\n// @ts-ignore Global namespace instantiation\nself.Protocol = self.Protocol || {};\n\n// FIXME: This instance of InspectorBackend should not be a side effect of importing this module.\nInspectorBackendCommands.registerCommands(InspectorBackend.inspectorBackend);\n"],
+  "mappings": "AAIA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAQA,KAAK,WAAW,KAAK,YAAY;AAGjC,yBAAyB,iBAAiB,iBAAiB;",
+  "names": []
+}
