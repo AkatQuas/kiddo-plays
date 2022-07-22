@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/console_counters/console_counters-meta.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as UI from '../../ui/legacy/legacy.js';\n\nimport type * as ConsoleCounters from './console_counters.js';\n\nlet loadedConsoleCountersModule: (typeof ConsoleCounters|undefined);\n\nasync function loadConsoleCountersModule(): Promise<typeof ConsoleCounters> {\n  if (!loadedConsoleCountersModule) {\n    loadedConsoleCountersModule = await import('./console_counters.js');\n  }\n  return loadedConsoleCountersModule;\n}\n\nUI.Toolbar.registerToolbarItem({\n  async loadItem() {\n    const ConsoleCounters = await loadConsoleCountersModule();\n    return ConsoleCounters.WarningErrorCounter.WarningErrorCounter.instance();\n  },\n  order: 1,\n  location: UI.Toolbar.ToolbarItemLocation.MAIN_TOOLBAR_RIGHT,\n  showLabel: undefined,\n  condition: undefined,\n  separator: undefined,\n  actionId: undefined,\n});\n"],
+  "mappings": "AAIA;AAIA,IAAI;AAEJ,2CAA4E;AAC1E,MAAI,CAAC,6BAA6B;AAChC,kCAA8B,MAAM,OAAO;AAAA;AAE7C,SAAO;AAAA;AAGT,GAAG,QAAQ,oBAAoB;AAAA,QACvB,WAAW;AACf,UAAM,kBAAkB,MAAM;AAC9B,WAAO,gBAAgB,oBAAoB,oBAAoB;AAAA;AAAA,EAEjE,OAAO;AAAA,EACP,UAAU,GAAG,QAAQ,oBAAoB;AAAA,EACzC,WAAW;AAAA,EACX,WAAW;AAAA,EACX,WAAW;AAAA,EACX,UAAU;AAAA;",
+  "names": []
+}

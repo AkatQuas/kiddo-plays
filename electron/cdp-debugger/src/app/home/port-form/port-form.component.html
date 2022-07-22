@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Update port</h1>
+<div mat-dialog-content>
+  <mat-list role="list">
+    <ng-container
+      *ngFor="let port of list; let index = index; let isLast = last"
+    >
+      <mat-list-item role="listitem"
+        >localhost:{{ port }} &nbsp;
+        <ng-container
+          [ngTemplateOutlet]="port === '9222' ? defaultTpl : removeTpl"
+          [ngTemplateOutletContext]="{ index: index }"
+        ></ng-container>
+      </mat-list-item>
+      <ng-template [ngIf]="!isLast">
+        <mat-divider></mat-divider>
+      </ng-template>
+    </ng-container>
+  </mat-list>
+  <mat-form-field appearance="fill">
+    <mat-label>Add new port</mat-label>
+    <input matInput [(ngModel)]="port" />
+  </mat-form-field>
+  <mat-icon (click)="handleAdd()">add</mat-icon>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="handleClose()">Close</button>
+  <button mat-button (click)="handleSave()" cdkFocusInitial>Save</button>
+</div>
+
+<ng-template #defaultTpl>
+  <mat-chip-list aria-label="Chip Default">
+    <mat-chip color="primary">Default</mat-chip>
+  </mat-chip-list>
+</ng-template>
+<ng-template #removeTpl let-index="index">
+  <button mat-icon-button aria-label="Clear Port" (click)="remove(index)">
+    <mat-icon>clear</mat-icon>
+  </button>
+</ng-template>

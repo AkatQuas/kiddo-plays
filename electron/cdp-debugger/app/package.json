@@ -1,0 +1,14 @@
+{
+  "name": "Debugger",
+  "version": "1.0.0",
+  "main": "main.js",
+  "private": true,
+  "dependencies": {
+    "node-fetch": "2.6.7",
+    "reflect-metadata": "0.1.13",
+    "tsyringe": "4.5.0"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "2.6.2"
+  }
+}

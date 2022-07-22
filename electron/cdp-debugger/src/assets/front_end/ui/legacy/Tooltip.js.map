@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/ui/legacy/Tooltip.ts"],
+  "sourcesContent": ["// Copyright (c) 2015 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport {ShortcutRegistry} from './ShortcutRegistry.js';\n\nexport class Tooltip {\n  static install(element: HTMLElement, tooltipContent: string|null): void {\n    element.title = tooltipContent || '';\n  }\n\n  static installWithActionBinding(element: HTMLElement, tooltipContent: string, actionId: string): void {\n    let description: string = tooltipContent;\n    const shortcuts = ShortcutRegistry.instance().shortcutsForAction(actionId);\n    for (const shortcut of shortcuts) {\n      description += ` - ${shortcut.title()}`;\n    }\n    element.title = description;\n  }\n}\n"],
+  "mappings": "AAIA;AAEO,qBAAc;AAAA,SACZ,QAAQ,SAAsB,gBAAmC;AACtE,YAAQ,QAAQ,kBAAkB;AAAA;AAAA,SAG7B,yBAAyB,SAAsB,gBAAwB,UAAwB;AACpG,QAAI,cAAsB;AAC1B,UAAM,YAAY,iBAAiB,WAAW,mBAAmB;AACjE,eAAW,YAAY,WAAW;AAChC,qBAAe,MAAM,SAAS;AAAA;AAEhC,YAAQ,QAAQ;AAAA;AAAA;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/entrypoints/worker_app/worker_app.ts"],
+  "sourcesContent": ["// Copyright 2018 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\nimport '../shell/shell.js';\nimport '../../panels/browser_debugger/browser_debugger-meta.js';\nimport '../../panels/developer_resources/developer_resources-meta.js';\nimport '../../panels/elements/elements-meta.js';\nimport '../../panels/issues/issues-meta.js';\nimport '../../panels/layer_viewer/layer_viewer-meta.js';\nimport '../../panels/mobile_throttling/mobile_throttling-meta.js';\nimport '../../panels/network/network-meta.js';\nimport '../../panels/application/application-meta.js';\nimport '../../panels/timeline/timeline-meta.js';\nimport './WorkerMain.js';\n\nimport * as Root from '../../core/root/root.js';\nimport * as Main from '../main/main.js';\n\n// @ts-ignore Exposed for legacy layout tests\nself.runtime = Root.Runtime.Runtime.instance({forceNew: true});\nnew Main.MainImpl.MainImpl();\n"],
+  "mappings": "AAGA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AAEA;AACA;AAGA,KAAK,UAAU,KAAK,QAAQ,QAAQ,SAAS,EAAC,UAAU;AACxD,IAAI,KAAK,SAAS;",
+  "names": []
+}

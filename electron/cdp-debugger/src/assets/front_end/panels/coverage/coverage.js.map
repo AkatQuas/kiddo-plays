@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/coverage/coverage.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport './CoverageModel.js';\nimport './CoverageListView.js';\nimport './CoverageView.js';\nimport './CoverageDecorationManager.js';\n\nimport * as CoverageDecorationManager from './CoverageDecorationManager.js';\nimport * as CoverageListView from './CoverageListView.js';\nimport * as CoverageModel from './CoverageModel.js';\nimport * as CoverageView from './CoverageView.js';\n\nexport {\n  CoverageDecorationManager,\n  CoverageListView,\n  CoverageModel,\n  CoverageView,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;AAEA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

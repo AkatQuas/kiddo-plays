@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/protocol_monitor/protocol_monitor.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport './ProtocolMonitor.js';\n\nimport * as ProtocolMonitor from './ProtocolMonitor.js';\n\nexport {\n  ProtocolMonitor,\n};\n"],
+  "mappings": "AAIA;AAEA;AAEA;AAAA;AAAA;",
+  "names": []
+}

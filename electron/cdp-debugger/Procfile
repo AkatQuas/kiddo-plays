@@ -1,0 +1,3 @@
+web: npx ng serve -c web
+app: npx tsc -p tsconfig.serve.json --watch
+e: npx wait-on tcp:4200 && npx electron . --serve

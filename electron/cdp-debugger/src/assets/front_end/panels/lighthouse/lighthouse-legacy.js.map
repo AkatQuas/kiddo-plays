@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/lighthouse/lighthouse-legacy.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// @ts-nocheck\n\nimport * as LighthouseModule from './lighthouse.js';\n\nself.Lighthouse = self.Lighthouse || {};\nLighthouse = Lighthouse || {};\n\n/** @type {!LighthouseModule.LighthouseReporterTypes.LighthouseReportGenerator} */\nLighthouse.ReportGenerator;\n\n/**\n * @constructor\n */\nLighthouse.LighthousePanel = LighthouseModule.LighthousePanel.LighthousePanel;\n\n/**\n * @constructor\n */\nLighthouse.ReportSelector = LighthouseModule.LighthouseReportSelector.ReportSelector;\n\n/**\n* @constructor\n*/\nLighthouse.StatusView = LighthouseModule.LighthouseStatusView.StatusView;\n"],
+  "mappings": "AAMA;AAEA,KAAK,aAAa,KAAK,cAAc;AACrC,aAAa,cAAc;AAG3B,WAAW;AAKX,WAAW,kBAAkB,iBAAiB,gBAAgB;AAK9D,WAAW,iBAAiB,iBAAiB,yBAAyB;AAKtE,WAAW,aAAa,iBAAiB,qBAAqB;",
+  "names": []
+}

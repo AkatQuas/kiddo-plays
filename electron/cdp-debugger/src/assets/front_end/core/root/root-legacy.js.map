@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/core/root/root-legacy.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// @ts-nocheck\n\nimport * as RootModule from './root.js';\n\nself.Root = self.Root || {};\nRoot = Root || {};\n\n/** @constructor */\nRoot.Runtime = RootModule.Runtime.Runtime;\n\n// This must be constructed after the query parameters have been parsed.\nRoot.Runtime.experiments = RootModule.Runtime.experiments;\n\nRoot.Runtime.queryParam = RootModule.Runtime.Runtime.queryParam;\n\n/** @type {!RootModule.Runtime.Runtime} */\nRoot.runtime;\n\n/** @constructor */\nRoot.Runtime.Extension = RootModule.Runtime.Extension;\n\n/** @constructor */\nRoot.Runtime.Module = RootModule.Runtime.Module;\n"],
+  "mappings": "AAMA;AAEA,KAAK,OAAO,KAAK,QAAQ;AACzB,OAAO,QAAQ;AAGf,KAAK,UAAU,WAAW,QAAQ;AAGlC,KAAK,QAAQ,cAAc,WAAW,QAAQ;AAE9C,KAAK,QAAQ,aAAa,WAAW,QAAQ,QAAQ;AAGrD,KAAK;AAGL,KAAK,QAAQ,YAAY,WAAW,QAAQ;AAG5C,KAAK,QAAQ,SAAS,WAAW,QAAQ;",
+  "names": []
+}

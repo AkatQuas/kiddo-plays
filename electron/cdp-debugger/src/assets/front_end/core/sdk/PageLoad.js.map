@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/core/sdk/PageLoad.ts"],
+  "sourcesContent": ["// Copyright 2021 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport type * as Platform from '../platform/platform.js';\n\nimport type {NetworkRequest} from './NetworkRequest.js';\n\nexport class PageLoad {\n  id: number;\n  url: Platform.DevToolsPath.UrlString;\n  startTime: number;\n  loadTime!: number;\n  contentLoadTime!: number;\n  mainRequest: NetworkRequest;\n\n  constructor(mainRequest: NetworkRequest) {\n    this.id = ++PageLoad.lastIdentifier;\n    this.url = mainRequest.url();\n    this.startTime = mainRequest.startTime;\n    this.mainRequest = mainRequest;\n  }\n\n  static forRequest(request: NetworkRequest): PageLoad|null {\n    return pageLoadForRequest.get(request) || null;\n  }\n\n  bindRequest(request: NetworkRequest): void {\n    pageLoadForRequest.set(request, this);\n  }\n\n  private static lastIdentifier = 0;\n}\n\nconst pageLoadForRequest = new WeakMap<NetworkRequest, PageLoad>();\n"],
+  "mappings": "AAQO,sBAAe;AAAA,EACpB;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EAEA,YAAY,aAA6B;AACvC,SAAK,KAAK,EAAE,SAAS;AACrB,SAAK,MAAM,YAAY;AACvB,SAAK,YAAY,YAAY;AAC7B,SAAK,cAAc;AAAA;AAAA,SAGd,WAAW,SAAwC;AACxD,WAAO,mBAAmB,IAAI,YAAY;AAAA;AAAA,EAG5C,YAAY,SAA+B;AACzC,uBAAmB,IAAI,SAAS;AAAA;AAAA,SAGnB,iBAAiB;AAAA;AAGlC,MAAM,qBAAqB,oBAAI;",
+  "names": []
+}

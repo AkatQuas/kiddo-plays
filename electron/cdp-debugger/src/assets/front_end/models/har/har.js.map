@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/models/har/har.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as HARFormat from './HARFormat.js';\nimport * as Importer from './Importer.js';\nimport * as Log from './Log.js';\nimport * as Writer from './Writer.js';\n\nexport {\n  HARFormat,\n  Importer,\n  Log,\n  Writer,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/profiler/ProfileTypeRegistry.ts"],
+  "sourcesContent": ["// Copyright 2014 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport {CPUProfileType} from './CPUProfileView.js';\nimport {SamplingHeapProfileType} from './HeapProfileView.js';\nimport {HeapSnapshotProfileType, TrackingHeapSnapshotProfileType} from './HeapSnapshotView.js';\n\nexport class ProfileTypeRegistry {\n  cpuProfileType: CPUProfileType;\n  heapSnapshotProfileType: HeapSnapshotProfileType;\n  samplingHeapProfileType: SamplingHeapProfileType;\n  trackingHeapSnapshotProfileType: TrackingHeapSnapshotProfileType;\n  constructor() {\n    this.cpuProfileType = new CPUProfileType();\n    this.heapSnapshotProfileType = new HeapSnapshotProfileType();\n    this.samplingHeapProfileType = new SamplingHeapProfileType();\n    this.trackingHeapSnapshotProfileType = new TrackingHeapSnapshotProfileType();\n  }\n}\n\nexport const instance = new ProfileTypeRegistry();\n"],
+  "mappings": "AAIA;AACA;AACA;AAEO,iCAA0B;AAAA,EAC/B;AAAA,EACA;AAAA,EACA;AAAA,EACA;AAAA,EACA,cAAc;AACZ,SAAK,iBAAiB,IAAI;AAC1B,SAAK,0BAA0B,IAAI;AACnC,SAAK,0BAA0B,IAAI;AACnC,SAAK,kCAAkC,IAAI;AAAA;AAAA;AAIxC,aAAM,WAAW,IAAI;",
+  "names": []
+}

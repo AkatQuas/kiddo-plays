@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/components/docs/component_docs.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// Ensure all image variables are defined in the component docs.\nimport '../../../Images/Images.js';\n\nimport * as CreateBreadcrumbs from './create_breadcrumbs.js';\nimport * as ToggleDarkMode from './toggle_dark_mode.js';\nimport * as ToggleFonts from './toggle_fonts.js';\n\nToggleDarkMode.init();\nCreateBreadcrumbs.init();\nToggleFonts.init();\n\n// This can be used by tests to hide the UI elements that are part of the component docs interface.\n// E.g., this is useful for screenshot tests.\nwindow.addEventListener('hidecomponentdocsui', () => {\n  for (const node of document.querySelectorAll<HTMLElement>('.component-docs-ui')) {\n    node.style.display = 'none';\n  }\n});\n\nwindow.addEventListener('showcomponentdocsui', () => {\n  for (const node of document.querySelectorAll<HTMLElement>('.component-docs-ui')) {\n    node.style.display = '';\n  }\n});\n"],
+  "mappings": "AAKA;AAEA;AACA;AACA;AAEA,eAAe;AACf,kBAAkB;AAClB,YAAY;AAIZ,OAAO,iBAAiB,uBAAuB,MAAM;AACnD,aAAW,QAAQ,SAAS,iBAA8B,uBAAuB;AAC/E,SAAK,MAAM,UAAU;AAAA;AAAA;AAIzB,OAAO,iBAAiB,uBAAuB,MAAM;AACnD,aAAW,QAAQ,SAAS,iBAA8B,uBAAuB;AAC/E,SAAK,MAAM,UAAU;AAAA;AAAA;",
+  "names": []
+}

@@ -12,11 +12,19 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 
 - [Bundler](./bundler)
 
+  - [Babel](./babel-guide/)
+
+  - [Webpack](./webpack/)
+
 - [Computer Graphics](https://github.com/AkatQuas/webgl-playlist): A quick guid to Computer Graphics, examples listed.
 
 - Containers:
 
   - [Docker](./docker)
+
+  - [Grafana](./grafana/)
+
+  - [Kubernetes](./kubernetes/)
 
 - Dart language:
 
@@ -26,15 +34,19 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 
   - [Dart Angular Demo](./dart-language/charge-system-demo)
 
+- [Electron](./electron/)
+
 - [Flutter](./flutter_playlist)
 
 - [Golang](./golanger)
 
 - [GraphQL language](./graphql-language)
 
-- [Gulp, Grunt](./task-runners)
-
 - [jQuery](./jQuery)
+
+- [Lerna](./lerna-verdaccio/)
+
+- [NativeScript](./nativescript/)
 
 - [NextJS](./nextjs-playlist)
 
@@ -42,17 +54,35 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 
 - [Node](./node-playlist)
 
+- Monorepo
+
+  - [Nx.dev](./nxdev/)
+
+  - [Fullstack starter](./fullstack-starter/)
+
 - [React](https://github.com/AkatQuas/react-playlist)
 
-- [React stores](./react-stores): react store using Flux, Mobx, Redux.
+  - [React Renderer](./react-renderer/)
+
+  - [React stores](./react-stores): react store using Flux, Mobx, Redux.
+
+- [Rust](./rust-language/)
+
+  - [Solutions for rustlings](https://github.com/AkatQuas/rustlings)
 
 - [Python Language](./python-language)
 
 - [shell scripts](./shells): scripts in shell
 
+- [Task Runner: Gulp, Grunt](./task-runners)
+
 - [Test-Driven Development and Behavior-Driven Development](./tdd-and-bdd)
 
+- [Type Gymnastics](./type-gymnastics/)
+
 - [VueJS](./vuejs): several web projects using VueJS.
+
+- [WebAssembly](./wasm/)
 
 - [Wechat Mini Programme](./wxma): 微信小程序
 

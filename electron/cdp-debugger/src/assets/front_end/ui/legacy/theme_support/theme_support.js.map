@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../front_end/ui/legacy/theme_support/theme_support.ts"],
+  "sourcesContent": ["// Copyright 2020 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nexport * from './theme_support_impl.js';\n"],
+  "mappings": "AAIA;",
+  "names": []
+}

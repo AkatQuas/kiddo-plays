@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../../front_end/ui/legacy/components/color_picker/color_picker.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\nimport * as ContrastDetails from './ContrastDetails.js';\nimport * as ContrastInfo from './ContrastInfo.js';\nimport * as ContrastOverlay from './ContrastOverlay.js';\nimport * as Spectrum from './Spectrum.js';\n\nexport {\n  ContrastDetails,\n  ContrastInfo,\n  ContrastOverlay,\n  Spectrum,\n};\n"],
+  "mappings": "AAIA;AACA;AACA;AACA;AAEA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}

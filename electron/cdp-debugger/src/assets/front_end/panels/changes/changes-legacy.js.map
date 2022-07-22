@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../front_end/panels/changes/changes-legacy.ts"],
+  "sourcesContent": ["// Copyright 2019 The Chromium Authors. All rights reserved.\n// Use of this source code is governed by a BSD-style license that can be\n// found in the LICENSE file.\n\n// @ts-nocheck\n\nimport * as ChangesModule from './changes.js';\n\nself.Changes = self.Changes || {};\nChanges = Changes || {};\n\n/**\n * @constructor\n */\nChanges.ChangesSidebar = ChangesModule.ChangesSidebar.ChangesSidebar;\n\n/**\n * @constructor\n */\nChanges.ChangesView = ChangesModule.ChangesView.ChangesView;\n\n/** @enum {string} */\nChanges.ChangesView.RowType = ChangesModule.ChangesView.RowType;\n\n/**\n * @implements {Common.Revealer}\n */\nChanges.ChangesView.DiffUILocationRevealer = ChangesModule.ChangesView.DiffUILocationRevealer;\n"],
+  "mappings": "AAMA;AAEA,KAAK,UAAU,KAAK,WAAW;AAC/B,UAAU,WAAW;AAKrB,QAAQ,iBAAiB,cAAc,eAAe;AAKtD,QAAQ,cAAc,cAAc,YAAY;AAGhD,QAAQ,YAAY,UAAU,cAAc,YAAY;AAKxD,QAAQ,YAAY,yBAAyB,cAAc,YAAY;",
+  "names": []
+}
