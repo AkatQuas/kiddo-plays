@@ -1,0 +1,74 @@
+import * as fs from 'fs';
+import * as _module from 'module';
+import * as path from 'path';
+import * as v8 from 'v8';
+import * as vm from 'vm';
+
+v8.setFlagsFromString('--no-flush-bytecode');
+
+import {
+  getReferenceFlagHash,
+  headerUtils,
+  makeRequireFunction,
+} from './utils';
+
+type ExtendModule = typeof _module & {
+  _extensions: { [key: string]: Function };
+};
+
+export function loadBytecode(filename: string) {
+  // 这里要求是同步的
+  const byteBuffer = fs.readFileSync(filename, null);
+  let bytesource = '';
+
+  try {
+    bytesource = fs.readFileSync(
+      filename.replace(/\.bytecode$/i, '.bytesource'),
+      'utf-8'
+    );
+  } catch (e) {}
+
+  headerUtils.set(byteBuffer, 'flag_hash', getReferenceFlagHash());
+
+  const sourceLength = headerUtils.buf2num(
+    headerUtils.get(byteBuffer, 'source_hash')
+  );
+  const dummySource =
+    bytesource.length === sourceLength ? bytesource : ' '.repeat(sourceLength);
+
+  // reproduce the script to run
+  const script = new vm.Script(dummySource, {
+    filename: filename,
+    cachedData: byteBuffer,
+  });
+
+  if (script.cachedDataRejected) {
+    throw new Error('cannot load bytecode, check node version');
+  }
+  return script;
+}
+
+export function execByteCode(filename: string) {
+  const script = loadBytecode(filename);
+  // evaluation script
+  return script.runInThisContext();
+}
+
+// add extension resolve
+(_module as ExtendModule)._extensions['.bytecode'] = function loadModule(
+  module: NodeJS.Module,
+  filename: string
+) {
+  // evaluate function to the wrapped one.
+  const wrapperFn = execByteCode(filename);
+  const require = makeRequireFunction(module);
+  // 这里的参数列表和之前的 wrapper 函数是一一对应的
+  // to run the wrapped function, it might export something
+  wrapperFn.bind(module.exports)(
+    module.exports,
+    require,
+    module,
+    filename,
+    path.dirname(filename)
+  );
+};
