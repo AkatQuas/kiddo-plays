@@ -1,0 +1,2 @@
+- Run build in root folder to create library.
+- Run test.js to demonstrate
