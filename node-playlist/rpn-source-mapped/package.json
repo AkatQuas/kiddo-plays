@@ -1,0 +1,22 @@
+{
+  "name": "rpn-source-mapped",
+  "version": "1.0.0",
+  "description": "A reverse polish notation -> JavaScript compiler using source maps",
+  "type": "module",
+  "bin": {
+    "rpn": "./bin/rpn.mjs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jison": "~0.4.18",
+    "source-map": "~0.7.4"
+  },
+  "devDependencies": {
+    "http-server": "~14.1.1"
+  }
+}
