@@ -1,0 +1,15 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Demo",
+      "detail": "Compile RPN to Javascript with source map",
+      "type": "shell",
+      "command": "node ../bin/rpn.mjs ./example-simple.rpn ./example-error.rpn && npx http-server ./",
+      "options": { "cwd": "${workspaceFolder}/demo" },
+      "problemMatcher": []
+    }
+  ]
+}
