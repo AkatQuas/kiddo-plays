@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Websocket connection</title>
+  </head>
+  <body>
+    <div
+      id="connect"
+      role="button"
+      style="
+        height: 100px;
+        width: 200px;
+        margin: 20px auto;
+        cursor: pointer;
+        text-align: center;
+        line-height: 100px;
+        border: 2px solid greenyellow;
+      "
+    >
+      Do connect
+    </div>
+    <div
+      id="close"
+      role="button"
+      style="
+        height: 100px;
+        width: 200px;
+        margin: 20px auto;
+        cursor: pointer;
+        text-align: center;
+        line-height: 100px;
+        border: 2px solid red;
+      "
+    >
+      Close connection
+    </div>
+
+    <script>
+      let /** @type {WebSocket} */ ws;
+      let /** @type {number} */ t;
+      document.querySelector('#close').addEventListener('click', () => {
+        if (ws) {
+          ws.send('close');
+          ws = undefined;
+          // server will close it.
+          // ws.close();
+        }
+      });
+      document.querySelector('#connect').addEventListener('click', () => {
+        if (ws) {
+          ws.close();
+          clearInterval(t);
+        }
+        ws = new WebSocket(
+          'ws://localhost:10100/battle-room/join?token=aoh23nt&ticket=room_123&role=ide&target=phone'
+        );
+        ws.addEventListener('open', (ev) => {
+          console.debug(
+            '\x1B[97;42;1m --- client connected --- \x1B[m',
+            '\n',
+            ev
+          );
+
+          t = setInterval(() => {
+            ws.send('--PING--');
+          }, 1000);
+        });
+        ws.addEventListener('message', (e) => {
+          console.debug('\x1B[97;100;1m --- message heard --- \x1B[m', '\n', {
+            message: e.data,
+          });
+        });
+        ws.addEventListener('close', (e) => {
+          console.log('client closed', e);
+          clearInterval(t);
+        });
+        ws.addEventListener('error', (e) => {
+          console.debug('\x1B[97;101;1m --- ws error --- \x1B[m', '\n', e);
+        });
+      });
+    </script>
+  </body>
+</html>
