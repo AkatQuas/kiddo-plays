@@ -54,6 +54,8 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 
 - [Node](./node-playlist)
 
+  - [Websocket Server](./node-playlist/websocket-server-demo/)
+
 - Monorepo
 
   - [Nx.dev](./nxdev/)
@@ -65,6 +67,8 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
   - [React Renderer](./react-renderer/)
 
   - [React stores](./react-stores): react store using Flux, Mobx, Redux.
+
+  - [Data Sharing](./react-data/): several ways to share the data.
 
 - [Rust](./rust-language/)
 
@@ -81,6 +85,8 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 - [Type Gymnastics](./type-gymnastics/)
 
 - [VueJS](./vuejs): several web projects using VueJS.
+
+- [VS Code extensions](./vscode-extensions/): Several small extensions for VS Code.
 
 - [WebAssembly](./wasm/)
 
