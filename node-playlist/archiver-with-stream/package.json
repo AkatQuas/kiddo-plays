@@ -1,0 +1,29 @@
+{
+  "name": "archiver-with-stream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/archiver": "~5.3.1",
+    "@types/fs-extra": "~9.0.13",
+    "@types/node": "~18.11.17",
+    "@types/yauzl": "~2.10.0",
+    "@types/yazl": "~2.4.2",
+    "archiver": "~5.3.1",
+    "ts-node": "~10.9.1",
+    "tslib": "~2.4.1",
+    "typescript": "~4.9.4"
+  },
+  "dependencies": {
+    "fast-glob": "~3.2.12",
+    "fs-extra": "~11.1.0",
+    "yauzl": "~2.10.0",
+    "yazl": "~2.5.1"
+  }
+}
