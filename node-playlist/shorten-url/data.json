@@ -1,0 +1,45 @@
+{
+  "_id": "63ad0a1d788c4e72ee9bcdb6",
+  "index": 1,
+  "guid": "60bfc169-25d1-4fe4-9dee-12afc71e1941",
+  "isActive": true,
+  "balance": "$1,319.27",
+  "picture": "http://placehold.it/32x32",
+  "age": 28,
+  "eyeColor": "brown",
+  "name": "Mia Boone",
+  "gender": "female",
+  "company": "ZILIDIUM",
+  "email": "miaboone@zilidium.com",
+  "phone": "+1 (816) 588-2438",
+  "address": "347 Livingston Street, Allentown, New Mexico, 4005",
+  "about": "Qui aute dolor ut duis occaecat et dolor enim ea quis. Duis consequat dolor aliqua voluptate incididunt ex dolor ad nisi labore et. Sint magna adipisicing eu deserunt elit sit laboris esse ullamco nulla pariatur aute in amet.\r\n",
+  "registered": "2018-12-14T02:00:47 -08:00",
+  "latitude": 24.292901,
+  "longitude": -103.672228,
+  "tags": [
+    "aliqua",
+    "consectetur",
+    "ullamco",
+    "dolore",
+    "eu",
+    "nisi",
+    "laboris"
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Alba Price"
+    },
+    {
+      "id": 1,
+      "name": "Shelia Kirkland"
+    },
+    {
+      "id": 2,
+      "name": "Josefa Harding"
+    }
+  ],
+  "greeting": "Hello, Mia Boone! You have 4 unread messages.",
+  "favoriteFruit": "banana"
+}
