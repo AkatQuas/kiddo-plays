@@ -1,0 +1,15 @@
+{
+  "_id": "63ad0a1d788c4e72ee9bcdb6",
+  "index": 1,
+  "guid": "60bfc169-25d1-4fe4-9dee-12afc71e1941",
+  "isActive": true,
+  "balance": "$1,319.27",
+  "picture": "http://placehold.it/32x32",
+  "age": 28,
+  "address": "347 Livingston Street, Allentown, New Mexico, 4005",
+  "registered": "2018-12-14T02:00:47 - 08:00",
+  "latitude": 24.292901,
+  "longitude": -103.672228,
+  "greeting": "Hello, Mia Boone! You have 4 unread messages.",
+  "favoriteFruit": "banana"
+}
