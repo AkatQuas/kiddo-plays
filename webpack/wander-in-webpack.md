@@ -61,6 +61,8 @@ When created, the `Compiler` instance is almost a collection of lots of configur
 
 More details on `hooks` later. Before that, It's important to take a look at [`tapable`](https://github.com/webpack/tapable).
 
+> [Here](./tapable-it/) are some examples using tapable hooks.
+
 > Understanding how `tapable` works is quite helpful when figuring out how webpack works. It's the backbone of webpack anyway. References: [compiler hooks](https://webpack.js.org/api/compiler-hooks/), [compilation hooks](https://webpack.js.org/api/compilation-hooks/), [JavascriptParser Hooks](https://webpack.js.org/api/parser/).
 
 Since we have the `Compiler` instance, it's time to register plugins into the instance, aka, _tap into hooks_.
