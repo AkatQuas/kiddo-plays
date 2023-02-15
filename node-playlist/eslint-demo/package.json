@@ -1,0 +1,21 @@
+{
+  "name": "infra-pos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "echo $npm_execpath | grep -q pnpm || { echo 'Use `pnpm` to install'; exit 1; }",
+    "postinstall": "rm -rf infra/node_modules || true; mv node_modules infra/; sh -c ./scripts/post-link.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-config-semistandard": "~17.0.0",
+    "eslint-config-standard": "~17.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0"
+  }
+}
