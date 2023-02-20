@@ -2,17 +2,27 @@
 .container {
   padding: 25rpx;
 }
-.avatar {
-  margin: 0rpx auto;
-}
+.avatar {}
+.infomation {}
 .avatar image {
   width: 700rpx;
   height: 700rpx;
 }
-.info {
+.avatar {
+  margin: 0rpx auto;
+}
 
+.info {
+ color: red;
+}
+.other>button {
+  resize: both;
+  margin: 0%;
 }
 .info .author {
   text-align: center;
-  padding: 10rpx 0
+  padding: 10rpx 0;
+}
+.info button {
+  padding: 10rpx;
 }
