@@ -1,14 +1,39 @@
-<import src="../../components/tips.wxml"/>
+<import src="../../components/tips.wxml" />
 
-<view class="container">
-  <view class="avatar">
-    <image src="{{avatar}}"></image>
-  </view>
-  <view class="info">
-    <view class="author">{{author}}</view>
-    <view>
-      <button bindtap="goGitHub">去GitHub看看</button>
+
+<wxs src="./../tools.wxs" module="tools" />
+<wxs module="foo">
+  var some_msg = "hello world";
+
+  function g() { 
+    // $.ajax
+    return 'saoqi'; 
+  };
+  module.exports = {
+    msg: some_msg,
+    he: '2',
+    g: g(),
+
+    sao: function b () {
+      return 'sao'
+    },
+  }
+
+</wxs>
+<block>
+  <view  class="container" style="{{color == 'abc' ? '-webkit-line-clamp:6':''}}">
+    <view class="">
+      <image src="{{avatar}}"></image>
     </view>
-    <template is="tips" data="{{ message: 'dada'}}" />
+    <view class="info">
+      <view class="author" style="background: url('{{color}}/amg.png'); color:{{color}};height:{{height+200}}rpx;">{{g['h']+g['o'] }}  {{color}}</view>
+      <view>
+        <button  bindtap="goGitHub">去GitHub看看 {{ foo.msg }} {{ foo.g }}</button>
+        <button  bindtap="naviTo">NavigateTo 看看 </button>
+        <button  bindtap="jumpTodo2">NavigateTo todo2 Page </button>
+      </view>
+      <template is="tips" data="{{ message: 'dada'}}" />
+    </view>
+    <img src="" alt="" sizes="" srcset="" />
   </view>
-</view>
+</block>

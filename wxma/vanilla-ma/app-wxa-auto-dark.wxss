@@ -1,0 +1,13 @@
+/*
+此文件为开发者工具生成，生成时间: 9/9/2021, 10:25:07 AM
+使用方法：
+在 app.wxss 文件末尾引入样式
+```
+@import "./app-wxa-auto-dark.wxss";
+```
+ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  }
+}

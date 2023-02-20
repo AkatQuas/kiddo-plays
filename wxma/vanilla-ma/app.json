@@ -1,27 +1,32 @@
 {
-  "pages":[
+  "pages": [
+    "pages/home/index",
     "pages/todo/index",
-    "pages/home/index"
+    "pages/todo2/index"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#999",
-    "selectedColor":"#66ccff",
-    "list": [{
-      "pagePath": "pages/home/index",
-      "iconPath":"assets/home-inactive.png",
-      "selectedIconPath": "assets/home-active.png",
-      "text": "作者"
-    }, {
-      "pagePath": "pages/todo/index",
-      "iconPath":"assets/todo-inactive.png",
-      "selectedIconPath": "assets/todo-active.png",
-      "text": "Todo"
-    }]
-  }
+    "selectedColor": "#66ccff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "assets/home-inactive.png",
+        "selectedIconPath": "assets/home-active.png",
+        "text": "作者"
+      },
+      {
+        "pagePath": "pages/todo/index",
+        "iconPath": "assets/todo-inactive.png",
+        "selectedIconPath": "assets/todo-active.png",
+        "text": "Todo"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }

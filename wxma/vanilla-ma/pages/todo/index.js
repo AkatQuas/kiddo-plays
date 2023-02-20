@@ -1,7 +1,21 @@
+// Component({
+//   data: {
+//     c_data: '',
+//   },
+//   methods: {
+//     shenfen() {}
+//   }
+// })
+
 Page({
   data: {
     inputValue: '',
     todos: [],
+    nest: {
+      deep: {
+        d: 'b'
+      },
+    },
   },
   handleInput(e) {
     this.setData({
@@ -52,5 +66,9 @@ Page({
     })
   },
   onLoad: function () {
+    console.log('big number', 1_000_000_2);
+    console.log('string_replace_all'.replaceAll('a', '2'));
+    console.log(this.data.nest.deep?.d ?? 'optional chain');
+    console.log(this.data.nest.deep?.c ?? 'nullish');
   }
 })
