@@ -48,7 +48,7 @@ MONGO_IMAGE=mongo:4.0-xenial
 
 SHELL:=/bin/bash
 .DEFAULT_GOAL:=help
-TARGETS = help groupdhelp list-help _check-docker _start-mongo _stop-mongo _setup server test clean
+TARGETS = _check-docker _setup _start-mongo _stop-mongo clean groupdhelp help server silenthelp test 
 
 
 .SILENT: $(TARGETS)
@@ -62,8 +62,8 @@ help:  ## Display this help
 groupdhelp:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-list-help: ## List all commands
-	awk -F":.*##" '/^[a-zA-Z0-9_-]+:.*?##/ { printf $$1 " " }' $(MAKEFILE_LIST) | pbcopy
+silenthelp: ## List all commands
+	@sed -i '' -E "s/^TARGETS =.*$$/TARGETS = ""$$(awk -F":.*##" '/^[a-zA-Z0-9_-]+:.*?##/ { printf $$1 " " }' $(MAKEFILE_LIST) | tr " " "\n" | sort -n | tr "\n" " ")""/" $(MAKEFILE_LIST)
 
 ##@ Utils
 
