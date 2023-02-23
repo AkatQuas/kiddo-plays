@@ -29,3 +29,15 @@ function ensure_node_modules() {
         yarn
     fi
 }
+
+
+function list_and_do_work() {
+    local WORKSPACE=/Users/workspace
+
+    # pass all results (joined with space) to sh-exec
+    find $WORKSPACE -maxdepth 1 -type d -iname '*target-*' -not -name '*template*' -exec sh -c 'echo "hello $@"' -- {} +
+
+
+    # pass find results one by one to sh-exec
+    find $WORKSPACE -maxdepth 1 -type d -iname '*target-*' -not -name '*template*' -exec sh -c 'echo "hello $@" ' -- {} \;
+}
