@@ -1,3 +1,10 @@
+/*
+
+Check out the video when viewing this file.
+
+https://www.bilibili.com/video/BV1K34y1x7F9/?p=55
+
+*/
 use std::{cell::RefCell, rc::Rc};
 
 // Rc RefCell

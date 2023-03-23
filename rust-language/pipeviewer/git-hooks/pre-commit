@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# cargo format files
+cargo fmt
+
+# cargo lint files, throw errors even with warnings
+exec cargo clippy -- -D warnings

@@ -1,0 +1,30 @@
+[package]
+name = "pipeviewer"
+version = "0.1.0"
+edition = "2021"
+description = "Educational version of the pipeviewer utility"
+homepage = "https://github.com/AkatQuas"
+repository = "https://github.com/AkatQuas"
+readme = "README.md"
+keywords = ["education"]
+categories = ["command-line-utilities"]
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "4.1.11", features=["derive"] }
+crossbeam = "0.8"
+crossterm = "0.26.1"
+
+[[bin]]
+name = "pv_single"
+path = "src/bin/pv_single.rs"
+
+[[bin]]
+name = "pv_mpsc"
+path = "src/bin/pv_mpsc.rs"
+
+[[bin]]
+name = "pv_crossbeam"
+path = "src/bin/pv_crossbeam.rs"

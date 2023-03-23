@@ -72,6 +72,8 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 
 - [Rust](./rust-language/)
 
+  - [The beginning of learning rust](./rust-language/hello_world/)
+
   - [Solutions for rustlings](https://github.com/AkatQuas/rustlings)
 
 - [Python Language](./python-language)
