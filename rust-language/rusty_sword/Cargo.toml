@@ -1,0 +1,13 @@
+[package]
+name = "rusty_sword"
+version = "0.1.0"
+edition = "2021"
+authors = [ "Nathan Stocks <nathan.stocks@gmail.com>", "AkatQuas <>" ]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+crossbeam = "0.8.2"
+crossterm = "0.26.1"
+rand = "0.8.5"
+rusty_audio = "1.4.0"
