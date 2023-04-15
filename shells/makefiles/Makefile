@@ -13,7 +13,18 @@ USER_ID=$(shell id -u)
 VERSION_BY_DATE = $(shell date +v"%Y%m%d")
 CWD = $(shell pwd)
 
+# https://linuxcommand.org/lc3_adv_tput.php
+# bold
+BOLD_ON=$(shell tput bold)
+# high-contrast output
+STD_OUT_ON=$(shell tput smso)
+STD_OUT_OFF=$(shell tput rmso)
+# underline decroations
+UNDERLINE_ON=$(shell tput smul)
+UNDERLINE_OFF=$(shell tput rmul)
+# clear all attributes
 NOFORMAT=$(shell tput sgr0)
+# foreground colors
 RED:=$(shell tput setaf 1)
 GREEN=$(shell tput setaf 2)
 YELLOW=$(shell tput setaf 3)
@@ -21,6 +32,14 @@ BLUE=$(shell tput setaf 4)
 MAGENTA=$(shell tput setaf 5)
 CYAN=$(shell tput setaf 6)
 WHITE=$(shell tput setaf 7)
+# background colors
+BG_RED:=$(shell tput setab 1)
+BG_GREEN=$(shell tput setab 2)
+BG_YELLOW=$(shell tput setab 3)
+BG_BLUE=$(shell tput setab 4)
+BG_MAGENTA=$(shell tput setab 5)
+BG_CYAN=$(shell tput setab 6)
+BG_WHITE=$(shell tput setab 7)
 
 #
 # Tweak the variables based on your project.
@@ -63,7 +82,7 @@ endef
 
 SHELL:=/bin/bash
 .DEFAULT_GOAL:=help
-TARGETS = _check_docker _list_images _start-mongo _start-redis _stop-mongo _stop-redis build clean clean-redmon develop groupdhelp help silenthelp start-redmon stop-redmon test 
+TARGETS = _check_docker _list_images _start-mongo _start-redis _stop-mongo _stop-redis build clean clean-redmon develop groupdhelp help silenthelp start-redmon stop-redmon test
 
 
 # All targets.
@@ -127,7 +146,6 @@ build: _check_docker ## build the distribution
 	sh -c './build.sh'
 
 test: ## just for test makefile commands
-	echo $(USER_ID) && $(call fetch_latest, "./")
 	$(info $(RED)Message$(NOFORMAT))
 	$(info $(GREEN)Message$(NOFORMAT))
 	$(info $(YELLOW)Message$(NOFORMAT))
@@ -135,7 +153,29 @@ test: ## just for test makefile commands
 	$(info $(MAGENTA)Message$(NOFORMAT))
 	$(info $(CYAN)Message$(NOFORMAT))
 	$(info $(WHITE)Message$(NOFORMAT))
-	echo "$(BLUE)Message OK$(NOFORMAT)"
+	$(info $(BG_RED)Message$(NOFORMAT))
+	$(info $(BG_GREEN)Message$(NOFORMAT))
+	$(info $(BG_YELLOW)Message$(NOFORMAT))
+	$(info $(BG_BLUE)Message$(NOFORMAT))
+	$(info $(BG_MAGENTA)Message$(NOFORMAT))
+	$(info $(BG_CYAN)Message$(NOFORMAT))
+	$(info $(BG_WHITE)Message$(NOFORMAT))
+	$(info $(BOLD_ON)Bold Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(RED)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(GREEN)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(YELLOW)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(BLUE)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(MAGENTA)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(CYAN)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(WHITE)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(BG_RED)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(BG_GREEN)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(BG_YELLOW)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(BG_BLUE)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(BG_MAGENTA)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(BG_CYAN)STD Message$(NOFORMAT))
+	$(info $(STD_OUT_ON)$(BG_WHITE)STD Message$(NOFORMAT))
 
 ##@ Cleanup
 
