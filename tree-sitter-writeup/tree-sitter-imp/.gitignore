@@ -1,0 +1,8 @@
+bindings/
+build/
+target/
+src/
+binding.gyp
+Cargo.toml
+Cargo.lock
+pnpm-lock.yaml
