@@ -1,0 +1,36 @@
+{
+  "name": "tree-sitter-imp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bindings/node",
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp configure && node-gyp build",
+    "highlight": "tree-sitter highlight",
+    "pretest": "npm run build",
+    "test": "tree-sitter test"
+  },
+  "keywords": [
+    "tree-sitter",
+    "imp"
+  ],
+  "tree-sitter": [
+    {
+      "scope": "source.imp",
+      "file-types": [
+        "imp"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nan": "~2.17.0",
+    "node-gyp": "^9.0.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "~0.20.8"
+  }
+}
