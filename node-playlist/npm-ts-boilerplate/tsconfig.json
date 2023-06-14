@@ -1,0 +1,22 @@
+{
+    // This is for type intelligence
+    // never for build
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "lib": ["es6"],
+        "moduleResolution": "node",
+        "sourceMap": false,
+        "strict": true,
+        "declaration": true,
+        "outDir": "lib",
+        "importHelpers": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": ["src/**/*.ts", "test/**/*.ts"],
+    "exclude": ["node_modules"]
+}

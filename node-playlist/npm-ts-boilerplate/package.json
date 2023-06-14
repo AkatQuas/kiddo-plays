@@ -1,0 +1,76 @@
+{
+  "name": "npm-ts-boilerplate",
+  "version": "0.0.0",
+  "description": "A boilerplate for npm package with typescript",
+  "keywords": [
+    "npmpackage",
+    "typescript",
+    "boilerplate",
+    "template"
+  ],
+  "license": "MIT",
+  "author": "AkatQuas (https://github.com/AkatQuas/)",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./lib/index.js",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "lib/index.js",
+  "module": "es6/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "es6",
+    "index.mjs"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.es5.json && tsc -p tsconfig.es6.json && tsc -p tsconfig.mjs.json && rollup -o index.mjs mjs/index.js",
+    "lint": "eslint src/**/*.ts test/**/*.ts",
+    "prepublishOnly": "npm run test && npm run build",
+    "test": "npm run lint && nyc --reporter=text --reporter=html --reporter=lcov mocha test/*.ts"
+  },
+  "prettier": {
+    "parser": "typescript",
+    "printWidth": 80,
+    "singleQuote": true,
+    "tabWidth": 2
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "eqeqeq": "error",
+      "no-async-promise-executor": "off",
+      "@typescript-eslint/no-namespace": "off"
+    },
+    "root": true
+  },
+  "dependencies": {
+    "tslib": "^2.5.3"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.3.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
+    "eslint": "^8.42.0",
+    "import-sort-style-eslint": "^6.0.0",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-import-sort": "^0.0.7",
+    "rollup": "^3.25.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
