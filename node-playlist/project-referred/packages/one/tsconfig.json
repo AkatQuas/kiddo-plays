@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/one"
+  },
+  "references": [
+    { "path": "../../libs/common" },
+    { "path": "../../libs/math" }
+  ],
+  "include": ["src"]
+}
