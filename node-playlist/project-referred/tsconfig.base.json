@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "baseUrl": ".",
+    "paths": {
+      "common/*": ["./libs/common/*"],
+      "math/*": ["./libs/math/*"]
+    }
+  }
+}
