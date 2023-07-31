@@ -1,0 +1,26 @@
+[package]
+name = "rust-2048-demo"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "spin-square"
+path = "bin/spin-square.rs"
+
+[[bin]]
+name = "2048-demo"
+path = "src/main.rs"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+piston = "0.53.2"
+# piston-music = "0.26.0"
+piston2d-graphics = "0.43.0"
+piston2d-opengl_graphics = "0.82.0"
+piston_window = "0.128.0"
+pistoncore-glutin_window = "0.71.0"
+pistoncore-sdl2_window = "0.68.0"
+rand = "0.8.5"
+serde = "1.0.164"
+serde_derive = "1.0.164"
+serde_json = "1.0.99"
