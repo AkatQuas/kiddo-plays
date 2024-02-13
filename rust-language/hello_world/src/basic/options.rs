@@ -1,3 +1,8 @@
+struct P {
+    name: Option<String>,
+    birth: i32,
+}
+
 fn calculate(x: f64, y: f64) -> Option<f64> {
     if y == 0.0 {
         None
@@ -27,4 +32,13 @@ pub fn options() {
     } else {
         println!("Error: Divide by zero.")
     }
+    let mut composers = Vec::new();
+    composers.push(P {
+        name: Some("Paul".to_string()),
+        birth: 1526,
+    });
+
+    let first_name = std::mem::replace(&mut composers[0].name, None);
+    assert_eq!(first_name, Some("Paul".to_string()));
+    assert_eq!(composers[0].name, None);
 }

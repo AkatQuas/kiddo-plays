@@ -23,6 +23,8 @@ struct Course {
     name: String,
 }
 
+// Whenever a reference type appears inside another type’s definition
+// write out its lifetime.
 struct Enrollment<'a> {
     student: &'a Student,
     course: &'a Course,

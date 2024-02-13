@@ -32,13 +32,14 @@ pub fn show_lifetime() {
         ceo: &i_kun,
     };
 
-    let mut z: &String;
+    let z: &String;
 
     {
         let p = Person {
             name: String::from("iKun"),
         };
         z = p.get_name_ref();
+        assert_eq!(z, "iKun");
     }
 
     {
