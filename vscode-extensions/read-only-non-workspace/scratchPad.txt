@@ -1,0 +1,31 @@
+					// "read-only.non-workspace.setToRead-only": {
+					// 	"type": "boolean",
+					// 	"order": 0,
+					// 	"default": false,
+					// 	"markdownDescription": "Enable this to set all non-workspace files to read-only. Default is false/disabled."
+					// },
+
+          	"read-only.non-workspace.enableBadges": {
+						"type": "boolean",
+						"order": 0,
+						"default": false,
+						"markdownDescription": "Enable this to apply a lock icon to non-workspace files."
+					},
+
+          					"read-only.non-workspaceFiles.badges": {
+						"type": "object",
+						"maxLength": 1,
+						"scope": "resource",
+						"order": 1,
+						"properties": {
+							"non-workspace files": {
+								"type": "string",
+								"description": "Add a badge to non-Workspace files"
+							}
+						},
+						"additionalProperties": false,
+						"default": {
+							"non-workspace files": "⏹⏹"
+						},
+						"markdownDescription": "Can be 1-2 characters, including unicode characters (but not unicode, don't use `\\u23F9` for example, paste its character ⏹ instead). Leave the value empty for no badge.  The setting `#explorer.decorations.badges#` must be set to `true` for this setting to take effect."
+						}
