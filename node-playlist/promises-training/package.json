@@ -1,0 +1,55 @@
+{
+  "name": "create-promises-training",
+  "version": "2.0.1",
+  "description": "Practical promises exercises.",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build && node ./build/scripts/prepublishOnly.js",
+    "postpublish": "npm run build && node ./build/scripts/postpublish.js",
+    "e2e": "npm run build && node ./build/scripts/e2eTest.js",
+    "setup": "npm run build && node ./build/scripts/setup.js",
+    "migrate": "npm run build && node ./build/scripts/migrate.js",
+    "check": "vitest",
+    "graph:ui": "npm run dev --prefix ./src/lib/graphExercise/ui",
+    "graph:generateTests": "npm run build && node ./build/scripts/generateGraphTestsData.js",
+    "graph:shuffleTests": "npm run build && node ./build/scripts/shuffleGraphTestData.js",
+    "graph:setTestsCap": "npm run build && node ./build/scripts/setGraphTestsCap.js"
+  },
+  "keywords": [
+    "promises",
+    "training",
+    "learning"
+  ],
+  "author": {
+    "name": "Henrique Inonhe",
+    "email": "henriqueinonhe@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:henriqueinonhe/promises-training.git"
+  },
+  "engines": {
+    "node": ">=20.x"
+  },
+  "bin": "bin.js",
+  "license": "CC-BY-NC-ND-4.0",
+  "devDependencies": {
+    "tar": "6.2.0",
+    "prettier": "2.8.8"
+  },
+  "dependencies": {
+    "vitest": "0.32.4",
+    "ts-pattern": "5.0.4",
+    "@types/fs-extra": "11.0.4",
+    "@types/lodash": "npm:@types/lodash-es@4.17.8",
+    "@types/prompts": "2.4.4",
+    "@types/tar": "6.1.9",
+    "typescript": "5.1.6",
+    "lodash": "npm:lodash-es@4.17.21",
+    "return-exception": "1.0.2",
+    "fs-extra": "11.1.1",
+    "kolorist": "1.8.0",
+    "prompts": "2.4.2"
+  },
+  "type": "module"
+}
