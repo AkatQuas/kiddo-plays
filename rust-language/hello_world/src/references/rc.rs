@@ -22,6 +22,7 @@ pub fn demo() {
         name,
         Rc::strong_count(&name)
     );
+    assert_eq!(Rc::strong_count(&name), 1);
     {
         let person = Person::new(name.clone());
 
@@ -31,6 +32,7 @@ pub fn demo() {
             name,
             Rc::strong_count(&name)
         );
+        assert_eq!(Rc::strong_count(&name), 2);
     }
 
     println!(
@@ -38,5 +40,6 @@ pub fn demo() {
         name,
         Rc::strong_count(&name)
     );
+    assert_eq!(Rc::strong_count(&name), 1);
     println!("=== Rc END");
 }

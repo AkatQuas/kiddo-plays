@@ -51,4 +51,31 @@ pub fn closures() {
     let mut f = 12;
     plus_three(&mut f);
     println!("After plus_three, f is {}", f);
+
+    /*  */
+    let mut x = 5;
+
+    let mut closure = || {
+        println!("In Closure, the captured value of x is: {}", x);
+        x = 7;
+        println!(
+            "In Closure, after mutation The captured value of x is: {}",
+            x
+        );
+    };
+
+    closure();
+
+    // rustc --explain E0434
+    // A variable used inside an inner function comes from a dynamic environment.
+    //
+    // fn bad() {
+    //     println!("nested fn, x is {}", x);
+    // }
+
+    fn f() { // return type is `()`.
+        return;
+        // equivalent returning `()`, the unit type.
+        // return ();
+    }
 }
