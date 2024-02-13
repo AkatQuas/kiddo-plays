@@ -1,0 +1,14 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Fetch and rebase",
+      "detail": "Fetch the traceked upstream and rebase current branch on it, resolve confiliction manually if necessary",
+      "type": "shell",
+      "command": "git fetch --prune --no-tags origin $(git for-each-ref --format='%(upstream:short)' \"$(git symbolic-ref -q HEAD)\" | sed -e \"s#^origin/##\"); git remote prune origin; if [[ $(git status --porcelain) ]]; then git stash -u && _STAGED='did' ; fi ; git rebase --reapply-cherry-picks FETCH_HEAD;  if [[ -n \"${_STAGED}\" ]] ; then git stash pop ; fi ",
+      "problemMatcher": []
+    }
+  ]
+}
