@@ -12,5 +12,5 @@ pub fn concurrency() {
         println!("out-");
         thread::sleep(time::Duration::from_millis(300));
     }
-    handle.join();
+    let _ = handle.join();
 }

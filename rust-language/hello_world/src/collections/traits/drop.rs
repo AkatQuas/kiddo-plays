@@ -27,7 +27,7 @@ pub fn make_drops() {
     //
     // i_kun is no longer available
 
-    let mut ji_yin: Creature;
+    let ji_yin: Creature;
     println!("Before scope.");
 
     {
