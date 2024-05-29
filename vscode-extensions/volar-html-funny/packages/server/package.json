@@ -1,0 +1,23 @@
+{
+  "name": "@html-funny/language-server",
+  "version": "1.0.0",
+  "main": "out/index.js",
+  "license": "MIT",
+  "bin": {
+    "html-funny-server": "./bin/html-funny-language-server.js"
+  },
+  "files": [
+    "out/**/*.js",
+    "out/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@volar/language-core": "^2.2.5",
+    "@volar/language-server": "^2.2.5",
+    "@volar/language-service": "^2.2.5",
+    "volar-service-css": "volar-2.2",
+    "volar-service-emmet": "volar-2.2",
+    "volar-service-html": "volar-2.2",
+    "volar-service-typescript": "volar-2.2",
+    "vscode-html-languageservice": "^5.2.0"
+  }
+}
