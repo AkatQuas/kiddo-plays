@@ -1,0 +1,2 @@
+server: ./node_modules/.bin/json-server --port=9090 db.json
+web: ng serve
