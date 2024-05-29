@@ -1,0 +1,38 @@
+{
+  "private" : true,
+  "name": "vscode-html-funny",
+  "displayName": "HTML funny client",
+  "description": "A VS Code extension for html funny",
+  "version": "0.0.1",
+  "main": "./dist/extension.js",
+  "author": "akat",
+  "publisher": "akat",
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:html_funny"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "html_funny",
+        "extensions": [
+          ".html_funny"
+        ]
+      }
+    ]
+  },
+  "devDependencies": {
+    "@html-funny/language-server": "workspace:*",
+    "@types/vscode": "^1.82.0",
+    "@volar/language-server": "^2.2.5",
+    "@volar/vscode": "^2.2.5",
+    "@vscode/vsce": "latest",
+    "esbuild": "latest",
+    "vscode-languageclient": "^9.0.1"
+  }
+}

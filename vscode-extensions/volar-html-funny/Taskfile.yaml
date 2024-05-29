@@ -1,0 +1,11 @@
+version: '3'
+
+tasks:
+  pack:
+    deps: [build_ext]
+    cmds:
+      - cd packages/client && ./node_modules/.bin/vsce package --pre-release --allow-missing-repository --out ~/Desktop
+  build_ext:
+    cmds:
+      - cd packages/client && node ./scripts/build.js --minify
+    silent: true
