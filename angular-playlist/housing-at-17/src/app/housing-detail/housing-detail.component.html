@@ -1,0 +1,36 @@
+<article *ngIf="item; else elseBlock">
+  <img
+    class="listing-photo"
+    [src]="item.photo"
+    alt="Exterior photo of {{ item.name }}"
+  />
+  <section class="listing-description">
+    <h2 class="listing-heading">{{ item.name }}</h2>
+    <p class="listing-location">{{ item.city }}, {{ item.state }}</p>
+  </section>
+  <section class="listing-features">
+    <h2 class="section-heading">About this housing location</h2>
+    <ul>
+      <li>Units available: {{ item.availableUnits }}</li>
+      <li>Does this location have wifi: {{ item.wifi }}</li>
+      <li>Does this location have laundry: {{ item.laundry }}</li>
+    </ul>
+  </section>
+  <section class="listing-apply">
+    <h2 class="section-heading">Apply now to rent</h2>
+    <form [formGroup]="applyForm" (submit)="apply()">
+      <label for="first-name">First Name</label>
+      <input id="first-name" type="text" formControlName="first_name" />
+
+      <label for="last-name">Last Name</label>
+      <input id="last-name" type="text" formControlName="last_name" />
+
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+      <button type="submit" class="primary">Apply now</button>
+    </form>
+  </section>
+</article>
+<ng-template #elseBlock>
+  <p>Really ???</p>
+</ng-template>
