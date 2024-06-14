@@ -1,0 +1,50 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+  "name": "Collection, try on DevContainer",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "node",
+  "mounts": [
+    // sharing docker
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    // persist bash history
+    "source=devcontainer-bashhistory,target=/commandhistory,type=volume"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        // personalizing with dotfiles
+        // "dotfiles.repository": "your-github-id/your-dotfiles-repo",
+        // "dotfiles.targetPath": "~/dotfiles",
+        // "dotfiles.installCommand": "install.sh",
+
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          },
+          "zsh": {
+            "path": "zsh"
+          },
+          "fish": {
+            "path": "fish"
+          },
+          "tmux": {
+            "path": "tmux",
+            "icon": "terminal-tmux"
+          },
+          "pwsh": {
+            "path": "pwsh",
+            "icon": "terminal-powershell"
+          }
+        }
+      }
+    }
+  }
+}
