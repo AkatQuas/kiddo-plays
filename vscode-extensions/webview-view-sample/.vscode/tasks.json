@@ -1,0 +1,72 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "label": "node:watch",
+      "type": "npm",
+      "script": "node:watch",
+      "problemMatcher": "$tsc-watch",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "webview:watch",
+      "type": "npm",
+      "script": "webview:watch",
+      "problemMatcher": [
+        {
+          "owner": "rspack compiler",
+          "applyTo": "closedDocuments",
+          "fileLocation": "absolute",
+          "severity": "error",
+          "pattern": [
+            {
+              "regexp": ".*Error: (.*):(.*) \\((.*):(.*)\\)",
+              "message": 2,
+              "file": 1,
+              "line": 3,
+              "column": 4
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": {
+              "regexp": ".*setup"
+            },
+            "endsPattern": {
+              "regexp": "compiled successfully in"
+            }
+          }
+        }
+      ],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "watch-all",
+      "dependsOn": ["node:watch", "webview:watch"]
+    },
+    {
+      "label": "[TEST]Pack extension",
+      "detail": "Pack an extension locally, you can pass the visx file around.",
+      "type": "shell",
+      "command": "rm -rf out webview/dist && npm version prerelease && npm run prepublish ; ./node_modules/.bin/vsce package --out ~/Desktop --no-dependencies",
+      "options": {},
+      "problemMatcher": []
+    }
+  ]
+}
