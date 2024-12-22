@@ -1,0 +1,12 @@
+scripts/
+src/
+.vscode/
+webview/
+!webview/dist/
+!webview/static/
+.editorconfig
+.eslintrc.js
+rspack.config.js
+.eslintignore
+tsconfig.*
+pnpm-lock.yaml
