@@ -1,0 +1,127 @@
+{
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "category": "Webview Sample",
+        "command": "webview-sample.addColor",
+        "title": "Add Color"
+      },
+      {
+        "category": "Webview Sample",
+        "command": "webview-sample.clearColors",
+        "icon": "$(clear-all)",
+        "title": "Clear Colors"
+      },
+      {
+        "category": "Webview Sample",
+        "command": "webview-sample.addNumber",
+        "title": "Add Number"
+      },
+      {
+        "category": "Webview Sample",
+        "command": "webview-sample.clearNumber",
+        "icon": "$(clear-all)",
+        "title": "Clear Number"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "webview-sample.clearColors",
+          "group": "navigation",
+          "when": "view == webview-sample.sidebar"
+        },
+        {
+          "command": "webview-sample.clearNumber",
+          "group": "navigation",
+          "when": "view == webview-sample.panel"
+        }
+      ]
+    },
+    "views": {
+      "webview-sample": [
+        {
+          "id": "webview-sample.sidebar",
+          "name": "Webview Sample Sidebar",
+          "type": "webview"
+        }
+      ],
+      "webview-sample-panel": [
+        {
+          "id": "webview-sample.panel",
+          "name": "Webview Sample Panel",
+          "type": "webview"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "webview-sample-panel",
+          "title": "Webview Sample Panel",
+          "icon": "./assets/logo.svg"
+        }
+      ],
+      "activitybar": [
+        {
+          "icon": "./assets/logo.svg",
+          "id": "webview-sample",
+          "title": "Webview Sample Container"
+        }
+      ]
+    }
+  },
+  "description": "Webview View Sample",
+  "devDependencies": {
+    "@rspack/cli": "^1.0.13",
+    "@rspack/core": "^1.0.13",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@types/vscode": "^1.73.0",
+    "@types/vscode-webview": "^1.57.5",
+    "@typescript-eslint/eslint-plugin": "^7.14.0",
+    "@typescript-eslint/parser": "^7.14.0",
+    "@vscode/vsce": "^3.2.1",
+    "concurrently": "^9.0.1",
+    "eslint": "^8.32.0",
+    "node-polyfill-webpack-plugin": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0",
+    "typescript": "^5.5.2"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "license": "MIT",
+  "main": "./out/extension.js",
+  "name": "webview-sample",
+  "private": true,
+  "publisher": "github",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "lint": "eslint \"src/**/*.ts\"",
+    "node:build": "npm run tsc",
+    "node:watch": "tsc -w",
+    "prepublish": "npm run node:build && npm run webview:build",
+    "tsc": "tsc",
+    "type-check": "tsc --noEmit",
+    "webview:build": "rspack --config rspack.config.js --mode=production",
+    "webview:watch": "rspack --config rspack.config.js --watch"
+  },
+  "version": "0.0.2-3"
+}
