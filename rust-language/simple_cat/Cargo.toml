@@ -1,0 +1,12 @@
+[package]
+name = "simple_cat"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = "2"
+
+[dev-dependencies]
+assert_cmd = "2"
+predicates = "2"
+rand = "0.8"
