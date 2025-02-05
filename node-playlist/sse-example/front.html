@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Server-Sent Events Example</title>
+  </head>
+  <body>
+    <h1>Server-Sent Events Example</h1>
+    <div id="messages"></div>
+
+    <script>
+      // Create a new EventSource object
+      const eventSource = new EventSource('http://localhost:3000/events', {
+        withCredentials: false,
+      });
+
+      // Handle incoming messages
+      eventSource.onmessage = function (event) {
+        const messagesDiv = document.getElementById('messages');
+        const newMessage = document.createElement('p');
+        newMessage.textContent = `New message: ${event.data}`;
+        messagesDiv.appendChild(newMessage);
+      };
+
+      // Handle custom events
+      eventSource.addEventListener('custom-event', function (event) {
+        console.log(`Custom event received: ${event.data}`);
+      });
+      eventSource.addEventListener('ping', (event) => {
+        const eventList = document.getElementById('messages');
+        const newElement = document.createElement('p');
+        const time = JSON.parse(event.data).time;
+        newElement.textContent = `ping at ${time}`;
+        eventList.appendChild(newElement);
+      });
+      eventSource.addEventListener('jack', (event) => {
+        const eventList = document.getElementById('messages');
+        const newElement = document.createElement('p');
+        const time = new Date();
+        newElement.textContent = `jack at ${time}`;
+        eventList.appendChild(newElement);
+      });
+
+      // Handle connection errors
+      eventSource.onerror = function (event) {
+        console.error('EventSource failed:', event);
+      };
+    </script>
+  </body>
+</html>
