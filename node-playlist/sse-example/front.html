@@ -43,6 +43,10 @@
       // Handle connection errors
       eventSource.onerror = function (event) {
         console.error('EventSource failed:', event);
+        // when server close connection
+        // eventSource would reconnect automatically
+        // use `close` to stop it
+        // eventSource.close();
       };
     </script>
   </body>
