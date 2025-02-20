@@ -37,10 +37,17 @@ app.get('/events', (req, res) => {
   }, 2200);
 
   // Clean up when the connection is closed
-  req.on('close', () => {
+  // req.on('close', () => {
+  //   clearInterval(interval);
+  //   console.debug('\x1B[97;100;1m --- closed --- \x1B[m', '\n');
+  //   res.end();
+  // });
+
+  // close connection by timeout
+  setTimeout(() => {
     clearInterval(interval);
     res.end();
-  });
+  }, 6700);
 });
 
 app.listen(3000, () => {
