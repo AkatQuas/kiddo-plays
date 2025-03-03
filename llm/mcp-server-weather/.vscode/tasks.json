@@ -1,0 +1,29 @@
+
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "npm",
+			"script": "build",
+      "detail": "Build the MCP server using tsc",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "inspect",
+			"type": "shell",
+			"command": "npx @modelcontextprotocol/inspector node build/index.js",
+			"detail": "Start the MCP Inspector for server",
+      "dependsOn": ["build"],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			}
+		}
+	]
+}
