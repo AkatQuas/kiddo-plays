@@ -1,29 +1,81 @@
-
 // See https://go.microsoft.com/fwlink/?LinkId=733558
 // for the documentation about the tasks.json format
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"label": "build",
-			"type": "npm",
-			"script": "build",
-      "detail": "Build the MCP server using tsc",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-		},
-		{
-			"label": "inspect",
-			"type": "shell",
-			"command": "npx @modelcontextprotocol/inspector node build/index.js",
-			"detail": "Start the MCP Inspector for server",
-      "dependsOn": ["build"],
-			"group": {
-				"kind": "test",
-				"isDefault": true
-			}
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "hide": true,
+      "label": "development (SSE)",
+      "type": "npm",
+      "script": "dev",
+      "detail": "Development MCP server through SSE transport",
+      "isBackground": true,
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+			"presentation": {
+				"echo": true,
+				"reveal": "never",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+      "problemMatcher": []
+    },
+    {
+      "hide": true,
+      "label": "inspector (SSE)",
+      "type": "shell",
+      "command": "npx @modelcontextprotocol/inspector",
+      "detail": "Start the MCP Inspector for server",
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Inspect (SSE)",
+      "detail": "Inspect through SSE",
+      "dependsOn": ["development (SSE)", "inspector (SSE)"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "hide": true,
+      "label": "build (CLI)",
+      "type": "npm",
+      "script": "build",
+      "detail": "BUILD MCP server for CLI transport inspect",
+      "isBackground": true,
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+			"presentation": {
+				"echo": true,
+				"reveal": "never",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+      "problemMatcher": []
+    },
+    {
+      "label": "Inspect (CLI)",
+      "type": "shell",
+      "command": "npx @modelcontextprotocol/inspector node dist/index.js --stdio",
+      "detail": "Development MCP server through CLI transport",
+      "dependsOn": ["build (CLI)"],
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "problemMatcher": []
+    },
+  ]
 }
