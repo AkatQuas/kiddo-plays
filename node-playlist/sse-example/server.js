@@ -2,15 +2,31 @@ const express = require('express');
 const { readFileSync } = require('node:fs');
 const app = express();
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function* shortGenerator() {
+  for (let i = 1; i <= 3; i++) {
+    yield `string ${i}`;
+    // Wait for a random time between 100 and 1000 milliseconds
+    const delay = Math.floor(Math.random() * 900) + 100;
+    await sleep(delay);
+  }
+}
+
 app.get('/front.html', (req, res) => {
   const content = readFileSync('./front.html');
   res.write(content);
 });
 
 app.get('/events', (req, res) => {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
+  res.set({
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive',
+    'Access-Control-Allow-Origin': '*',
+  });
 
   // Function to send an event
   const sendData = (data) => {
@@ -48,6 +64,40 @@ app.get('/events', (req, res) => {
     clearInterval(interval);
     res.end();
   }, 6700);
+});
+
+app.post('/stream', async (req, res) => {
+  req.socket.setTimeout(0);
+  req.socket.setNoDelay(true);
+  req.socket.setKeepAlive(true);
+
+  res.set({
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive',
+    'Access-Control-Allow-Origin': '*',
+  });
+
+  res.status(200);
+  res.on('close', () => {
+    res.end();
+  });
+
+  try {
+    for await (const s of shortGenerator()) {
+      const chunkData = {
+        content: s,
+        role: 'shortGenerator',
+        eventType: 'shortGenerator',
+      };
+      res.write(`data: ${JSON.stringify(chunkData)}\n\n`);
+    }
+    res.end();
+  } catch (error) {
+    res.end();
+  }
+
+  return res;
 });
 
 app.listen(3000, () => {
