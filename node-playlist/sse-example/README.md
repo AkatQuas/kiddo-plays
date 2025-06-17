@@ -11,3 +11,8 @@ This example shows how to use the `sse` feature to send events to the client.
 - Run the `node server.js` command in terminal to start the server.
 - Visit the `http://localhost:3000/front.html` page in your browser.
 - Check the `Network` and `Console` tab in the browser's developer tools to see the events being sent.
+
+## References
+
+- [How streaming LLM APIs work](https://til.simonwillison.net/llms/streaming-llm-apis)
+
