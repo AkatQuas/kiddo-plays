@@ -77,5 +77,39 @@
       },
       "problemMatcher": []
     },
+    {
+      "label": "Docker build",
+      "type": "shell",
+      "command": "docker build -t mcp-server-weather ./",
+      "detail": "Build the docker image",
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker build (inspector)",
+      "type": "shell",
+      "command": "docker build -t mcp-server-weather-inspect -f Dockerfile.inspect ./",
+      "detail": "Build the docker image with inpsector",
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker run (inspector)",
+      "type": "shell",
+      "command": "docker run -i --rm -p 6274:6274 -p 6277:6277 mcp-server-weather-inspect",
+      "detail": "Run the docker image with inpsector",
+      "dependsOn": ["Docker build (inspector)"],
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "problemMatcher": []
+    },
   ]
 }

@@ -12,16 +12,7 @@ After you write the capabilities of your server, you can use the MCP Inspector t
 
 Use VS Code Task to build the server in watch mode and start the debugger.
 
-Choose `Tasks: Run Task` and choose `Inspect (SSE)` from VS Code command palette.
-
-![](./docs/sse.png)
-
-<details>
-<summary>
-
-MCP Inspector through CLI (Not recommended).
-
-</summary>
+**MCP Inspector through CLI**
 
 The `tsx` would not generate a `dist` folder, so you might need to start the task each time when you make changes.
 
@@ -29,8 +20,38 @@ Choose `Tasks: Run Task` and choose `Inspect (CLI)` from VS Code command palette
 
 ![](./docs/cli.png)
 
+<details>
+<summary>
+**MCP Inspector through HTTP** (deprecated)
+</summary>
+
+Choose `Tasks: Run Task` and choose `Inspect (SSE)` from VS Code command palette.
+
+![](./docs/sse.png)
+
 </details>
 
+## Docker
+
+Server is running in CLI mode by default in docker.
+
+Build the image: `docker build -t mcp-server-weather ./`
+
+Run the image: `docker run -i --rm mcp-server-weather`
+
+### Docker with debug
+
+Use `Dockerfile.debug` to build the image.
+
+```bash
+docker build -t mcp-server-weather-debug -f Dockerfile.inspect ./
+```
+
+Run the image with debug mode:
+
+```bash
+docker run --rm -p 6274:6274 -p 6277:6277 mcp-server-weather-inspect
+```
 
 ## References
 
