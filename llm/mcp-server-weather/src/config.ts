@@ -52,9 +52,9 @@ export function getServerConfig(): ServerConfig {
   }
 
   // Log configuration sources
-  console.log("\nConfiguration:");
-  console.log(`- PORT: ${config.port} (source: ${config.configSources.port})`);
-  console.log(); // Empty line for better readability
+  // console.error("\nConfiguration:");
+  // console.error(`- PORT: ${config.port} (source: ${config.configSources.port})`);
+  // console.error(); // Empty line for better readability
 
   return config;
 }

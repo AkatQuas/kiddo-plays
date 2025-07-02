@@ -3,26 +3,41 @@ import {
   ResourceTemplate,
 } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
+import { LoggingMessageNotification } from '@modelcontextprotocol/sdk/types.js';
 import express, { Request, Response } from 'express';
 import { IncomingMessage, ServerResponse } from 'http';
 import { z } from 'zod';
 
 export class BaseServer {
-  private readonly server: McpServer;
+  private readonly _mcpServer: McpServer;
   private sseTransport: SSEServerTransport | null = null;
 
   constructor() {
-    this.server = new McpServer({
-      name: 'Weather MCP Server',
-      version: '1.0.0',
-    });
+    this._mcpServer = new McpServer(
+      {
+        name: 'Weather MCP Server',
+        version: '1.0.0',
+      },
+      {
+        capabilities: {
+          experimental: {},
+          completions: {},
+          prompts: {},
+
+          logging: {},
+          resources: {},
+          tools: {},
+        },
+      }
+    );
     this.setupTools();
   }
 
   // basic capability for server
   private setupTools() {
-    this.server.tool(
+    this._mcpServer.tool(
       'add-number',
       {
         a: z.number(),
@@ -40,7 +55,7 @@ export class BaseServer {
       }
     );
     // Add a dynamic greeting resource
-    this.server.resource(
+    this._mcpServer.resource(
       'greeting',
       new ResourceTemplate('greeting://{name}', { list: undefined }),
       async (uri, { name }) => ({
@@ -54,7 +69,7 @@ export class BaseServer {
     );
 
     // Add a prompt which is a reusable template that help LLMs interact with your server effectively
-    this.server.prompt('review-code', { code: z.string() }, ({ code }) => ({
+    this._mcpServer.prompt('review-code', { code: z.string() }, ({ code }) => ({
       messages: [
         {
           role: 'user',
@@ -68,22 +83,49 @@ export class BaseServer {
   }
 
   get mcpServer() {
-    return this.server;
+    return this._mcpServer;
   }
 
-  async connect(transport: Transport) {
-    await this.server.connect(transport);
+  async onInitialized(fn: () => void) {
+    this._mcpServer.server.oninitialized = fn;
   }
 
+  async close() {
+    await this._mcpServer.close();
+  }
+
+  async cleanup() {
+    await Promise.resolve();
+    // do some clean up
+  }
+
+  async sendLoggingMessage(p: Partial<LoggingMessageNotification['params']>) {
+    this._mcpServer.server.sendLoggingMessage(
+      Object.assign(
+        {
+          level: 'info',
+        },
+        p
+      )
+    );
+  }
+
+  async startCliServer() {
+    const transport = new StdioServerTransport();
+    await this._mcpServer.connect(transport);
+  }
+
+  /**
+   * @deprecated
+   */
   async startHttpServer(port: number) {
     const app = express();
     app.get('/sse', async (req: Request, res: Response) => {
-      console.log('New SSE connection established');
       this.sseTransport = new SSEServerTransport(
         '/messages',
         res as unknown as ServerResponse<IncomingMessage>
       );
-      await this.server.connect(this.sseTransport);
+      await this._mcpServer.connect(this.sseTransport);
     });
 
     app.post('/messages', async (req: Request, res: Response) => {
@@ -98,12 +140,15 @@ export class BaseServer {
       );
     });
 
-    app.listen(port, () => {
-      console.log(`HTTP server listening on port ${port}`);
-      console.log(`SSE endpoint available at http://localhost:${port}/sse`);
-      console.log(
-        `Message endpoint available at http://localhost:${port}/messages`
-      );
+    return new Promise((resolve) => {
+      app.listen(port, () => {
+        console.error(`HTTP server listening on port ${port}`);
+        console.error(`SSE endpoint available at http://localhost:${port}/sse`);
+        console.error(
+          `Message endpoint available at http://localhost:${port}/messages`
+        );
+        resolve(1);
+      });
     });
   }
 }
