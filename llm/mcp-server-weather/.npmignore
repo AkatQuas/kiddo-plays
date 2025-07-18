@@ -1,0 +1,4 @@
+src/**
+Dockerfile
+tsconfig.json
+.gitignore

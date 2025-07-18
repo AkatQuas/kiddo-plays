@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { resolve } from "path";
 import { config } from "dotenv";
+import { resolve } from "path";
 import { startServer } from "./index";
 
 // Load .env from the current working directory

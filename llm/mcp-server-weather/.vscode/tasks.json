@@ -5,51 +5,10 @@
   "tasks": [
     {
       "hide": true,
-      "label": "development (SSE)",
-      "type": "npm",
-      "script": "dev",
-      "detail": "Development MCP server through SSE transport",
-      "isBackground": true,
-      "group": {
-        "kind": "test",
-        "isDefault": false
-      },
-			"presentation": {
-				"echo": true,
-				"reveal": "never",
-				"focus": false,
-				"panel": "shared",
-				"showReuseMessage": true,
-				"clear": false
-			},
-      "problemMatcher": []
-    },
-    {
-      "hide": true,
-      "label": "inspector (SSE)",
-      "type": "shell",
-      "command": "npx @modelcontextprotocol/inspector",
-      "detail": "Start the MCP Inspector for server",
-      "isBackground": true,
-      "problemMatcher": [],
-      "group": {
-        "kind": "build",
-        "isDefault": false
-      }
-    },
-    {
-      "label": "Inspect (SSE)",
-      "detail": "Inspect through SSE",
-      "dependsOn": ["development (SSE)", "inspector (SSE)"],
-      "dependsOrder": "parallel",
-      "problemMatcher": []
-    },
-    {
-      "hide": true,
-      "label": "build (CLI)",
+      "label": "build (STDIO)",
       "type": "npm",
       "script": "build",
-      "detail": "BUILD MCP server for CLI transport inspect",
+      "detail": "BUILD MCP server for STDIO transport inspect",
       "isBackground": true,
       "group": {
         "kind": "test",
@@ -66,11 +25,11 @@
       "problemMatcher": []
     },
     {
-      "label": "Inspect (CLI)",
+      "label": "Inspect (STDIO)",
       "type": "shell",
-      "command": "npx @modelcontextprotocol/inspector node dist/index.js --stdio",
-      "detail": "Development MCP server through CLI transport",
-      "dependsOn": ["build (CLI)"],
+      "command": "npx -y @modelcontextprotocol/inspector node dist/index.js --stdio",
+      "detail": "Development MCP server through STDIO transport",
+      "dependsOn": ["build (STDIO)"],
       "group": {
         "kind": "test",
         "isDefault": false
@@ -78,7 +37,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Docker build",
+      "label": "build (Docker)",
       "type": "shell",
       "command": "docker build -t mcp-server-weather ./",
       "detail": "Build the docker image",
@@ -89,7 +48,8 @@
       "problemMatcher": []
     },
     {
-      "label": "Docker build (inspector)",
+      "hide": true,
+      "label": "build (Docker + inspector)",
       "type": "shell",
       "command": "docker build -t mcp-server-weather-inspect -f Dockerfile.inspect ./",
       "detail": "Build the docker image with inpsector",
@@ -100,15 +60,56 @@
       "problemMatcher": []
     },
     {
-      "label": "Docker run (inspector)",
+      "label": "Inspect (Docker)",
       "type": "shell",
       "command": "docker run -i --rm -p 6274:6274 -p 6277:6277 mcp-server-weather-inspect",
-      "detail": "Run the docker image with inpsector",
-      "dependsOn": ["Docker build (inspector)"],
+      "detail": "Run the mpc server in STDIO mode with inpsector in Docker",
+      "dependsOn": ["build (Docker + inspector)"],
       "group": {
         "kind": "test",
         "isDefault": false
       },
+      "problemMatcher": []
+    },
+    {
+      "hide": true,
+      "label": "development (HTTP)",
+      "type": "npm",
+      "script": "dev",
+      "detail": "Development MCP server through HTTP transport",
+      "isBackground": true,
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+			"presentation": {
+				"echo": true,
+				"reveal": "never",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+      "problemMatcher": []
+    },
+    {
+      "hide": true,
+      "label": "inspector (HTTP)",
+      "type": "shell",
+      "command": "npx -y @modelcontextprotocol/inspector",
+      "detail": "Start the MCP Inspector for server",
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "Inspect (HTTP)",
+      "detail": "Inspect through HTTP",
+      "dependsOn": ["development (HTTP)", "inspector (HTTP)"],
+      "dependsOrder": "parallel",
       "problemMatcher": []
     },
   ]
