@@ -8,12 +8,12 @@ config();
 interface ServerConfig {
   port: number;
   configSources: {
-    port: "cli" | "env" | "default";
+    port: "stdio" | "env" | "default";
   };
 }
 
 
-interface CliArgs {
+interface StdioArgs {
   port?: number;
 }
 
@@ -27,7 +27,7 @@ export function getServerConfig(): ServerConfig {
       },
     })
     .help()
-    .parseSync() as CliArgs;
+    .parseSync() as StdioArgs;
 
   const config: ServerConfig = {
     port: 3333,
@@ -39,7 +39,7 @@ export function getServerConfig(): ServerConfig {
   // Handle PORT
   if (argv.port) {
     config.port = argv.port;
-    config.configSources.port = "cli";
+    config.configSources.port = "stdio";
   } else if (process.env.PORT) {
     config.port = parseInt(process.env.PORT, 10);
     config.configSources.port = "env";

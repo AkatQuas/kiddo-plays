@@ -12,20 +12,41 @@ After you write the capabilities of your server, you can use the MCP Inspector t
 
 Use VS Code Task to build the server in watch mode and start the debugger.
 
-**MCP Inspector through CLI**
+**MCP Inspector through Streamable HTTP**
 
-The `tsx` would not generate a `dist` folder, so you might need to start the task each time when you make changes.
+Choose `Tasks: Run Task` and choose `Inspect (HTTP)` from VS Code command palette.
 
-Choose `Tasks: Run Task` and choose `Inspect (CLI)` from VS Code command palette.
+Select `Transport Type` as `Streamable HTTP`.
 
-![](./docs/cli.png)
+![](./docs/stream.png)
 
 <details>
 <summary>
-**MCP Inspector through HTTP** (deprecated)
+
+**MCP Inspector through STDIO**
+
 </summary>
 
-Choose `Tasks: Run Task` and choose `Inspect (SSE)` from VS Code command palette.
+The `tsx` would not generate a `dist` folder, so you might need to start the task each time when you make changes.
+
+Choose `Tasks: Run Task` and choose `Inspect (STDIO)` from VS Code command palette.
+
+Select `Transport Type` as `STDIO`.
+
+![](./docs/stdio.png)
+
+</details>
+
+<details>
+<summary>
+
+**MCP Inspector through SSE** (deprecated)
+
+</summary>
+
+Choose `Tasks: Run Task` and choose `Inspect (HTTP)` from VS Code command palette.
+
+Select `Transport Type` as `SSE` (Server Sent Events).
 
 ![](./docs/sse.png)
 
@@ -33,25 +54,27 @@ Choose `Tasks: Run Task` and choose `Inspect (SSE)` from VS Code command palette
 
 ## Docker
 
-Server is running in CLI mode by default in docker.
+Server is running in **STDIO mode** by default in docker.
 
 Build the image: `docker build -t mcp-server-weather ./`
 
 Run the image: `docker run -i --rm mcp-server-weather`
 
-### Docker with debug
+### Inspect the MCP server in Docker
 
-Use `Dockerfile.debug` to build the image.
+Use config file `Dockerfile.inspect` to build the image.
 
 ```bash
-docker build -t mcp-server-weather-debug -f Dockerfile.inspect ./
+docker build -t mcp-server-weather-inspect -f Dockerfile.inspect ./
 ```
 
-Run the image with debug mode:
+Run the image and connect to the MCP through **STDIO transport**:
 
 ```bash
 docker run --rm -p 6274:6274 -p 6277:6277 mcp-server-weather-inspect
 ```
+
+Or, Choose `Tasks: Run Task` and choose `Inspect (Docker)` from VS Code command palette.
 
 ## References
 
