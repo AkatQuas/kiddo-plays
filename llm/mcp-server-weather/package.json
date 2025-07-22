@@ -2,45 +2,41 @@
   "name": "mcp-server-weather",
   "version": "1.0.0",
   "description": "Model Context Protocol demo server for Weather",
+  "keywords": [
+    "mcp",
+    "typescript"
+  ],
+  "license": "MIT",
   "main": "dist/index.js",
   "bin": {
-    "weather-server": "./dist/cli.js"
-  },
-  "scripts": {
-    "build": "tsc && tsc-alias",
-    "type-check": "tsc --noEmit",
-    "start": "node dist/index.js",
-    "start:cli": "cross-env NODE_ENV=cli node dist/index.js",
-    "start:http": "node dist/index.js",
-    "dev": "cross-env NODE_ENV=development tsx watch src/index.ts",
-    "dev:cli": "cross-env NODE_ENV=development tsx watch src/index.ts --stdio",
-    "inspect:cli": "npx -y @modelcontextprotocol/inspector",
-    "prepare": "npm run build && chmod +x ./dist/index.js"
+    "mcp-server-weather": "./dist/cli.js"
   },
   "files": [
     "dist",
     "README.md"
   ],
-  "keywords": [
-    "mcp",
-    "typescript"
-  ],
-  "author": "",
-  "license": "MIT",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "cross-env NODE_ENV=development tsx watch src/index.ts",
+    "inspect": "npx -y @modelcontextprotocol/inspector",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.16.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "yargs": "^17.7.2",
+    "zod": "^3.25.76"
+  },
   "devDependencies": {
     "@types/express": "^5.0.3",
-    "@types/node": "^22.16.0",
+    "@types/express-serve-static-core": "^5.0.7",
+    "@types/node": "^22.16.4",
     "@types/yargs": "^17.0.33",
     "cross-env": "^7.0.3",
     "tsc-alias": "^1.8.16",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.13.2",
-    "dotenv": "^16.5.0",
-    "express": "^4.21.2",
-    "yargs": "^17.7.2",
-    "zod": "^3.25.67"
   }
 }

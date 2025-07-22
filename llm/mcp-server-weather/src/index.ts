@@ -1,49 +1,54 @@
-import { BaseServer } from './server';
 import { getServerConfig } from './config';
+import { App } from './app';
+import { BasicService } from './services/basic';
 import { WeatherService } from './services/weather';
 
 export async function startServer(): Promise<void> {
-  const server = new BaseServer();
-
-  // add service and register
-  // service might accept `config` as arguments
-  const weatherService = new WeatherService();
-
-  // it's important to register service before server start
-  weatherService.register(server.mcpServer);
-
-  // Check if we're running in stdio mode (e.g., via CLI)
-  const isStdioMode =
-    process.env.NODE_ENV === 'cli' || process.argv.includes('--stdio');
-
-  if (isStdioMode) {
-    server.onInitialized(() => {
-      server.sendLoggingMessage({
-        data: 'Hello, you are connected through STDIO',
-      });
-    });
-    process.nextTick(() => {
-      server.startCliServer();
-    });
-  } else {
-    const config = getServerConfig();
-    server.onInitialized(() => {
-      server.sendLoggingMessage({
-        data: 'Hello, you are connected through HTTP',
-      });
-    });
-    process.nextTick(() => {
-      server.startHttpServer(config.port);
-    });
-  }
+  const app = new App();
 
   // Cleanup on exit
   process.on('SIGINT', async () => {
-    await server.close();
-    await server.cleanup();
+    await app.close();
     process.exit(0);
   });
-  // no more
+
+  // add service and register
+  // service might accept `config` as arguments
+  const basicService = new BasicService();
+  const weatherService = new WeatherService();
+
+  // it's important to register service before server start
+  basicService.register(app.mcpServer);
+  weatherService.register(app.mcpServer);
+
+  // Check if we're running in stdio mode (e.g., via tty)
+  const isStdioMode = process.argv.includes('--stdio');
+
+  if (isStdioMode) {
+    app.onInitialized(() => {
+      app.sendLoggingMessage({
+        data: 'Hello, you are connected through STDIO',
+      });
+    });
+    await new Promise((resolve, reject) => {
+      process.nextTick(() => {
+        app.startServerStdio().then(resolve, reject);
+      });
+    });
+
+    return;
+  }
+  const config = getServerConfig();
+  app.onInitialized(() => {
+    app.sendLoggingMessage({
+      data: 'Hello, you are connected through StreamableHTTP',
+    });
+  });
+  await new Promise((resolve, reject) => {
+    process.nextTick(() => {
+      app.startServerStream(config.port).then(resolve, reject);
+    });
+  });
 }
 
 // If this file is being run directly, start the server

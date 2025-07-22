@@ -1,5 +1,5 @@
-import z from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import z from 'zod';
 import { BaseService } from './base';
 
 export const NWS_API_BASE = 'https://api.weather.gov';
