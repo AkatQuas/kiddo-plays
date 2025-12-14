@@ -1,4 +1,3 @@
-node_modules
 lib
 es6
 mjs
@@ -6,4 +5,3 @@ index.mjs
 coverage
 .nyc_output
 package.lock
-.vscode/launch.json

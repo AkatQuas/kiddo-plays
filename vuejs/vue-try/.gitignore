@@ -1,8 +1,6 @@
 .DS_Store
 dist/
 
-# Editor directories and files
-.vscode
 .idea
 *.suo
 *.ntvs*
@@ -196,4 +194,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-

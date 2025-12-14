@@ -59,16 +59,10 @@ typings/
 # dotenv environment variables file
 .env
 
-# ide
-.idea/
-.vscode/
-
 # build
 dll/
 dist/
 raw_data/
-
-proxychains.conf
 
 #generate images
 generate_images/
