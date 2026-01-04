@@ -1,0 +1,18 @@
+# https://packaging.python.org/en/latest/tutorials/packaging-projects/
+
+[project]
+name = "flaskr"
+version = "1.0.0"
+description = "The basic blog app built in the Flask tutorial."
+dependencies = ["flask"]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["flaskr"]
