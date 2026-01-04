@@ -1,0 +1,34 @@
+@server = http://localhost:5000/api
+
+###
+GET {{server}}/todos
+
+###
+POST {{server}}/todos
+Content-Type: application/json
+
+{ "task": "new task 1" }
+###
+POST {{server}}/todos
+Content-Type: application/json
+
+{ "task": "new task 1", "due": "2026-01-05 00:00:00"}
+
+###
+GET {{server}}/todos/1
+
+###
+PUT {{server}}/todos/1
+Content-Type: application/json
+
+{
+  "task": "haha"
+}
+###
+POST http://localhost:5000/auth/change_pwd
+Content-Type: application/json
+
+{
+  "username": "admin2",
+  "password": "123"
+}
