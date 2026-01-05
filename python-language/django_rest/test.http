@@ -1,0 +1,34 @@
+@server = http://localhost:8000
+
+###
+GET {{server}}/users/
+Authorization: Basic admin:admin
+
+### snippets list
+GET {{server}}/snippets/
+
+### snippet detail by id
+GET {{server}}/snippets/2/
+
+### create a new snippet
+POST {{server}}/snippets/
+Content-Type: application/json
+
+{
+  "title": "first snippet",
+  "code": "print(\"hello, 42\")\n",
+  "linenos": false,
+  "language": "python",
+  "style": "friendly"
+}
+
+### update snippet by id
+PUT {{server}}/snippets/2/
+Content-Type: application/json
+
+{
+  "code": "print(\"hello, 42 and 42\")\n"
+}
+
+### delete a snippet
+DELETE {{server}}/snippets/1/

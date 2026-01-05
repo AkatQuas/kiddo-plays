@@ -26,6 +26,8 @@ Most handlers are in [api.py](./flaskr/api.py) leveraging [flask-restful](https:
 
 We have some typing and serialization / deserialization issues since the `row_factory` is set to `sqlite3.Row`.
 
+It's a sad story that it has been a long time since last update, see https://github.com/flask-restful/flask-restful.
+
 ## Test
 
 Install this project before running test.
