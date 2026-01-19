@@ -1,0 +1,58 @@
+@server = http://localhost:8000
+
+###
+GET {{server}}/
+
+###
+GET {{server}}/static/a.txt
+
+###
+GET {{server}}/users
+
+###
+GET {{server}}/users/me
+
+###
+GET {{server}}/users/random_username
+
+###
+GET {{server}}/books
+
+
+###
+GET {{server}}/books/no_gun
+
+###
+POST {{server}}/books/
+X-Token: coneofsilence
+Content-Type: application/json
+
+{
+  "id": "foo",
+  "body": "failed to create",
+  "title": "useless"
+}
+
+###
+POST {{server}}/books/
+X-Token: coneofsilence
+Content-Type: application/json
+
+{
+  "id": "foo2",
+  "body": "failed to create",
+  "title": "useless"
+}
+
+###
+GET {{server}}/books/foo
+X-Token: coneofsilence
+
+###
+PUT {{server}}/books/gun
+
+###
+PUT {{server}}/books/foo
+
+###
+POST {{server}}/admin
