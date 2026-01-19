@@ -1,0 +1,53 @@
+@server = http://localhost:8000
+
+### Open API json
+GET {{server}}/openapi.json HTTP/1.1
+
+### Hello world
+GET {{server}}/ HTTP/1.1
+
+###
+GET {{server}}/items/?
+&needy=required
+&q=abc
+&multi=mm
+&hidden_query=2
+
+###
+GET {{server}}/items/5?
+&q=some
+
+###
+PUT {{server}}/items/5
+Content-Type: application/json
+
+{
+  "book": {
+    "name": "item_5",
+    "price": 10.5
+  },
+  "author": {
+    "username": "becky",
+    "fullname": "Becky Query"
+  },
+  "importance": 100
+}
+
+###
+GET {{server}}/models/AlexNet HTTP/1.1
+
+###
+POST {{server}}/books
+Content-Type: application/json
+
+{
+  "name": "Some Book",
+  "description": "A demo book",
+  "price": 45.2,
+  "tax": 3.5
+}
+
+###
+GET {{server}}/users/me/
+X-Global-Token: fake-global-token
+Authorization: Bearer JWT-token-is-here-
