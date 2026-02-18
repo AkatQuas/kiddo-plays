@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+venv/
+.uv/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# 忽略ROM文件（避免提交）
+*.nds
+# 忽略解包的文件
+nds_extracted/
+
+# 日志/临时文件
+*.log
+tmp/
