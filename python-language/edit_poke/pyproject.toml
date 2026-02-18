@@ -1,0 +1,11 @@
+[project]
+name = "edit-poke"
+version = "0.1.0"
+description = "macOS NDS ROM Editor based on ndspy & uv"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "charset-normalizer>=3.4.4",
+    "ndspy>=4.2.0",
+    "pillow>=12.1.1",
+]
