@@ -1,0 +1,15 @@
+{
+  "name": "css-completion-lsp-client",
+  "description": "Client part of a language server",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.52.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.52.0",
+    "@vscode/test-electron": "^1.6.1"
+  }
+}

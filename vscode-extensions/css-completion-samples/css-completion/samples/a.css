@@ -1,0 +1,12 @@
+.head {
+  color: red;
+}
+
+.button,
+.navigation {
+  color: green;
+}
+
+.title {
+  font-size: 20px;
+}
