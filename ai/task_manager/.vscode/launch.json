@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "editor-browser",
+      "request": "launch",
+      "name": "Launch in integrated browser",
+      "url": "http://localhost:8000",
+      "preLaunchTask": "Start static server"
+    }
+  ]
+}
