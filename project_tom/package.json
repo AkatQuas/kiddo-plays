@@ -1,0 +1,10 @@
+{
+  "name": "tom_ai",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Monorepo for Project Tom",
+  "devDependencies": {
+    "sort-package-json": "^3.4.0",
+    "typescript": "^5.9.3"
+  }
+}

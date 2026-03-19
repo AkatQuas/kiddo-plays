@@ -1,0 +1,6 @@
+##
+## With Overmind, we can easily run several processes from the Procfile in a single terminal.
+## See more at https://github.com/DarthSim/overmind
+##
+website: cd apps/website && PORT=3000 npm run dev
+server: cd apps/server && PORT=8080 npm run dev
