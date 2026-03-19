@@ -1,0 +1,22 @@
+{
+  "name": "website",
+  "version": "0.0.0",
+  "private": true,
+  "keywords": [],
+  "license": "MIT",
+  "author": "",
+  "scripts": {
+    "build": "",
+    "dev": ""
+  },
+  "dependencies": {
+    "@tom_ai/intensity": "workspace:*"
+  },
+  "devDependencies": {
+    "@tom_ai/config": "workspace:*",
+    "@tom_ai/types": "workspace:*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

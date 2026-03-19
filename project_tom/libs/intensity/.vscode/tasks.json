@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run all test files with coverage report",
+      "type": "shell",
+      "command": "node --test --experimental-test-coverage test/*.test.mjs",
+      "options": {
+        "env": {}
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run test for intensity in watch mode",
+      "type": "shell",
+      "command": "node --test --watch test/index.test.mjs",
+      "options": {
+        "env": {}
+      },
+      "problemMatcher": []
+    }
+  ]
+}

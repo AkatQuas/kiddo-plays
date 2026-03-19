@@ -1,0 +1,6 @@
+packages:
+  - apps/website
+  - apps/server
+  - libs/config
+  - libs/types
+  - libs/intensity

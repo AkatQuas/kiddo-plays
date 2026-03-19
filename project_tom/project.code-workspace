@@ -1,0 +1,123 @@
+{
+  "folders": [
+    // {
+    //   "path": "apps/website"
+    // },
+    // {
+    //   "path": "apps/server"
+    // },
+    {
+      "path": "libs/intensity"
+    },
+    {
+      "name": "ROOT",
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "cSpell.words": [
+      "Procfile",
+      "qrcode",
+      "silenthelp",
+      "vetur",
+      "NOFORMAT",
+      "overmind"
+    ],
+    "cSpell.ignorePaths": [
+      "pnpm-lock.yaml",
+      "node_modules",
+      "vscode-extension",
+      ".git/{info,lfs,logs,refs,objects}/**",
+      ".git/{index,*refs,*HEAD}",
+      ".vscode",
+      ".vscode-insiders",
+      "*.code-workspace"
+    ],
+    "debug.allowBreakpointsEverywhere": true
+  },
+  "extensions": {
+    "recommendations": [
+      "eamodio.gitlens",
+      "esbenp.prettier-vscode",
+      "streetsidesoftware.code-spell-checker",
+      "richie5um2.vscode-sort-json",
+      "humao.rest-client",
+      "usernamehw.errorlens",
+      // "vscodevim.vim"
+      "benspaulding.procfile",
+
+      "redhat.vscode-yaml",
+      "tamasfe.even-better-toml",
+
+      "mrmlnc.vscode-less",
+      "bradlc.vscode-tailwindcss",
+      "stylelint.vscode-stylelint",
+      "dbaeumer.vscode-eslint",
+      "ms-python.vscode-python-envs",
+      "ms-python.isort",
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "ms-python.debugpy"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "[helper]wait-docker",
+        "type": "shell",
+        "command": "echo 'waiting for docker...' && until docker system info > /dev/null 2>&1; do sleep 3; done",
+        "problemMatcher": []
+      },
+      {
+        "label": "website",
+        "detail": "develop the website",
+        "type": "shell",
+        "options": {
+          "env": {
+            "PORT": "3000"
+          }
+        },
+        "command": "cd website && npm run dev"
+      },
+      {
+        "label": "server",
+        "detail": "develop the server",
+        "options": {
+          "env": {
+            "PORT": "8000",
+            "CUSTOM_REGION": "${input:CUSTOM_REGION}"
+          }
+        },
+        "type": "shell",
+        "command": "cd website && python server.py"
+      }
+    ],
+    "inputs": [
+      {
+        "type": "pickString",
+        "id": "CUSTOM_REGION",
+        "description": "Pick your development region",
+        "options": [
+          {
+            "label": "Test",
+            "value": "consul:test"
+          },
+          {
+            "label": "Production",
+            "value": "consul:production"
+          },
+          {
+            "label": "Local",
+            "value": "consul:local"
+          }
+        ],
+        "default": "consul:local"
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": []
+  }
+}

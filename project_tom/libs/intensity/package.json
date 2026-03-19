@@ -1,0 +1,21 @@
+{
+  "name": "@tom_ai/intensity",
+  "version": "1.0.0",
+  "keywords": [],
+  "license": "MIT",
+  "author": {
+    "name": "Taotao Dong",
+    "email": "taotao.dong@getjerry.com"
+  },
+  "type": "module",
+  "main": "lib/index.mjs",
+  "scripts": {
+    "test": "node test/index.test.mjs"
+  },
+  "devDependencies": {
+    "@tom_ai/config": "workspace:*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
