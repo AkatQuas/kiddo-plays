@@ -1,0 +1,9 @@
+database:
+  path: "./reminder.db"
+server:
+  http_port: 8000
+  ws_port: 8000
+  enable_cors: true
+notification:
+  sound: "default"
+  timeout: 10
