@@ -6,93 +6,55 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 
 > Not all projects are listed. Checkout the sub-directory please.
 
+- [AI](./ai): AI related explorations, including Google ADK agents and raw bot.
 - [Angular](./angular-playlist): several web projects using the AWESOME frontend framework Angular.
-
-- [Assembly](./assembly)
-
-- [Bundler](./bundler)
-
-  - [Babel](./babel-guide/)
-
-  - [Webpack](./webpack/)
-
-- [Computer Graphics](https://github.com/AkatQuas/webgl-playlist): A quick guid to Computer Graphics, examples listed.
-
-- Containers:
-
-  - [Docker](./docker)
-
-  - [Grafana](./grafana/)
-
-  - [Kubernetes](./kubernetes/)
-
-- Dart language:
-
-  - [Dart the language](./dart-language)
-
-  - [Dart web](./dart-language/dart-web)
-
-  - [Dart Angular Demo](./dart-language/charge-system-demo)
-
-- [Electron](./electron/)
-
-- [Flutter](./flutter_playlist)
-
-- [Golang](./golanger)
-
-- [GraphQL language](./graphql-language)
-
-- [jQuery](./jQuery)
-
-- [Lerna](./lerna-verdaccio/)
-
-- [NativeScript](./nativescript/)
-
-- [NextJS](./nextjs-playlist)
-
-- [NestJS](./nest-playlist)
-
-- [Node](./node-playlist)
-
-  - [Websocket Server](./node-playlist/websocket-server-demo/)
-
-- Monorepo
-
-  - [Nx.dev](./nxdev/)
-
-  - [Fullstack starter](./fullstack-starter/)
-
-- [React](https://github.com/AkatQuas/react-playlist)
-
-  - [React Renderer](./react-renderer/)
-
-  - [React stores](./react-stores): react store using Flux, Mobx, Redux.
-
-  - [Data Sharing](./react-data/): several ways to share the data.
-
-- [Rust](./rust-language/)
-
-  - [The beginning of learning rust](./rust-language/hello_world/)
-
-  - [Solutions for rustlings](https://github.com/AkatQuas/rustlings)
-
-- [Python Language](./python-language)
-
-- [shell scripts](./shells): scripts in shell
-
-- [Task Runner: Gulp, Grunt](./task-runners)
-
-- [Test-Driven Development and Behavior-Driven Development](./tdd-and-bdd)
-
-- [Type Gymnastics](./type-gymnastics/)
-
-- [VueJS](./vuejs): several web projects using VueJS.
-
+- [Assembly](./assembly): Assembly language examples and guides.
+- [Babel](./babel-guide/): Guide to Babel, JavaScript transpiler.
+- [Bundler](./bundler): Various bundlers including Parcel and Rollup.
+- [Computer Graphics](https://github.com/AkatQuas/webgl-playlist): A quick guide to Computer Graphics, examples listed.
+- [Containers](./docker): Docker, Grafana, Kubernetes, etc.
+  - [Docker](./docker): Docker guides and examples.
+  - [Grafana](./grafana/): Grafana monitoring and visualization.
+  - [Kubernetes](./kubernetes/): Kubernetes orchestration.
+- [Dart language](./dart-language): Dart language explorations, including web and charge system demo.
+- [Data Structures and Algorithms Recap](./data_structure_algorithm_recap): Recap of data structures and algorithms.
+- [Database](./database): Database projects, including toy SQLite implementation.
+- [Dotfiles](./dotfiles): Configuration files for development environment.
+- [Electron](./electron/): Electron applications, including CDP debugger, image shrink, and more.
+- [Flutter](./flutter_playlist): Flutter projects, including basic demo, egg timer, weather app, etc.
+- [Fullstack Starter](./fullstack-starter/): Fullstack project setup with Angular and Nest.
+- [Golang](./golanger): Golang explorations, including concurrency, TDD, and web servers.
+- [GraphQL language](./graphql-language): GraphQL explorations.
+- [jQuery](./jQuery): jQuery examples and projects.
+- [Lerna](./lerna-verdaccio/): Lerna monorepo management with Verdaccio.
+- [LLM](./llm): Large Language Model explorations.
+- [NativeScript](./nativescript/): NativeScript mobile app development.
+- [NestJS](./nest-playlist): NestJS backend projects.
+- [NextJS](./nextjs-playlist): NextJS full-stack React projects.
+- [Node](./node-playlist): Node.js projects, including websocket server demo.
+- [Nx.dev](./nxdev/): Nx.dev monorepo tool explorations.
+- [Python Language](./python-language): Python language learning and projects.
+- [Radix and Shadcn](./radix-n-shadcn): UI components with Radix and Shadcn.
+- [React](https://github.com/AkatQuas/react-playlist): React explorations.
+- [React Data](./react-data/): Ways to share data in React applications.
+- [React Renderer](./react-renderer/): Custom React renderer implementations.
+- [React Stores](./react-stores): React state management with Flux, Mobx, Redux.
+- [Rust](./rust-language/): Rust language learning, including hello world and rustlings solutions.
+- [Scheduler](./scheduler): Scheduling related code and algorithms.
+- [Shell Scripts](./shells): Scripts in shell for automation.
+- [Spring Boot Demos](./spring-boot-demos): Spring Boot demonstrations.
+- [Task Runner: Gulp, Grunt](./task-runners): Task runners for build automation.
+- [TDD and BDD](./tdd-and-bdd): Test-Driven Development and Behavior-Driven Development.
+- [Toy Promise](./toy-promise): Toy implementation of JavaScript Promise.
+- [Tree Sitter Writeup](./tree-sitter-writeup): Writeup on Tree Sitter parser.
+- [Dev Container](./try-on-dev_container): Trying out development containers.
+- [Type Gymnastics](./type-gymnastics/): Advanced TypeScript type exercises.
 - [VS Code extensions](./vscode-extensions/): Several small extensions for VS Code.
-
-- [WebAssembly](./wasm/)
-
-- [Wechat Mini Programme](./wxma): 微信小程序
+- [VueJS](./vuejs): several web projects using VueJS.
+- [WebAssembly](./wasm/): WebAssembly explorations.
+- [Web Video Player](./web-video-player): Web video player implementation.
+- [Webpack](./webpack/): Webpack configurations and examples.
+- [Wechat Mini Programme](./wxma): 微信小程序 (WeChat Mini Programs).
 
 - And more to go ...
 
@@ -103,7 +65,6 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 # Deprecated playlists, may not touch them anymore...
 
 - [NativeScript](./nativescript/README.md)
-
   - [petscrapbook-ns-ng](./nativescript/petscrapbook-ns-ng)
 
   - [Tekmo-ns-core](./nativescript/Tekmo-ns-core)
