@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Task Manager</h1>
+    </header>
+    <main>
+      <section class="task-form">
+        <form id="add-task-form">
+          <label for="task-input" class="sr-only">Enter a new task</label>
+          <input
+            type="text"
+            id="task-input"
+            placeholder="Add a new task..."
+            required
+          />
+          <button type="submit" aria-label="Add task">Add Task</button>
+        </form>
+      </section>
+      <section class="task-list">
+        <div class="task-list-header">
+          <h2>Your Tasks</h2>
+          <div class="filter-buttons" role="group" aria-label="Filter tasks">
+            <button type="button" class="filter-btn active" data-filter="all">
+              All
+            </button>
+            <button type="button" class="filter-btn" data-filter="pending">
+              Pending
+            </button>
+            <button type="button" class="filter-btn" data-filter="completed">
+              Completed
+            </button>
+            <button type="button" class="filter-btn" data-filter="hidden">
+              Hidden
+            </button>
+          </div>
+          <div class="batch-actions" id="batch-actions" style="display: none">
+            <button id="batch-complete" class="batch-btn">
+              Complete Selected
+            </button>
+            <button id="batch-hide" class="batch-btn">Hide Selected</button>
+            <button id="batch-unhide" class="batch-btn">Unhide Selected</button>
+            <button id="batch-delete" class="batch-btn">Delete Selected</button>
+          </div>
+        </div>
+        <ul id="tasks" aria-label="List of tasks"></ul>
+      </section>
+    </main>
+
+    <button id="edit-json-btn" class="fab" aria-label="Edit tasks JSON">
+      JSON
+    </button>
+
+    <div class="modal" id="json-modal" aria-hidden="true">
+      <div class="modal-overlay" data-close="true"></div>
+      <div
+        class="modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="json-modal-title"
+      >
+        <header class="modal-header">
+          <h3 id="json-modal-title">Edit Tasks (JSON)</h3>
+          <button class="modal-close" aria-label="Close">×</button>
+        </header>
+        <textarea id="tasks-json" aria-label="Tasks JSON"></textarea>
+        <div class="modal-actions">
+          <button id="save-json">Save</button>
+          <button id="cancel-json" type="button">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
