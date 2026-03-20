@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Launch ws Client",
+      "command": "node",
+      "type": "shell",
+      "args": ["src/ws.mjs"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "isBackground": true
+    }
+  ]
+}
