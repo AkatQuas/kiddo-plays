@@ -1,0 +1,14 @@
+{
+  "name": "feishu_bot",
+  "version": "1.0.0",
+  "main": "src/ws.mjs",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.25.0",
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.59.0",
+    "dotenv": "^17.3.1"
+  }
+}
