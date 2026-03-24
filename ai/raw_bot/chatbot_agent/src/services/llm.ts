@@ -12,7 +12,7 @@ export const llmService = {
     signal: AbortSignal;
   }): Promise<AsyncGenerator<LLMStreamResponse>> {
     const { config } = configStore.getState();
-    const { apiKey, baseUrl, temperature } = config.llmConfig;
+    const { apiKey, baseUrl, temperature, model } = config.llmConfig;
 
     // Validate configuration
     if (!apiKey) {
@@ -43,7 +43,7 @@ export const llmService = {
 
     try {
       const completion = await openai.chat.completions.create({
-        model: 'qwen/qwen3-coder:free',
+        model,
         messages,
         stream: true,
         temperature
