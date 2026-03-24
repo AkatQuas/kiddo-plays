@@ -53,7 +53,7 @@ export const ConfigForm = () => {
             </label>
             <Input
               type="url"
-              placeholder="https://api.example.com/v1/chat/completions"
+              placeholder="https://api.example.com/v1"
               {...register('baseUrl')}
               error={errors.baseUrl?.message}
               disabled={isLoading}
