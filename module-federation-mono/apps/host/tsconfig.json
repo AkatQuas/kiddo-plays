@@ -1,0 +1,25 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@mf-monorepo/types": ["../../packages/types/src/index.ts"],
+      "@mf-monorepo/ui": ["../../packages/ui/src/index.ts"],
+      "@mf-monorepo/utils": ["../../packages/utils/src/index.ts"],
+      "@mf-monorepo/config": ["../../packages/config/src/index.ts"],
+      "@/*": ["./src/*"],
+      "products/ProductsList": ["../products/src/components/ProductsList.tsx"],
+      "products/ProductCard": ["../products/src/components/ProductCard.tsx"],
+      "products/ProductDetail": ["../products/src/components/ProductDetail.tsx"],
+      "cart/CartWidget": ["../cart/src/components/CartWidget.tsx"],
+      "cart/CartDrawer": ["../cart/src/components/CartDrawer.tsx"],
+      "cart/Checkout": ["../cart/src/components/Checkout.tsx"],
+      "user/UserMenu": ["../user/src/components/UserMenu.tsx"],
+      "user/LoginForm": ["../user/src/components/LoginForm.tsx"],
+      "user/RegisterForm": ["../user/src/components/RegisterForm.tsx"],
+      "user/Profile": ["../user/src/components/Profile.tsx"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

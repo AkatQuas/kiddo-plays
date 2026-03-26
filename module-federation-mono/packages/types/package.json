@@ -1,0 +1,16 @@
+{
+  "name": "@mf-monorepo/types",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./cart": "./src/types/cart.ts",
+    "./user": "./src/types/user.ts",
+    "./product": "./src/types/product.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}
