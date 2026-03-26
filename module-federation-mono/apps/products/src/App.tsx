@@ -1,0 +1,15 @@
+import ProductsList from './components/ProductsList';
+
+export default function App() {
+  return (
+    <div style={{ padding: '2rem' }}>
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+        Products Module
+      </h1>
+      <p style={{ color: '#666', marginBottom: '1.5rem' }}>
+        This is a remote Module Federation app that exposes product components.
+      </p>
+      <ProductsList />
+    </div>
+  );
+}
