@@ -1,0 +1,19 @@
+{
+  "name": "conceal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo $npm_execpath | grep -q pnpm"
+  },
+  "dependencies": {
+    "dayjs": "~1.11.3",
+    "jimp": "~0.16.2",
+    "node-fetch": "~3.3.0",
+    "zx": "~4.3.0"
+  },
+  "devDependencies": {
+    "file-type": "~18.0.0"
+  }
+}

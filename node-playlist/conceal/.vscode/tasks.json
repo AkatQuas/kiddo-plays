@@ -1,0 +1,70 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "[conceal] install dependencies",
+      "type": "shell",
+      "command": "pnpm install",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "[steganography] build",
+      "type": "shell",
+      "command": "./scripts/build-steganography.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "[steganography] help",
+      "type": "shell",
+      "command": "./steganography encode --help",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "[conceal] run basic (shot)",
+      "type": "shell",
+      "command": "node conceal.mjs --dir=./test --type shot",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "[conceal] run basic (record)",
+      "type": "shell",
+      "command": "node conceal.mjs --dir=./test --type record",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "[conceal_strong] run with steganography",
+      "type": "shell",
+      "command": "node conceal_strong.mjs --dir=./test --type shot",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "[steganography] encode demo",
+      "type": "shell",
+      "command": "./steganography encode --input ./test/shot.png --output ./output.png --embed ./test/a.txt --passwd test123",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "[steganography] decode demo",
+      "type": "shell",
+      "command": "./steganography decode --input ./output.png --output ./decoded.txt --passwd test123",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "[steganography] clean build",
+      "type": "shell",
+      "command": "rm -rf scripts/steganography/build && ./scripts/build-steganography.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
+  ]
+}
