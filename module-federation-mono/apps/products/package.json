@@ -8,6 +8,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "@mf-monorepo/types": "workspace:*",
     "@mf-monorepo/ui": "workspace:*",
     "@mf-monorepo/utils": "workspace:*",
     "lucide-react": "^1.7.0",

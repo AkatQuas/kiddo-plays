@@ -163,6 +163,9 @@ importers:
 
   apps/products:
     dependencies:
+      '@mf-monorepo/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@mf-monorepo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -370,6 +373,9 @@ importers:
       '@mf-monorepo/types':
         specifier: workspace:*
         version: link:../types
+      zustand:
+        specifier: ^5.0.12
+        version: 5.0.12(@types/react@19.2.14)(react@18.3.1)
     devDependencies:
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
@@ -389,6 +395,12 @@ importers:
       lucide-react:
         specifier: ^1.7.0
         version: 1.7.0(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
       tailwind-merge:
         specifier: ^3.5.0
         version: 3.5.0
@@ -3269,6 +3281,24 @@ packages:
   yocto-queue@1.2.2:
     resolution: {integrity: sha512-4LCcse/U2MHZ63HAJVE+v71o7yOdIe4cZ70Wpf8D/IyjDKYQLV5GD46B+hSTjJsvV5PztjvHoU580EftxjDZFQ==}
     engines: {node: '>=12.20'}
+
+  zustand@5.0.12:
+    resolution: {integrity: sha512-i77ae3aZq4dhMlRhJVCYgMLKuSiZAaUPAct2AksxQ+gOtimhGMdXljRT21P5BNpeT4kXlLIckvkPM029OljD7g==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
 
 snapshots:
 
@@ -6351,3 +6381,8 @@ snapshots:
   yallist@3.1.1: {}
 
   yocto-queue@1.2.2: {}
+
+  zustand@5.0.12(@types/react@19.2.14)(react@18.3.1):
+    optionalDependencies:
+      '@types/react': 19.2.14
+      react: 18.3.1

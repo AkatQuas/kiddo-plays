@@ -3,46 +3,22 @@
  * Mini cart display for header
  */
 
-import { useState, useEffect } from 'react';
-import { Button, Badge } from '@mf-monorepo/ui';
+import { Badge } from '@mf-monorepo/ui';
+import { useCartStore } from '@mf-monorepo/utils';
 import { ShoppingCart } from 'lucide-react';
-import type { CartItem } from '@mf-monorepo/types';
 
 interface CartWidgetProps {
-  items?: CartItem[];
+  items?: any[]; // Keep for backward compatibility, but not used
 }
 
-export default function CartWidget({ items: externalItems }: CartWidgetProps) {
-  const [internalItems, setInternalItems] = useState<CartItem[]>([]);
+export default function CartWidget({ items: _externalItems }: CartWidgetProps) {
+  const { cartItems } = useCartStore();
 
-  // Use external items if provided, otherwise use internal state
-  const items = externalItems ?? internalItems;
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-  // Internal event listener only when not using external items
-  useEffect(() => {
-    if (externalItems !== undefined) return; // Skip if using external items
-
-    const handleAddToCart = (e: CustomEvent) => {
-      const item = e.detail as Omit<CartItem, 'quantity'>;
-      setInternalItems((prev) => {
-        const existing = prev.find((i) => i.id === item.id);
-        if (existing) {
-          return prev.map((i) =>
-            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-          );
-        }
-        return [...prev, { ...item, quantity: 1 }];
-      });
-    };
-
-    window.addEventListener('mf:add-to-cart', handleAddToCart as EventListener);
-
-    return () => {
-      window.removeEventListener('mf:add-to-cart', handleAddToCart as EventListener);
-    };
-  }, [externalItems]);
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -57,7 +33,7 @@ export default function CartWidget({ items: externalItems }: CartWidgetProps) {
               minWidth: '18px',
               height: '18px',
               padding: '0 4px',
-              fontSize: '0.625rem',
+              fontSize: '0.625rem'
             }}
           >
             {totalItems}
@@ -70,5 +46,3 @@ export default function CartWidget({ items: externalItems }: CartWidgetProps) {
     </div>
   );
 }
-
-export type { CartItem };
