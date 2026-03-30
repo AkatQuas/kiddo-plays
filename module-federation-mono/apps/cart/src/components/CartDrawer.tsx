@@ -3,74 +3,43 @@
  * Slide-out cart panel
  */
 
-import { useState, useEffect } from 'react';
 import { Button, Card, CardContent } from '@mf-monorepo/ui';
-import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
-import type { CartItem } from '@mf-monorepo/types';
+import { useCartStore } from '@mf-monorepo/utils';
+import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 
 interface CartDrawerProps {
   isOpen?: boolean;
   onClose?: () => void;
-  items?: CartItem[];
+  items?: any[]; // Keep for backward compatibility
   onUpdateQuantity?: (id: string, delta: number) => void;
   onRemoveItem?: (id: string) => void;
   onCheckout?: () => void;
 }
 
-export default function CartDrawer({ isOpen = true, onClose, items: externalItems, onUpdateQuantity: externalUpdateQuantity, onRemoveItem: externalRemoveItem, onCheckout }: CartDrawerProps) {
-  const [internalItems, setInternalItems] = useState<CartItem[]>([]);
+export default function CartDrawer({
+  isOpen = true,
+  onClose,
+  onCheckout
+}: CartDrawerProps) {
+  const { cartItems, updateQuantity, removeItem, handleCheckout, setCartOpen } =
+    useCartStore();
 
-  // Use external items if provided, otherwise use internal state
-  const items = externalItems ?? internalItems;
+  const items = cartItems;
 
-  const handleUpdateQuantity = externalUpdateQuantity ?? ((id: string, delta: number) => {
-    setInternalItems((prev) =>
-      prev.map((item) => {
-        if (item.id === id) {
-          const newQty = item.quantity + delta;
-          return newQty > 0 ? { ...item, quantity: newQty } : item;
-        }
-        return item;
-      })
-    );
-  });
-
-  const handleRemoveItem = externalRemoveItem ?? ((id: string) => {
-    setInternalItems((prev) => prev.filter((item) => item.id !== id));
-  });
-
-  // Internal event listener only when not using external items
-  useEffect(() => {
-    if (externalItems !== undefined) return; // Skip if using external items
-
-    const handleAddToCart = (e: CustomEvent) => {
-      const item = e.detail as Omit<CartItem, 'quantity'>;
-      setInternalItems((prev) => {
-        const existing = prev.find((i) => i.id === item.id);
-        if (existing) {
-          return prev.map((i) =>
-            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-          );
-        }
-        return [...prev, { ...item, quantity: 1 }];
-      });
-    };
-
-    window.addEventListener('mf:add-to-cart', handleAddToCart as EventListener);
-    return () => {
-      window.removeEventListener('mf:add-to-cart', handleAddToCart as EventListener);
-    };
-  }, [externalItems]);
-
-  const updateQuantity = (id: string, delta: number) => {
-    handleUpdateQuantity(id, delta);
+  const handleClose = () => {
+    if (onClose) onClose();
+    else setCartOpen(false);
   };
 
-  const removeItem = (id: string) => {
-    handleRemoveItem(id);
+  const handleCheckoutClick = () => {
+    if (onCheckout) onCheckout();
+    else handleCheckout();
   };
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   if (!isOpen) return null;
 
@@ -87,7 +56,7 @@ export default function CartDrawer({ isOpen = true, onClose, items: externalItem
         boxShadow: '-4px 0 20px rgba(0,0,0,0.15)',
         zIndex: 1000,
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'column'
       }}
     >
       <div
@@ -96,20 +65,28 @@ export default function CartDrawer({ isOpen = true, onClose, items: externalItem
           borderBottom: '1px solid #e5e7eb',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2
+          style={{
+            fontSize: '1.25rem',
+            fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
           <ShoppingBag size={20} />
           Shopping Cart
         </h2>
         <button
-          onClick={onClose}
+          onClick={handleClose}
           style={{
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            padding: '0.5rem',
+            padding: '0.5rem'
           }}
         >
           <X size={20} />
@@ -118,12 +95,19 @@ export default function CartDrawer({ isOpen = true, onClose, items: externalItem
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '1rem' }}>
         {items.length === 0 ? (
-          <div style={{ textAlign: 'center', color: '#6b7280', padding: '2rem' }}>
-            <ShoppingBag size={48} style={{ marginBottom: '1rem', opacity: 0.5 }} />
+          <div
+            style={{ textAlign: 'center', color: '#6b7280', padding: '2rem' }}
+          >
+            <ShoppingBag
+              size={48}
+              style={{ marginBottom: '1rem', opacity: 0.5 }}
+            />
             <p>Your cart is empty</p>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+          >
             {items.map((item) => (
               <Card key={item.id}>
                 <CardContent style={{ padding: '0.75rem' }}>
@@ -132,15 +116,29 @@ export default function CartDrawer({ isOpen = true, onClose, items: externalItem
                       <img
                         src={item.image}
                         alt={item.name}
-                        style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '4px' }}
+                        style={{
+                          width: '60px',
+                          height: '60px',
+                          objectFit: 'cover',
+                          borderRadius: '4px'
+                        }}
                       />
                     )}
                     <div style={{ flex: 1 }}>
-                      <h3 style={{ fontWeight: 500, fontSize: '0.875rem' }}>{item.name}</h3>
+                      <h3 style={{ fontWeight: 500, fontSize: '0.875rem' }}>
+                        {item.name}
+                      </h3>
                       <p style={{ color: '#6b7280', fontSize: '0.875rem' }}>
                         ${item.price.toFixed(2)}
                       </p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          marginTop: '0.5rem'
+                        }}
+                      >
                         <button
                           onClick={() => updateQuantity(item.id, -1)}
                           style={{
@@ -152,12 +150,18 @@ export default function CartDrawer({ isOpen = true, onClose, items: externalItem
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center',
+                            justifyContent: 'center'
                           }}
                         >
                           <Minus size={14} />
                         </button>
-                        <span style={{ fontSize: '0.875rem', minWidth: '20px', textAlign: 'center' }}>
+                        <span
+                          style={{
+                            fontSize: '0.875rem',
+                            minWidth: '20px',
+                            textAlign: 'center'
+                          }}
+                        >
                           {item.quantity}
                         </span>
                         <button
@@ -171,7 +175,7 @@ export default function CartDrawer({ isOpen = true, onClose, items: externalItem
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center',
+                            justifyContent: 'center'
                           }}
                         >
                           <Plus size={14} />
@@ -183,7 +187,7 @@ export default function CartDrawer({ isOpen = true, onClose, items: externalItem
                             border: 'none',
                             cursor: 'pointer',
                             color: '#ef4444',
-                            marginLeft: 'auto',
+                            marginLeft: 'auto'
                           }}
                         >
                           <Trash2 size={16} />
@@ -202,14 +206,26 @@ export default function CartDrawer({ isOpen = true, onClose, items: externalItem
         style={{
           padding: '1rem',
           borderTop: '1px solid #e5e7eb',
-          backgroundColor: '#f9fafb',
+          backgroundColor: '#f9fafb'
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '1rem'
+          }}
+        >
           <span style={{ fontWeight: 600 }}>Total</span>
-          <span style={{ fontWeight: 700, fontSize: '1.125rem' }}>${total.toFixed(2)}</span>
+          <span style={{ fontWeight: 700, fontSize: '1.125rem' }}>
+            ${total.toFixed(2)}
+          </span>
         </div>
-        <Button style={{ width: '100%' }} disabled={items.length === 0} onClick={onCheckout}>
+        <Button
+          style={{ width: '100%' }}
+          disabled={items.length === 0}
+          onClick={handleCheckoutClick}
+        >
           Proceed to Checkout
         </Button>
       </div>

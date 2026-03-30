@@ -3,10 +3,9 @@
  * Demonstrates Module Federation by loading remote components
  */
 
-import { Suspense, lazy, useState, useEffect, startTransition } from 'react';
+import { useCartStore } from '@mf-monorepo/utils';
+import { Suspense, lazy, startTransition } from 'react';
 import Layout from './components/Layout';
-import type { CartItem } from '@mf-monorepo/types';
-import { MF_EVENTS } from '@mf-monorepo/types';
 
 // Lazy load remote modules
 const ProductsList = lazy(() => import('products/ProductsList'));
@@ -24,7 +23,7 @@ function LoadingFallback({ module }: { module: string }) {
         color: '#6b7280',
         backgroundColor: '#f9fafb',
         borderRadius: '8px',
-        margin: '1rem 0',
+        margin: '1rem 0'
       }}
     >
       <div
@@ -35,7 +34,7 @@ function LoadingFallback({ module }: { module: string }) {
           borderTopColor: '#3b82f6',
           borderRadius: '50%',
           margin: '0 auto 0.5rem',
-          animation: 'spin 1s linear infinite',
+          animation: 'spin 1s linear infinite'
         }}
       />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
@@ -45,52 +44,16 @@ function LoadingFallback({ module }: { module: string }) {
 }
 
 export default function App() {
-  const [cartOpen, setCartOpen] = useState(false);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
-  // Listen for add to cart events from products
-  useEffect(() => {
-    const handleAddToCart = (e: CustomEvent) => {
-      const item = e.detail as Omit<CartItem, 'quantity'>;
-      setCartItems((prev) => {
-        const existing = prev.find((i) => i.id === item.id);
-        if (existing) {
-          return prev.map((i) =>
-            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-          );
-        }
-        return [...prev, { ...item, quantity: 1 }];
-      });
-      startTransition(() => setCartOpen(true));
-    };
-
-    window.addEventListener(MF_EVENTS.ADD_TO_CART, handleAddToCart as EventListener);
-    return () => {
-      window.removeEventListener(MF_EVENTS.ADD_TO_CART, handleAddToCart as EventListener);
-    };
-  }, []);
-
-  const updateQuantity = (id: string, delta: number) => {
-    setCartItems((prev) =>
-      prev.map((item) => {
-        if (item.id === id) {
-          const newQty = item.quantity + delta;
-          return newQty > 0 ? { ...item, quantity: newQty } : item;
-        }
-        return item;
-      })
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const handleCheckout = () => {
-    setCartOpen(false);
-    setCheckoutOpen(true);
-  };
+  const {
+    cartItems,
+    cartOpen,
+    checkoutOpen,
+    setCartOpen,
+    setCheckoutOpen,
+    updateQuantity,
+    removeItem,
+    handleCheckout
+  } = useCartStore();
 
   const handleCheckoutClose = () => {
     setCheckoutOpen(false);
@@ -109,7 +72,7 @@ export default function App() {
             alignItems: 'center',
             padding: '1rem 2rem',
             borderBottom: '1px solid #e5e7eb',
-            backgroundColor: 'white',
+            backgroundColor: 'white'
           }}
         >
           <h1 style={{ fontSize: '1.5rem', fontWeight: 700 }}>My Store</h1>
@@ -119,7 +82,7 @@ export default function App() {
               style={{ background: 'none', border: 'none', cursor: 'pointer' }}
             >
               <Suspense fallback={<LoadingFallback module="Cart" />}>
-                <CartWidget items={cartItems} />
+                <CartWidget />
               </Suspense>
             </button>
             <Suspense fallback={<LoadingFallback module="User" />}>
@@ -129,28 +92,38 @@ export default function App() {
         </div>
       }
       sidebar={
-        <div style={{ padding: '1rem', borderRight: '1px solid #e5e7eb', width: '200px' }}>
-          <h3 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>Categories</h3>
+        <div
+          style={{
+            padding: '1rem',
+            borderRight: '1px solid #e5e7eb',
+            width: '200px'
+          }}
+        >
+          <h3 style={{ fontWeight: 600, marginBottom: '0.5rem' }}>
+            Categories
+          </h3>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            {['Electronics', 'Clothing', 'Home', 'Sports', 'Books'].map((cat) => (
-              <li
-                key={cat}
-                style={{
-                  padding: '0.5rem',
-                  cursor: 'pointer',
-                  borderRadius: '4px',
-                }}
-              >
-                {cat}
-              </li>
-            ))}
+            {['Electronics', 'Clothing', 'Home', 'Sports', 'Books'].map(
+              (cat) => (
+                <li
+                  key={cat}
+                  style={{
+                    padding: '0.5rem',
+                    cursor: 'pointer',
+                    borderRadius: '4px'
+                  }}
+                >
+                  {cat}
+                </li>
+              )
+            )}
           </ul>
         </div>
       }
     >
       {showCheckout ? (
         <Suspense fallback={<LoadingFallback module="Checkout" />}>
-          <Checkout items={cartItems} onClose={handleCheckoutClose} />
+          <Checkout onClose={handleCheckoutClose} />
         </Suspense>
       ) : (
         <Suspense fallback={<LoadingFallback module="Products" />}>
@@ -162,10 +135,6 @@ export default function App() {
       <Suspense fallback={null}>
         <CartDrawer
           isOpen={cartOpen}
-          items={cartItems}
-          onUpdateQuantity={updateQuantity}
-          onRemoveItem={removeItem}
-          onCheckout={handleCheckout}
           onClose={() => startTransition(() => setCartOpen(false))}
         />
       </Suspense>

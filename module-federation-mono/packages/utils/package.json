@@ -10,7 +10,8 @@
     "./user-context": "./src/user-context.tsx"
   },
   "dependencies": {
-    "@mf-monorepo/types": "workspace:*"
+    "@mf-monorepo/types": "workspace:*",
+    "zustand": "^5.0.12"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -23,6 +24,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.7.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tailwind-merge": "^3.5.0"
   }
 }

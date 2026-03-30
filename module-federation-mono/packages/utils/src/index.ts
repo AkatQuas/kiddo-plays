@@ -3,6 +3,7 @@
  */
 
 export * from './cart-context';
+export * from './cart-store';
 export * from './user-context';
 
 /**
@@ -11,7 +12,7 @@ export * from './user-context';
 export function formatPrice(price: number, currency = 'USD'): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency,
+    currency
   }).format(price);
 }
 
