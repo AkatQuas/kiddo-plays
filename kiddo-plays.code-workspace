@@ -5,7 +5,11 @@
       "path": "./"
     }
   ],
-  "settings": {},
+  "settings": {
+    "workbench.colorCustomizations": {
+      "titleBar.activeBackground": "#ea9ef4"
+    }
+  },
   "tasks": {
     "version": "2.0.0",
     "tasks": [
