@@ -1,0 +1,33 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:18.9.3-ce.0
+    container_name: gitlab
+    restart: always
+    hostname: '$HOST_IP'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://$HOST_IP:6060'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+        puma['worker_processes'] = 2
+        sidekiq['max_concurrency'] = 10
+    ports:
+      - '6060:6060'   # Web UI
+      - '4443:443'  # HTTPS
+      - '2224:22'   # SSH
+    volumes:
+      - $GITLAB_HOME/config:/etc/gitlab
+      - $GITLAB_HOME/logs:/var/log/gitlab
+      - $GITLAB_HOME/data:/var/opt/gitlab
+    shm_size: '512m'
+    network_mode: host
+
+  gitlab_runner:
+    image: gitlab/gitlab-runner:v18.9.0
+    container_name: gitlab_runner
+    restart: always
+    depends_on:
+      - gitlab
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $GITLAB_HOME/gitlab-runner:/etc/gitlab-runner
+    network_mode: host
