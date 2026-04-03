@@ -1,0 +1,65 @@
+# Define Docker image (used for all jobs)
+image: node-git:latest
+# customized image node22 with git / pnpm etc
+
+default:
+  tags:
+    - docker
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  # Turn off SSL in case SSL verification failed
+  GIT_SSL_NO_VERIFY: 'true'
+  # Do NOT pull code from GitLab
+  GIT_STRATEGY: none
+  # Pull repository from bitbucket
+  BITBUCKET_REPO_URL: https://<username>:<pat>@mybitbucket.com/scm/<group>/<project>.git
+  # Default branch (overridden by webhook)
+  BITBUCKET_BRANCH: main
+
+before_script:
+  - echo "What in working directory $(pwd)"
+  - ls -la
+
+after_script:
+  - echo "Ok, at the end, what in working directory $(pwd)"
+  - ls -la
+
+# Build Job
+build_app:
+  stage: build
+  before_script:
+    - echo "Cloning code DIRECTLY from Bitbucket (LAN)...  $BITBUCKET_BRANCH $BITBUCKET_REPO_URL "
+    - git clone --depth=10 --branch $BITBUCKET_BRANCH $BITBUCKET_REPO_URL .
+    - ls -la
+  script:
+    - echo "Building code from Bitbucket (no mirror used!)"
+    - mkdir -p build/
+    - echo "Build success" > build/output.txt
+  artifacts:
+    paths:
+      - build/ # Save folder to pass to next stage
+
+# Test Job
+test_app:
+  stage: test
+  script:
+    - echo "Running tests on LAN Runner"
+    - test -f build/output.txt && echo "Test PASSED"
+  dependencies:
+    - build_app # Get files from build job
+    # Add your test commands
+
+# Deploy Job
+deploy_app:
+  stage: deploy
+  script:
+    - echo "Deploying to internal LAN"
+    - echo " Deploying application..."
+    - echo "Deploy finished successfully!"
+  only:
+    - main # Only run when pushing to main branch
