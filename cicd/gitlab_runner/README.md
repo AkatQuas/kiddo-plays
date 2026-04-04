@@ -2,6 +2,44 @@
 
 This guide covers setting up GitLab CE using Docker Compose and registering runners for CI/CD.
 
+## Full Architecture Diagram
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│ Host Machine / Physical Server                               │
+│ Native Docker Engine                                         │
+│ Key socket: /var/run/docker.sock (global Docker API endpoint)│
+└───────────────┬────────────────────────────┬─────────────────┘
+                │                            │
+  ┌─────────────▼────────────┐      ┌─────────▼────────────────┐
+  │ GitLab Container         │      │ GitLab Runner Container  │
+  │ - CI/CD Orchestrator     │      │ - Mounted:               │
+  │ - Receives Bitbucket Webhook│   │   /var/run/docker.sock   │
+  │ - Pipeline Scheduling    │      │ - Controls host Docker   │
+  │ LAN Private IP           │      │ via host socket          │
+  └───────────┬──────────────┘      └──────────┬───────────────┘
+              │                                │
+              │ ① HTTP (80/443) Internal LAN Communication
+              │ GitLab sends pipeline jobs to Runner
+              └───────────────────────────────────────────────┘
+                                               │
+                                               │ ② Runner calls host Docker API
+                                               │ through docker.sock
+                                               ▼
+          ┌────────────────────────────────────────────────────┐
+          │ Host Docker creates independent CI Job Containers  │
+          │ (Build / Test / Deploy — isolated peer containers) │
+          │ Same host level as GitLab & Runner containers      │
+          └──────────────────────┬─────────────────────────────┘
+                                 │
+                                 │ ③ CI jobs inside LAN
+                                 ▼
+          ┌─────────────────────────────────────────┐
+          │ Internal LAN Server                     │
+          │ Supplies resources, code + config files │
+          └─────────────────────────────────────────┘
+```
+
 ## Prerequisites
 
 - Docker and Docker Compose installed
@@ -264,3 +302,23 @@ This is useful for integrating with external systems (Bitbucket, GitHub, cron jo
 1. Verify at least one runner is available
 2. Check runner has matching tags
 3. Review runner logs: `docker logs gitlab-runner`
+
+```
+┌───────────────────────────────────────────────────────┐
+│                PRIVATE LOCAL LAN                      │
+└─────────────────────┬─────────────────────────────┬───┘
+                      │                             │
+┌─────────────────────▼───────┐    ┌────────────────▼─────────┐
+│     Bitbucket Repo          │    │   Empty GitLab Project   │
+│  ┌───────────────────────┐  │    │  (CI Trigger/Scheduler)  │
+│  │ Your Application Code │  │    │  NO CODE, NO CI YAML     │
+│  │ .gitlab-ci.yml  ◄─────┼──┼────┼── CI CONFIG LOADED FROM HERE │
+│  │ - Webhook             |  |    |                          |
+│  └───────────────────────┘  │    └─────────────┬────────────┘
+└──────────────────┬──────────┘                  │
+                   │                  ┌──────────▼─────────────┐
+                   └──────────────────►   GitLab Runner        │
+                                      │ (Runs job using        │
+                                      │  Bitbucket code + YAML)│
+                                      └────────────────────────┘
+```
