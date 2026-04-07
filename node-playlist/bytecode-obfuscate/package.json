@@ -1,0 +1,22 @@
+{
+  "name": "my-app",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "obfuscate": "bytenode --compile dist/index.js",
+    "build:obfuscate": "npm run build && bytenode --compile dist/index.js",
+    "start:raw": "node dist/index.js",
+    "start": "node -r bytenode dist/index.jsc"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.13",
+    "hono": "^4.12.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "bytenode": "^1.5.7",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3"
+  }
+}
