@@ -107,8 +107,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $GITLAB_HOME/gitlab-runner-config:/etc/gitlab-runner
-    # networks:
-    #   - gitlab_network
     network_mode: host
 ```
 
