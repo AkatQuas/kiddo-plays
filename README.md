@@ -10,6 +10,7 @@ My explorations in Computer Science, frontend & web, JS/Go/Python, docker & Kube
 - [Angular](./angular-playlist): several web projects using the AWESOME frontend framework Angular.
 - [Assembly](./assembly): Assembly language examples and guides.
 - [Babel](./babel-guide/): Guide to Babel, JavaScript transpiler.
+- [Bun](./bun): The fast, incrementally adoptable all-in-one JavaScript, TypeScript & JSX toolkit.
 - [Bundler](./bundler): Various bundlers including Parcel and Rollup.
 - [CI/CD](./cicd/): CI CD setup, Automation workflow.
 - [Computer Graphics](https://github.com/AkatQuas/webgl-playlist): A quick guide to Computer Graphics, examples listed.

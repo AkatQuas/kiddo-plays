@@ -1,0 +1,71 @@
+# Test routes in index.ts (Bun server)
+
+# Health check
+GET http://localhost:8080/api/healthy
+
+###
+
+# Get user by ID
+GET http://localhost:8080/users/123
+
+###
+
+# Get user by ID (another example)
+GET http://localhost:8080/users/42
+
+###
+
+# Dice roll with default min/max (2-10)
+GET http://localhost:8080/api/dice
+
+###
+
+# Dice roll with custom min/max (1-6)
+GET http://localhost:8080/api/dice?min=1&max=6
+
+###
+
+# Dice roll with custom range (0-100)
+GET http://localhost:8080/api/dice?min=0&max=100
+
+###
+
+# List posts (GET)
+GET http://localhost:8080/api/posts
+
+###
+
+# Create post (POST)
+POST http://localhost:8080/api/posts
+Content-Type: application/json
+
+{
+  "title": "Hello World",
+  "content": "This is my first post"
+}
+
+###
+
+# Create post (POST) - another example
+POST http://localhost:8080/api/posts
+Content-Type: application/json
+
+{
+  "title": "Test Post",
+  "author": "claude"
+}
+
+###
+
+# Not found route (should return 404)
+GET http://localhost:8080/api/unknown
+
+###
+
+# Redirect test (should redirect to /blog/hello/world)
+GET http://localhost:8080/blog/hello
+
+###
+
+# Redirect target
+GET http://localhost:8080/blog/hello/world
