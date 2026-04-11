@@ -1,0 +1,30 @@
+[test]
+  root = "tests"
+  # Only run specific test files
+  preload = ["./tests/test-setup.ts", "./tests/test-mocks.ts"]
+
+  # Test timeouts
+  timeout = 10000
+
+  pathIgnorePatterns = [
+    # Git submodules with their own test suites
+    "submodules/**",
+
+    # Vendored dependencies
+    "vendor/**",
+    "third-party/**",
+
+    # Test fixtures that look like tests but aren't
+    "fixtures/**",
+    "**/test-data/**",
+
+    # Integration / E2E tests you want to run separately
+    "**/integration/**",
+    "e2e/**"
+  ]
+
+  #
+  smol = false
+
+
+  randomize = true
