@@ -1,0 +1,20 @@
+- id: webhook_job1
+  execute-command: '/opt/scripts/job1.sh'
+  command-working-directory: '/home'
+- id: webhook_job2
+  execute-command: '/opt/scripts/job2.sh'
+  command-working-directory: '/home'
+  pass-arguments-to-command:
+    - source: payload
+      name: 'actor.username'
+  trigger-rule:
+    or:
+      - match:
+          type: ip-whitelist
+          ip-range: '13.52.5.96/28'
+      - match:
+          type: ip-whitelist
+          ip-range: '13.236.8.224/28'
+      - match:
+          type: ip-whitelist
+          ip-range: '18.136.214.96/28'
