@@ -1,0 +1,13 @@
+{
+  "welcome": "欢迎回来",
+  "description": "登录您的账户以继续",
+  "email": "邮箱",
+  "emailPlaceholder": "name@example.com",
+  "password": "密码",
+  "passwordPlaceholder": "请输入密码",
+  "signIn": "登录",
+  "signingIn": "登录中...",
+  "success": "登录成功！",
+  "failed": "邮箱或密码无效",
+  "error": "登录失败，请重试。"
+}

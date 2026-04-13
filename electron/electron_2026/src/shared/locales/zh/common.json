@@ -1,0 +1,15 @@
+{
+  "hello": "你好",
+  "loading": "加载中...",
+  "network": {
+    "offlineTitle": "无网络连接",
+    "offlineMessage": "您似乎处于离线状态，部分功能可能不可用。",
+    "serviceUnreachableTitle": "服务不可用",
+    "serviceUnreachableMessage": "无法连接到服务，请稍后重试。"
+  },
+  "sidebar": {
+    "menu": "菜单",
+    "settings": "设置",
+    "logout": "退出登录"
+  }
+}

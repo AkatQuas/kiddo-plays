@@ -1,0 +1,13 @@
+{
+  "welcome": "Welcome Back",
+  "description": "Sign in to your account to continue",
+  "email": "Email",
+  "emailPlaceholder": "name@example.com",
+  "password": "Password",
+  "passwordPlaceholder": "Enter your password",
+  "signIn": "Sign In",
+  "signingIn": "Signing in...",
+  "success": "Login successful!",
+  "failed": "Invalid email or password",
+  "error": "Login failed. Please try again."
+}

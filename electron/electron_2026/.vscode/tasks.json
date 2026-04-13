@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Generate Icons",
+      "type": "shell",
+      "command": "node",
+      "args": ["./scripts/generate-icons.mjs"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Development",
+      "command": "npm",
+      "type": "shell",
+      "args": ["run", "dev"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Local build",
+      "command": "npm",
+      "type": "shell",
+      "args": ["run", "build"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build"
+    }
+  ]
+}
