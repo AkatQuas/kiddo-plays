@@ -1,0 +1,7 @@
+POST http://localhost:9000/hooks/webhook_job1
+Content-Type: application/json
+
+{ "arg": "1" }
+
+###
+GET http://localhost:9000/hooks/webhook_job1
