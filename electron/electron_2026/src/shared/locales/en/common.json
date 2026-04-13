@@ -1,0 +1,15 @@
+{
+  "hello": "Ciallo～(∠・ω< )⌒★",
+  "loading": "Loading...",
+  "network": {
+    "offlineTitle": "No Internet Connection",
+    "offlineMessage": "You appear to be offline. Some features may not be available.",
+    "serviceUnreachableTitle": "Service Unavailable",
+    "serviceUnreachableMessage": "Unable to connect to the service. Please try again later."
+  },
+  "sidebar": {
+    "menu": "Menu",
+    "settings": "Settings",
+    "logout": "Logout"
+  }
+}
