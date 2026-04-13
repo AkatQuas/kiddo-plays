@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  webhook:
+    image: lwlook/webhook
+    container_name: webhook
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./webhook:/etc/webhook
+      - ./scripts:/opt/scripts
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -verbose -hooks=/etc/webhook/hooks.yaml -hotreload
