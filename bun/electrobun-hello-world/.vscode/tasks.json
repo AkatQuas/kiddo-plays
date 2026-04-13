@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Installation",
+      "command": "bun install",
+      "type": "shell",
+      "args": []
+    },
+    {
+      "label": "Development",
+      "type": "shell",
+      "command": "bun start",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "bun build",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "hello-world",
+  "private": true,
+  "description": "Electrobun app demonstrating multiple windows with RPC communication",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "electrobun": "^1.16.0"
+  },
+  "scripts": {
+    "start": "electrobun run",
+    "dev": "electrobun dev",
+    "dev:watch": "electrobun dev --watch",
+    "build:dev": "electrobun build",
+    "build:canary": "electrobun build --env=canary",
+    "build:stable": "electrobun build --env=stable"
+  }
+}
