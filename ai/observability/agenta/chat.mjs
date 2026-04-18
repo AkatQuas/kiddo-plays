@@ -104,7 +104,7 @@ async function executeTool(toolCall, tracer) {
 
 async function chat() {
   const openai = new OpenAI({
-    baseURL: process.env.OPENAI_BASEURL,
+    baseURL: process.env.OPENAI_BASE_URL,
     apiKey: process.env.OPENAI_API_KEY
   });
   const model = 'minimax-m2.5';
