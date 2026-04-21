@@ -1,14 +1,26 @@
-# Webhook
+# Webhook Study Memo
 
-The trial on [adnanh/webhook](https://github.com/adnanh/webhook).
+Trial notes for [adnanh/webhook](https://github.com/adnanh/webhook).
 
-Two example webhooks at [webhook/hooks.yaml](./webhook/hooks.yaml).
+Two sample webhook definitions provided in [webhook/hooks.yaml](./webhook/hooks.yaml).
 
-Tricky to setup the working directory, the docker `lwlook/webhook` doesn't create such folder automatically.
+## Setup Note
 
-Start the webhook in docker `docker compose up`. Mounting local [config](./webhook) and [scripts](./scripts/) to docker.
+Working directory configuration can be tricky. The Docker image `lwlook/webhook` does **not** create target directories automatically; ensure paths exist before mounting.
 
-Invoke the webhook by:
+## Run with Docker
+
+Start the service using Docker Compose:
+
+```bash
+docker compose up
+```
+
+Local [config](./webhook) and [scripts](./scripts/) directories are mounted into the container for live updates.
+
+## Test Invocation
+
+Trigger the webhook with a `POST` request:
 
 ```bash
 curl --request POST \
@@ -19,25 +31,26 @@ curl --request POST \
 
 ## Pros
 
-Lightweight (Go binary, no runtime), fast startup
-Simple YAML config, hot-reload support
-Rich trigger rules (IP whitelist, HMAC)
-Flexible (runs any shell script/binary)
-Mature, low resource usage
+- Extremely lightweight: compiled Go binary, no external runtime required
+- Fast startup and low resource footprint
+- Clean, declarative YAML configuration with hot-reload support
+- Flexible triggering: IP whitelisting, HMAC verification, and more
+- General-purpose: can execute arbitrary shell scripts or binaries
+- Stable and mature with minimal operational overhead
 
 ### Best For
 
-Small-scale automation (deploy hooks, CI triggers) on low-resource environments.
+Small-scale automation tasks such as deployment hooks, lightweight CI triggers, and simple event-driven jobs on resource-constrained environments.
 
 ## Cons
 
-Low maintainer activity
-No retries/queueing (fire-and-forget)
-Minimal observability (basic logs only)
-Limited scaling/concurrency
-Security (IP/HMAC/HTTPS) requires manual setup
-No workflow orchestration
+- Limited recent maintainer activity
+- Stateless fire-and-forget design: no built-in job queuing or retries
+- Minimal observability: only basic logging, no metrics or alerting
+- Limited concurrency and scaling capabilities
+- Security hardening (HTTPS, proper HMAC/IP rules) requires manual configuration
+- No native workflow orchestration or dependency chaining
 
 ### Avoid When
 
-Need critical job retries, complex workflows, or enterprise-scale observability.
+Your use case requires reliable job retries, complex multi-step workflows, enterprise-grade observability, high concurrency, or managed fault tolerance.
