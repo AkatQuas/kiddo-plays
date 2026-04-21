@@ -1,0 +1,59 @@
+services:
+  jaeger:
+    image: jaegertracing/jaeger:2.17.0
+    container_name: otel-jaeger
+    profiles: [ "jaeger" ]
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "5778:5778"
+      - "9411:9411" # if use zipkin
+      - "16686:16686"
+    restart: unless-stopped
+
+  # OpenTelemetry Collector (Profile: collector)
+  otel-collector:
+    image: otel/opentelemetry-collector:0.150.0-amd64
+    container_name: otel-collector
+    profiles: [ "collector" ]
+    command: [ "--config", "/etc/otelcol/config.yaml" ]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol/config.yaml
+    ports:
+      - 1777:1777 # pprof extension
+      - 13133:13133 # health_check extension
+      - 4317:4317 # OTLP gRPC receiver
+      - 4318:4318 # OTLP http receiver
+      - 55679:55679 # zpages extension
+    restart: unless-stopped
+
+  # OpenTelemetry Collector (Profile: collector-contrib)
+  otel-collector-contrib:
+    image: otel/opentelemetry-collector-contrib:0.150.1-amd64
+    container_name: otel-collector-contrib
+    profiles: [ "collector-contrib" ]
+    command: [ "--config", "/etc/otelcol-contrib/config.yaml" ]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - 1777:1777 # pprof extension
+      - 13133:13133 # health_check extension
+      - 4317:4317 # OTLP gRPC receiver
+      - 4318:4318 # OTLP http receiver
+      - 55679:55679 # zpages extension
+    restart: unless-stopped
+
+  # not recommended
+  # requires Elasticsearch (database) and Kibana (UI)
+  # APM Server (collector)
+  apm:
+    image: docker.elastic.co/apm/apm-server:7.17.28
+    container_name: apm
+    profiles:
+      - apm
+    ports:
+      - 8200:8200
+      - 4317:4317
+    restart: unless-stopped
