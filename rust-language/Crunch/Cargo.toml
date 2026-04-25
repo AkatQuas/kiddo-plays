@@ -1,0 +1,15 @@
+[package]
+name = "crunch"
+version = "6.2.0"
+edition = "2024"
+authors = ["AkatQuas <akatquas@example.com>"]
+description = "A PNG file optimization tool built on pngquant and zopflipng"
+license = "MIT"
+readme = "./README.md"
+
+[dependencies]
+clap = { version = "4.0", features = ["derive"] }
+anyhow = "1.0"
+thiserror = "1.0"
+ctrlc = "3.2"
+num_cpus = "1.0"
