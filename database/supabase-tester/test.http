@@ -1,0 +1,84 @@
+@base = http://localhost:3000
+
+### OTP setup
+GET {{base}}/api/otp/setup
+
+###
+POST {{base}}/api/otp/verify
+Content-Type: application/json
+
+{ "token": "710246" }
+
+### OTP guard
+GET {{base}}/api/admin
+X-OTP-TOKEN: 123566
+
+### user list
+
+GET {{base}}/api/users
+
+### user by id
+
+GET {{base}}/api/users/1
+
+### create a user
+
+POST {{base}}/api/users
+Content-Type: application/json
+
+{
+  "name": "新用户",
+  "email": "new@126.com"
+}
+
+### update user by id
+
+@uid=1
+PUT {{base}}/api/users/{{uid}}
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": ""
+}
+
+### car list
+
+GET {{base}}/api/cars
+
+### car by id
+
+@car=1
+
+GET {{base}}/api/cars/{{car}}
+
+### car by user id
+
+@car_uid=1
+
+GET {{base}}/api/cars/user/{{car_uid}}
+
+### create a car
+
+POST {{base}}/api/cars
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "make": "制造商",
+  "model": "车型",
+  "year": 2024
+}
+
+### update car by id
+
+@car_id=4
+PUT {{base}}/api/cars/{{car_id}}
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "make": "制造商new",
+  "model": "车型",
+  "year": 2024
+}
