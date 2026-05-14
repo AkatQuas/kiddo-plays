@@ -1,0 +1,235 @@
+openapi: 3.0.0
+info:
+  title: ops_tool_server
+  description: "餐饮系统 - 运维工具服务端"
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /api-v1/stores/:
+    get:
+      tags:
+        - StoresController
+      summary: getStores
+      operationId: getStores
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    post:
+      tags:
+        - StoresController
+      summary: createStore
+      operationId: createStore
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StoreCreateDto"
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api-v1/stores/<id>:
+    get:
+      tags:
+        - StoresController
+      summary: getStore
+      operationId: getStore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    put:
+      tags:
+        - StoresController
+      summary: updateStore
+      operationId: updateStore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    delete:
+      tags:
+        - StoresController
+      summary: deleteStore
+      operationId: deleteStore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api-v1/versions/:
+    get:
+      tags:
+        - VersionsController
+      summary: getVersions
+      operationId: getVersions
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    post:
+      tags:
+        - VersionsController
+      summary: createVersion
+      operationId: createVersion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VersionCreateDto"
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api-v1/issues/:
+    get:
+      tags:
+        - IssuesController
+      summary: getIssues
+      operationId: getIssues
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    post:
+      tags:
+        - IssuesController
+      summary: createIssue
+      operationId: createIssue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IssueCreateDto"
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api-v1/issues/<id>:
+    put:
+      tags:
+        - IssuesController
+      summary: updateIssue
+      operationId: updateIssue
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Operation completed!"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    StoreCreateDto:
+      title: StoreCreateDto
+      type: object
+      properties:
+        name:
+          type: string
+        owner:
+          type: string
+        address:
+          type: string
+        phone:
+          type: string
+        coopStatus:
+          type: string
+        coopExpireAt:
+          type: string
+      required:
+        - name
+        - owner
+        - address
+        - phone
+        - coopStatus
+    VersionCreateDto:
+      title: VersionCreateDto
+      type: object
+      properties:
+        version:
+          type: string
+        description:
+          type: string
+      required:
+        - version
+        - description
+    IssueCreateDto:
+      title: IssueCreateDto
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - title
+        - description
+tags:
+  - name: StoresController
+  - name: VersionsController
+  - name: IssuesController

@@ -1,0 +1,22 @@
+name: catering_order_system
+description: 餐饮小店订单管理系统 - Mono Repo
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+dependency_overrides:
+  common_core:
+    path: packages/common_core
+  database_core:
+    path: packages/database_core
+  offline_voice:
+    path: packages/offline_voice
+  auth_core:
+    path: packages/auth_core
