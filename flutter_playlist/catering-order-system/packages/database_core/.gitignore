@@ -1,0 +1,16 @@
+# Dart
+.pub/
+.dart_tool/
+.packages
+build/
+
+# Drift generated code (check in for build-free CI)
+# database.g.dart
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
