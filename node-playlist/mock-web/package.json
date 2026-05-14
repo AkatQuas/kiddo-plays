@@ -1,0 +1,19 @@
+{
+  "name": "mock-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently 'http-server -p 8090 ./' 'node ./server.js'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "express": "^5.2.1",
+    "http-server": "^14.1.1",
+    "ws": "^8.20.1"
+  }
+}
