@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>客户端唤起演示</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- React core -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"
+      crossorigin
+    ></script>
+    <!-- React DOM -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"
+      crossorigin
+    ></script>
+    <!-- Babel for JSX -->
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const { useState, useEffect, useRef, useCallback } = React;
+
+      // 状态常量
+      const AppState = {
+        IDLE: 'idle',
+        LAUNCHING: 'launching',
+        SUCCESS: 'success',
+        FAILED: 'failed'
+      };
+
+      // 错误类型
+      const ErrorType = {
+        NOT_INSTALLED: 'not_installed',
+        PROTOCOL_BROKEN: 'protocol_broken',
+        USER_CANCELLED: 'user_cancelled',
+        TIMEOUT: 'timeout'
+      };
+
+      // 错误提示文案
+      const errorMessages = {
+        [ErrorType.NOT_INSTALLED]: {
+          title: '未检测到客户端',
+          description: '请下载并安装客户端后重试',
+          buttons: [
+            { text: '前往下载', action: 'download', primary: true },
+            { text: '关闭', action: 'close', primary: false }
+          ]
+        },
+        [ErrorType.PROTOCOL_BROKEN]: {
+          title: '协议损坏',
+          description: '自动唤起失败，请手动启动客户端完成初始化并重试',
+          buttons: [
+            { text: '打开客户端目录', action: 'openDir', primary: true },
+            { text: '关闭', action: 'close', primary: false }
+          ]
+        },
+        [ErrorType.USER_CANCELLED]: {
+          title: '用户取消授权',
+          description: '您取消了客户端唤起，请手动打开客户端',
+          buttons: [
+            { text: '重新唤起客户端', action: 'relaunch', primary: true },
+            { text: '手动打开客户端', action: 'manualOpen', primary: false }
+          ]
+        },
+        [ErrorType.TIMEOUT]: {
+          title: '连接超时',
+          description: '客户端启动超时，请检查客户端状态',
+          buttons: [
+            { text: '重新唤起客户端', action: 'relaunch', primary: true },
+            { text: '手动打开客户端', action: 'manualOpen', primary: false }
+          ]
+        }
+      };
+
+      // 轮询配置
+      const POLL_INTERVAL = 400; // 400ms
+      const MAX_TIMEOUT = 5000; // 5秒
+      const API_ENDPOINT = 'http://127.0.0.1:21210/api/status';
+      const WS_ENDPOINT = 'ws://127.0.0.1:21210';
+
+      // 模拟协议参数
+      const protocolParams = {
+        cookie: 'mock_cookie_' + Date.now(),
+        industry: 'tech',
+        userId: '1001'
+      };
+
+      function App() {
+        const [appState, setAppState] = useState(AppState.IDLE);
+        const [errorType, setErrorType] = useState(null);
+        const [statusData, setStatusData] = useState(null);
+        const [pollProgress, setPollProgress] = useState(0);
+        const [wsConnected, setWsConnected] = useState(false);
+        const [wsMessages, setWsMessages] = useState([]);
+        const pollTimerRef = useRef(null);
+        const timeoutTimerRef = useRef(null);
+        const startTimeRef = useRef(null);
+        const pollCountRef = useRef(0);
+        const wsRef = useRef(null);
+        const wsTimerRef = useRef(null);
+        const wsSendCountRef = useRef(0);
+        const WS_MAX_COUNT = 10;
+
+        // 清理定时器
+        const clearTimers = useCallback(() => {
+          if (pollTimerRef.current) {
+            clearInterval(pollTimerRef.current);
+            pollTimerRef.current = null;
+          }
+          if (timeoutTimerRef.current) {
+            clearTimeout(timeoutTimerRef.current);
+            timeoutTimerRef.current = null;
+          }
+          if (wsTimerRef.current) {
+            clearInterval(wsTimerRef.current);
+            wsTimerRef.current = null;
+          }
+          if (wsRef.current) {
+            wsRef.current.close();
+            wsRef.current = null;
+          }
+        }, []);
+
+        // 轮询检测客户端状态
+        const pollClientStatus = useCallback(() => {
+          pollCountRef.current += 1;
+
+          fetch(API_ENDPOINT)
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error('HTTP error');
+              }
+              return res.json();
+            })
+            .then((data) => {
+              clearTimers();
+              setStatusData(data.data);
+              setAppState(AppState.SUCCESS);
+            })
+            .catch((err) => {
+              // 继续轮询，超时会在另一个定时器处理
+              const elapsed = Date.now() - startTimeRef.current;
+              const progress = Math.min((elapsed / MAX_TIMEOUT) * 100, 100);
+              setPollProgress(progress);
+            });
+        }, [clearTimers]);
+
+        // WebSocket 连接
+        const connectWebSocket = useCallback(() => {
+          if (wsRef.current) {
+            wsRef.current.close();
+          }
+
+          setWsMessages((prev) => [
+            ...prev,
+            { type: 'system', text: '🔄 正在连接...' }
+          ]);
+
+          try {
+            const ws = new WebSocket(WS_ENDPOINT);
+            wsRef.current = ws;
+
+            ws.onopen = () => {
+              setWsConnected(true);
+              setWsMessages((prev) => [
+                ...prev,
+                { type: 'system', text: '✅ WebSocket 连接成功' }
+              ]);
+              ws.send('Hello 服务端！');
+
+              // 开始定时发送消息
+              wsSendCountRef.current = 0;
+              wsTimerRef.current = setInterval(() => {
+                if (ws.readyState === WebSocket.OPEN) {
+                  wsSendCountRef.current += 1;
+                  const msg = `定时消息 ${wsSendCountRef.current} | ${Date.now()}`;
+                  ws.send(msg);
+                  setWsMessages((prev) => [
+                    ...prev,
+                    {
+                      type: 'send',
+                      text: `📤 发送：${msg} （${wsSendCountRef.current}/${WS_MAX_COUNT}）`
+                    }
+                  ]);
+
+                  // 达到 10 次 → 关闭连接
+                  if (wsSendCountRef.current >= WS_MAX_COUNT) {
+                    if (wsTimerRef.current) {
+                      clearInterval(wsTimerRef.current);
+                      wsTimerRef.current = null;
+                    }
+                    setWsMessages((prev) => [
+                      ...prev,
+                      {
+                        type: 'system',
+                        text: '\n✅ 已发送 10 次，准备关闭连接...'
+                      }
+                    ]);
+                    ws.close();
+                  }
+                }
+              }, 1000);
+            };
+
+            ws.onmessage = (event) => {
+              setWsMessages((prev) => [
+                ...prev,
+                { type: 'receive', text: `📥 服务端回复：${event.data}` }
+              ]);
+            };
+
+            ws.onclose = () => {
+              setWsConnected(false);
+              setWsMessages((prev) => [
+                ...prev,
+                { type: 'system', text: '❌ 连接已关闭' }
+              ]);
+            };
+
+            ws.onerror = (err) => {
+              setWsMessages((prev) => [
+                ...prev,
+                { type: 'error', text: `⚠️ 错误：${err.message || '连接失败'}` }
+              ]);
+            };
+          } catch (err) {
+            setWsMessages((prev) => [
+              ...prev,
+              { type: 'error', text: `⚠️ 创建连接失败：${err.message}` }
+            ]);
+          }
+        }, []);
+
+        // 唤起客户端
+        const launchClient = useCallback(() => {
+          // 重置状态
+          setAppState(AppState.LAUNCHING);
+          setErrorType(null);
+          setStatusData(null);
+          setPollProgress(0);
+          pollCountRef.current = 0;
+          startTimeRef.current = Date.now();
+
+          // 构建协议URL
+          const params = new URLSearchParams(protocolParams).toString();
+          const protocolUrl = `mongo://open?${params}`;
+
+          // 触发协议跳转
+          window.location.href = protocolUrl;
+
+          // 启动轮询
+          pollTimerRef.current = setInterval(pollClientStatus, POLL_INTERVAL);
+
+          // 启动超时定时器
+          timeoutTimerRef.current = setTimeout(() => {
+            clearTimers();
+            // 根据轮询次数判断错误类型
+            if (pollCountRef.current === 0) {
+              // 一次请求都没有发出，可能是协议未注册
+              setErrorType(ErrorType.NOT_INSTALLED);
+            } else {
+              // 有请求但全部失败
+              setErrorType(ErrorType.TIMEOUT);
+            }
+            setAppState(AppState.FAILED);
+          }, MAX_TIMEOUT);
+        }, [pollClientStatus, clearTimers]);
+
+        // 处理按钮点击
+        const handleButtonClick = useCallback(
+          (action) => {
+            switch (action) {
+              case 'relaunch':
+                launchClient();
+                break;
+              case 'manualOpen':
+                // 手动打开客户端目录
+                window.location.href = 'mongo://open';
+                break;
+              case 'download':
+                alert('下载功能待实现');
+                break;
+              case 'openDir':
+                alert('打开目录功能待实现');
+                break;
+              case 'close':
+                // 重置状态
+                setAppState(AppState.IDLE);
+                setErrorType(null);
+                setStatusData(null);
+                break;
+              default:
+                break;
+            }
+          },
+          [launchClient]
+        );
+
+        // 组件卸载时清理
+        useEffect(() => {
+          return () => clearTimers();
+        }, [clearTimers]);
+
+        // 渲染加载动画
+        const renderLoading = () => (
+          <div className="flex flex-col items-center justify-center space-y-6">
+            <div className="relative w-16 h-16">
+              <div className="absolute inset-0 border-4 border-blue-200 rounded-full"></div>
+              <div className="absolute inset-0 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
+            </div>
+            <p className="text-lg text-gray-700">正在唤起客户端...</p>
+            <div className="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-blue-600 transition-all duration-300 ease-out"
+                style={{ width: `${pollProgress}%` }}
+              ></div>
+            </div>
+            <p className="text-sm text-gray-500">
+              等待客户端响应 ({Math.round(pollProgress)}%)
+            </p>
+          </div>
+        );
+
+        // 渲染成功状态
+        const renderSuccess = () => (
+          <div className="flex flex-col items-center space-y-4">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+              <svg
+                className="w-8 h-8 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+            </div>
+            <p className="text-lg font-medium text-gray-800">客户端已启动</p>
+            <button
+              onClick={() => handleButtonClick('close')}
+              className="mt-4 ml-4 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              关闭
+            </button>
+
+            {statusData && (
+              <div className="w-full max-w-sm bg-gray-50 rounded-lg p-4 space-y-3">
+                <h3 className="font-medium text-gray-700 border-b pb-2">
+                  客户端状态
+                </h3>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <span className="text-gray-500">用户ID:</span>
+                  <span className="text-gray-800">
+                    {statusData.userId || '-'}
+                  </span>
+                  <span className="text-gray-500">版本:</span>
+                  <span className="text-gray-800">
+                    {statusData.version || '-'}
+                  </span>
+                  <span className="text-gray-500">PID:</span>
+                  <span className="text-gray-800">{statusData.pid || '-'}</span>
+                  <span className="text-gray-500">状态:</span>
+                  <span className="text-green-600 font-medium">
+                    {statusData.status || '在线'}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* WebSocket 测试区域 */}
+            <div className="w-full max-w-sm mt-6 bg-gray-50 rounded-lg p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-medium text-gray-700">WebSocket 测试</h3>
+                <span
+                  className={`text-xs px-2 py-1 rounded ${wsConnected ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}
+                >
+                  {wsConnected ? '已连接' : '未连接'}
+                </span>
+              </div>
+              <button
+                onClick={connectWebSocket}
+                disabled={wsConnected}
+                className="w-full px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+              >
+                {wsConnected ? '连接中...' : '开始测试'}
+              </button>
+
+              {/* 消息日志 */}
+              {wsMessages.length > 0 && (
+                <div className="mt-3 bg-white rounded border p-2 max-h-40 overflow-y-auto text-xs font-mono">
+                  {wsMessages.map((msg, idx) => (
+                    <div
+                      key={idx}
+                      className={`mb-1 ${
+                        msg.type === 'send'
+                          ? 'text-blue-600'
+                          : msg.type === 'receive'
+                            ? 'text-green-600'
+                            : msg.type === 'error'
+                              ? 'text-red-600'
+                              : 'text-gray-500'
+                      }`}
+                    >
+                      {msg.text}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
+        // 渲染失败状态
+        const renderFailed = () => {
+          const error = errorMessages[errorType];
+          if (!error) return null;
+
+          return (
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                <svg
+                  className="w-8 h-8 text-red-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </div>
+              <p className="text-lg font-medium text-gray-800">{error.title}</p>
+              <p className="text-sm text-gray-500 text-center max-w-xs">
+                {error.description}
+              </p>
+
+              <div className="flex space-x-3 mt-4">
+                {error.buttons.map((btn, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleButtonClick(btn.action)}
+                    className={`px-4 py-2 rounded-lg transition-colors ${
+                      btn.primary
+                        ? 'bg-blue-600 text-white hover:bg-blue-700'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {btn.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        };
+
+        // 渲染初始状态
+        const renderIdle = () => (
+          <div className="flex flex-col items-center space-y-6">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <svg
+                className="w-10 h-10 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+                ></path>
+              </svg>
+            </div>
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-gray-800">
+                客户端唤起演示
+              </h1>
+              <p className="text-sm text-gray-500 mt-2">
+                点击下方按钮唤起本地客户端
+              </p>
+            </div>
+
+            {/* 参数预览 */}
+            <div className="w-full max-w-sm bg-gray-50 rounded-lg p-4 text-sm">
+              <h3 className="font-medium text-gray-700 mb-2">唤起参数</h3>
+              <div className="space-y-1 text-gray-600">
+                <p>
+                  <span className="font-medium">cookie:</span>{' '}
+                  {protocolParams.cookie}
+                </p>
+                <p>
+                  <span className="font-medium">industry:</span>{' '}
+                  {protocolParams.industry}
+                </p>
+                <p>
+                  <span className="font-medium">userId:</span>{' '}
+                  {protocolParams.userId}
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={launchClient}
+              className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+            >
+              唤起客户端
+            </button>
+
+            <p className="text-xs text-gray-400">
+              协议: mongo://open?cookie=xxx&amp;industry=yyy&amp;userId=1001
+            </p>
+          </div>
+        );
+
+        return (
+          <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-2">
+            <div className="w-full max-w-md">
+              {/* 头部 */}
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center space-x-2 text-sm text-gray-500">
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                  <span>演示页面</span>
+                </div>
+              </div>
+
+              {/* 主卡片 */}
+              <div className="bg-white rounded-2xl shadow-xl p-4">
+                {appState === AppState.IDLE && renderIdle()}
+                {appState === AppState.LAUNCHING && renderLoading()}
+                {appState === AppState.SUCCESS && renderSuccess()}
+                {appState === AppState.FAILED && renderFailed()}
+              </div>
+
+              {/* 底部说明 */}
+              <div className="mt-6 text-center text-xs text-gray-400">
+                <p>
+                  轮询间隔: {POLL_INTERVAL}ms | 超时时间: {MAX_TIMEOUT}ms
+                </p>
+                <p className="mt-1">检测端口: 127.0.0.1:21210</p>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // 渲染应用
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
