@@ -1,0 +1,28 @@
+name: merchant_app
+description: 餐饮系统 - 商家端Android APP
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.1
+  common_core:
+    path: ../../packages/common_core
+  database_core:
+    path: ../../packages/database_core
+  offline_voice:
+    path: ../../packages/offline_voice
+  auth_core:
+    path: ../../packages/auth_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
