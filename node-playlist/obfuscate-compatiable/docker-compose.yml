@@ -1,0 +1,18 @@
+services:
+  obfuscate:
+    image: "node:${COMPILE_VERSION:-22.22.3}-slim"
+    working_dir: "/app/builds/${COMPILE_VERSION:-22.22.3}"
+    environment:
+      - CI=true
+    volumes:
+      - .:/app
+    command: >
+      bash -lc "corepack enable && pnpm install && node obfuscate.js"
+
+  runtime:
+    image: "node:${RUNTIME_VERSION:-22.16.0}-slim"
+    working_dir: "/app/builds/${COMPILE_VERSION:-22.22.3}"
+    volumes:
+      - .:/app
+    command: >
+      node example/index.js
