@@ -1,0 +1,56 @@
+# Copy to config.yaml and edit before running.
+# Single configuration file with global, ai, push, and repos sections.
+
+global:
+  repos_root: ./repos
+  cursor_dir: ./cursors
+  log_dir: ./log
+  lock_file: ./.repo-report.lock
+  log_retention_days: 30
+  max_parallel_repos: 3
+  init_lookback_days: 7
+  min_free_disk_mb: 512
+  cron_expression: "0 23 * * *"  # document-only; configure in system crontab
+
+ai:
+  engine: claude-code
+  timeout_seconds: 600
+  max_turns: 20
+  max_retries: 3
+  retry_interval_seconds: 5
+
+push:
+  retry_count: 2
+  retry_interval_seconds: 3
+  channels:
+    - type: webhook
+      enabled: false
+      url: "https://example.com/hook"
+      custom_body:
+        # Extra fields merged with default {title, content}
+        channel: "repo-report"
+        priority: "normal"
+    - type: feishu
+      enabled: false
+      webhook_url: "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+      custom_body:
+        # Overrides msg_type, adds extra fields
+        msg_type: "interactive"
+        content:
+          header:
+            title:
+              tag: "plain_text"
+              content: "Repo Report"
+    - type: dingtalk
+      enabled: false
+      webhook_url: "https://oapi.dingtalk.com/robot/send?access_token=xxx"
+    - type: wecom
+      enabled: false
+      webhook_url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
+
+repos:
+  # Example: local ordering repo (adjust url for your environment)
+  - name: ordering
+    url: git@github.com:AkatQuas/Crunch.git
+    branch: main
+    enabled: true

@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+dist/
+*.egg-info/
+config/config.yaml
+repos/
+cursors/
+log/
+.repo-report.lock
