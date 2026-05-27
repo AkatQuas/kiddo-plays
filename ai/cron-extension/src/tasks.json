@@ -1,0 +1,23 @@
+{
+  "tasks": [
+    {
+      "id": "example-log",
+      "name": "Example: Log every minute",
+      "schedule": "* * * * *",
+      "action": "log",
+      "config": {
+        "message": "Cron tick"
+      }
+    },
+    {
+      "id": "example-digest",
+      "name": "Example: Daily digest at 9AM weekdays",
+      "schedule": "0 9 * * 1-5",
+      "action": "notify",
+      "config": {
+        "title": "Daily Digest",
+        "message": "Time for your morning review!"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Personal Cron Tasks",
+  "version": "1.0.0",
+  "description": "Run cron-style tasks while Chrome is active",
+  "permissions": ["alarms", "storage", "notifications"],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_title": "Cron Tasks",
+    "default_icon": "icons/icon128.png"
+  },
+  "offline_enabled": true
+}
