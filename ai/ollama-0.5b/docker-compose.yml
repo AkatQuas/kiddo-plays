@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-intel-test
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama-data:/root/.ollama
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+  # command: >
+  #  sh -c "
+  #    ollama serve &
+  #    sleep 8 &&
+  #    ollama pull qwen:0.5b-chat &&
+  #    wait
+  #  "

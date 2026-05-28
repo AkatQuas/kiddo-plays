@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  tinyllm:
+    image: nishankkoul/tinyllama-server:v1.7
+      # ghcr.io/huggingface/tinyllama-server:cpu
+    container_name: tiny-llm-test
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
