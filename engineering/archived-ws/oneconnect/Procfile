@@ -1,0 +1,5 @@
+of: until lsof -i -P -n | grep "5100.*LISTEN" > /dev/null 2>&1 ; do sleep 3; done && cd $ONEC_WEB && yarn watch
+os: until ping -c 3 $VIP > /dev/null 2>&1; do sleep 3; done && cd $ONEC_WEB && sleep 5 && yarn startDev $VIP
+
+wf: until lsof -i -P -n | grep "5300.*LISTEN" > /dev/null 2>&1 ; do sleep 3; done && cd $WORK_WEB && (rm i18n_langs/zh_CN.json || true) ; yarn watch
+ws: echo "Using SEAL VPN" && until ping -c 3 $WVIP > /dev/null 2>&1; do sleep 3; done && sleep 5 && cd $WORK_WEB && DEBUG=sso:* yarn startDev $WVIP

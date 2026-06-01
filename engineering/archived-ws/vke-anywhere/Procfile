@@ -1,0 +1,2 @@
+web: until lsof -i -P -n | grep "3000.*LISTEN" > /dev/null 2>&1 ; do sleep 3; done && echo 'login via pass123@Pwd123456' && cd $FRONT_WEB && PORT=8080 yarn start
+sever: cd $BACK_SERVER && PORT=3000 yarn startDev

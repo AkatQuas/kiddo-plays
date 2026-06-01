@@ -1,0 +1,30 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "./"
+    },
+    {
+      "name": "app",
+      "path": "app"
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "prettier.singleQuote": true,
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/out": true,
+      "**/dist": true
+    },
+    "cSpell.words": ["overmind", "Procfile"]
+  },
+  "extensions": {
+    "recommendations": [
+      "esbenp.prettier-vscode",
+      "editorconfig.editorconfig",
+      "benspaulding.procfile",
+      "irongeek.vscode-env"
+    ]
+  }
+}

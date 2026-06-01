@@ -1,0 +1,161 @@
+{
+  "folders": [
+    {
+      "name": "workspace",
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**miniprogram-ide/extensions": true,
+      "**/miniprogram-simulator/public": true,
+      "**/out": true,
+      "***.inc": true,
+      "***.gypi": true
+    },
+    "files.associations": {
+      ".madgerc": "jsonc"
+    },
+    "js/ts.preferences.importModuleSpecifier": "shortest",
+    "prettier.singleQuote": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modifications",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "eslint.format.enable": true,
+    "cSpell.words": [
+      "asar",
+      "esbuild",
+      "nocheck",
+      "noemit",
+      "overmind",
+      "Procfile",
+      "prettier",
+      "sandboxed",
+      "Serializable",
+      "VSIX",
+      "Wifi"
+    ],
+    "diffEditor.ignoreTrimWhitespace": false
+  },
+  "extensions": {
+    "recommendations": [
+      "streetsidesoftware.code-spell-checker",
+      "irongeek.vscode-env",
+      "ms-azuretools.vscode-docker",
+      "graphql.vscode-graphql",
+      "esbenp.prettier-vscode",
+      "benspaulding.procfile",
+      "editorconfig.editorconfig"
+    ],
+    "unwantedRecommendations": []
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "[MiniApp] Lint Staged",
+        "type": "shell",
+        "command": "time npx lint-staged && git status",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}/miniapp-toolkit",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "[Tila] Rebuild Once",
+        "type": "shell",
+        "command": "make tila_rebuild",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "[MinApp] Sync Tila SubModule",
+        "type": "shell",
+        "command": "make mini_sync_tsbm",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "[MiniApp] Yarn install",
+        "type": "shell",
+        "command": "make yarn_mini",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}",
+          "env": {
+            "YARN_CHECKSUM_BEHAVIOR": "update"
+          }
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "[Tila] Yarn install",
+        "type": "shell",
+        "command": "make yarn_tila",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "[All] Git Fetch Origin",
+        "type": "shell",
+        "command": "make gfo",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "[SimpleDevtools] WebSite",
+        "type": "shell",
+        "command": "http-server --port 9090 ./",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}/simple-devtools-page",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "[SimpleDevtools] Node Server",
+        "type": "shell",
+        "command": "node --inspect=8327 ./server.js",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}/simple-devtools-page",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "[PCSDK] Run in docker",
+        "type": "shell",
+        "command": "docker run --rm -it --entrypoint /bin/sh --volume ${workspaceFolder:workspace}/pc-sdk:/pc-sdk --volume ${env:HOME}/.cache/yarn:/yarn  node:16-alpine",
+        "options": {
+          "cwd": "${workspaceFolder:workspace}",
+          "env": {}
+        },
+        "problemMatcher": [],
+        "dependsOn": ["wait-docker"]
+      },
+      {
+        "label": "wait-docker",
+        "type": "shell",
+        "command": "echo 'waiting for docker...' && until docker system info > /dev/null 2>&1; do sleep 3; done",
+        "problemMatcher": []
+      }
+    ]
+  }
+}

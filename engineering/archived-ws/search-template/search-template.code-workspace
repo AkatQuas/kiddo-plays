@@ -1,0 +1,139 @@
+{
+  "extensions": {
+    "recommendations": [
+      "streetsidesoftware.code-spell-checker",
+      "irongeek.vscode-env",
+      "ms-azuretools.vscode-docker",
+      "graphql.vscode-graphql",
+      "esbenp.prettier-vscode",
+      "benspaulding.procfile",
+      "editorconfig.editorconfig"
+    ],
+    "unwantedRecommendations": []
+  },
+  "folders": [
+    {
+      "path": "mono"
+    },
+    {
+      "name": "ROOT",
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[yaml]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "cSpell.words": [
+      "asar",
+      "esbuild",
+      "nocheck",
+      "noemit",
+      "overmind",
+      "Procfile",
+      "prettier",
+      "sandboxed",
+      "Serializable",
+      "VSIX",
+      "Wifi"
+    ],
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "never",
+      "source.organizeImports": "never"
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modifications",
+    "extensions.experimental.affinity": {
+      "bradlc.vscode-tailwindcss": 98
+    },
+    "files.associations": {
+      ".madgerc": "jsonc"
+    },
+    "files.exclude": {},
+    "js/ts.preferences.importModuleSpecifier": "shortest",
+    "prettier.singleQuote": true,
+    "search.exclude": {
+      "**/__dist__": true,
+      "**/__snapshots__": true,
+      "**/*.code-search": true,
+      "**/*.gyp": true,
+      "**/*.gypi": true,
+      "**/*.h": true,
+      "**/*.inc": true,
+      "**/bower_components": true,
+      "**/node_modules": true,
+      "**/out": true
+    },
+    "search.followSymlinks": false,
+    "stylelint.packageManager": "pnpm",
+    "tailwindCSS.experimental.configFile": {
+      // add config to the projects, here is an example
+      // "mono/packages/v2/tailwind.config.js": "mono/packages/v2/src/**/*",
+    },
+    "tailwindCSS.files.exclude": [
+      "**/.git/**",
+      "**/node_modules/**",
+      "**/.hg/**",
+      "**/.svn/**",
+      "**/*.md",
+      "**/*.ts",
+      "**/*.js",
+      "**/*.json",
+      "**/*.less"
+    ],
+    "tailwindCSS.includeLanguages": {},
+    "yaml.schemas": {
+      "https://github.org/ci/open/dsl.schema.json": [
+        "mono/.gitlab/pipelines/*.yaml",
+        "mono/.gitlab/pipelines/*.yml"
+      ]
+    }
+  },
+  "tasks": {
+    "echoCommand": false,
+    "inputs": [
+      {
+        "description": "Choose the folder",
+        "id": "DIR",
+        "options": ["mono"],
+        "type": "pickString"
+      }
+    ],
+    "tasks": [
+      {
+        "command": "if [[ ! -d \"$DIR\" ]] ; then echo \"$DIR not exist\" && exit 1 ; fi ;  cd $DIR && REMOTE_TRACK=$(git for-each-ref --format='%(upstream:short)' \"$(git symbolic-ref -q HEAD)\" | sed -e \"s#^origin/##\"); if [[ -z \"${REMOTE_TRACK}\" ]] ; then echo \"Remote track branch not found. Please rebase manually.\" && exit 0 ; fi ; git fetch --prune --no-tags origin \"${REMOTE_TRACK}\"; git remote prune origin; if [[ $(git status --porcelain) ]]; then git stash -u && F_STAGED='did' ; fi ; git rebase --reapply-cherry-picks FETCH_HEAD;  if [[ -n \"${F_STAGED}\" ]] ; then git stash pop ; fi ",
+        "detail": "Fetch the tracked upstream and rebase current branch on it, resolve conflict manually if necessary",
+        "label": "[Root]Fetch and rebase",
+        "options": {
+          "cwd": "${workspaceFolder:ROOT}",
+          "env": {
+            "DIR": "${input:DIR}"
+          }
+        },
+        "problemMatcher": [],
+        "type": "shell"
+      },
+      {
+        "command": "http-server -p 8090 ./",
+        "label": "[All] Serve Test folder",
+        "options": {
+          "cwd": "${workspaceFolder:ROOT}/test",
+          "env": {}
+        },
+        "problemMatcher": [],
+        "type": "shell"
+      },
+      {
+        "command": "echo 'waiting for docker...' && until docker system info > /dev/null 2>&1; do sleep 3; done",
+        "label": "[helper]wait-docker",
+        "problemMatcher": [],
+        "type": "shell"
+      }
+    ],
+    "version": "2.0.0"
+  }
+}

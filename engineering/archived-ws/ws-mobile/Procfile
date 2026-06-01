@@ -1,0 +1,13 @@
+# Set MONO_REPO, MERCURY_REPO, DEV_USER, DEV_BOX_IP in .env
+
+fe: cd $MERCURY_REPO/go_mobile_detail_fe && USER=$DEV_USER npm run dev
+
+profile: cd $MONO_REPO/packages/mobile_profile_web && PORT=3000 ROUTE_IP=$DEV_BOX_IP npx nodemon
+
+comment: cd $MONO_REPO/packages/mobile_comment_web && PORT=4001 ROUTE_IP=$DEV_BOX_IP npx nodemon
+
+answer: cd $MONO_REPO/packages/mobile_answer_list && IS_LOCAL_DEV=1 PORT=8887 npx vue-cli-service serve
+
+detail: cd $MONO_REPO/packages/mobile_detail && node web/build/dev.js
+
+detail-web: cd $MONO_REPO/packages/mobile_detail && npm run dev

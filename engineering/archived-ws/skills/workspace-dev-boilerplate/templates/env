@@ -1,0 +1,7 @@
+# Workspace shell — paths (edit after placing repos)
+CURRENT_DIR=__CURRENT_DIR__
+
+# One variable per repo root, relative to CURRENT_DIR or absolute:
+# APP_DIR=${CURRENT_DIR}/app
+# LIB_DIR=${CURRENT_DIR}/lib
+APP_DIR=${CURRENT_DIR}/app

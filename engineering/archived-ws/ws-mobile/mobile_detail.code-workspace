@@ -1,0 +1,59 @@
+{
+  "folders": [
+    {
+      "path": "../go_mobile_detail_fe/"
+    },
+    {
+      "path": "../monorepo"
+    },
+    {
+      "name": "workspace",
+      "path": "./"
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "apollographql.vscode-apollo",
+      "irongeek.vscode-env",
+      "ms-azuretools.vscode-docker",
+      "graphql.vscode-graphql",
+      "esbenp.prettier-vscode",
+      "kumar-harsh.graphql-for-vscode",
+      "benspaulding.procfile"
+    ]
+  },
+  "settings": {
+    "editor.tabSize": 4,
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**release": true,
+      "**/dist": true,
+      "**/log": true
+    },
+    "js/ts.format.insertSpaceBeforeFunctionParenthesis": true,
+    "files.associations": {
+      "es6": "js"
+    },
+    "npm-scripts.showStartNotification": false,
+    "alias-skip.mappings": {
+      "common": "./common"
+    },
+    "alias-skip.allowedsuffix": ["es6", "js", "vue", "jsx", "ts"],
+    "alias-skip.rootpath": "../go_mobile_detail_fe/package.json",
+    "editor.formatOnSave": false,
+    "cSpell.words": [
+      "asar",
+      "esbuild",
+      "nocheck",
+      "noemit",
+      "overmind",
+      "Procfile",
+      "prettier",
+      "sandboxed",
+      "Serializable",
+      "VSIX",
+      "Wifi"
+    ]
+  }
+}

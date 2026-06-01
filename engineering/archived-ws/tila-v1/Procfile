@@ -1,0 +1,11 @@
+kit_watch: echo "LANG mode $LANG" && cd $TOOLKIT_DIR && LANG=$LANG NODE_ENV=development node --max_old_space_size=4096 ./.dev_local/dev.js --pure-watch
+
+ide: until [ -f $TOOLKIT_DIR/packages/miniprogram-ide/dist/index.js ] ; do sleep 5 ; done && cd $TOOLKIT_DIR/packages/miniprogram-ide && echo "LANG mode $LANG" && sleep 5 && LANG=$LANG NODE_ENV=development IDE_PORT=9222 npx electron ./
+--inspect=5858
+--verbose
+
+pcsdk_watch: cd $CURRENT_DIR/pc-sdk/packages/pc-sdk-node && yarn dev
+
+# tila
+# tila: cd $TILA_DIR && NODE_ENV=development npx webpack --progress
+tila_watch: cd $TILA_DIR && NODE_ENV=development npx webpack --watch

@@ -1,0 +1,44 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "devtools:fast_build",
+      "type": "shell",
+      "command": "cd ${workspaceFolder}/devtools-frontend && gn gen out/Default --args='devtools_skip_typecheck=true' && autoninja -C out/Default",
+      "dependsOn": ["devtools:clean"],
+      "group": "build"
+    },
+    {
+      "label": "devtools:clean",
+      "type": "shell",
+      "command": "rm -rf ${workspaceFolder}/devtools-frontend/out"
+    },
+    {
+      "label": "play-with-devtools:server",
+      "type": "shell",
+      "command": "node --inspect ${workspaceFolder}/play-with-devtools/simple-server.js"
+    },
+    {
+      "label": "play-with-devtools:front",
+      "type": "shell",
+      "problemMatcher": [],
+      "command": "echo 'http://localhost:8090/node_app.html?remoteFrontend=true&ws=' && http-server --silent --port 8090 ${workspaceFolder}/devtools-frontend/out/Default/gen/front_end/"
+    },
+    {
+      "label": "play-with-devtools:start",
+      "dependsOn": ["play-with-devtools:front", "play-with-devtools:server"]
+    },
+    {
+      "label": "host-mode:static_server",
+      "type": "shell",
+      "command": "http-server --silent --port 8090 ${workspaceFolder}/devtools-frontend/out/Default/gen/front_end/"
+    },
+    {
+      "label": "host-mode:dummy_chrome",
+      "type": "shell",
+      "command": "${workspaceFolder}/devtools-frontend/third_party/chrome/chrome-mac/Chromium.app --custom-devtools-frontend=http://localhost:8090/ --remote-debugging-port=9222"
+    }
+  ]
+}
