@@ -1,0 +1,50 @@
+{
+  "folders": [
+    {
+      "path": "./devtools-frontend"
+    },
+    {
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "js/ts.tsdk.path": "node_modules/typescript/lib",
+    "debug.javascript.terminalOptions": {
+      "skipFiles": ["node_modules/typescript/**"]
+    },
+    "cSpell.words": ["Keybind", "Keybinds", "largeicon", "toggleable"]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "serve_frontend",
+        "detail": "Serve the static frontend",
+        "type": "shell",
+        "command": "http-server -p 8500 ./out/Default/gen/front_end > http.log",
+        "options": {
+          "cwd": "${workspaceFolder}/devtools-frontend",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "start_chrome",
+        "detail": "Start the Chrome with custom devtools frontend",
+        "type": "shell",
+        "command": "./third_party/chrome/chrome-mac/Chromium.app/Contents/MacOS/Chromium --custom-devtools-frontend=http://localhost:8500",
+        "options": {
+          "cwd": "${workspaceFolder}/devtools-frontend",
+          "env": {}
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "debug_chrome_with_frontend",
+        "dependsOrder": "parallel",
+        "dependsOn": ["serve_frontend", "start_chrome"],
+        "problemMatcher": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "./"
+    }
+  ],
+
+  "settings": {
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/*.code-search": true,
+      "**/out": true,
+      "**/*.h": true,
+      "**/*.inc": true,
+      "**/*.gyp": true,
+      "**/*.gypi": true
+    },
+    "files.associations": {
+      ".madgerc": "jsonc"
+    },
+    "js/ts.preferences.importModuleSpecifier": "shortest",
+    "prettier.singleQuote": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modifications",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "never",
+      "source.organizeImports": "never"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[yaml]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "stylelint.packageManager": "pnpm",
+    "tailwindCSS.includeLanguages": {
+      "ttml": "html"
+    },
+    "yaml.schemas": {},
+    "diffEditor.ignoreTrimWhitespace": true
+  },
+  "extensions": {
+    "recommendations": [
+      "streetsidesoftware.code-spell-checker",
+      "irongeek.vscode-env",
+      "ms-azuretools.vscode-docker",
+      "graphql.vscode-graphql",
+      "esbenp.prettier-vscode",
+      "benspaulding.procfile",
+      "editorconfig.editorconfig"
+    ],
+    "unwantedRecommendations": []
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "[Root]Fetch and rebase",
+        "detail": "Fetch the tracked upstream and rebase current branch on it, resolve conflict manually if necessary",
+        "type": "shell",
+        "command": "if [[ ! -d \"$DIR\" ]] ; then echo \"$DIR not exist\" && exit 1 ; fi ;  cd $DIR && REMOTE_TRACK=$(git for-each-ref --format='%(upstream:short)' \"$(git symbolic-ref -q HEAD)\" | sed -e \"s#^origin/##\"); if [[ -z \"${REMOTE_TRACK}\" ]] ; then echo \"Remote track branch not found. Please rebase manually.\" && exit 0 ; fi ; git fetch --prune --no-tags origin \"${REMOTE_TRACK}\"; git remote prune origin; if [[ $(git status --porcelain) ]]; then git stash -u && F_STAGED='did' ; fi ; git rebase --reapply-cherry-picks FETCH_HEAD;  if [[ -n \"${F_STAGED}\" ]] ; then git stash pop ; fi ",
+        "options": {
+          "env": {
+            "DIR": "${input:DIR}"
+          },
+          "cwd": "${workspaceFolder:ROOT}"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "test",
+        "detail": "Fetch the tracked upstream and rebase current branch on it, resolve conflict manually if necessary",
+        "type": "shell",
+        "command": "cd $DIR && pwd",
+        "problemMatcher": [],
+        "dependsOn": ["[helper]wait-docker"]
+      },
+      {
+        "label": "[helper]wait-docker",
+        "type": "shell",
+        "command": "echo 'waiting for docker...' && until docker system info > /dev/null 2>&1; do sleep 3; done",
+        "problemMatcher": []
+      }
+    ],
+    "echoCommand": false,
+    "inputs": [
+      {
+        "type": "pickString",
+        "id": "DIR",
+        "description": "Folder",
+        "options": ["vscode-extension-samples"],
+        "default": "vscode-extension-samples"
+      }
+    ]
+  }
+}

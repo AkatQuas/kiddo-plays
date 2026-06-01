@@ -1,0 +1,9 @@
+{
+  "baseDir": "${HOME}/workspace/maide/vela/extensions/typescript-language-features/out",
+  "fontSize": "10px",
+  "graphVizOptions": {
+    "G": {
+      "rankdir": "LR"
+    }
+  }
+}

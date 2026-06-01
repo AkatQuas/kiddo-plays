@@ -1,0 +1,4 @@
+# Processes for Overmind — names must match: overmind start -l <name>
+# Variables from .env: $APP_DIR, $LIB_DIR, …
+
+# dev: cd $APP_DIR && npm run dev

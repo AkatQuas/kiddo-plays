@@ -1,0 +1,47 @@
+{
+  "folders": [
+    {
+      "path": "../examples/npm-from-empty"
+    },
+    {
+      "path": "./mini-ext-pack"
+    },
+    {
+      "name": "workspace",
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "cSpell.words": [
+      "asar",
+      "esbuild",
+      "nocheck",
+      "noemit",
+      "overmind",
+      "Procfile",
+      "prettier",
+      "sandboxed",
+      "Serializable",
+      "VSIX",
+      "Wifi"
+    ],
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "apollographql.vscode-apollo",
+      "coenraads.bracket-pair-colorizer-2",
+      "irongeek.vscode-env",
+      "ms-azuretools.vscode-docker",
+      "graphql.vscode-graphql",
+      "esbenp.prettier-vscode",
+      "kumar-harsh.graphql-for-vscode",
+      "benspaulding.procfile",
+      "editorconfig.editorconfig"
+    ]
+  }
+}

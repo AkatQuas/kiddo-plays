@@ -1,0 +1,14 @@
+// 修改过的启动脚本
+kit: echo "LANG mode $LANG" && cd $TOOLKIT_DIR && LANG=$LANG NODE_ENV=development node --max_old_space_size=4096 ./.dev_local/dev.js
+kit_watch: echo "LANG mode $LANG" && cd $TOOLKIT_DIR && LANG=$LANG NODE_ENV=development node --max_old_space_size=4096 ./.dev_local/dev.js --pure-watch
+ide: until [ -f $TOOLKIT_DIR/packages/miniprogram-ide/dist/index.js ] ; do sleep 5 ; done && cd $TOOLKIT_DIR/packages/miniprogram-ide && echo "LANG mode $LANG" && LANG=$LANG NODE_ENV=development VSCODE_DEV=1 IDE_PORT=9222 npx electron ./
+--verbose
+
+#
+#
+vela_client: cd $VELA_DIR && npx gulp watch-client --max_old_space_size=4095
+vela_extensions: cd $VELA_DIR && npx gulp watch-extensions --max_old_space_size=4095
+
+
+# do guard
+puck_guard: cd $TOOLKIT_DIR/packages/miniprogram-ide && ELECTRON_RUN_AS_NODE=1 npx electron ./build/guard-puck.js ""

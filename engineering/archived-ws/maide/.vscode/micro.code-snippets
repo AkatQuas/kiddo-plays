@@ -1,0 +1,35 @@
+{
+  "TS -> Inject -> registerColor": {
+    "scope": "typescript",
+    "prefix": "velaColor",
+    "body": "export const v${1/(.*)/${1:/capitalize}/} = registerColor('vela.${1}', { dark: '', light: '', hc: '' }, nls.localize('vela.${1}', 'The ${2} color injected by vela.'));"
+  },
+  "display in light mode": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "lightmode",
+    "body": "$BLOCK_COMMENT_START display in light mode $BLOCK_COMMENT_END"
+  },
+  "css var": {
+    "scope": "css,scss,less",
+    "prefix": "var",
+    "body": "var(--vscode-vela-$0);"
+  },
+  "css mask": {
+    "scope": "css,scss,less",
+    "prefix": "mask",
+    "body": [
+      "mask: url($1) center center / cover no-repeat;",
+      "-webkit-mask: url($1) center center / cover no-repeat;"
+    ]
+  },
+  "uncomment": {
+    "scope": "typescript,javascript,typescriptreact,javascriptreact",
+    "prefix": "uncomment",
+    "body": "$LINE_COMMENT uncomment for debug"
+  },
+  "global light": {
+    "scope": "css,scss,less",
+    "prefix": "global",
+    "body": ":global(body.vscode-light) :local($1) {\n\t$0\n}"
+  }
+}

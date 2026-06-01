@@ -1,0 +1,12 @@
+kit_watch: cd $TOOLKIT_DIR && NODE_ENV=development node --max_old_space_size=4096 ./.dev_local/dev.js --pure-watch
+game_watch: cd $TOOLKIT_DIR && GAME_FEATURE=true NODE_ENV=development node --max_old_space_size=4096 ./.dev_local/dev.js --pure-watch
+
+ide: until [[ -f $TOOLKIT_DIR/packages/miniprogram-ide/dist/index.js && -f $TOOLKIT_DIR/packages/miniprogram-ide/dist/pages/front-page/preload.js && -f $TOOLKIT_DIR/packages/miniprogram-ide/dist/assets/theme.js && -f $TOOLKIT_DIR/packages/miniprogram-ide/dist/applications/microapp/workbench/index.js ]] ; do sleep 4 ; done && cd $TOOLKIT_DIR/packages/miniprogram-ide && cp -f loader.js.output loader.js &&  NODE_ENV=development IDE_PORT=9222 SKIP__IDE_START_LOADER=true npx electron ./
+--inspect=5858
+--verbose
+
+pcsdk_watch: cd $CURRENT_DIR/pc-sdk/packages/pc-sdk-node && yarn dev
+
+# tila
+# tila: cd $TILA_DIR && NODE_ENV=development npx webpack --progress
+tila_watch: cd $TILA_DIR && NODE_ENV=development npx webpack --watch

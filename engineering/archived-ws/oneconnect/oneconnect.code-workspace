@@ -1,0 +1,35 @@
+{
+  "folders": [
+    {
+      "name": "workspace",
+      "path": "./"
+    }
+  ],
+  "settings": {
+    "cSpell.words": [
+      "asar",
+      "esbuild",
+      "nocheck",
+      "noemit",
+      "overmind",
+      "Procfile",
+      "prettier",
+      "sandboxed",
+      "Serializable",
+      "VSIX",
+      "Wifi"
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "apollographql.vscode-apollo",
+      "irongeek.vscode-env",
+      "ms-azuretools.vscode-docker",
+      "graphql.vscode-graphql",
+      "esbenp.prettier-vscode",
+      "kumar-harsh.graphql-for-vscode",
+      "benspaulding.procfile",
+      "editorconfig.editorconfig"
+    ]
+  }
+}
