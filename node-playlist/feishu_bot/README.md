@@ -18,6 +18,10 @@
 
 `node src/ws.mjs` ，进行消息监听。
 
+> 这一步也可以用来做 “长连接” 的验证。
+>
+> ![](socket-verify.png)
+
 ## 主动发送消息
 
 `node src/send-message.mjs`，发送一些消息给指定用户。
