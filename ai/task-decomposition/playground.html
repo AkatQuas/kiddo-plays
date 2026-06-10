@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>任务拆解练习 Playground</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800 min-h-screen p-6">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow p-6 space-y-6">
+      <h1 class="text-2xl font-bold text-center">🤖 任务拆解练习 Playground</h1>
+
+      <!-- API 配置 -->
+      <div class="border p-4 rounded bg-gray-50">
+        <h3 class="font-semibold mb-2">🔌 OpenAI 兼容配置</h3>
+        <input
+          id="baseUrl"
+          placeholder="Base URL (例如 https://api.openai.com/v1)"
+          class="w-full p-2 border rounded mb-2"
+          value="https://api.openai.com/v1"
+        />
+        <input
+          id="apiKey"
+          placeholder="API Key"
+          class="w-full p-2 border rounded mb-2"
+          type="password"
+        />
+        <input
+          id="modelName"
+          placeholder="模型名称 (gpt-3.5-turbo / gpt-4o-mini)"
+          class="w-full p-2 border rounded"
+          value="gpt-3.5-turbo"
+        />
+      </div>
+
+      <!-- 当前题目 -->
+      <div id="taskContainer" class="border p-4 rounded bg-blue-50 hidden">
+        <h3 class="font-semibold">📋 当前任务：</h3>
+        <p id="taskText" class="text-lg mt-1"></p>
+      </div>
+
+      <!-- 输入拆解 -->
+      <div id="inputContainer" class="hidden">
+        <h3 class="font-semibold">✍️ 请输入你的拆解</h3>
+        <textarea
+          id="userPlan"
+          rows="10"
+          class="w-full p-3 border rounded mt-2"
+          placeholder="例如：
+1. 需求梳理 → 产品Agent → 无依赖
+2. 创建项目 → 开发Agent → 依赖1
+..."
+        ></textarea>
+        <button
+          id="submitBtn"
+          class="mt-3 bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          提交答案
+        </button>
+      </div>
+
+      <!-- AI 评价结果 -->
+      <div id="resultContainer" class="hidden border p-4 rounded bg-green-50">
+        <h3 class="font-semibold">✅ AI 评价结果</h3>
+        <div id="resultContent" class="mt-2 whitespace-pre-line"></div>
+      </div>
+
+      <!-- 操作按钮 -->
+      <div class="flex gap-3 justify-center mt-4">
+        <button id="startBtn" class="bg-green-600 text-white px-4 py-2 rounded">
+          开始新练习
+        </button>
+        <button
+          id="nextBtn"
+          class="bg-purple-600 text-white px-4 py-2 rounded hidden"
+        >
+          下一题
+        </button>
+        <button id="resetBtn" class="bg-red-500 text-white px-4 py-2 rounded">
+          重新开始
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // 任务题库
+      const tasks = [
+        '开发一个待办网页应用',
+        '排查线上服务突然变慢的故障',
+        '开发用户登录注册模块',
+        '搭建个人博客前端页面',
+        '实现文件上传与预览功能',
+        '做一个商品列表 + 搜索 + 筛选页面',
+        '修复线上接口偶尔超时问题',
+        '开发一个简单的计算器网页'
+      ];
+
+      // DOM
+      const taskContainer = document.getElementById('taskContainer');
+      const taskText = document.getElementById('taskText');
+      const inputContainer = document.getElementById('inputContainer');
+      const userPlan = document.getElementById('userPlan');
+      const resultContainer = document.getElementById('resultContainer');
+      const resultContent = document.getElementById('resultContent');
+      const startBtn = document.getElementById('startBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const submitBtn = document.getElementById('submitBtn');
+
+      let currentTask = '';
+
+      // 开始一题
+      startBtn.onclick = () => {
+        currentTask = tasks[Math.floor(Math.random() * tasks.length)];
+        taskText.innerText = currentTask;
+        taskContainer.classList.remove('hidden');
+        inputContainer.classList.remove('hidden');
+        resultContainer.classList.add('hidden');
+        userPlan.value = '';
+        startBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+      };
+
+      // 提交
+      submitBtn.onclick = async () => {
+        const baseUrl = document.getElementById('baseUrl').value.trim();
+        const apiKey = document.getElementById('apiKey').value.trim();
+        const model = document.getElementById('modelName').value.trim();
+        const plan = userPlan.value.trim();
+
+        if (!baseUrl || !apiKey || !model || !plan) {
+          alert('请填写完整配置和答案');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'AI 评价中...';
+
+        try {
+          const res = await fetch(`${baseUrl}/chat/completions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model,
+              temperature: 0.7,
+              messages: [
+                {
+                  role: 'system',
+                  content: `你是任务拆解教练。
+用户会给一个需求 + 他的拆解方案。
+请你：
+1. 解析他的拆解是否清晰、原子化
+2. 角色分配是否合理
+3. 依赖是否正确
+4. 给出 1-10 分评分
+5. 给出优点、缺点、优化建议
+格式清晰、简短、中文`
+                },
+                {
+                  role: 'user',
+                  content: `需求：${currentTask}
+我的拆解：
+${plan}`
+                }
+              ]
+            })
+          });
+
+          const data = await res.json();
+          const reply = data.choices?.[0]?.message?.content || '评价失败';
+          resultContent.innerText = reply;
+          resultContainer.classList.remove('hidden');
+          nextBtn.classList.remove('hidden');
+        } catch (e) {
+          alert('调用失败：' + e.message);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = '提交答案';
+        }
+      };
+
+      // 下一题
+      nextBtn.onclick = startBtn.onclick;
+
+      // 重置
+      resetBtn.onclick = () => {
+        location.reload();
+      };
+    </script>
+  </body>
+</html>

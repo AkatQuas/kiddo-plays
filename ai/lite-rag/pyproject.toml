@@ -1,0 +1,13 @@
+[project]
+name = "lite-rag"
+version = "0.1.0"
+description = "Minimal RAG with sentence-transformers + FAISS + Chroma"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "sentence-transformers>=3.0.0",
+    "faiss-cpu>=1.8.0",
+    "chromadb>=0.5.0",
+    "plotly>=5.0.0",
+    "numpy>=1.26.0",
+]
