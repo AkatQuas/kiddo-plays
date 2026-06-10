@@ -1,0 +1,3 @@
+FAISS 是 Facebook 出品的向量检索库，适合大规模相似度搜索。
+
+Redis 是内存缓存；本项目的 FAISS 索引同样扮演缓存角色，源数据在 Chroma。
