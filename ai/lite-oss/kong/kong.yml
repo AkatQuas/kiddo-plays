@@ -1,0 +1,22 @@
+_format_version: "3.0"
+
+services:
+  - name: lite-oss-api
+    url: http://app:8000
+    routes:
+      - name: lite-oss-root
+        paths:
+          - /
+        strip_path: false
+      - name: lite-oss-static
+        paths:
+          - /static
+        strip_path: false
+      - name: lite-oss-api-routes
+        paths:
+          - /api
+        strip_path: false
+      - name: lite-oss-health
+        paths:
+          - /health
+        strip_path: false

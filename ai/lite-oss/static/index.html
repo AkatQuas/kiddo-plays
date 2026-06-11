@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lite OSS - 文件上传下载</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Lite OSS</h1>
+      <p class="subtitle">轻量文件托管 · 前端直传 MinIO</p>
+    </header>
+
+    <div class="mode-switch">
+      <button type="button" class="mode-btn active" data-mode="upload">上传模式</button>
+      <button type="button" class="mode-btn" data-mode="download">下载模式</button>
+    </div>
+
+    <section class="panel">
+      <label class="field">
+        <span>用户名</span>
+        <input type="text" id="username" placeholder="请输入用户名" autocomplete="username">
+      </label>
+
+      <div id="upload-panel" class="mode-panel">
+        <label class="field">
+          <span>选择文件</span>
+          <input type="file" id="file-input">
+        </label>
+        <button type="button" id="upload-btn" class="primary-btn">上传文件</button>
+        <p id="upload-status" class="status" hidden></p>
+      </div>
+
+      <div id="download-panel" class="mode-panel hidden">
+        <button type="button" id="query-btn" class="primary-btn">查询文件列表</button>
+        <div id="file-list" class="file-list"></div>
+        <p id="empty-tip" class="empty-tip hidden">该用户暂无绑定文件</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
