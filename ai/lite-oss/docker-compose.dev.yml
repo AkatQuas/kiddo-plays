@@ -1,0 +1,102 @@
+# 开发模式：仅启动基础设施，Python 服务在宿主机本地运行
+#
+# 启动依赖：
+#   docker compose -f docker-compose.dev.yml up -d
+#
+# 启动本地 Python 服务：
+#   uv sync
+#   uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+#
+# 访问入口：http://localhost:8080（经 Kong 转发至宿主机 :8000）
+
+services:
+  mongo:
+    image: mongodb/mongodb-community-server:8.0.6-ubi8
+    container_name: lite-oss-mongo-dev
+    restart: unless-stopped
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: root
+      MONGODB_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - lite-oss-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: lite-oss-minio-dev
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_API_CORS_ALLOW_ORIGIN: "*"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - lite-oss-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: lite-oss-minio-init-dev
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_BUCKET: lite-oss-files
+    volumes:
+      - ./scripts/minio-init.sh:/scripts/minio-init.sh:ro
+    entrypoint: ["/bin/sh", "/scripts/minio-init.sh"]
+    networks:
+      - lite-oss-net
+
+  kong:
+    image: kong:3.9
+    container_name: lite-oss-kong-dev
+    restart: unless-stopped
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /kong/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+    ports:
+      - "8080:8000"
+      - "8001:8001"
+    volumes:
+      - ./kong/kong.dev.yml:/kong/kong.yml:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      minio-init:
+        condition: service_completed_successfully
+    networks:
+      - lite-oss-net
+
+volumes:
+  mongo_data:
+  minio_data:
+
+networks:
+  lite-oss-net:
+    driver: bridge
