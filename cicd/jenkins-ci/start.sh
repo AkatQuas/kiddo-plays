@@ -1,0 +1,1 @@
+nohup /Library/Java/JavaVirtualMachines/jdk-11.0.2.jdk/Contents/Home/bin/java -jar agent.jar -jnlpUrl http://jenkins.custom.com:8080/computer/agent%2Dnode/jenkins-agent.jnlp -secret abcdefg1234567922390517fe8e3cfa9467f6e8f9f5ccdaeacb77f2cb7073087 -workDir "/Users/x/jenkins-ci" &> whatever.log &
