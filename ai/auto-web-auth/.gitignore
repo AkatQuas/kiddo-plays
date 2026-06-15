@@ -1,0 +1,4 @@
+auth.env
+auth.log
+launchd.out.log
+launchd.err.log
