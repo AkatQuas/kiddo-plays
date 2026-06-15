@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.user.auto-web-auth</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__SCRIPT_DIR__/auth.sh</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>AUTH_ENV_FILE</key>
+    <string>__SCRIPT_DIR__/auth.env</string>
+  </dict>
+
+  <!-- 每 100 分钟检测一次，可按需修改 -->
+  <key>StartInterval</key>
+  <integer>6000</integer>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>__SCRIPT_DIR__/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>__SCRIPT_DIR__/launchd.err.log</string>
+</dict>
+</plist>
