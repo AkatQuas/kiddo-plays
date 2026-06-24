@@ -1,0 +1,24 @@
+{
+  "httpsPort": 8443,
+  "httpPort": 0,
+  "bind": "0.0.0.0",
+  "includeLanIPs": true,
+  "tls": "internal",
+  "tlsCert": "",
+  "tlsKey": "",
+  "routes": [
+    {
+      "name": "ai-agent-server",
+      "default": true,
+      "hosts": ["agent.local", "localhost", "127.0.0.1"],
+      "upstream": "http://127.0.0.1:8811",
+      "comment": "Node HTTP + Socket.IO"
+    },
+    {
+      "name": "ai-agent-web",
+      "hosts": ["web.local"],
+      "upstream": "http://127.0.0.1:5173",
+      "comment": "ai-agent-web Vite dev server"
+    }
+  ]
+}
