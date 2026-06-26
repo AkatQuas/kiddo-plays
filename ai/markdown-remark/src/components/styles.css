@@ -1,0 +1,95 @@
+.ui-card,
+.ui-panel {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  background: #fff;
+}
+
+.ui-card--primary {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.ui-card--success {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.ui-card__title,
+.ui-panel__title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.ui-button {
+  display: inline-block;
+  margin: 4px 8px 4px 0;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.ui-button--primary {
+  background: #3b82f6;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.ui-button--success {
+  background: #22c55e;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+.ui-form {
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+.ui-form__hint {
+  margin-bottom: 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.ui-form__input {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.markdown-render pre code.hljs {
+  display: block;
+  padding: 12px;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #e2e8f0;
+  overflow-x: auto;
+}
+
+.markdown-render table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.markdown-render th,
+.markdown-render td {
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+}
+
+.markdown-render ul {
+  padding-left: 1.25rem;
+}
