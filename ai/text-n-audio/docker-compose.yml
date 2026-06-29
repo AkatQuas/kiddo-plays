@@ -1,0 +1,61 @@
+services:
+  asr:
+    build: ./asr-service
+    container_name: text-n-audio-asr
+    environment:
+      - WHISPER_MODEL=${WHISPER_MODEL:-Systran/faster-whisper-base}
+      - WHISPER_DEVICE=${WHISPER_DEVICE:-cpu}
+      - WHISPER_COMPUTE_TYPE=${WHISPER_COMPUTE_TYPE:-int8}
+      - HF_ENDPOINT=${HF_ENDPOINT:-https://huggingface.co}
+      - HF_HOME=/models
+    volumes:
+      - whisper-models:/models
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health')"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+  tts:
+    build: ./tts-service
+    container_name: text-n-audio-tts
+    environment:
+      - HF_ENDPOINT=${HF_ENDPOINT:-https://huggingface.co}
+      - HF_HOME=/models
+      - TTS_SAMPLE_RATE=24000
+      - PIPER_VOICE_REPO=${PIPER_VOICE_REPO:-rhasspy/piper-voices}
+      - PIPER_MODEL_FILE=${PIPER_MODEL_FILE:-zh/zh_CN/huayan/medium/zh_CN-huayan-medium.onnx}
+    volumes:
+      - piper-models:/models
+    ports:
+      - "8002:8002"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/health')"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+  web:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: text-n-audio-web
+    environment:
+      - PORT=3000
+      - ASR_SERVICE_URL=http://asr:8001
+      - TTS_SERVICE_URL=http://tts:8002
+    ports:
+      - "3000:3000"
+    depends_on:
+      asr:
+        condition: service_healthy
+      tts:
+        condition: service_healthy
+
+volumes:
+  whisper-models:
+  piper-models:
