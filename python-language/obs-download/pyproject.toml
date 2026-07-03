@@ -1,0 +1,13 @@
+[project]
+name = "obs-download"
+version = "0.1.0"
+description = "Use Huawei OBS sdk to upload and download object"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "esdk-obs-python>=3.26.2",
+]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+default = true

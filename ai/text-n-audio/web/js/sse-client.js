@@ -1,49 +1,53 @@
 /**
- * SSE client (subset of ai.kit useSSE + fetch-event-source)
+ * SSE client
  */
-export async function postSSE(url, body, { signal, onmessage, onopen, onclose, onerror } = {}) {
+export async function postSSE(
+  url,
+  body,
+  { signal, onmessage, onopen, onclose, onerror } = {}
+) {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
-    signal,
-  })
+    signal
+  });
 
-  await onopen?.(res)
+  await onopen?.(res);
   if (!res.ok) {
-    const err = new Error(`SSE upstream ${res.status}`)
-    onerror?.(err)
-    throw err
+    const err = new Error(`SSE upstream ${res.status}`);
+    onerror?.(err);
+    throw err;
   }
 
-  const reader = res.body.getReader()
-  const decoder = new TextDecoder()
-  let buffer = ''
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
 
   try {
     while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-      buffer += decoder.decode(value, { stream: true })
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
 
-      let boundary = buffer.indexOf('\n\n')
+      let boundary = buffer.indexOf('\n\n');
       while (boundary !== -1) {
-        const raw = buffer.slice(0, boundary)
-        buffer = buffer.slice(boundary + 2)
-        boundary = buffer.indexOf('\n\n')
+        const raw = buffer.slice(0, boundary);
+        buffer = buffer.slice(boundary + 2);
+        boundary = buffer.indexOf('\n\n');
 
-        let event = 'message'
-        let data = ''
+        let event = 'message';
+        let data = '';
         for (const line of raw.split('\n')) {
-          if (line.startsWith('event:')) event = line.slice(6).trim()
-          else if (line.startsWith('data:')) data += line.slice(5).trim()
+          if (line.startsWith('event:')) event = line.slice(6).trim();
+          else if (line.startsWith('data:')) data += line.slice(5).trim();
         }
-        onmessage?.({ event, data })
+        onmessage?.({ event, data });
       }
     }
-    onclose?.()
+    onclose?.();
   } catch (err) {
-    if (err.name !== 'AbortError') onerror?.(err)
-    throw err
+    if (err.name !== 'AbortError') onerror?.(err);
+    throw err;
   }
 }
