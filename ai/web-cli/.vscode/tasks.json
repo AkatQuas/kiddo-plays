@@ -1,0 +1,193 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Dev Server",
+			"type": "shell",
+			"command": "pnpm dev",
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": [],
+			"detail": "Start the TanStack Start dev server on port 3000"
+		},
+		{
+			"label": "Build",
+			"type": "shell",
+			"command": "pnpm build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": [],
+			"detail": "Build the project for production"
+		},
+		{
+			"label": "Type Check",
+			"type": "shell",
+			"command": "pnpm tsc --noEmit",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": {
+				"base": "$tsc",
+				"fileLocation": "relative"
+			},
+			"detail": "Run TypeScript compiler check without emitting files"
+		},
+		{
+			"label": "Lint",
+			"type": "shell",
+			"command": "pnpm lint",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": {
+				"base": "$biome-lint",
+				"fileLocation": "relative"
+			},
+			"detail": "Run Biome linter on the project"
+		},
+		{
+			"label": "Check (Lint + Format)",
+			"type": "shell",
+			"command": "pnpm check",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": {
+				"base": "$biome-lint",
+				"fileLocation": "relative"
+			},
+			"detail": "Run Biome check (lint + format checks)"
+		},
+		{
+			"label": "Format",
+			"type": "shell",
+			"command": "pnpm format",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"detail": "Run Biome formatter"
+		},
+		{
+			"label": "Test",
+			"type": "shell",
+			"command": "pnpm test",
+			"group": "test",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"problemMatcher": [],
+			"detail": "Run all Vitest tests"
+		},
+		{
+			"label": "Test (Watch)",
+			"type": "shell",
+			"command": "pnpm vitest",
+			"group": "test",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": [],
+			"detail": "Run Vitest in watch mode"
+		},
+		{
+			"label": "Generate Routes",
+			"type": "shell",
+			"command": "pnpm generate-routes",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"detail": "Regenerate TanStack Router route tree"
+		},
+		{
+			"label": "Dev (Full Restart)",
+			"type": "shell",
+			"command": "pkill -f 'vite dev' ; sleep 1 && pnpm dev",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": [],
+			"detail": "Kill any existing dev server process, then start fresh"
+		},
+		{
+			"label": "Preview Production Build",
+			"type": "shell",
+			"command": "pnpm preview",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"detail": "Preview the production build locally"
+		}
+	]
+}
