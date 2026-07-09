@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>会议中 - Web Meeting</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #0f172a;
+        height: 100vh;
+        overflow: hidden;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      /* ─── Video Grid ─────────────────────────────────────────── */
+      #videoGrid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 80px;
+        display: grid;
+        gap: 4px;
+        padding: 4px;
+        background: #0a0f1e;
+      }
+
+      /* Total 1 (self only) — full screen */
+      #videoGrid.total-1 {
+        grid-template-columns: 1fr;
+      }
+
+      /* Total 2 (self + 1 remote) — side by side */
+      #videoGrid.total-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      /* Total 3 (self + 2 remote) — 2x2 grid */
+      #videoGrid.total-3 {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+
+      /* Total 4 (self + 3 remote) — 2x2 grid */
+      #videoGrid.total-4 {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+
+      /* ─── Video Container ─────────────────────────────────────── */
+      .video-container {
+        position: relative;
+        background: #1a1f2e;
+        border-radius: 12px;
+        overflow: hidden;
+        min-height: 0;
+      }
+
+      .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #1a1f2e;
+      }
+
+      .video-container .video-label {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        padding: 4px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .video-container .video-label .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .video-container .video-label .status-dot.active {
+        background: #22c55e;
+        box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+      }
+
+      .video-container .video-label .status-dot.inactive {
+        background: #ef4444;
+      }
+
+      .video-container.local-video {
+        border: 2px solid rgba(99, 102, 241, 0.4);
+      }
+
+      .video-container.muted-video {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #1e293b;
+      }
+
+      .video-container.muted-video .avatar-placeholder {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: 700;
+        color: white;
+      }
+
+      .video-container.muted-video video {
+        display: none;
+      }
+
+      /* ─── Top Bar ─────────────────────────────────────────────── */
+      #topBar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        padding: 12px 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 23, 42, 0.95) 0%,
+          transparent 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      #topBar .room-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      #topBar .room-badge {
+        padding: 6px 14px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .copy-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: #94a3b8;
+        padding: 4px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.2s;
+      }
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+      }
+
+      .connection-status {
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-weight: 500;
+      }
+      .connection-status.connected {
+        background: rgba(34, 197, 94, 0.2);
+        color: #4ade80;
+      }
+      .connection-status.connecting {
+        background: rgba(234, 179, 8, 0.2);
+        color: #facc15;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+      .connection-status.disconnected {
+        background: rgba(239, 68, 68, 0.2);
+        color: #f87171;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      /* ─── Bottom Controls ─────────────────────────────────────── */
+      #controls {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        padding: 12px 20px;
+        background: linear-gradient(
+          0deg,
+          rgba(15, 23, 42, 0.98) 0%,
+          rgba(15, 23, 42, 0.7) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        height: 80px;
+      }
+
+      .control-btn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .control-btn:hover {
+        transform: translateY(-2px);
+      }
+      .control-btn:active {
+        transform: translateY(0);
+      }
+
+      .control-btn.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+      }
+      .control-btn.active:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .control-btn.inactive {
+        background: rgba(239, 68, 68, 0.3);
+        color: #ef4444;
+      }
+      .control-btn.inactive:hover {
+        background: rgba(239, 68, 68, 0.4);
+      }
+
+      .control-btn.leave-btn {
+        width: 56px;
+        height: 56px;
+        background: rgba(239, 68, 68, 0.8);
+        color: white;
+      }
+      .control-btn.leave-btn:hover {
+        background: rgba(239, 68, 68, 1);
+      }
+
+      .control-btn svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* ─── Toast ───────────────────────────────────────────────── */
+      .toast-container {
+        position: fixed;
+        top: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        pointer-events: none;
+      }
+
+      .toast {
+        padding: 8px 18px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(8px);
+        color: white;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        pointer-events: auto;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .toast.info {
+        border: 1px solid rgba(99, 102, 241, 0.3);
+      }
+      .toast.error {
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        background: rgba(239, 68, 68, 0.2);
+      }
+      .toast.success {
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        background: rgba(34, 197, 94, 0.2);
+      }
+
+      /* ─── Loading Overlay ─────────────────────────────────────── */
+      #loadingOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.95);
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        transition: opacity 0.5s ease;
+      }
+
+      #loadingOverlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(99, 102, 241, 0.2);
+        border-top-color: #6366f1;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      #loadingOverlay .loading-text {
+        color: #94a3b8;
+        font-size: 16px;
+      }
+
+      #loadingOverlay .loading-step {
+        color: #64748b;
+        font-size: 13px;
+      }
+
+      /* ─── Permission Error ────────────────────────────────────── */
+      #permissionError {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.98);
+        z-index: 250;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding: 24px;
+        text-align: center;
+      }
+
+      #permissionError .error-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(239, 68, 68, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ef4444;
+      }
+
+      #permissionError h3 {
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      #permissionError p {
+        color: #94a3b8;
+        font-size: 14px;
+        max-width: 320px;
+      }
+
+      #permissionError .retry-btn {
+        margin-top: 8px;
+        padding: 10px 32px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        color: white;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      #permissionError .retry-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─── Loading Overlay ─────────────────────────────────── -->
+    <div id="loadingOverlay">
+      <div class="spinner"></div>
+      <div class="loading-text">正在进入会议室...</div>
+      <div class="loading-step" id="loadingStep">正在连接服务器...</div>
+    </div>
+
+    <!-- ─── Permission Error ─────────────────────────────────── -->
+    <div id="permissionError">
+      <div class="error-icon">
+        <svg
+          class="w-8 h-8"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"
+          />
+        </svg>
+      </div>
+      <h3>无法访问摄像头/麦克风</h3>
+      <p>请允许浏览器访问您的摄像头和麦克风权限，然后重试</p>
+      <button class="retry-btn" onclick="location.reload()">重试</button>
+    </div>
+
+    <!-- ─── Toast Container ──────────────────────────────────── -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ─── Top Bar ──────────────────────────────────────────── -->
+    <div id="topBar">
+      <div class="room-info">
+        <div class="room-badge">
+          <svg
+            class="w-4 h-4 text-indigo-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+            />
+          </svg>
+          <span>房间 <strong id="roomIdDisplay">---</strong></span>
+          <button class="copy-btn" onclick="copyRoomId()" title="复制房间号">
+            <svg
+              class="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="room-badge">
+          <svg
+            class="w-4 h-4 text-green-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+            />
+          </svg>
+          <span id="peerCountDisplay">0/4</span>
+        </div>
+      </div>
+      <div id="connectionStatus" class="connection-status connected">
+        已连接
+      </div>
+    </div>
+
+    <!-- ─── Video Grid ───────────────────────────────────────── -->
+    <div id="videoGrid" class="total-1">
+      <!-- Local video (always first) -->
+      <div id="localVideoContainer" class="video-container local-video">
+        <video id="localVideo" autoplay playsinline muted></video>
+        <div class="video-label">
+          <span class="status-dot active" id="localVideoDot"></span>
+          <span>我</span>
+        </div>
+      </div>
+      <!-- Remote videos inserted by JS -->
+    </div>
+
+    <!-- ─── Bottom Controls ──────────────────────────────────── -->
+    <div id="controls">
+      <!-- Mic -->
+      <button
+        id="micBtn"
+        class="control-btn active"
+        onclick="toggleMic()"
+        title="麦克风"
+      >
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+          />
+        </svg>
+      </button>
+
+      <!-- Camera -->
+      <button
+        id="camBtn"
+        class="control-btn active"
+        onclick="toggleCam()"
+        title="摄像头"
+      >
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+          />
+        </svg>
+      </button>
+
+      <!-- Leave -->
+      <button
+        class="control-btn leave-btn"
+        onclick="leaveRoom()"
+        title="退出房间"
+      >
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.8.3/dist/socket.io.min.js"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>

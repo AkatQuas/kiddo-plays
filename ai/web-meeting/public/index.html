@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>多人视频会议 - Web Meeting</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      body {
+        background: linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #1e293b 50%,
+          #0f172a 100%
+        );
+        min-height: 100vh;
+      }
+      .card-glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+      }
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(99, 102, 241, 0.5);
+      }
+      .input-field {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: all 0.3s ease;
+      }
+      .input-field:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        outline: none;
+      }
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+      }
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .status-pulse {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      .toast {
+        position: fixed;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-100px);
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        z-index: 100;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        opacity: 0;
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+      .toast.error {
+        background: rgba(239, 68, 68, 0.9);
+        color: white;
+        border: 1px solid rgba(239, 68, 68, 0.5);
+      }
+      .toast.success {
+        background: rgba(34, 197, 94, 0.9);
+        color: white;
+        border: 1px solid rgba(34, 197, 94, 0.5);
+      }
+    </style>
+  </head>
+  <body class="text-white font-sans">
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Main Container -->
+    <div
+      class="min-h-screen flex flex-col items-center justify-center px-4 py-12"
+    >
+      <!-- Logo / Title -->
+      <div class="mb-10 text-center">
+        <div
+          class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-6 shadow-lg shadow-indigo-500/30"
+        >
+          <svg
+            class="w-10 h-10 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+            />
+          </svg>
+        </div>
+        <h1 class="text-4xl font-bold tracking-tight mb-2">Web Meeting</h1>
+        <p class="text-gray-400 text-lg">
+          多人实时视频会议 · 端到端加密 · 支持4人同时在线
+        </p>
+      </div>
+
+      <!-- Cards Row -->
+      <div class="w-full max-w-4xl grid md:grid-cols-2 gap-6">
+        <!-- Create Room Card -->
+        <div class="card-glass rounded-2xl p-8 text-center">
+          <div
+            class="feature-icon bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-400 mx-auto mb-6"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-semibold mb-3">创建会议室</h2>
+          <p class="text-gray-400 mb-8 text-sm leading-relaxed">
+            一键创建专属视频会议室<br />
+            系统自动生成6位房间号，分享给朋友即可加入
+          </p>
+          <button
+            id="createRoomBtn"
+            class="btn-primary w-full py-3 px-6 rounded-xl font-semibold text-white shadow-lg shadow-indigo-500/25"
+          >
+            创建房间
+          </button>
+        </div>
+
+        <!-- Join Room Card -->
+        <div class="card-glass rounded-2xl p-8">
+          <div
+            class="feature-icon bg-gradient-to-br from-emerald-500/20 to-teal-500/20 text-emerald-400 mx-auto mb-6"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-semibold mb-3">加入会议室</h2>
+          <p class="text-gray-400 mb-6 text-sm leading-relaxed">
+            输入好友分享的6位房间号<br />
+            加入已有会议室，最多4人同时在线
+          </p>
+          <div class="space-y-4">
+            <input
+              id="roomIdInput"
+              type="text"
+              maxlength="6"
+              class="input-field w-full py-3 px-4 rounded-xl text-white text-center text-2xl tracking-[0.3em] font-mono placeholder:text-gray-600 placeholder:tracking-normal"
+              placeholder="输入房间号"
+            />
+            <button
+              id="joinRoomBtn"
+              class="btn-secondary w-full py-3 px-6 rounded-xl font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed"
+              disabled
+            >
+              加入房间
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="mt-12 text-center text-gray-500 text-sm space-y-2">
+        <p>🔒 无需注册登录 · 匿名入会 · 房间号为唯一标识</p>
+        <p>📹 摄像头/麦克风控制 · 自适应布局 · 自动断连回收</p>
+      </div>
+    </div>
+
+    <!-- Socket.io CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.8.3/dist/socket.io.min.js"></script>
+    <script>
+      const socket = io();
+      // 拦截客户端发出的所有消息
+      const originEmit = socket.emit;
+      socket.emit = function (event, ...args) {
+        console.log('[CLIENT SEND]', event, args);
+        return originEmit.call(this, event, ...args);
+      };
+
+      // 拦截所有服务端推送过来的消息
+      const originOn = socket.on;
+      socket.on = function (event, cb) {
+        return originOn.call(this, event, (...args) => {
+          console.log('[CLIENT RECV]', event, args);
+          cb(...args);
+        });
+      };
+      let currentRoomId = null;
+
+      // ─── DOM Elements ─────────────────────────────────────────────────────
+      const createRoomBtn = document.getElementById('createRoomBtn');
+      const joinRoomBtn = document.getElementById('joinRoomBtn');
+      const roomIdInput = document.getElementById('roomIdInput');
+      const toast = document.getElementById('toast');
+
+      // ─── Toast ────────────────────────────────────────────────────────────
+      let toastTimeout = null;
+      function showToast(message, type = 'error') {
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toast.textContent = message;
+        toast.className = `toast show ${type}`;
+        toastTimeout = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+
+      // ─── Input Validation ─────────────────────────────────────────────────
+      roomIdInput.addEventListener('input', () => {
+        const val = roomIdInput.value.replace(/\D/g, '').slice(0, 6);
+        roomIdInput.value = val;
+        joinRoomBtn.disabled = val.length !== 6;
+      });
+
+      // Allow only digits
+      roomIdInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && roomIdInput.value.length === 6) {
+          handleJoinRoom();
+        }
+      });
+
+      // ─── Create Room ──────────────────────────────────────────────────────
+      createRoomBtn.addEventListener('click', handleCreateRoom);
+
+      async function handleCreateRoom() {
+        createRoomBtn.disabled = true;
+        createRoomBtn.textContent = '创建中...';
+
+        socket.emit('createRoom');
+      }
+
+      // ─── Join Room ────────────────────────────────────────────────────────
+      joinRoomBtn.addEventListener('click', handleJoinRoom);
+
+      function handleJoinRoom() {
+        const roomId = roomIdInput.value.trim();
+        if (roomId.length !== 6) {
+          showToast('请输入6位房间号', 'error');
+          return;
+        }
+
+        joinRoomBtn.disabled = true;
+        joinRoomBtn.textContent = '加入中...';
+
+        socket.emit('joinRoom', { roomId });
+      }
+
+      // ─── Socket Handlers ──────────────────────────────────────────────────
+
+      socket.on('roomCreated', ({ roomId }) => {
+        currentRoomId = roomId;
+        showToast(`房间 ${roomId} 创建成功！`, 'success');
+        // Navigate to room page
+        setTimeout(() => {
+          window.location.href = `/room.html?roomId=${roomId}`;
+        }, 500);
+      });
+
+      socket.on('roomJoined', ({ roomId, peerId }) => {
+        currentRoomId = roomId;
+        showToast('加入房间成功！', 'success');
+        // Navigate to room page
+        setTimeout(() => {
+          window.location.href = `/room.html?roomId=${roomId}`;
+        }, 500);
+      });
+
+      socket.on('error', ({ message }) => {
+        showToast(message, 'error');
+        createRoomBtn.disabled = false;
+        createRoomBtn.textContent = '创建房间';
+        joinRoomBtn.disabled = false;
+        joinRoomBtn.textContent = '加入房间';
+      });
+
+      // ─── Reconnect ────────────────────────────────────────────────────────
+      socket.on('connect', () => {
+        console.log('Socket connected');
+      });
+
+      socket.on('disconnect', () => {
+        console.log('Socket disconnected');
+      });
+    </script>
+  </body>
+</html>
