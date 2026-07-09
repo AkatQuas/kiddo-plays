@@ -1,0 +1,22 @@
+{
+  "name": "web-meeting",
+  "version": "1.0.0",
+  "description": "WebRTC SFU multi-person video chat MVP - Mediasoup + Express + Socket.io",
+  "main": "server.js",
+  "scripts": {
+    "start": "pnpm run build:client && node server.js",
+    "dev": "pnpm run build:client && node server.js",
+    "build:client": "esbuild public/client-main.js --bundle --outfile=public/client.js --format=iife --global-name=WebMeeting",
+    "postinstall": "node setup-worker.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "mediasoup": "^3.21.0",
+    "mediasoup-client": "^3.21.0",
+    "socket.io": "^4.7.5",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.1"
+  }
+}
