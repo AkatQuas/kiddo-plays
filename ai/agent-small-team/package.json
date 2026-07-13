@@ -1,0 +1,27 @@
+{
+  "name": "agent-small-team",
+  "version": "1.0.0",
+  "description": "Multi-agent team collaboration system built on @openai/agents",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "pretest": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "node dist/index.js \"Analyze the project's source code structure and list all exported interfaces\"",
+    "clean": "rm -rf dist .agent-team-logs"
+  },
+  "keywords": ["openai", "agents", "multi-agent", "team"],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@openai/agents": "^0.13.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.0",
+    "typescript": "^5.9.3"
+  }
+}
