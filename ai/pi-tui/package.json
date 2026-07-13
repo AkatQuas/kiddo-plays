@@ -1,0 +1,21 @@
+{
+  "name": "pi-tui",
+  "version": "1.0.0",
+  "description": "Interactive demo of @earendil-works/pi-tui components",
+  "scripts": {
+    "start": "tsx playground.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@earendil-works/pi-tui": "^0.80.6",
+    "chalk": "^5.6.2",
+    "tsx": "^4.23.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^7.0.2"
+  }
+}
