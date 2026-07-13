@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Breathe · 共振呼吸</title>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; overflow:hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: #fff; user-select: none; -webkit-user-select: none;
+  }
+
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse at 50% 50%, #0e2546 0%, #0a182e 40%, #050a13 90%);
+    transition: background 0.3s ease;
+  }
+  .overlay {
+    position: fixed; inset: 0; z-index: 1;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 24px;
+  }
+
+  .center-group { margin: auto; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .phase-label { font-size:13px; letter-spacing:4px; opacity:0.5; transition:opacity .3s; height:20px; }
+  .phase-label.active { opacity:0.9; }
+
+  .breath-circle { position:relative; width:220px; height:220px; display:flex; align-items:center; justify-content:center; }
+  .breath-circle .ring-ref {
+    position: absolute; top: 50%; left: 50%;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .breath-circle .ring-ref.max {
+    width: 218px; height: 218px;
+    margin-top: -109px; margin-left: -109px;
+    border: 1px solid rgba(251,191,36,0.3);
+  }
+  .breath-circle .ring-ref.min {
+    width: 130px; height: 130px;
+    margin-top: -65px; margin-left: -65px;
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+  .breath-circle .ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 1.5px dashed rgba(148,196,255,0.2);
+    will-change: transform; pointer-events: none;
+    transform: scale(0.6);
+  }
+  .breath-circle .center {
+    position: relative; z-index: 2; width:78px; height:78px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(148,196,255,0.15), rgba(148,196,255,0.03));
+    display: flex; align-items: center; justify-content: center; will-change: transform;
+  }
+
+  .bottom-panel {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; height: 160px; flex-shrink: 0; margin-bottom: 160px;
+  }
+  .info-row { display:flex; align-items:center; gap:14px; font-size:13px; opacity:0.7; justify-content:center; }
+  .info-row .dot { display:inline-block; width:5px; height:5px; border-radius:50%; }
+  .info-row .dot.active { background:#60a5fa; }
+  .info-row .dot.paused { background:#facc15; }
+  .info-row .dot.muted  { background:#475569; }
+
+  .preset-bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .preset-bar.hidden { display:none; }
+  .preset-btn {
+    background: rgba(96,165,250,0.1); backdrop-filter: blur(8px);
+    border: 1px solid rgba(96,165,250,0.15); color: #fff;
+    padding: 6px 16px; border-radius: 100px; font-size: 12px;
+    cursor: pointer; transition: all .25s;
+  }
+  .preset-btn:hover { background:rgba(96,165,250,0.2); transform:scale(1.04); }
+  .preset-btn.active { background:rgba(96,165,250,0.25); border-color:rgba(96,165,250,0.4); }
+
+  .custom-bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .custom-bar.hidden { display:none; }
+  .custom-bar label { display:flex; align-items:center; gap:4px; font-size:11px; opacity:0.6; }
+  .custom-bar input {
+    width:42px; padding:3px 5px; border-radius:5px;
+    border:1px solid rgba(96,165,250,0.2);
+    background:rgba(96,165,250,0.08); color:#fff;
+    font-size:12px; text-align:center;
+  }
+  .custom-bar input:focus { outline:none; border-color:rgba(96,165,250,0.5); }
+
+  .action-row { display:flex; gap:10px; justify-content:center; align-items:center; min-height:44px; }
+  .start-btn {
+    background:rgba(96,165,250,0.12); backdrop-filter:blur(8px);
+    border:1px solid rgba(96,165,250,0.18); color:#fff;
+    padding:10px 44px; border-radius:100px; font-size:15px;
+    letter-spacing:2px; cursor:pointer; transition:all .3s;
+  }
+  .start-btn:hover { background:rgba(96,165,250,0.22); transform:scale(1.04); }
+  .start-btn:active { transform:scale(0.97); }
+  .start-btn.hidden { display:none; }
+
+  .ctrl-btn {
+    background:rgba(96,165,250,0.08); backdrop-filter:blur(8px);
+    border:1px solid rgba(96,165,250,0.12); color:#fff;
+    padding:7px 18px; border-radius:100px; font-size:12px;
+    cursor:pointer; transition:all .2s; min-width:64px;
+  }
+  .ctrl-btn:hover { background:rgba(96,165,250,0.18); }
+  .ctrl-btn:active { transform:scale(0.95); }
+  .ctrl-btn.danger:hover { background:rgba(239,68,68,0.2); border-color:rgba(239,68,68,0.3); }
+  .ctrl-btn.hidden { display:none; }
+
+  @media (max-width:480px) {
+    .breath-circle { width:170px; height:170px; }
+    .breath-circle .center { width:56px; height:56px; }
+    .overlay { padding:16px; }
+    .preset-btn { font-size:11px; padding:5px 12px; }
+    .ctrl-btn { font-size:11px; padding:5px 14px; min-width:56px; }
+    .start-btn { padding:8px 36px; font-size:14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg" id="bg"></div>
+<div class="overlay">
+  <div class="center-group">
+    <div class="phase-label" id="phaseLabel">准备</div>
+    <div class="breath-circle" id="breathCircle">
+      <div class="ring-ref max"></div>
+      <div class="ring-ref min"></div>
+      <div class="ring" id="breathRing"></div>
+      <div class="center" id="breathCenter"></div>
+    </div>
+  </div>
+
+  <div class="bottom-panel">
+    <div class="info-row">
+      <span class="dot active" id="statusDot"></span>
+      <span id="timerDisplay">15:00</span>
+      <span style="opacity:0.3">·</span>
+      <span id="cycleDisplay" style="opacity:0.6">1/15 轮</span>
+    </div>
+    <div class="info-row" style="font-size:12px;opacity:0.5">
+      <span id="presetName">平静</span>
+      <span style="opacity:0.3">·</span>
+      <span id="ratioDisplay">4-6</span>
+    </div>
+
+    <div class="preset-bar" id="presetBar">
+      <button class="preset-btn active" data-preset="calm">平静</button>
+      <button class="preset-btn" data-preset="balanced">平衡</button>
+      <button class="preset-btn" data-preset="extended">延长</button>
+      <button class="preset-btn" data-preset="custom">自定义</button>
+    </div>
+    <div class="custom-bar hidden" id="customBar">
+      <label>吸 <input type="number" id="inhaleInput" value="4" min="3" max="10"></label>
+      <label>呼 <input type="number" id="exhaleInput" value="6" min="3" max="10"></label>
+      <label>分钟 <input type="number" id="durationInput" value="5" min="1" max="60"></label>
+    </div>
+
+    <div class="action-row">
+      <button class="start-btn" id="startBtn">开始</button>
+      <button class="ctrl-btn hidden" id="pauseBtn">暂停</button>
+      <button class="ctrl-btn hidden" id="muteBtn">静音</button>
+      <button class="ctrl-btn danger hidden" id="quitBtn">退出</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PRESETS = {
+  balanced: { label:'平衡', inhale:5, exhale:5, duration:10 },
+  calm:     { label:'平静', inhale:4, exhale:6, duration:15 },
+  extended: { label:'延长', inhale:4, exhale:6, duration:20 },
+};
+
+const S = {
+  active: false, paused: false, muted: false,
+  phase: 'idle', preset: 'calm',
+  in: 4, ex: 6, durMin: 15,
+  durS: 0, cycleS: 10, breaths: 0, elapsed: 0,
+  phaseStart: 0, raf: null,
+};
+
+const $ = id => document.getElementById(id);
+const bg = $('bg'), phaseLabel = $('phaseLabel');
+const breathRing = $('breathRing'), breathCenter = $('breathCenter');
+const timerDisplay = $('timerDisplay'), cycleDisplay = $('cycleDisplay');
+const presetName = $('presetName'), ratioDisplay = $('ratioDisplay');
+const statusDot = $('statusDot');
+const startBtn = $('startBtn'), presetBar = $('presetBar'), customBar = $('customBar');
+const pauseBtn = $('pauseBtn'), muteBtn = $('muteBtn'), quitBtn = $('quitBtn');
+const inhaleInput = $('inhaleInput'), exhaleInput = $('exhaleInput'), durationInput = $('durationInput');
+
+/* ── Audio ──────────────────────────────────────────────── */
+let audioCtx = null;
+function initAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+function playTone(freq, dur, vol) {
+  if (S.muted) return;
+  try {
+    initAudio();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = 'sine'; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+    o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime + dur);
+  } catch (_) {}
+}
+const playIn = () => playTone(396, 0.12, 0.05);
+const playEx = () => playTone(285, 0.18, 0.04);
+
+/* ── Background Color ───────────────────────────────────── */
+function setBg(c1, c2, c3) {
+  bg.style.background = `radial-gradient(ellipse at 50% 50%, ${c1} 0%, ${c2} 40%, ${c3} 90%)`;
+}
+const IN_C1 = '#1f59a6', IN_C2 = '#12366c', IN_C3 = '#07101f';
+const EX_C1 = '#0e2546', EX_C2 = '#0a182e', EX_C3 = '#050a13';
+
+function updateBg(progress, phase) {
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function lerpColor(s, e, t) {
+    const r = Math.round(lerp(parseInt(s.slice(1,3),16), parseInt(e.slice(1,3),16), t));
+    const g = Math.round(lerp(parseInt(s.slice(3,5),16), parseInt(e.slice(3,5),16), t));
+    const b = Math.round(lerp(parseInt(s.slice(5,7),16), parseInt(e.slice(5,7),16), t));
+    return `rgb(${r},${g},${b})`;
+  }
+  const t = phase === 'inhale'
+    ? 0.15 + 0.85 * (progress * progress * (3 - 2 * progress))
+    : 0.15 + 0.85 * ((1 - progress) * (1 - progress) * (3 - 2 * (1 - progress)));
+  setBg(lerpColor(EX_C1, IN_C1, t), lerpColor(EX_C2, IN_C2, t), lerpColor(EX_C3, IN_C3, t));
+}
+
+/* ── Circle Animation ───────────────────────────────────── */
+function updateCircle(p, phase) {
+  const pg = phase === 'inhale' ? p : 1 - p;
+  breathRing.style.transform = `scale(${0.6 + 0.4 * pg})`;
+  breathCenter.style.transform = `scale(${0.8 + 0.2 * pg})`;
+  breathRing.style.boxShadow = `0 0 ${8 + 24 * pg}px rgba(96,165,250,${0.04 + 0.1 * pg})`;
+  breathRing.style.borderColor = `rgba(148,196,255,${0.12 + 0.15 * pg})`;
+}
+function resetRing() {
+  breathRing.style.transform = '';
+  breathRing.style.boxShadow = '';
+  breathRing.style.borderColor = '';
+  breathCenter.style.transform = '';
+}
+
+/* ── Display ────────────────────────────────────────────── */
+function formatMMSS(s) {
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+function updateUI() {
+  timerDisplay.textContent = formatMMSS(Math.max(0, S.durS - S.elapsed));
+  const total = S.durS / S.cycleS;
+  cycleDisplay.textContent = `${Math.min(S.breaths + 1, total)}/${total} 轮`;
+  statusDot.className = 'dot' + (S.paused ? ' paused' : S.active ? ' active' : '');
+  const labels = { idle:'准备', countdown:'准备', inhale:'吸气', exhale:'呼气', paused:'暂停' };
+  phaseLabel.textContent = labels[S.phase] || '';
+  phaseLabel.classList.toggle('active', S.phase === 'inhale' || S.phase === 'exhale');
+}
+
+/* ── Render ─────────────────────────────────────────────── */
+function render(p, phase, elapsed) {
+  if (S.phase === 'idle') return;
+  updateBg(p, phase);
+  updateCircle(p, phase);
+  if (elapsed !== undefined) { S.elapsed = elapsed; }
+  updateUI();
+}
+
+/* ── Main Loop ──────────────────────────────────────────── */
+function loop() {
+  if (!S.active || S.phase === 'countdown') return;
+  if (S.phase === 'paused') { S.raf = requestAnimationFrame(loop); return; }
+  const now = performance.now() / 1000;
+  const dur = S.phase === 'inhale' ? S.in : S.ex;
+  const phaseElapsed = now - S.phaseStart;
+  const p = Math.min(1, phaseElapsed / dur);
+  const elapsed = S.breaths * S.cycleS + (S.phase === 'inhale' ? phaseElapsed : S.in + phaseElapsed);
+  render(p, S.phase, elapsed);
+
+  if (p >= 1) {
+    if (S.phase === 'inhale') {
+      S.phase = 'exhale'; S.phaseStart = now; playEx(); render(0, 'exhale', elapsed);
+    } else {
+      S.breaths++; S.phaseStart = now;
+      const completed = S.breaths * S.cycleS;
+      S.elapsed = completed;
+      if (completed >= S.durS) { finish(true); return; }
+      S.phase = 'inhale'; playIn(); render(0, 'inhale', completed);
+    }
+  }
+  S.raf = requestAnimationFrame(loop);
+}
+
+/* ── Countdown ──────────────────────────────────────────── */
+function runCountdown() {
+  return new Promise(resolve => {
+    S.phase = 'countdown';
+    phaseLabel.textContent = '准备 3...';
+    phaseLabel.classList.add('active');
+    startBtn.classList.add('hidden');
+    pauseBtn.classList.remove('hidden');
+    muteBtn.classList.remove('hidden');
+    quitBtn.classList.remove('hidden');
+    updateBg(0.5, 'inhale');
+
+    let count = 3;
+    const step = () => {
+      if (!S.active) { resolve(false); return; }
+      count--;
+      if (count <= 0) { phaseLabel.textContent = '开始'; setTimeout(() => resolve(true), 200); return; }
+      phaseLabel.textContent = `准备 ${count}...`;
+      setTimeout(step, 1000);
+    };
+    setTimeout(step, 1000);
+  });
+}
+
+/* ── Start Session ──────────────────────────────────────── */
+async function startSession() {
+  if (S.active) return;
+  if (S.preset === 'custom') {
+    let inh = Math.max(3, Math.min(10, parseInt(inhaleInput.value) || 4));
+    let exh = Math.max(3, Math.min(10, parseInt(exhaleInput.value) || 6));
+    if (exh > inh * 2) exh = inh * 2;
+    S.in = inh; S.ex = exh;
+    S.durMin = Math.max(1, Math.min(60, parseInt(durationInput.value) || 5));
+    inhaleInput.value = inh; exhaleInput.value = exh; durationInput.value = S.durMin;
+  }
+  S.cycleS = S.in + S.ex;
+  S.durS = Math.ceil(S.durMin * 60 / S.cycleS) * S.cycleS;
+  S.breaths = 0; S.elapsed = 0; S.active = true; S.paused = false;
+  presetName.textContent = PRESETS[S.preset]?.label || '自定义';
+  ratioDisplay.textContent = `${S.in}-${S.ex}`;
+  cycleDisplay.textContent = `1/${S.durS / S.cycleS} 轮`;
+  presetBar.classList.add('hidden'); customBar.classList.add('hidden');
+  initAudio();
+  const ok = await runCountdown();
+  if (!ok) { abort(); return; }
+  S.phase = 'inhale'; S.phaseStart = performance.now() / 1000;
+  playIn(); render(0, 'inhale', 0);
+  S.raf = requestAnimationFrame(loop);
+}
+
+/* ── Controls ───────────────────────────────────────────── */
+function togglePause() {
+  if (!S.active || S.phase === 'countdown') return;
+  if (!S.paused) {
+    S.paused = true; S.phase = 'paused';
+    if (S.raf) { cancelAnimationFrame(S.raf); S.raf = null; }
+    pauseBtn.textContent = '继续';
+  } else {
+    S.paused = false; S.phase = 'inhale';
+    S.phaseStart = performance.now() / 1000;
+    pauseBtn.textContent = '暂停'; playIn();
+    S.raf = requestAnimationFrame(loop);
+  }
+  updateUI();
+}
+function toggleMute() { S.muted = !S.muted; muteBtn.textContent = S.muted ? '🔇 静音' : '静音'; }
+
+function finish(completed) {
+  S.active = false; S.phase = 'idle';
+  if (S.raf) { cancelAnimationFrame(S.raf); S.raf = null; }
+  resetRing();
+  const pct = Math.min(100, Math.round(S.elapsed / S.durS * 100));
+  phaseLabel.textContent = `${completed ? '完成 ✓' : '已结束'} · ${S.breaths} 次 · ${pct}%`;
+  phaseLabel.classList.add('active');
+  setTimeout(() => {
+    pauseBtn.classList.add('hidden'); muteBtn.classList.add('hidden'); quitBtn.classList.add('hidden');
+    startBtn.textContent = '重新开始'; startBtn.classList.remove('hidden');
+    presetBar.classList.remove('hidden');
+    if (S.preset === 'custom') customBar.classList.remove('hidden');
+  }, 2000);
+  setBg(EX_C1, EX_C2, EX_C3);
+  try {
+    const log = JSON.parse(localStorage.getItem('breathe_log') || '[]');
+    log.push({ date: new Date().toISOString().slice(0,10), time: new Date().toLocaleTimeString(),
+      preset: S.preset, ratio: `${S.in}-${S.ex}`, duration_target: S.durS,
+      duration_actual: Math.round(S.elapsed), breaths: S.breaths, completion_pct: pct,
+      status: completed ? 'completed' : 'ended early' });
+    localStorage.setItem('breathe_log', JSON.stringify(log));
+  } catch (_) {}
+}
+
+function abort() {
+  if (S.raf) { cancelAnimationFrame(S.raf); S.raf = null; }
+  S.active = false; S.phase = 'idle';
+  resetRing();
+  pauseBtn.classList.add('hidden'); muteBtn.classList.add('hidden'); quitBtn.classList.add('hidden');
+  startBtn.textContent = '开始'; startBtn.classList.remove('hidden');
+  presetBar.classList.remove('hidden');
+  if (S.preset === 'custom') customBar.classList.remove('hidden');
+  updateUI();
+  setBg(EX_C1, EX_C2, EX_C3);
+}
+
+function quitSession() { if (S.active) finish(false); }
+
+/* ── Preset ─────────────────────────────────────────────── */
+function selectPreset(name) {
+  S.preset = name;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.preset-btn[data-preset="${name}"]`).classList.add('active');
+  if (name === 'custom') {
+    customBar.classList.remove('hidden');
+    S.in = parseInt(inhaleInput.value) || 4; S.ex = parseInt(exhaleInput.value) || 6;
+    S.durMin = parseInt(durationInput.value) || 5; presetName.textContent = '自定义';
+  } else {
+    customBar.classList.add('hidden');
+    const p = PRESETS[name]; S.in = p.inhale; S.ex = p.exhale; S.durMin = p.duration;
+    presetName.textContent = p.label;
+  }
+  S.cycleS = S.in + S.ex;
+  S.durS = Math.ceil(S.durMin * 60 / S.cycleS) * S.cycleS;
+  ratioDisplay.textContent = `${S.in}-${S.ex}`;
+  timerDisplay.textContent = formatMMSS(S.durS);
+  cycleDisplay.textContent = `1/${S.durS / S.cycleS} 轮`;
+}
+
+/* ── Keyboard ───────────────────────────────────────────── */
+document.addEventListener('keydown', e => {
+  if (e.key === ' ' && S.active) { e.preventDefault(); togglePause(); }
+  if (e.key === 's' && S.active) toggleMute();
+  if ((e.key === 'q' || e.key === 'Escape') && S.active) quitSession();
+  if (e.key === 'Enter' && !S.active) startSession();
+});
+
+/* ── Bindings ───────────────────────────────────────────── */
+startBtn.addEventListener('click', startSession);
+document.querySelectorAll('.preset-btn').forEach(btn =>
+  btn.addEventListener('click', () => selectPreset(btn.dataset.preset)));
+pauseBtn.addEventListener('click', togglePause);
+muteBtn.addEventListener('click', toggleMute);
+quitBtn.addEventListener('click', quitSession);
+[inhaleInput, exhaleInput].forEach(inp =>
+  inp.addEventListener('change', () => {
+    const val = Math.max(3, Math.min(10, parseInt(inp.value) || 4));
+    inp.value = val;
+    if (S.preset === 'custom') selectPreset('custom');
+  }));
+durationInput.addEventListener('change', () => {
+  const val = Math.max(1, Math.min(60, parseInt(durationInput.value) || 5));
+  durationInput.value = val;
+  if (S.preset === 'custom') selectPreset('custom');
+});
+
+/* ── Init ───────────────────────────────────────────────── */
+selectPreset('calm');
+</script>
+</body>
+</html>
