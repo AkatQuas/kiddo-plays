@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🏭 工厂模拟游戏</title>
+<link rel="stylesheet" href="style.css?v=3" />
+</head>
+<body>
+  <div id="app">
+    <!-- Agent 日志流（左侧） -->
+    <div id="logPanel">
+      <div class="log-head">📋 Agent 日志</div>
+      <div id="logBody"></div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- 顶部 HUD -->
+    <div id="hud">
+      <div class="hud-left">
+        <span id="hudTick">⏱ 0</span>
+        <button id="hudPause" class="hud-btn" title="暂停/继续">⏸</button>
+        <select id="hudSpeed">
+          <option value="1">1x</option>
+          <option value="2" selected>2x</option>
+          <option value="3">3x</option>
+          <option value="4">4x</option>
+          <option value="5">5x</option>
+          <option value="6">6x</option>
+        </select>
+        <button id="questBtn" class="hud-btn" title="新手引导">📖</button>
+        <button id="resetBtn" class="hud-btn" title="重置游戏">🔄</button>
+      </div>
+      <div class="hud-center" id="hudResources">
+        <span id="hudMoney">💰 ¥0</span>
+        <span id="hudItems"></span>
+      </div>
+    </div>
+
+    <!-- 订单栏 -->
+    <div id="orderBar">
+      <div class="order-scroll" id="orderScroll"></div>
+    </div>
+
+    <!-- 新手引导面板 -->
+    <div id="questPanel" style="display:none">
+      <div id="questHeader"><b>📖 新手引导</b><button id="questClose">×</button></div>
+      <div id="questBody"></div>
+    </div>
+
+    <!-- 右侧建造面板 -->
+    <div id="palette">
+      <div class="palette-head">建造</div>
+      <div id="paletteBody"></div>
+    </div>
+
+    <!-- 底部状态栏 -->
+    <div id="statusBar">
+      <span id="statusText">点击右侧面板选择要建造的机器或传送带，然后在地图上点击放置</span>
+    </div>
+
+    <!-- 助手面板（后续阶段增加） -->
+    <div id="assistantPanel" style="display:none"></div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js?v=4"></script>
+</body>
+</html>
