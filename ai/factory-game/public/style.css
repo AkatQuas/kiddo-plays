@@ -1,0 +1,395 @@
+/* ============================================================
+   工厂模拟游戏 · 样式
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2128;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text2: #8b949e;
+  --brand: #58a6ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --red: #f85149;
+  --font: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', monospace;
+  --font-ui: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --radius: 6px;
+
+  --panel-w: 180px;
+  --hud-h: 36px;
+  --order-h: 28px;
+  --status-h: 28px;
+  --cell: 48px;
+}
+
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font-ui); }
+
+#app { width: 100%; height: 100%; display: flex; position: relative; }
+
+/* ──── Agent 日志流 ──── */
+#logPanel {
+  position: fixed;
+  left: 0; top: calc(36px + var(--order-h)); bottom: 28px;
+  width: 260px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+.log-head {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--text2);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+#logBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.log-entry {
+  padding: 2px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  word-break: break-all;
+}
+.log-entry.turn {
+  background: rgba(255,255,255,0.05);
+  font-weight: bold;
+  color: #58a6ff;
+}
+.log-entry.factory {
+  background: rgba(88,166,255,0.08);
+  color: #58a6ff;
+}
+.log-entry.customer {
+  background: rgba(191,121,255,0.08);
+  color: #bb86fc;
+}
+.log-entry.action {
+  color: #3fb950;
+  padding-left: 18px;
+}
+.log-entry.text {
+  color: #c9d1d9;
+  padding-left: 18px;
+}
+.log-entry.system {
+  color: #8b949e;
+  font-style: italic;
+}
+.log-entry.error {
+  color: #f85149;
+}
+
+/* ──── Canvas ──── */
+#gameCanvas {
+  position: absolute;
+  top: calc(var(--hud-h) + var(--order-h));
+  left: 260px;
+  right: var(--panel-w);
+  bottom: var(--status-h);
+  cursor: crosshair;
+  background: #1a1d2e;
+}
+
+/* ──── HUD ──── */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 260px;
+  right: var(--panel-w);
+  height: var(--hud-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 13px;
+  font-family: var(--font);
+  z-index: 10;
+  gap: 0;
+}
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.hud-center {
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+/* ──── 订单栏 ──── */
+#orderBar {
+  position: absolute;
+  top: var(--hud-h);
+  left: 260px;
+  right: var(--panel-w);
+  height: var(--order-h);
+  background: #1a1d3e;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 10;
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 0 8px;
+  gap: 12px;
+}
+.order-scroll {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+  width: 100%;
+  height: 100%;
+  scrollbar-width: none;
+}
+.order-scroll::-webkit-scrollbar { display: none; }
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: rgba(63, 185, 80, 0.1);
+  border: 1px solid rgba(63, 185, 80, 0.2);
+  flex-shrink: 0;
+  font-size: 11px;
+}
+.order-item .reward { color: var(--orange); font-weight: bold; }
+.order-item .deadline { color: var(--text2); }
+.order-item .deadline.urgent { color: var(--red); font-weight: bold; }
+.order-item .items { color: var(--text); }
+.order-empty { color: var(--text2); font-style: italic; font-size: 11px; }
+#hud > span, #hud > select { white-space: nowrap; }
+#hudSpeed {
+  background: var(--surface2);
+  color: var(--brand);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2px 4px;
+  font-family: var(--font);
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+}
+#hudSpeed:focus { border-color: var(--brand); }
+
+.hud-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 14px;
+  line-height: 1;
+}
+.hud-btn:hover { background: var(--surface2); border-color: var(--text2); }
+
+#hudMoney { color: var(--orange); font-weight: bold; }
+#hudItems { color: var(--text2); font-size: 12px; }
+.hud-orders {
+  font-size: 12px;
+  color: var(--green);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 10px;
+  border-left: 1px solid var(--border);
+  flex: 0 1 auto;
+  max-width: 35%;
+}
+
+/* ──── 新手引导面板 ──── */
+#questPanel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 460px;
+  max-height: 80vh;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 16px 64px rgba(0,0,0,.5);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#questHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+#questHeader button {
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+#questHeader button:hover { color: var(--text); }
+#questBody {
+  padding: 16px 14px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.7;
+}
+#questBody h2 { font-size: 16px; margin: 0 0 8px; }
+#questBody h3 { font-size: 14px; margin: 14px 0 6px; color: var(--brand); }
+#questBody p { margin: 6px 0; color: var(--text2); }
+#questBody .step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  margin: 4px 0;
+  border-radius: var(--radius);
+  background: var(--surface2);
+}
+#questBody .step.done { opacity: 0.5; }
+#questBody .step .num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #000;
+  font-size: 12px; font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+#questBody .step.done .num { background: var(--green); }
+#questBody .step .text { flex: 1; }
+#questBody .step .check { color: var(--green); font-size: 16px; }
+.quest-actions { margin-top: 14px; display: flex; gap: 8px; justify-content: flex-end; }
+.quest-actions button {
+  background: var(--brand);
+  color: #000;
+  border: none;
+  border-radius: var(--radius);
+  padding: 6px 16px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.quest-actions button:hover { opacity: 0.85; }
+
+/* ──── 建造面板 ──── */
+#palette {
+  position: absolute;
+  top: calc(var(--hud-h) + var(--order-h));
+  right: 0;
+  bottom: var(--status-h);
+  width: var(--panel-w);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.palette-head {
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.palette-cat {
+  padding: 6px 10px 2px;
+  font-size: 11px;
+  color: var(--text2);
+  border-top: 1px solid var(--border);
+  margin-top: 2px;
+}
+
+.palette-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+  font-size: 13px;
+}
+
+.palette-item:hover { background: var(--surface2); }
+.palette-item.active { background: #1f3a5f; color: var(--brand); }
+.palette-item .preview {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.palette-item .name { flex: 1; }
+.palette-item .size { font-size: 10px; color: var(--text2); }
+
+.separator { height: 1px; background: var(--border); margin: 4px 10px; }
+
+/* ──── 状态栏 ──── */
+#statusBar {
+  position: absolute;
+  bottom: 0;
+  left: 260px;
+  right: 0;
+  height: var(--status-h);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 12px;
+  color: var(--text2);
+  z-index: 10;
+}
+
+/* ──── 助手面板（预留） ──── */
+#assistantPanel {
+  position: absolute;
+  bottom: var(--status-h);
+  right: var(--panel-w);
+  width: 300px;
+  max-height: 320px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  overflow-y: auto;
+  z-index: 20;
+}
+
+/* ──── 滚动条 ──── */
+#palette::-webkit-scrollbar { width: 4px; }
+#palette::-webkit-scrollbar-track { background: transparent; }
+#palette::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+#logBody::-webkit-scrollbar { width: 4px; }
+#logBody::-webkit-scrollbar-track { background: transparent; }
+#logBody::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
