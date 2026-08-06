@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>WebSocket Chat — Through NGINX Gateway</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; display: flex; justify-content: center; padding: 20px; }
+  .container { max-width: 700px; width: 100%; }
+  h1 { font-size: 22px; margin: 20px 0; color: #58a6ff; }
+  h1 small { font-size: 14px; color: #8b949e; display: block; margin-top: 4px; }
+  .panel { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+  .row label { min-width: 60px; color: #8b949e; font-size: 13px; }
+  input, select { background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px; color: #c9d1d9; font-size: 14px; flex: 1; }
+  input:focus, select:focus { outline: none; border-color: #58a6ff; }
+  button { background: #238636; border: 1px solid #2ea043; color: #fff; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  button:hover { background: #2ea043; }
+  button.danger { background: #da3633; border-color: #f85149; }
+  button.danger:hover { background: #f85149; }
+  #messages { height: 350px; overflow-y: auto; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 12px; margin-bottom: 10px; font-size: 14px; }
+  .msg { margin-bottom: 8px; line-height: 1.4; }
+  .msg .time { color: #484f58; font-size: 11px; margin-right: 8px; }
+  .msg .from { color: #58a6ff; font-weight: 600; }
+  .msg .system { color: #8b949e; font-style: italic; }
+  .msg .system .icon { margin-right: 6px; }
+  #input-row { display: flex; gap: 10px; }
+  #input { flex: 1; }
+  .badge { display: inline-block; background: #1f6feb; color: #fff; border-radius: 12px; padding: 2px 10px; font-size: 12px; margin-left: 8px; }
+  .status { color: #8b949e; font-size: 13px; margin-bottom: 10px; }
+  .status .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .dot.green { background: #3fb950; }
+  .dot.red { background: #f85149; }
+  .dot.yellow { background: #d29922; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>
+    💬 WebSocket Chat
+    <small>通过 NGINX 网关代理 · ws://localhost:8080/ws/chat</small>
+  </h1>
+
+  <div class="panel">
+    <div class="row">
+      <label>用户名</label>
+      <input id="username" value="User-" onfocus="if(this.value==='User-')this.value=''" placeholder="输入昵称">
+      <label style="min-width:40px">房间</label>
+      <select id="room">
+        <option value="general">general</option>
+        <option value="tech">tech</option>
+        <option value="random">random</option>
+      </select>
+      <button id="btn-join" onclick="join()">加入</button>
+    </div>
+    <div class="status" id="status"><span class="dot red"></span>未连接</div>
+  </div>
+
+  <div class="panel">
+    <div id="messages"></div>
+    <div id="input-row">
+      <input id="input" placeholder="输入消息..." disabled onkeydown="if(event.key==='Enter')send()">
+      <button id="btn-send" disabled onclick="send()">发送</button>
+      <button class="danger" onclick="leave()">离开</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+<script>
+// 通过 NGINX 网关连接 Socket.IO
+let socket = null;
+const gateway = 'http://localhost:8080';
+const messagesEl = document.getElementById('messages');
+const statusEl = document.getElementById('status');
+const inputEl = document.getElementById('input');
+const btnSend = document.getElementById('btn-send');
+const btnJoin = document.getElementById('btn-join');
+const usernameEl = document.getElementById('username');
+const roomEl = document.getElementById('room');
+
+function setStatus(text, color) {
+  statusEl.innerHTML = '<span class="dot ' + color + '"></span>' + text;
+}
+
+function appendMsg(html) {
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.innerHTML = html;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function join() {
+  const username = usernameEl.value.trim() || 'Anonymous';
+  const room = roomEl.value;
+
+  btnJoin.disabled = true;
+  btnJoin.textContent = '连接中...';
+  setStatus('正在连接网关 ' + gateway + '...', 'yellow');
+
+  socket = io(gateway, {
+    path: '/ws/chat',
+    transports: ['websocket', 'polling'],
+    reconnection: true,
+  });
+
+  socket.on('connect', () => {
+    btnJoin.textContent = '已连接';
+    btnJoin.disabled = true;
+    inputEl.disabled = false;
+    btnSend.disabled = false;
+    setStatus('已连接 (ID: ' + socket.id.slice(0,8) + '…)', 'green');
+    appendMsg('<span class="system"><span class="icon">🔗</span>已连接到网关，正在加入房间 ' + room + '…</span>');
+
+    socket.emit('join-room', room, username);
+  });
+
+  socket.on('connect_error', (err) => {
+    btnJoin.textContent = '重试';
+    btnJoin.disabled = false;
+    setStatus('连接失败: ' + err.message, 'red');
+    appendMsg('<span class="system"><span class="icon">❌</span>连接失败: ' + err.message + '</span>');
+  });
+
+  socket.on('chat-message', (msg) => {
+    const time = new Date(msg.timestamp).toLocaleTimeString();
+    appendMsg('<span class="time">' + time + '</span>' +
+      '<span class="from">' + escapeHtml(msg.from) + '</span>: ' +
+      escapeHtml(msg.text));
+  });
+
+  socket.on('system-message', (msg) => {
+    const time = new Date(msg.timestamp).toLocaleTimeString();
+    appendMsg('<span class="time">' + time + '</span>' +
+      '<span class="system"><span class="icon">🔔</span>' +
+      escapeHtml(msg.text) + ' <span class="badge">' + msg.online + ' 在线</span></span>');
+  });
+
+  socket.on('error-msg', (msg) => {
+    appendMsg('<span class="system"><span class="icon">❌</span>' + escapeHtml(msg) + '</span>');
+  });
+
+  socket.on('disconnect', (reason) => {
+    btnJoin.textContent = '重新连接';
+    btnJoin.disabled = false;
+    inputEl.disabled = true;
+    btnSend.disabled = true;
+    setStatus('已断开: ' + reason, 'red');
+    appendMsg('<span class="system"><span class="icon">🔴</span>连接已断开</span>');
+  });
+}
+
+function send() {
+  if (!socket || !socket.connected) return;
+  const text = inputEl.value.trim();
+  if (!text) return;
+  socket.emit('message', text);
+  inputEl.value = '';
+  inputEl.focus();
+}
+
+function leave() {
+  if (socket) {
+    socket.disconnect();
+    socket = null;
+  }
+  btnJoin.textContent = '加入';
+  btnJoin.disabled = false;
+  inputEl.disabled = true;
+  btnSend.disabled = true;
+  setStatus('未连接', 'red');
+  appendMsg('<span class="system"><span class="icon">👋</span>已离开聊天室</span>');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+</script>
+</body>
+</html>

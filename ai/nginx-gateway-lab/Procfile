@@ -1,0 +1,7 @@
+# Procfile — NGINX 模式 (默认)
+# 启动: overmind start
+nginx: nginx -c $(PWD)/nginx/nginx.conf -p $(PWD)
+users: node services/users-service/index.js
+orders: node services/orders-service/index.js
+products: node services/products-service/index.js
+chat:   node services/chat-service/index.js

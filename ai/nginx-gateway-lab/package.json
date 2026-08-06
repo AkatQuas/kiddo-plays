@@ -1,0 +1,16 @@
+{
+  "name": "nginx-gateway-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API Gateway 学习项目 — 基于 NGINX 的服务转发与网关架构",
+  "scripts": {
+    "start": "overmind start",
+    "reload": "nginx -c $(PWD)/nginx/nginx.conf -p $(PWD) -s reload",
+    "check": "nginx -c $(PWD)/nginx/nginx.conf -p $(PWD) -t"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3"
+  }
+}
