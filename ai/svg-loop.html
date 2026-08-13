@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SVG.js 循环动画示例</title>
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+    <style>
+      body {
+        background: #f5f5f5;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        padding: 20px;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>基础 1</h3>
+      <div id="a1"></div>
+    </div>
+    <script>
+      function a1() {
+        // 1. 创建一个 SVG 画布，添加到 body，并设置尺寸
+        var draw = SVG().addTo('#a1').size(400, 300);
+
+        // 2. 绘制一个矩形，设置填充色
+        var rect = draw.rect(100, 100).fill('#f06');
+        // 3. 绘制一个圆形，设置描边
+        var circle = draw
+          .circle(80)
+          .fill('none')
+          .stroke({ color: '#000', width: 4 });
+        // 4. 将圆形移动到 (160, 70) 位置
+        circle.move(160, 70);
+
+        // 假设 draw 画布已存在
+        var rect = draw.rect(100, 100).fill('blue');
+
+        // 在 1000 毫秒内，将矩形移动到 (200, 200)，同时将颜色变为红色[citation:3]
+        rect.animate(1000).move(200, 200).fill('red');
+
+        // 你也可以为同一动画添加多个变化，比如同时改变大小[citation:3][citation:8]
+        rect.animate(1000).move(200, 200).fill('red').size(200, 200);
+      }
+      a1();
+    </script>
+    <div class="container">
+      <h3>基础 2</h3>
+      <div id="a2"></div>
+    </div>
+    <script>
+      function a2() {
+        // 假设 draw 画布已存在
+        var draw = SVG().addTo('#a2').size(400, 200);
+
+        // 1. 绘制中心模块 "Engine"
+        var engine = draw
+          .rect(180, 60)
+          .radius(8)
+          .fill('#eef4fb')
+          .stroke({ color: '#1a5fa8', width: 2 });
+        engine.move(125, 20);
+        // 添加文字
+        draw.text('Engine').move(155, 35).font({ size: 16, weight: 'bold' });
+        draw
+          .text('唯一有状态')
+          .move(135, 55)
+          .font({ size: 12, fill: '#1a5fa8' });
+
+        // 2. 绘制右侧模块 "PageRenderer"
+        var renderer = draw
+          .rect(180, 60)
+          .radius(8)
+          .fill('#fff')
+          .stroke({ color: '#c9d5e2', width: 1.5 });
+        renderer.move(125, 100);
+        draw
+          .text('PageRenderer')
+          .move(155, 115)
+          .font({ size: 14, weight: 'bold' });
+        draw
+          .text('出像素，卡住就杀')
+          .move(135, 135)
+          .font({ size: 12, fill: '#5b6875' });
+
+        // 3. 在 Engine 和 PageRenderer 之间画一个箭头
+        // SVG.js 中的 path 命令与 SVG 标准一致，M 是移动到，L 是画线到[citation:7]
+        var arrowPath = draw.path('M 215 50 L 300 50');
+        arrowPath.stroke({ color: '#8a99ab', width: 1.5 });
+        // 注意：添加箭头标记需要更复杂的设置，这里仅画路径做演示
+      }
+      a2();
+    </script>
+    <div class="container">
+      <h3>基础循环：来回移动</h3>
+      <div id="demo1"></div>
+    </div>
+
+    <script>
+      // 创建画布
+      var draw = SVG().addTo('#demo1').size(400, 150);
+
+      // 画一个背景轨道
+      draw.rect(360, 4).fill('#ddd').move(20, 73);
+
+      // 创建方块
+      var box = draw.rect(40, 40).fill('#1a5fa8').radius(4).move(20, 55);
+
+      // 循环动画：去 → 回 → 去 → 回 ...
+      // 在 SVG.js v3 中，ease 通过 .ease() 方法设置，不是 animate() 的第三个参数
+      // 语法：el.animate(duration, delay, when).ease(name)
+      // 内置缓动名：'-' 线性 / '<' 缓入 / '>' 缓出 / '<>' 缓入缓出
+      function moveBackAndForth() {
+        var currentX = box.x();
+        var targetX = currentX === 20 ? 340 : 20;
+
+        // 使用 '<>'（缓入缓出）缓动函数
+        box
+          .animate(2000)
+          .ease('<>')
+          .move(targetX, 55)
+          .after(function () {
+            // 动画完成后，递归调用自身实现循环
+            moveBackAndForth();
+          });
+      }
+
+      // 开始动画
+      moveBackAndForth();
+    </script>
+    <div class="container">
+      <h3>进阶循环：移动 + 变色</h3>
+      <div id="demo2"></div>
+    </div>
+    <script>
+      var draw2 = SVG().addTo('#demo2').size(400, 200);
+
+      // 绘制一个圆形路径（视觉参考）
+      var path = draw2.path(
+        'M 60,100 A 120,80 0 1,1 340,100 A 120,80 0 1,1 60,100'
+      );
+      path.fill('none').stroke({ color: '#ddd', width: 2, dasharray: '5,5' });
+
+      // 创建彩色圆点
+      var dot = draw2.circle(30).fill('#f06');
+
+      // 定义一个变量记录动画进度
+      var progress = 0;
+
+      // 循环动画：沿椭圆路径运动并变色
+      function moveDot() {
+        dot
+          .animate(3000)
+          .ease('<>')
+          .during(function (pos, morph, eased) {
+            // pos: 0~1 的进度值
+            // 计算椭圆上的位置
+            var angle = pos * Math.PI * 2;
+            var cx = 200,
+              cy = 100;
+            var rx = 140,
+              ry = 80;
+            var x = cx + rx * Math.cos(angle);
+            var y = cy + ry * Math.sin(angle);
+            dot.center(x, y);
+
+            // 同时改变颜色：使用HSL，让色相随进度变化
+            var hue = pos * 360;
+            dot.fill('hsl(' + hue + ', 80%, 55%)');
+          })
+          .loop(true);
+      }
+
+      moveDot();
+    </script>
+    <div class="container">
+      <h3>应用案例：模块逐个浮现</h3>
+      <div id="demo3"></div>
+    </div>
+
+    <script>
+      var draw3 = SVG().addTo('#demo3').size(400, 180);
+
+      // 绘制模块
+      var engine = draw3
+        .rect(180, 60)
+        .radius(8)
+        .fill('#eef4fb')
+        .stroke('#1a5fa8', 1.7);
+      engine.move(125, 10).opacity(0); // 初始透明
+      draw3
+        .text('Engine')
+        .move(155, 25)
+        .font({ size: 16, weight: 'bold' })
+        .opacity(0);
+      draw3
+        .text('唯一有状态')
+        .move(135, 45)
+        .font({ size: 12, fill: '#1a5fa8' })
+        .opacity(0);
+
+      var renderer = draw3
+        .rect(180, 60)
+        .radius(8)
+        .fill('#fff')
+        .stroke('#c9d5e2', 1.4);
+      renderer.move(125, 90).opacity(0);
+      draw3
+        .text('PageRenderer')
+        .move(155, 105)
+        .font({ size: 14, weight: 'bold' })
+        .opacity(0);
+      draw3
+        .text('出像素，卡住就杀')
+        .move(135, 125)
+        .font({ size: 12, fill: '#5b6875' })
+        .opacity(0);
+
+      // 箭头
+      var arrow = draw3
+        .path('M 215 40 L 300 40')
+        .stroke({ color: '#8a99ab', width: 1.5, opacity: 0 });
+
+      // 逐个淡入的循环动画
+      function playIntro() {
+        // 先用 500ms 淡出所有元素
+        var allElements = draw3.children();
+        allElements.forEach(function (el) {
+          el.animate(500).opacity(0);
+        });
+
+        // 等待 600ms 后，逐个淡入
+        setTimeout(function () {
+          // Engine 模块
+          engine.animate(600).opacity(1);
+          draw3.children().forEach(function (el) {
+            if (el.type === 'text' && el.x() > 140 && el.x() < 200) {
+              el.animate(600).opacity(1);
+            }
+          });
+
+          // 箭头（延迟 400ms）
+          setTimeout(function () {
+            arrow.animate(500).opacity(1);
+          }, 400);
+
+          // PageRenderer 模块（延迟 800ms）
+          setTimeout(function () {
+            renderer.animate(600).opacity(1);
+            draw3.children().forEach(function (el) {
+              if (
+                el.type === 'text' &&
+                el.x() > 140 &&
+                el.x() < 200 &&
+                el.y() > 80
+              ) {
+                el.animate(600).opacity(1);
+              }
+            });
+          }, 800);
+
+          // 等待所有动画完成，然后循环
+          setTimeout(function () {
+            playIntro();
+          }, 2000);
+        }, 600);
+      }
+
+      // 开始播放
+      playIntro();
+    </script>
+  </body>
+</html>
