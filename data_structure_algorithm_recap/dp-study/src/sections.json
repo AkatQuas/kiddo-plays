@@ -1,0 +1,180 @@
+[
+  {
+    "id": "01-basics",
+    "name": "基础篇",
+    "order": 1,
+    "files": [
+      {
+        "id": "01-basics/01-fibonacci",
+        "title": "1-1 斐波那契数列",
+        "section": "01-basics",
+        "order": 1,
+        "code": "/**\n * 📘 1-1 斐波那契数列\n *\n * 问题：计算斐波那契数列的第 n 项。\n *   F(0) = 0, F(1) = 1\n *   F(n) = F(n-1) + F(n-2)\n *\n * 学这个的目的：DP 的 Hello World。\n * 展示 DP 的三个核心要素：\n *   ① 状态定义 —— dp[i] 表示第 i 个斐波那契数\n *   ② 状态转移方程 —— dp[i] = dp[i-1] + dp[i-2]\n *   ③ 边界条件 —— dp[0] = 0, dp[1] = 1\n *\n * 先做对比实验：暴力递归 vs 记忆化 vs DP，感受速度差异。\n *\n * ────────────────────────────────────────────────────\n */\n\n// ─── 方法 1：暴力递归（指数级） ─────────────────────\n// fib(45) 跑 5~15 秒，fib(50) 数分钟\nfunction fibBrute(n: number): number {\n  if (n <= 1) return n;\n  return fibBrute(n - 1) + fibBrute(n - 2);\n}\n// 原因：重复计算了巨量子问题\n\n// ─── 方法 2：记忆化递归（自顶向下） ─────────────────\n// 用缓存存算过的结果\nfunction fibMemo(n: number, memo: number[] = []): number {\n  if (n <= 1) return n;\n  if (memo[n] !== undefined) return memo[n];\n  memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);\n  return memo[n];\n}\n\n// ─── 方法 3：自底向上 DP ───────────────────────────\n// 从小到大填表\nfunction fibDp(n: number): number {\n  if (n <= 1) return n;\n  const dp: number[] = [0, 1];\n  for (let i = 2; i <= n; i++) {\n    dp[i] = dp[i - 1] + dp[i - 2];\n  }\n  return dp[n];\n}\n\n// ─── 方法 4：空间优化 DP ──────────────────────────\n// 只存前两个值，O(1) 空间\nfunction fibOpt(n: number): number {\n  if (n <= 1) return n;\n  let prev2 = 0, prev1 = 1;\n  for (let i = 2; i <= n; i++) {\n    const cur = prev1 + prev2;\n    prev2 = prev1;\n    prev1 = cur;\n  }\n  return prev1;\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconst N = 45;\nconsole.log('=== 对比实验：为什么 DP 比暴力递归快？ ===\\n');\n\nconsole.time('② 记忆化递归');\nconsole.log('fibMemo(45) =', fibMemo(N));\nconsole.timeEnd('② 记忆化递归');\n\nconsole.time('③ 自底向上 DP');\nconsole.log('fibDp(45)   =', fibDp(N));\nconsole.timeEnd('③ 自底向上 DP');\n\nconsole.time('④ 空间优化 DP');\nconsole.log('fibOpt(45)  =', fibOpt(N));\nconsole.timeEnd('④ 空间优化 DP');\n\nconsole.log('\\n① 暴力递归没跑——指数爆炸 O(2ⁿ)');\nconsole.log('结论：DP = 空间换时间，消除重复计算');\n",
+        "filePath": "/01-basics/01-fibonacci.ts"
+      },
+      {
+        "id": "01-basics/02-climb-stairs",
+        "title": "1-2 爬楼梯",
+        "section": "01-basics",
+        "order": 2,
+        "code": "/**\n * 📘 1-2 爬楼梯\n *\n * 问题：一次可以爬 1 阶或 2 阶，爬到 n 阶有多少种方法？\n *\n * 思路：最后一步要么从 n-1 跨 1 阶，要么从 n-2 跨 2 阶。\n *   dp[i] = dp[i-1] + dp[i-2]\n *   边界：dp[1] = 1, dp[2] = 2\n *\n * 扩展：如果一次可以爬 1,2,3 阶？\n *   dp[i] = dp[i-1] + dp[i-2] + dp[i-3]\n *\n * ────────────────────────────────────────────────────\n */\n\n// ─── 基础 DP ──────────────────────────────────────\nfunction climbStairs(n: number): number {\n  if (n <= 2) return n;\n  const dp: number[] = [];\n  dp[0] = 0;\n  dp[1] = 1;\n  dp[2] = 2;\n  for (let i = 3; i <= n; i++) {\n    dp[i] = dp[i - 1] + dp[i - 2];\n  }\n  return dp[n];\n}\n\n// ─── 空间优化 ─────────────────────────────────────\nfunction climbStairsOpt(n: number): number {\n  if (n <= 2) return n;\n  let prev2 = 1, prev1 = 2;\n  for (let i = 3; i <= n; i++) {\n    const cur = prev1 + prev2;\n    prev2 = prev1;\n    prev1 = cur;\n  }\n  return prev1;\n}\n\n// ─── 扩展：可爬 1,2,3 阶 ──────────────────────────\nfunction climbStairs3(n: number): number {\n  if (n <= 1) return n;\n  if (n === 2) return 2;\n  if (n === 3) return 4;\n  const dp: number[] = [];\n  dp[1] = 1; dp[2] = 2; dp[3] = 4;\n  for (let i = 4; i <= n; i++) {\n    dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];\n  }\n  return dp[n];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 爬楼梯 ===\\n');\nfor (let n = 1; n <= 10; n++) {\n  console.log(`${n} 阶 → ${climbStairs(n)} 种方法`);\n}\nconsole.log('\\n--- 扩展（1,2,3 步）---');\nfor (let n = 1; n <= 10; n++) {\n  console.log(`${n} 阶 → ${climbStairs3(n)} 种方法`);\n}\n",
+        "filePath": "/01-basics/02-climb-stairs.ts"
+      },
+      {
+        "id": "01-basics/03-min-cost-climb",
+        "title": "1-3 最小花费爬楼梯",
+        "section": "01-basics",
+        "order": 3,
+        "code": "/**\n * 📘 1-3 最小花费爬楼梯\n *\n * 问题：每阶楼梯有 cost[i]，从 i 阶往上爬需付 cost[i]。\n * 可从第 0 或第 1 阶开始，每次爬 1 或 2 阶。求到楼顶的最小花费。\n *\n * 思路：\n *   dp[i] = 到达 i 阶的最小总花费（含本阶 cost）\n *   dp[i] = min(dp[i-1], dp[i-2]) + cost[i]\n *   最终答案 = min(dp[n-1], dp[n-2])  —— 楼顶在 n 阶之后，不需再出发\n *\n * 从\"计数\"到\"求最值\"的转折点。\n *\n * ─── LeetCode 746 ─────────────────────────────────\n */\n\nfunction minCostClimbingStairs(cost: number[]): number {\n  const n = cost.length;\n  if (n === 2) return Math.min(cost[0], cost[1]);\n  const dp: number[] = [];\n  dp[0] = cost[0];\n  dp[1] = cost[1];\n  for (let i = 2; i < n; i++) {\n    dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];\n  }\n  return Math.min(dp[n - 1], dp[n - 2]);\n}\n\n// ─── 空间优化 ─────────────────────────────────────\nfunction minCostClimbingStairsOpt(cost: number[]): number {\n  const n = cost.length;\n  if (n === 2) return Math.min(cost[0], cost[1]);\n  let prev2 = cost[0], prev1 = cost[1];\n  for (let i = 2; i < n; i++) {\n    const cur = Math.min(prev1, prev2) + cost[i];\n    prev2 = prev1;\n    prev1 = cur;\n  }\n  return Math.min(prev1, prev2);\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 最小花费爬楼梯 ===\\n');\nconst cases = [\n  [10, 15, 20],\n  [1, 100, 1, 1, 1, 100, 1, 1, 100, 1],\n];\nfor (const cost of cases) {\n  console.log(`cost = [${cost}] → ${minCostClimbingStairs(cost)}`);\n}\n",
+        "filePath": "/01-basics/03-min-cost-climb.ts"
+      }
+    ]
+  },
+  {
+    "id": "02-2d-grid",
+    "name": "二维网格",
+    "order": 2,
+    "files": [
+      {
+        "id": "02-2d-grid/01-unique-paths",
+        "title": "2-1 唯一路径数（Unique Paths）",
+        "section": "02-2d-grid",
+        "order": 1,
+        "code": "/**\n * 📐 2-1 唯一路径数（Unique Paths）\n *\n * 问题：m×n 网格，从左上走到右下，只能向右或向下，有多少条路？\n *\n * 思路：\n *   到 (i,j) 的最后一步要么从 (i-1,j) 向下，要么从 (i,j-1) 向右。\n *   dp[i][j] = dp[i-1][j] + dp[i][j-1]\n *   边界：第一行和第一列都只有 1 种走法\n *\n * 学习点：一维 DP → 二维 DP 的第一次跨越。\n * 空间优化技巧：滚动数组（一维数组行行更新）\n *\n * ────────────────────────────────────────────────────\n */\n\n// ─── 二维 DP ──────────────────────────────────────\nfunction uniquePaths(m: number, n: number): number {\n  const dp: number[][] = Array.from({ length: m }, () => Array(n).fill(0));\n  for (let j = 0; j < n; j++) dp[0][j] = 1;\n  for (let i = 0; i < m; i++) dp[i][0] = 1;\n  for (let i = 1; i < m; i++) {\n    for (let j = 1; j < n; j++) {\n      dp[i][j] = dp[i - 1][j] + dp[i][j - 1];\n    }\n  }\n  return dp[m - 1][n - 1];\n}\n\n// ─── 空间优化：滚动数组 ───────────────────────────\nfunction uniquePathsOpt(m: number, n: number): number {\n  const dp: number[] = Array(n).fill(1);\n  for (let i = 1; i < m; i++) {\n    for (let j = 1; j < n; j++) {\n      dp[j] = dp[j] + dp[j - 1];\n    }\n  }\n  return dp[n - 1];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 唯一路径数 ===\\n');\nconst tests: [number, number][] = [\n  [3, 7],\n  [3, 2],\n  [3, 3],\n  [1, 1],\n];\nfor (const [m, n] of tests) {\n  console.log(\n    `${m}×${n} → ${uniquePaths(m, n)}（空间优化: ${uniquePathsOpt(m, n)}）`\n  );\n}\n",
+        "filePath": "/02-2d-grid/01-unique-paths.ts"
+      },
+      {
+        "id": "02-2d-grid/02-min-path-sum",
+        "title": "2-2 最小路径和（Minimum Path Sum）",
+        "section": "02-2d-grid",
+        "order": 2,
+        "code": "/**\n * 📐 2-2 最小路径和（Minimum Path Sum）\n *\n * 问题：m×n 网格，每个格子有非负整数，找左上到右下的路径，\n * 只能向右或向下，使路径数字之和最小。\n *\n * 思路：\n *   dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]\n *   边界：第一行只能从左来，第一列只能从上面来\n *\n * 学习点：\"计数\"→\"求最值\"的二维版本。\n * 和 爬楼梯 → 最小花费爬楼梯 是同一思路升级。\n *\n * ─── LeetCode 64 ─────────────────────────────────\n */\n\nfunction minPathSum(grid: number[][]): number {\n  const m = grid.length, n = grid[0].length;\n  const dp: number[][] = Array.from({ length: m }, () => Array(n).fill(0));\n  dp[0][0] = grid[0][0];\n  for (let j = 1; j < n; j++) dp[0][j] = dp[0][j - 1] + grid[0][j];\n  for (let i = 1; i < m; i++) dp[i][0] = dp[i - 1][0] + grid[i][0];\n  for (let i = 1; i < m; i++) {\n    for (let j = 1; j < n; j++) {\n      dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];\n    }\n  }\n  return dp[m - 1][n - 1];\n}\n\n// ─── 空间优化 ─────────────────────────────────────\nfunction minPathSumOpt(grid: number[][]): number {\n  const m = grid.length, n = grid[0].length;\n  const dp: number[] = Array(n).fill(0);\n  dp[0] = grid[0][0];\n  for (let j = 1; j < n; j++) dp[j] = dp[j - 1] + grid[0][j];\n  for (let i = 1; i < m; i++) {\n    dp[0] = dp[0] + grid[i][0];\n    for (let j = 1; j < n; j++) {\n      dp[j] = Math.min(dp[j], dp[j - 1]) + grid[i][j];\n    }\n  }\n  return dp[n - 1];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 最小路径和 ===\\n');\nconst grid1 = [[1,3,1],[1,5,1],[4,2,1]];\nconsole.log('网格:', grid1);\nconsole.log('最小路径和:', minPathSum(grid1), '(期望 7)');\n",
+        "filePath": "/02-2d-grid/02-min-path-sum.ts"
+      }
+    ]
+  },
+  {
+    "id": "03-knapsack",
+    "name": "背包问题",
+    "order": 3,
+    "files": [
+      {
+        "id": "03-knapsack/01-01-knapsack",
+        "title": "3-1 0/1 背包问题",
+        "section": "03-knapsack",
+        "order": 1,
+        "code": "/**\n * 🎒 3-1 0/1 背包问题\n *\n * 问题：N 个物品，每个重 w[i]、价值 v[i]。背包容量 C，每种最多选 1 个。\n * 求最大总价值。\n *\n * 思路：\n *   dp[i][c] = 前 i 个物品，容量 c 时的最大价值\n *   不选 i: dp[i-1][c]\n *   选 i:   dp[i-1][c-w[i]] + v[i]（前提 c >= w[i]）\n *   取二者 max\n *\n * 学习点：这是 DP 最重要的模型。选/不选决策 + 容量维度。\n * 空间优化关键：容量倒序遍历（防止重复选）\n *\n * ────────────────────────────────────────────────────\n */\n\n// ─── 二维 DP ──────────────────────────────────────\nfunction knapsack01(weights: number[], values: number[], capacity: number): number {\n  const n = weights.length;\n  const dp: number[][] = Array.from({ length: n + 1 }, () => Array(capacity + 1).fill(0));\n  for (let i = 1; i <= n; i++) {\n    const w = weights[i - 1], v = values[i - 1];\n    for (let c = 0; c <= capacity; c++) {\n      dp[i][c] = dp[i - 1][c];\n      if (c >= w) dp[i][c] = Math.max(dp[i][c], dp[i - 1][c - w] + v);\n    }\n  }\n  return dp[n][capacity];\n}\n\n// ─── 空间优化（一维，容量倒序） ────────────────────\nfunction knapsack01Opt(weights: number[], values: number[], capacity: number): number {\n  const dp: number[] = Array(capacity + 1).fill(0);\n  for (let i = 0; i < weights.length; i++) {\n    const w = weights[i], v = values[i];\n    for (let c = capacity; c >= w; c--) {\n      dp[c] = Math.max(dp[c], dp[c - w] + v);\n    }\n  }\n  return dp[capacity];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 0/1 背包 ===\\n');\nconst weights = [2, 3, 4, 5], values = [3, 4, 5, 6];\nfor (const cap of [5, 8, 10]) {\n  console.log(`容量 ${cap}: 最大价值 = ${knapsack01(weights, values, cap)}`);\n}\n",
+        "filePath": "/03-knapsack/01-01-knapsack.ts"
+      },
+      {
+        "id": "03-knapsack/01-knapsack",
+        "title": "3-1 0/1 背包问题",
+        "section": "03-knapsack",
+        "order": 1,
+        "code": "/**\n * ============================================================\n * 📘 3-1 0/1 背包问题\n * ============================================================\n *\n * 问题：有 N 个物品，每个物品重 w[i]，价值 v[i]。\n * 背包容量为 C，每种物品最多选 1 个，求最大总价值。\n *\n * 为什么学这个？\n * 0/1 背包是 DP 最重要的模型！没有之一。\n * 它是\"选/不选\"决策的经典代表。\n * 后面很多问题（子集、分割等和子集、目标总和）都是它的变体。\n *\n * 思路：\n *  状态定义：dp[i][c] = 前 i 个物品中，容量为 c 时的最大价值\n *  转移方程：\n *    不选第 i 个物品：dp[i][c] = dp[i-1][c]\n *    选第 i 个物品：  dp[i][c] = dp[i-1][c-w[i]] + v[i]  （前提 c >= w[i]）\n *    取二者最大值\n *  边界：dp[0][c] = 0（没有物品可选）\n *\n *  空间优化：用一维数组，容量从大到小遍历（防止重复选）\n */\n\n// ─── 基础版：二维数组 ──────────────────────────────────\nfunction knapsack01(weights: number[], values: number[], capacity: number): number {\n  const n = weights.length;\n  // dp[i][c] = 前 i 个物品，容量 c 的最大价值\n  const dp: number[][] = Array.from({ length: n + 1 }, () => Array(capacity + 1).fill(0));\n\n  for (let i = 1; i <= n; i++) {\n    const w = weights[i - 1];\n    const v = values[i - 1];\n    for (let c = 0; c <= capacity; c++) {\n      // 不选第 i 个物品\n      dp[i][c] = dp[i - 1][c];\n      // 如果放得下，尝试选第 i 个物品\n      if (c >= w) {\n        dp[i][c] = Math.max(dp[i][c], dp[i - 1][c - w] + v);\n      }\n    }\n  }\n\n  return dp[n][capacity];\n}\n\n// ─── 空间优化版：一维数组，容量倒序遍历 ────────────────\n// 关键：为什么容量要倒序？\n//   dp[c] 在更新时，dp[c-w] 必须是\"上一行\"的值\n//   如果从左到右，dp[c-w] 已经被当前行更新了，相当于\"选了多次\"\n//   从右到左，保证 dp[c-w] 还是上一行的值\nfunction knapsack01Opt(weights: number[], values: number[], capacity: number): number {\n  const n = weights.length;\n  const dp: number[] = Array(capacity + 1).fill(0);\n\n  for (let i = 0; i < n; i++) {\n    const w = weights[i];\n    const v = values[i];\n    // 容量从大到小遍历\n    for (let c = capacity; c >= w; c--) {\n      dp[c] = Math.max(dp[c], dp[c - w] + v);\n    }\n  }\n\n  return dp[capacity];\n}\n\n// ─── 测试 ──────────────────────────────────────────────\nconsole.log('=== 0/1 背包问题 ===\\n');\n\n// 物品：重量 [2, 3, 4, 5]，价值 [3, 4, 5, 6]\n// 容量 5：最优选 物品2(3重4价) + 物品1(2重3价) = 总价 7\nconst weights = [2, 3, 4, 5];\nconst values = [3, 4, 5, 6];\nconst capacities = [5, 8, 10];\n\nfor (const cap of capacities) {\n  const r1 = knapsack01(weights, values, cap);\n  const r2 = knapsack01Opt(weights, values, cap);\n  console.log(`容量 ${cap}: 最大价值 = ${r1}（空间优化: ${r2}）`);\n}\n\nconsole.log('\\n💡 关键认识：');\nconsole.log('  0/1 背包 = 每个物品选/不选，容量维度倒序遍历');\nconsole.log('  这是\"选/不选\"决策模型的原型');\nconsole.log('  LeetCode 416(分割等和子集)、494(目标和) 都是它的变体');\nconsole.log('\\n  🔑 容量倒序的原因：');\nconsole.log('    一维数组 dp[c] 存储的是\"上一行\"的值');\nconsole.log('    如果正序遍历，dp[c-w] 会被当前行覆盖');\nconsole.log('    相当于物品被选了多次（变成完全背包了）');",
+        "filePath": "/03-knapsack/01-knapsack.ts"
+      },
+      {
+        "id": "03-knapsack/02-unbounded",
+        "title": "3-2 完全背包（Unbounded Knapsack）",
+        "section": "03-knapsack",
+        "order": 2,
+        "code": "/**\n * 🎒 3-2 完全背包（Unbounded Knapsack）\n *\n * 问题：N 种物品，每种重 w[i]、价值 v[i]。背包容量 C，每种无限个。\n * 求最大总价值。\n *\n * 思路：\n *   dp[i][c] = max(dp[i-1][c], dp[i][c-w[i]] + v[i])\n *   选了 i 后还可以继续选 → 用 dp[i][c-w] 而不是 dp[i-1][c-w]\n *\n * 和 0/1 背包的唯一区别：容量遍历方向！\n *   0/1 背包：倒序（不能重复选）\n *   完全背包：正序（可以重复选）\n *\n * ────────────────────────────────────────────────────\n */\n\n// ─── 二维 DP ──────────────────────────────────────\nfunction unboundedKnapsack(weights: number[], values: number[], capacity: number): number {\n  const n = weights.length;\n  const dp: number[][] = Array.from({ length: n + 1 }, () => Array(capacity + 1).fill(0));\n  for (let i = 1; i <= n; i++) {\n    const w = weights[i - 1], v = values[i - 1];\n    for (let c = 0; c <= capacity; c++) {\n      dp[i][c] = dp[i - 1][c];\n      if (c >= w) dp[i][c] = Math.max(dp[i][c], dp[i][c - w] + v);\n    }\n  }\n  return dp[n][capacity];\n}\n\n// ─── 空间优化（一维，容量正序） ────────────────────\nfunction unboundedKnapsackOpt(weights: number[], values: number[], capacity: number): number {\n  const dp: number[] = Array(capacity + 1).fill(0);\n  for (let i = 0; i < weights.length; i++) {\n    const w = weights[i], v = values[i];\n    for (let c = w; c <= capacity; c++) {\n      dp[c] = Math.max(dp[c], dp[c - w] + v);\n    }\n  }\n  return dp[capacity];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 完全背包 ===\\n');\nconst weights = [2, 3, 4], values = [3, 4, 5];\nfor (const cap of [5, 6, 10, 15]) {\n  console.log(`容量 ${cap}: 最大价值 = ${unboundedKnapsack(weights, values, cap)}`);\n}\n",
+        "filePath": "/03-knapsack/02-unbounded.ts"
+      },
+      {
+        "id": "03-knapsack/03-coin-change",
+        "title": "3-3 零钱兑换（Coin Change）",
+        "section": "03-knapsack",
+        "order": 3,
+        "code": "/**\n * 🎒 3-3 零钱兑换（Coin Change）\n *\n * 问题：面额 coins[]（无限用），求组成 amount 的最少硬币数。\n * 无法组成则返回 -1。\n *\n * 思路：\n *   dp[a] = 组成金额 a 的最少硬币数\n *   dp[a] = min(dp[a], dp[a - c] + 1) 对每个硬币 c\n *   边界：dp[0] = 0，其他初始化为 Infinity\n *\n * 变体：\n *   组合数（LeetCode 518）：外循环硬币，内循环金额\n *   排列数（LeetCode 377）：外循环金额，内循环硬币\n *\n * ─── LeetCode 322 ─────────────────────────────────\n */\n\n// ─── 最少硬币数 ──────────────────────────────────\nfunction coinChange(coins: number[], amount: number): number {\n  const dp: number[] = Array(amount + 1).fill(Infinity);\n  dp[0] = 0;\n  for (const coin of coins) {\n    for (let a = coin; a <= amount; a++) {\n      if (dp[a - coin] !== Infinity) {\n        dp[a] = Math.min(dp[a], dp[a - coin] + 1);\n      }\n    }\n  }\n  return dp[amount] === Infinity ? -1 : dp[amount];\n}\n\n// ─── 组合数（LeetCode 518）──────────────────────────\nfunction coinChangeCombinations(coins: number[], amount: number): number {\n  const dp: number[] = Array(amount + 1).fill(0);\n  dp[0] = 1;\n  for (const coin of coins) {\n    for (let a = coin; a <= amount; a++) {\n      dp[a] += dp[a - coin];\n    }\n  }\n  return dp[amount];\n}\n\n// ─── 排列数（LeetCode 377）──────────────────────────\nfunction coinChangePermutations(coins: number[], amount: number): number {\n  const dp: number[] = Array(amount + 1).fill(0);\n  dp[0] = 1;\n  for (let a = 1; a <= amount; a++) {\n    for (const coin of coins) {\n      if (a >= coin) dp[a] += dp[a - coin];\n    }\n  }\n  return dp[amount];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 零钱兑换 ===\\n');\nconsole.log('coins=[1,2,5], amount=11 →', coinChange([1,2,5], 11), '(期望 3: 5+5+1)');\nconsole.log('coins=[2], amount=3 →', coinChange([2], 3), '(期望 -1)');\nconsole.log('coins=[1,2,5], amount=5 组合数:', coinChangeCombinations([1,2,5], 5), '(期望 4)');\nconsole.log('coins=[1,2,3], amount=4 排列数:', coinChangePermutations([1,2,3], 4), '(期望 7)');\n",
+        "filePath": "/03-knapsack/03-coin-change.ts"
+      }
+    ]
+  },
+  {
+    "id": "04-sequence",
+    "name": "序列问题",
+    "order": 4,
+    "files": [
+      {
+        "id": "04-sequence/01-lis",
+        "title": "4-1 最长递增子序列（LIS）",
+        "section": "04-sequence",
+        "order": 1,
+        "code": "/**\n * 🧬 4-1 最长递增子序列（LIS）\n *\n * 问题：给定数组，找最长严格递增子序列的长度（不要求连续，顺序不变）\n *\n * 思路（O(n²) DP）：\n *   dp[i] = 以 nums[i] 结尾的 LIS 长度\n *   对每个 i，看前面 j < i，如果 nums[j] < nums[i]，则 dp[i] = max(dp[i], dp[j] + 1)\n *   每个元素至少为 1\n *\n * 进阶（O(n log n) 二分）：\n *   维护 tails[k] = 长度为 k+1 的递增子序列的末尾最小值\n *   对每个 x 二分查找第一个 >= x 的位置替换\n *   tails 不一定是 LIS，但长度 = LIS 长度\n *\n * ─── LeetCode 300 ─────────────────────────────────\n */\n\n// ─── O(n²) DP ─────────────────────────────────────\nfunction lengthOfLIS(nums: number[]): number {\n  const n = nums.length;\n  if (n === 0) return 0;\n  const dp: number[] = Array(n).fill(1);\n  let maxLen = 1;\n  for (let i = 0; i < n; i++) {\n    for (let j = 0; j < i; j++) {\n      if (nums[j] < nums[i]) dp[i] = Math.max(dp[i], dp[j] + 1);\n    }\n    maxLen = Math.max(maxLen, dp[i]);\n  }\n  return maxLen;\n}\n\n// ─── O(n log n) 贪心 + 二分 ───────────────────────\nfunction lengthOfLISFast(nums: number[]): number {\n  const tails: number[] = [];\n  for (const x of nums) {\n    let l = 0, r = tails.length;\n    while (l < r) {\n      const m = (l + r) >> 1;\n      if (tails[m] < x) l = m + 1;\n      else r = m;\n    }\n    if (l === tails.length) tails.push(x);\n    else tails[l] = x;\n  }\n  return tails.length;\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 最长递增子序列 ===\\n');\nconst cases = [\n  [10,9,2,5,3,7,101,18], // [2,3,7,101] → 4\n  [0,1,0,3,2,3],          // [0,1,2,3] → 4\n  [7,7,7,7],              // 严格递增 → 1\n];\nfor (const nums of cases) {\n  console.log(`[${nums}] → LIS = ${lengthOfLIS(nums)}（二分: ${lengthOfLISFast(nums)}）`);\n}\n",
+        "filePath": "/04-sequence/01-lis.ts"
+      },
+      {
+        "id": "04-sequence/02-lcs",
+        "title": "4-2 最长公共子序列（LCS）",
+        "section": "04-sequence",
+        "order": 2,
+        "code": "/**\n * 🧬 4-2 最长公共子序列（LCS）\n *\n * 问题：两个字符串 text1、text2，求最长公共子序列长度。\n *\n * 思路：\n *   dp[i][j] = text1[0..i-1] 和 text2[0..j-1] 的 LCS 长度\n *   如果 text1[i-1] == text2[j-1]：dp[i][j] = dp[i-1][j-1] + 1\n *   否则：dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n *   边界：dp[0][*] = 0, dp[*][0] = 0\n *\n * 学习点：双序列 DP 的经典代表。编辑距离、最长回文子序列都是它的变体。\n *\n * ─── LeetCode 1143 ────────────────────────────────\n */\n\n// ─── 二维 DP ──────────────────────────────────────\nfunction longestCommonSubsequence(text1: string, text2: string): number {\n  const m = text1.length, n = text2.length;\n  const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));\n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (text1[i - 1] === text2[j - 1]) {\n        dp[i][j] = dp[i - 1][j - 1] + 1;\n      } else {\n        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);\n      }\n    }\n  }\n  return dp[m][n];\n}\n\n// ─── 空间优化 ─────────────────────────────────────\nfunction longestCommonSubsequenceOpt(text1: string, text2: string): number {\n  const m = text1.length, n = text2.length;\n  if (n > m) return longestCommonSubsequenceOpt(text2, text1);\n  const dp: number[] = Array(n + 1).fill(0);\n  for (let i = 1; i <= m; i++) {\n    let prev = 0;\n    for (let j = 1; j <= n; j++) {\n      const temp = dp[j];\n      if (text1[i - 1] === text2[j - 1]) dp[j] = prev + 1;\n      else dp[j] = Math.max(dp[j], dp[j - 1]);\n      prev = temp;\n    }\n  }\n  return dp[n];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 最长公共子序列 ===\\n');\nconst tests: [string, string][] = [\n  ['abcde', 'ace'],\n  ['abc', 'abc'],\n  ['abc', 'def'],\n  ['ezupkr', 'ubmrapg'],\n];\nfor (const [s1, s2] of tests) {\n  console.log(`'${s1}' vs '${s2}' → LCS = ${longestCommonSubsequence(s1, s2)}`);\n}\n",
+        "filePath": "/04-sequence/02-lcs.ts"
+      },
+      {
+        "id": "04-sequence/03-edit-distance",
+        "title": "4-3 编辑距离（Edit Distance）",
+        "section": "04-sequence",
+        "order": 3,
+        "code": "/**\n * 🧬 4-3 编辑距离（Edit Distance）\n *\n * 问题：word1 → word2，可通过插入、删除、替换三种操作，求最少操作次数。\n *\n * 思路：\n *   dp[i][j] = word1[0..i-1] → word2[0..j-1] 的最小编辑距离\n *   如果 word1[i-1] == word2[j-1]：dp[i][j] = dp[i-1][j-1]\n *   否则：\n *     dp[i][j] = min(\n *       dp[i-1][j] + 1,     // 删除 word1[i-1]\n *       dp[i][j-1] + 1,     // 插入 word2[j-1]\n *       dp[i-1][j-1] + 1    // 替换\n *     )\n *   边界：dp[i][0] = i, dp[0][j] = j\n *\n * 学习点：LCS + 三种操作代价。搜索引擎拼写纠正、DNA 比对的基础。\n *\n * ─── LeetCode 72 ─────────────────────────────────\n */\n\nfunction minDistance(word1: string, word2: string): number {\n  const m = word1.length, n = word2.length;\n  const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));\n  for (let i = 1; i <= m; i++) dp[i][0] = i;\n  for (let j = 1; j <= n; j++) dp[0][j] = j;\n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (word1[i - 1] === word2[j - 1]) {\n        dp[i][j] = dp[i - 1][j - 1];\n      } else {\n        dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + 1);\n      }\n    }\n  }\n  return dp[m][n];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 编辑距离 ===\\n');\nconst tests: [string, string][] = [\n  ['horse', 'ros'],\n  ['intention', 'execution'],\n  ['', 'a'],\n  ['abc', 'abc'],\n];\nfor (const [w1, w2] of tests) {\n  console.log(`'${w1}' → '${w2}' = ${minDistance(w1, w2)} 步`);\n}\n",
+        "filePath": "/04-sequence/03-edit-distance.ts"
+      }
+    ]
+  },
+  {
+    "id": "05-interval",
+    "name": "区间 DP",
+    "order": 5,
+    "files": [
+      {
+        "id": "05-interval/01-palindrome",
+        "title": "5-1 最长回文子序列（Longest Palindromic Subsequence）",
+        "section": "05-interval",
+        "order": 1,
+        "code": "/**\n * 🔗 5-1 最长回文子序列（Longest Palindromic Subsequence）\n *\n * 问题：给定字符串 s，找最长回文子序列长度（不要求连续，顺序不变）\n *\n * 思路：\n *   dp[i][j] = s[i..j] 的最长回文子序列长度\n *   如果 s[i] == s[j]：dp[i][j] = dp[i+1][j-1] + 2\n *   否则：dp[i][j] = max(dp[i+1][j], dp[i][j-1])\n *   边界：dp[i][i] = 1\n *\n * 学习点：区间 DP 入门。大区间由小区间推导。\n * 遍历顺序：i 从大到小，j 从小到大（因为依赖 i+1 和 j-1）\n *\n * ─── LeetCode 516 ─────────────────────────────────\n */\n\nfunction longestPalindromeSubseq(s: string): number {\n  const n = s.length;\n  if (n <= 1) return n;\n  const dp: number[][] = Array.from({ length: n }, () => Array(n).fill(0));\n  for (let i = 0; i < n; i++) dp[i][i] = 1;\n  for (let i = n - 1; i >= 0; i--) {\n    for (let j = i + 1; j < n; j++) {\n      if (s[i] === s[j]) {\n        dp[i][j] = (i + 1 <= j - 1 ? dp[i + 1][j - 1] : 0) + 2;\n      } else {\n        dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);\n      }\n    }\n  }\n  return dp[0][n - 1];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 最长回文子序列 ===\\n');\nconst tests = ['bbbab', 'cbbd', 'a', 'aabaa'];\nfor (const s of tests) {\n  console.log(`'${s}' → ${longestPalindromeSubseq(s)}`);\n}\n",
+        "filePath": "/05-interval/01-palindrome.ts"
+      },
+      {
+        "id": "05-interval/02-stone-game",
+        "title": "5-2 石子合并（区间 DP 经典问题）",
+        "section": "05-interval",
+        "order": 2,
+        "code": "/**\n * 🔗 5-2 石子合并（区间 DP 经典问题）\n *\n * 问题：一排石子，每次合并相邻两堆，代价为两堆重量之和。\n * 求全部合并成一堆的最小总代价。\n *\n * 思路：\n *   dp[i][j] = 合并石子 i..j 的最小代价\n *   枚举分割点 k (i ≤ k < j)：\n *     dp[i][j] = min(dp[i][k] + dp[k+1][j] + sum[i][j])\n *   其中 sum[i][j] 用前缀和快速计算\n *\n * 学习点：区间 DP 三要素：\n *   ① 按区间长度从小到大遍历\n *   ② 枚举区间内的分割点\n *   ③ 合并左右子区间的结果\n *\n * ────────────────────────────────────────────────────\n */\n\nfunction stoneGame(stones: number[]): number {\n  const n = stones.length;\n  if (n <= 1) return 0;\n  const prefix: number[] = Array(n + 1).fill(0);\n  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + stones[i];\n  const sum = (i: number, j: number) => prefix[j + 1] - prefix[i];\n  const dp: number[][] = Array.from({ length: n }, () => Array(n).fill(0));\n  for (let len = 2; len <= n; len++) {\n    for (let i = 0; i + len - 1 < n; i++) {\n      const j = i + len - 1;\n      dp[i][j] = Infinity;\n      for (let k = i; k < j; k++) {\n        dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k + 1][j] + sum(i, j));\n      }\n    }\n  }\n  return dp[0][n - 1];\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 石子合并 ===\\n');\nconst tests = [\n  [1, 2, 3, 4], // 19\n  [4, 1, 1, 4], // 18\n  [3, 5, 2],    // 17\n  [1, 1],       // 2\n  [5],          // 0\n];\nfor (const stones of tests) {\n  console.log(`[${stones}] → ${stoneGame(stones)}`);\n}\n",
+        "filePath": "/05-interval/02-stone-game.ts"
+      }
+    ]
+  },
+  {
+    "id": "06-advanced",
+    "name": "进阶模式",
+    "order": 6,
+    "files": [
+      {
+        "id": "06-advanced/01-tree-dp",
+        "title": "6-1 树形 DP（Tree DP）",
+        "section": "06-advanced",
+        "order": 1,
+        "code": "/**\n * 🚀 6-1 树形 DP（Tree DP）\n *\n * 问题：打家劫舍 III —— 树上偷东西，不能偷相邻节点，求最大金额。\n *\n * 思路：\n *   后序遍历，每个节点返回两个状态 [偷, 不偷]\n *   偷 node：node.val + 不偷左子 + 不偷右子\n *   不偷 node：max(偷左子, 不偷左子) + max(偷右子, 不偷右子)\n *\n * 学习点：树形 DP = 后序遍历 + 每个节点做决策。\n * 树的结构天然适合 DP：子结果递归计算，父结果组合子结果。\n *\n * ─── LeetCode 337 ─────────────────────────────────\n */\n\ninterface TreeNode {\n  val: number;\n  left: TreeNode | null;\n  right: TreeNode | null;\n}\n\nfunction rob(root: TreeNode | null): number {\n  function dfs(node: TreeNode | null): [number, number] {\n    if (!node) return [0, 0];\n    const [lRob, lNot] = dfs(node.left);\n    const [rRob, rNot] = dfs(node.right);\n    const robCur = node.val + lNot + rNot;\n    const notRob = Math.max(lRob, lNot) + Math.max(rRob, rNot);\n    return [robCur, notRob];\n  }\n  return Math.max(...dfs(root));\n}\n\n// ─── 测试 ─────────────────────────────────────────\nfunction buildTree(values: (number | null)[]): TreeNode | null {\n  if (!values.length || values[0] === null) return null;\n  const root: TreeNode = { val: values[0]!, left: null, right: null };\n  const queue: (TreeNode | null)[] = [root];\n  let i = 1;\n  while (queue.length > 0 && i < values.length) {\n    const node = queue.shift()!;\n    if (node) {\n      if (i < values.length && values[i] !== null) {\n        node.left = { val: values[i]!, left: null, right: null };\n        queue.push(node.left);\n      }\n      i++;\n      if (i < values.length && values[i] !== null) {\n        node.right = { val: values[i]!, left: null, right: null };\n        queue.push(node.right);\n      }\n      i++;\n    }\n  }\n  return root;\n}\n\nconsole.log('=== 树形 DP ===\\n');\nconsole.log('[3,2,3,null,3,null,1] →', rob(buildTree([3,2,3,null,3,null,1])), '(期望 7)');\nconsole.log('[3,4,5,1,3,null,1] →', rob(buildTree([3,4,5,1,3,null,1])), '(期望 9)');\n",
+        "filePath": "/06-advanced/01-tree-dp.ts"
+      },
+      {
+        "id": "06-advanced/02-bitmask-dp",
+        "title": "6-2 状态压缩 DP（Bitmask DP）",
+        "section": "06-advanced",
+        "order": 2,
+        "code": "/**\n * 🚀 6-2 状态压缩 DP（Bitmask DP）\n *\n * 问题：旅行商问题（TSP）—— n 个城市距离矩阵，从 0 出发每个城市\n * 恰好访问一次，最后回到 0，求最短路径。\n *\n * 思路：\n *   dp[mask][i] = 已访问城市集合为 mask，当前在 i 的最小距离\n *   mask 是一个整数，第 k 位 = 1 表示访问过城市 k\n *   dp[mask][i] = min(dp[mask ^ (1<<i)][j] + dist[j][i])\n *   边界：dp[1][0] = 0\n *   答案：min(dp[full][i] + dist[i][0])\n *\n * 适用条件：n ≤ 20（2²⁰ ≈ 1M 状态可接受）\n *\n * ────────────────────────────────────────────────────\n */\n\nfunction tsp(dist: number[][]): number {\n  const n = dist.length;\n  const total = 1 << n;\n  const dp: number[][] = Array.from({ length: total }, () => Array(n).fill(Infinity));\n  dp[1][0] = 0;\n  for (let mask = 1; mask < total; mask++) {\n    if ((mask & 1) === 0) continue;\n    for (let i = 0; i < n; i++) {\n      if ((mask & (1 << i)) === 0) continue;\n      const prev = mask ^ (1 << i);\n      for (let j = 0; j < n; j++) {\n        if ((prev & (1 << j)) === 0) continue;\n        dp[mask][i] = Math.min(dp[mask][i], dp[prev][j] + dist[j][i]);\n      }\n    }\n  }\n  const full = total - 1;\n  let ans = Infinity;\n  for (let i = 1; i < n; i++) ans = Math.min(ans, dp[full][i] + dist[i][0]);\n  return ans;\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 状态压缩 DP：TSP ===\\n');\nconst dist = [\n  [0, 10, 15, 20],\n  [10, 0, 35, 25],\n  [15, 35, 0, 30],\n  [20, 25, 30, 0],\n];\nconsole.log('4 城市 TSP:', tsp(dist), '(期望 80: 0→1→3→2→0)');\n",
+        "filePath": "/06-advanced/02-bitmask-dp.ts"
+      },
+      {
+        "id": "06-advanced/03-digit-dp",
+        "title": "6-3 数位 DP（Digit DP）",
+        "section": "06-advanced",
+        "order": 3,
+        "code": "/**\n * 🚀 6-3 数位 DP（Digit DP）\n *\n * 问题：统计 [1, n] 范围内不含数字 4 的数字个数。\n *\n * 思路：\n *   将数字转成位数组，DFS 按位处理：\n *     dfs(pos, tight, has4)\n *        pos: 当前位（高位到低位）\n *        tight: 是否贴着 n 的上界\n *        has4: 是否已有数字 4\n *   记忆化 (pos, tight, has4) 避免重复计算。\n *\n * 统计 [L, R] = count(R) - count(L-1)\n *\n * 适用场景：大范围数字统计，n 可达 10¹⁸\n *\n * ────────────────────────────────────────────────────\n */\n\nfunction countWithoutFour(n: number): number {\n  const digits = String(n).split('').map(Number);\n  const memo = new Map<string, number>();\n  function dfs(pos: number, tight: boolean, has4: boolean): number {\n    if (pos === digits.length) return has4 ? 0 : 1;\n    const key = `${pos}_${tight}_${has4}`;\n    if (memo.has(key)) return memo.get(key)!;\n    const limit = tight ? digits[pos] : 9;\n    let total = 0;\n    for (let d = 0; d <= limit; d++) {\n      total += dfs(pos + 1, tight && d === limit, has4 || d === 4);\n    }\n    memo.set(key, total);\n    return total;\n  }\n  return dfs(0, true, false) - 1; // 减 0\n}\n\nfunction countRangeWithoutFour(L: number, R: number): number {\n  return countWithoutFour(R) - countWithoutFour(L - 1);\n}\n\n// ─── 测试 ─────────────────────────────────────────\nconsole.log('=== 数位 DP：不含 4 ===\\n');\nconsole.log('[1, 10] :', countWithoutFour(10), '(期望 9)');\nconsole.log('[1, 100] :', countWithoutFour(100), '(期望 81)');\nconsole.log('[4, 15]  :', countRangeWithoutFour(4, 15), '(期望 10: 4,14 排除)');\nconsole.log('[1, 1000]:', countWithoutFour(1000), '(期望 729)');\n",
+        "filePath": "/06-advanced/03-digit-dp.ts"
+      }
+    ]
+  }
+]
