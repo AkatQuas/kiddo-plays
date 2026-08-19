@@ -1,0 +1,15 @@
+{
+  "id": "ch_06_window_functions",
+  "title": "窗口函数",
+  "category": "中级篇",
+  "order": 6,
+  "theory": "## 窗口函数\n\n窗口函数对一组相关的行进行计算，但不合并行（与聚合函数不同）。\n\n### 常用函数\n- `ROW_NUMBER()`, `RANK()`, `DENSE_RANK()`\n- `LAG()`, `LEAD()`\n- 聚合窗口: `SUM() OVER()`, `AVG() OVER()`\n\n### 语法\n```sql\nfunction() OVER (PARTITION BY col ORDER BY col)\n```",
+  "learningObjectives": ["使用 ROW_NUMBER 和 RANK 排名", "掌握 LAG/LEAD 同比环比", "理解 PARTITION BY 分区"],
+  "dataset": { "tables": ["users", "orders"], "description": "电商用户与订单数据" },
+  "examples": [
+    { "label": "订单金额排名", "sql": "SELECT id, amount, RANK() OVER (ORDER BY amount DESC) AS rank FROM orders;" },
+    { "label": "用户内订单排名", "sql": "SELECT user_id, amount, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY amount DESC) AS rn FROM orders;" },
+    { "label": "累计金额", "sql": "SELECT id, amount, SUM(amount) OVER (ORDER BY id) AS running_total FROM orders;" }
+  ],
+  "initialSQL": "SELECT id, amount, RANK() OVER (ORDER BY amount DESC) AS rank FROM orders;"
+}

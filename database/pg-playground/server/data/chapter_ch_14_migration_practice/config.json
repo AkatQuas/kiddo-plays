@@ -1,0 +1,15 @@
+{
+  "id": "ch_14_migration_practice",
+  "title": "迁移实战",
+  "category": "迁移篇",
+  "order": 14,
+  "theory": "## 安全 Schema 变更\n\n生产环境中的 Schema 变更需要谨慎规划。\n\n### 最佳实践\n1. 先添加可空列，再填充数据，最后加约束\n2. 大表变更使用 `ADD COLUMN` 而非重建表\n3. 每次迁移保持原子性，提供 down 脚本\n4. 在 staging 环境验证后再上线\n\n### 🎯 实战场景\n添加 `description` 列到 products 表，填充默认值，然后回滚验证。",
+  "learningObjectives": ["安全添加列", "编写数据填充迁移", "验证回滚策略"],
+  "dataset": { "tables": ["products"], "description": "产品表，用于迁移实战练习" },
+  "features": { "migration": true },
+  "examples": [
+    { "label": "查看产品表", "sql": "SELECT * FROM products;" },
+    { "label": "表列信息", "sql": "SELECT column_name, data_type, is_nullable FROM information_schema.columns WHERE table_schema = 'migration_demo' AND table_name = 'products';" }
+  ],
+  "initialSQL": "SELECT * FROM products;"
+}

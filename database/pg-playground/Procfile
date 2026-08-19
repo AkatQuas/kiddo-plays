@@ -1,0 +1,2 @@
+server: cd server && SERVER_PORT=3001 npm run start:dev
+web: cd web && npm run dev

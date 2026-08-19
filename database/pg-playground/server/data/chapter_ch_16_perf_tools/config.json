@@ -1,0 +1,16 @@
+{
+  "id": "ch_16_perf_tools",
+  "title": "性能诊断工具",
+  "category": "性能优化篇",
+  "order": 16,
+  "theory": "## PostgreSQL 性能诊断\n\n### pg_stat_activity\n查看当前活动会话、等待事件和正在执行的查询。\n\n### pg_stat_statements\n统计所有 SQL 的执行次数、总时间、平均时间（需启用扩展）。\n\n### 慢查询日志\n通过 `log_min_duration_statement` 记录慢查询。\n\n### 💡 提示\n`pg_stat_statements` 在数据库初始化时已启用。",
+  "learningObjectives": ["使用 pg_stat_activity 监控会话", "分析 pg_stat_statements", "定位慢查询"],
+  "dataset": { "tables": ["users", "orders"], "description": "电商用户与订单数据" },
+  "examples": [
+    { "label": "活动会话", "sql": "SELECT pid, usename, state, wait_event_type, left(query, 80) AS query FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid();" },
+    { "label": "慢查询统计", "sql": "SELECT query, calls, total_exec_time, mean_exec_time FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 10;" },
+    { "label": "表扫描统计", "sql": "SELECT relname, seq_scan, idx_scan, n_live_tup FROM pg_stat_user_tables WHERE schemaname = current_schema();" },
+    { "label": "索引使用", "sql": "SELECT indexrelname, idx_scan, idx_tup_read FROM pg_stat_user_indexes WHERE schemaname = current_schema();" }
+  ],
+  "initialSQL": "SELECT pid, state, wait_event_type, left(query, 100) AS query FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid();"
+}

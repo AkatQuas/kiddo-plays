@@ -1,0 +1,14 @@
+{
+  "id": "ch_07_cte_recursive",
+  "title": "CTE 递归",
+  "category": "中级篇",
+  "order": 7,
+  "theory": "## WITH RECURSIVE\n\n递归 CTE 用于查询树形或图结构数据。\n\n### 基本结构\n```sql\nWITH RECURSIVE tree AS (\n  SELECT ... FROM table WHERE parent_id IS NULL  -- 锚点\n  UNION ALL\n  SELECT ... FROM table t JOIN tree ON ...       -- 递归\n) SELECT * FROM tree;\n```\n\n### 💡 提示\n递归深度默认无限制，可设置 `max_recursion` 防止无限循环。",
+  "learningObjectives": ["编写 WITH RECURSIVE 查询", "查询树形组织架构", "理解锚点和递归部分"],
+  "dataset": { "tables": ["departments"], "description": "部门组织架构树，parent_id 指向父部门" },
+  "examples": [
+    { "label": "组织架构树", "sql": "WITH RECURSIVE org AS (\n  SELECT id, name, parent_id, 0 AS depth FROM departments WHERE parent_id IS NULL\n  UNION ALL\n  SELECT d.id, d.name, d.parent_id, org.depth + 1\n  FROM departments d JOIN org ON d.parent_id = org.id\n) SELECT * FROM org ORDER BY depth, id;" },
+    { "label": "子部门数量", "sql": "WITH RECURSIVE descendants AS (\n  SELECT id, parent_id, id AS root_id FROM departments\n  UNION ALL\n  SELECT d.id, d.parent_id, descendants.root_id\n  FROM departments d JOIN descendants ON d.parent_id = descendants.id\n) SELECT root_id, COUNT(*) - 1 AS descendant_count FROM descendants GROUP BY root_id;" }
+  ],
+  "initialSQL": "WITH RECURSIVE org AS (\n  SELECT id, name, parent_id, 0 AS depth FROM departments WHERE parent_id IS NULL\n  UNION ALL\n  SELECT d.id, d.name, d.parent_id, org.depth + 1\n  FROM departments d JOIN org ON d.parent_id = org.id\n) SELECT * FROM org ORDER BY depth, id;"
+}

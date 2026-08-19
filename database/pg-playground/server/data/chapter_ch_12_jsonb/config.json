@@ -1,0 +1,16 @@
+{
+  "id": "ch_12_jsonb",
+  "title": "JSONB 高级操作",
+  "category": "高级篇",
+  "order": 12,
+  "theory": "## JSONB 数据类型\n\nJSONB 是 PostgreSQL 的二进制 JSON 格式，支持索引和高效查询。\n\n### 常用操作\n- `->` 获取 JSON 对象字段\n- `->>` 获取文本值\n- `@>` 包含判断\n- `jsonb_path_query` 路径查询\n\n### 🎯 最佳实践\n对频繁查询的 JSONB 字段创建 GIN 索引。",
+  "learningObjectives": ["JSONB 查询和过滤", "创建 GIN 索引", "使用路径表达式"],
+  "dataset": { "tables": ["documents"], "description": "文档表，metadata 和 tags 为 JSONB 字段" },
+  "examples": [
+    { "label": "查询 JSON 字段", "sql": "SELECT title, metadata->>'author' AS author FROM documents;" },
+    { "label": "JSONB 包含", "sql": "SELECT title FROM documents WHERE metadata @> '{\"category\": \"api\"}';" },
+    { "label": "标签查询", "sql": "SELECT title, tags FROM documents WHERE tags ? 'tutorial';" },
+    { "label": "路径查询", "sql": "SELECT title, metadata->'topics' FROM documents WHERE metadata ? 'topics';" }
+  ],
+  "initialSQL": "SELECT title, metadata->>'author' AS author, metadata->>'category' AS category FROM documents;"
+}

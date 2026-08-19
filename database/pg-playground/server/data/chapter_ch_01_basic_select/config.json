@@ -1,0 +1,24 @@
+{
+  "id": "ch_01_basic_select",
+  "title": "查询基础",
+  "category": "基础篇",
+  "order": 1,
+  "theory": "## SELECT 语句基础\n\n`SELECT` 是 SQL 中最常用的语句，用于从表中检索数据。\n\n### 核心语法\n\n```sql\nSELECT column1, column2 FROM table_name\nWHERE condition\nORDER BY column1\nLIMIT n;\n```\n\n### 💡 提示\n- `SELECT *` 返回所有列，生产环境建议明确列出需要的列\n- `LIMIT` 限制返回行数，避免大表全量扫描\n\n### ⚠️ 注意\n不带 `WHERE` 的查询会扫描全表，大数据量时注意性能。\n\n### 🎯 最佳实践\n始终为查询添加合理的 `LIMIT`，特别是在探索性查询阶段。",
+  "learningObjectives": [
+    "理解 SELECT 基本语法结构",
+    "掌握 WHERE 条件过滤",
+    "学会 ORDER BY 排序和 LIMIT 分页"
+  ],
+  "dataset": {
+    "tables": ["users", "orders"],
+    "description": "电商用户与订单数据，users 表包含用户基本信息，orders 表包含订单记录"
+  },
+  "examples": [
+    { "label": "查询所有用户", "sql": "SELECT * FROM users LIMIT 10;", "tooltip": "SELECT * FROM users LIMIT 10;" },
+    { "label": "查询活跃用户", "sql": "SELECT id, name, email FROM users WHERE status = 'active';", "tooltip": "SELECT id, name, email FROM users WHERE status = 'active';" },
+    { "label": "按注册时间排序", "sql": "SELECT name, created_at FROM users ORDER BY created_at DESC LIMIT 5;", "tooltip": "SELECT name, created_at FROM users ORDER BY created_at DESC LIMIT 5;" },
+    { "label": "查询订单金额", "sql": "SELECT id, user_id, amount, status FROM orders LIMIT 10;", "tooltip": "SELECT id, user_id, amount, status FROM orders LIMIT 10;" }
+  ],
+  "initialSQL": "SELECT * FROM users LIMIT 10;",
+  "clozeTemplate": "SELECT {{column}} FROM users WHERE {{condition}} LIMIT {{limit}};"
+}

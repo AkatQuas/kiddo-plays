@@ -1,0 +1,15 @@
+{
+  "id": "ch_03_joins",
+  "title": "表连接",
+  "category": "基础篇",
+  "order": 3,
+  "theory": "## 表连接 (JOIN)\n\nJOIN 用于组合多个表中的数据。\n\n### 连接类型\n- **INNER JOIN**: 只返回匹配的行\n- **LEFT JOIN**: 返回左表所有行 + 右表匹配\n- **RIGHT JOIN**: 返回右表所有行 + 左表匹配\n- **FULL JOIN**: 返回两表所有行\n\n### 🎯 最佳实践\n始终明确 JOIN 条件，避免笛卡尔积。",
+  "learningObjectives": ["理解 INNER JOIN 和 LEFT JOIN", "掌握多表关联查询", "了解自连接的使用场景"],
+  "dataset": { "tables": ["users", "orders"], "description": "用户表与订单表，通过 user_id 关联" },
+  "examples": [
+    { "label": "用户订单 INNER JOIN", "sql": "SELECT u.name, o.amount, o.status FROM users u INNER JOIN orders o ON u.id = o.user_id LIMIT 10;" },
+    { "label": "LEFT JOIN 含无订单用户", "sql": "SELECT u.name, COUNT(o.id) AS order_count FROM users u LEFT JOIN orders o ON u.id = o.user_id GROUP BY u.id, u.name;" },
+    { "label": "订单详情", "sql": "SELECT o.id, u.name AS customer, o.amount FROM orders o JOIN users u ON o.user_id = u.id WHERE o.status = 'completed';" }
+  ],
+  "initialSQL": "SELECT u.name, o.amount FROM users u JOIN orders o ON u.id = o.user_id LIMIT 10;"
+}

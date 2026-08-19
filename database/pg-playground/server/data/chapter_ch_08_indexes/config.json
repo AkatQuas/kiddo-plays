@@ -1,0 +1,16 @@
+{
+  "id": "ch_08_indexes",
+  "title": "索引基础",
+  "category": "中级篇",
+  "order": 8,
+  "theory": "## 索引基础\n\n索引是加速查询的数据结构，PostgreSQL 默认使用 B-Tree 索引。\n\n### 索引类型\n- B-Tree（默认）\n- Hash\n- GIN / GiST（全文、JSONB）\n\n### 🎯 最佳实践\n- 为高频 WHERE/JOIN 列创建索引\n- 复合索引注意列顺序\n- 使用 `EXPLAIN` 验证索引是否被使用\n\n### ⚠️ 注意\n索引会减慢写入操作，不要过度索引。",
+  "learningObjectives": ["创建 B-Tree 和唯一索引", "理解复合索引", "用 EXPLAIN 验证索引效果"],
+  "dataset": { "tables": ["users", "orders"], "description": "500 用户 + 2000 订单，适合索引性能对比" },
+  "examples": [
+    { "label": "无索引查询", "sql": "SELECT * FROM users WHERE email = 'user100@example.com';" },
+    { "label": "创建索引", "sql": "CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);" },
+    { "label": "索引查询对比", "sql": "EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'user100@example.com';" },
+    { "label": "复合索引", "sql": "CREATE INDEX IF NOT EXISTS idx_orders_user_status ON orders(user_id, status);" }
+  ],
+  "initialSQL": "EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'user100@example.com';"
+}

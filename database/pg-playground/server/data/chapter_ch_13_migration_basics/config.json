@@ -1,0 +1,15 @@
+{
+  "id": "ch_13_migration_basics",
+  "title": "迁移基础",
+  "category": "迁移篇",
+  "order": 13,
+  "theory": "## 数据库迁移\n\n迁移是管理 Schema 变更的版本化方式，确保数据库结构变更可追踪、可回滚。\n\n### 核心概念\n- **Up 脚本**: 应用变更\n- **Down 脚本**: 回滚变更\n- **版本号**: 唯一标识每次迁移\n\n### 本平台\n迁移操作在 `migration_demo` Schema 中执行，使用 `schema_migrations` 表记录历史。\n\n### ⚠️ 注意\n迁移脚本仅允许 DDL 语句（CREATE/ALTER/DROP）。",
+  "learningObjectives": ["理解 Schema 版本控制", "编写 up/down 迁移脚本", "查看迁移历史"],
+  "dataset": { "tables": ["app_users"], "description": "迁移演示用户表" },
+  "features": { "migration": true },
+  "examples": [
+    { "label": "查看迁移历史", "sql": "SELECT * FROM migration_demo.schema_migrations ORDER BY executed_at DESC;" },
+    { "label": "查看表结构", "sql": "SELECT column_name, data_type FROM information_schema.columns WHERE table_schema = 'migration_demo' AND table_name = 'app_users';" }
+  ],
+  "initialSQL": "SELECT * FROM migration_demo.schema_migrations ORDER BY executed_at DESC;"
+}
