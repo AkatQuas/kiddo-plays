@@ -1,0 +1,15 @@
+{
+  "id": "ch_05_subqueries",
+  "title": "子查询",
+  "category": "中级篇",
+  "order": 5,
+  "theory": "## 子查询\n\n子查询是嵌套在另一个查询中的 SELECT 语句。\n\n### 类型\n- **标量子查询**: 返回单个值\n- **行子查询**: 返回单行\n- **表子查询**: 返回多行多列\n- **EXISTS / NOT EXISTS**: 存在性判断\n\n### 💡 提示\nPostgreSQL 优化器通常能将相关子查询转换为 JOIN，但写法上子查询更直观。",
+  "learningObjectives": ["编写标量和表子查询", "使用 EXISTS 进行存在性判断", "理解子查询与 JOIN 的选择"],
+  "dataset": { "tables": ["users", "orders"], "description": "电商用户与订单数据" },
+  "examples": [
+    { "label": "最高金额订单", "sql": "SELECT * FROM orders WHERE amount = (SELECT MAX(amount) FROM orders);" },
+    { "label": "有订单的用户", "sql": "SELECT name FROM users u WHERE EXISTS (SELECT 1 FROM orders o WHERE o.user_id = u.id);" },
+    { "label": "子查询 IN", "sql": "SELECT * FROM users WHERE id IN (SELECT user_id FROM orders WHERE amount > 100);" }
+  ],
+  "initialSQL": "SELECT * FROM orders WHERE amount = (SELECT MAX(amount) FROM orders);"
+}

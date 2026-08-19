@@ -1,0 +1,16 @@
+{
+  "id": "ch_10_locks",
+  "title": "锁机制",
+  "category": "高级篇",
+  "order": 10,
+  "theory": "## 锁机制\n\nPostgreSQL 使用多粒度锁系统保护数据一致性。\n\n### 锁类型\n- 行级锁: `FOR UPDATE`, `FOR SHARE`\n- 表级锁: `ACCESS SHARE` 到 `ACCESS EXCLUSIVE`\n\n### 死锁\n当两个事务互相等待对方持有的锁时发生死锁，PostgreSQL 自动检测并终止其中一个事务。\n\n### 💡 提示\n查看 `pg_locks` 和 `pg_stat_activity` 诊断锁等待。",
+  "learningObjectives": ["理解行级锁和表级锁", "使用 FOR UPDATE 加锁", "观察锁等待和死锁"],
+  "dataset": { "tables": ["users", "orders"], "description": "电商用户与订单数据" },
+  "features": { "lockGraph": true },
+  "examples": [
+    { "label": "查看当前锁", "sql": "SELECT locktype, relation::regclass, mode, granted, pid FROM pg_locks WHERE relation IS NOT NULL LIMIT 20;" },
+    { "label": "FOR UPDATE 加锁", "sql": "SELECT * FROM users WHERE id = 1 FOR UPDATE;" },
+    { "label": "活动会话", "sql": "SELECT pid, state, query, wait_event_type FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid();" }
+  ],
+  "initialSQL": "SELECT locktype, mode, granted, pid FROM pg_locks WHERE relation IS NOT NULL LIMIT 20;"
+}

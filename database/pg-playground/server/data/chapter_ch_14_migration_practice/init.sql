@@ -1,0 +1,1 @@
+-- Migration chapters use migration_demo schema (see server/data/migration_demo/init.sql)

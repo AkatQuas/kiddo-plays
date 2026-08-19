@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: pgplay-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-pgplay}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pgplay_secret}
+      POSTGRES_DB: ${DB_NAME:-pgplayground}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql
+      - ./docker/postgres/init-scripts:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-pgplay} -d ${DB_NAME:-pgplayground}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pgplay-server
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-pgplay}
+      DB_PASSWORD: ${DB_PASSWORD:-pgplay_secret}
+      DB_NAME: ${DB_NAME:-pgplayground}
+      SERVER_PORT: ${SERVER_PORT:-3001}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      SQL_TIMEOUT: ${SQL_TIMEOUT:-30000}
+    ports:
+      - "${SERVER_PORT:-3001}:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: pgplay-web
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    depends_on:
+      - server
+    restart: unless-stopped
+
+volumes:
+  pg_data:

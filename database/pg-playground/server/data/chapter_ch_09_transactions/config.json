@@ -1,0 +1,15 @@
+{
+  "id": "ch_09_transactions",
+  "title": "事务与隔离级别",
+  "category": "高级篇",
+  "order": 9,
+  "theory": "## 事务与 ACID\n\n事务保证数据库操作的原子性、一致性、隔离性和持久性。\n\n### 隔离级别\n1. READ UNCOMMITTED (PG 视为 READ COMMITTED)\n2. **READ COMMITTED** (默认)\n3. **REPEATABLE READ**\n4. **SERIALIZABLE**\n\n### 💡 提示\n使用 `BEGIN` / `COMMIT` / `ROLLBACK` 管理事务。DML 操作在本平台中默认在事务中执行。",
+  "learningObjectives": ["理解 ACID 属性", "掌握事务控制语句", "了解不同隔离级别的行为差异"],
+  "dataset": { "tables": ["users", "orders"], "description": "电商用户与订单数据" },
+  "examples": [
+    { "label": "查看隔离级别", "sql": "SHOW transaction_isolation;" },
+    { "label": "设置隔离级别", "sql": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;" },
+    { "label": "事务内查询", "sql": "SELECT COUNT(*) FROM orders;" }
+  ],
+  "initialSQL": "SHOW transaction_isolation;"
+}

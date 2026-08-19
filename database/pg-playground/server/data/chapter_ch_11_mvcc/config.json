@@ -1,0 +1,16 @@
+{
+  "id": "ch_11_mvcc",
+  "title": "MVCC 与 VACUUM",
+  "category": "高级篇",
+  "order": 11,
+  "theory": "## MVCC 多版本并发控制\n\nPostgreSQL 通过 MVCC 实现读写不阻塞，每行数据有多个版本。\n\n### 关键概念\n- **xmin / xmax**: 事务 ID 标记行版本\n- **死元组**: 被更新/删除后不再可见的旧版本\n- **VACUUM**: 清理死元组，防止表膨胀\n\n### 💡 提示\n使用 `pg_stat_user_tables` 监控 `n_dead_tup` 死元组数量。",
+  "learningObjectives": ["理解 MVCC 原理", "监控表膨胀", "手动执行 VACUUM"],
+  "dataset": { "tables": ["mvcc_demo", "users"], "description": "MVCC 演示表和用户表" },
+  "examples": [
+    { "label": "表膨胀统计", "sql": "SELECT relname, n_live_tup, n_dead_tup, last_vacuum, last_autovacuum FROM pg_stat_user_tables WHERE schemaname = current_schema();" },
+    { "label": "行版本信息", "sql": "SELECT id, value, xmin, xmax FROM mvcc_demo;" },
+    { "label": "手动 VACUUM", "sql": "VACUUM mvcc_demo;" },
+    { "label": "VACUUM 分析", "sql": "VACUUM ANALYZE mvcc_demo;" }
+  ],
+  "initialSQL": "SELECT relname, n_live_tup, n_dead_tup FROM pg_stat_user_tables WHERE schemaname = current_schema();"
+}

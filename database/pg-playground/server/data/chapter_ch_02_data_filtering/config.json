@@ -1,0 +1,17 @@
+{
+  "id": "ch_02_data_filtering",
+  "title": "数据过滤",
+  "category": "基础篇",
+  "order": 2,
+  "theory": "## 数据过滤运算符\n\n使用 `WHERE` 子句配合各种运算符过滤数据。\n\n### 常用运算符\n- 比较: `=`, `<>`, `>`, `<`, `>=`, `<=`\n- 范围: `BETWEEN`, `IN`\n- 模式匹配: `LIKE`, `ILIKE`\n- 空值: `IS NULL`, `IS NOT NULL`\n\n### 💡 提示\n`LIKE '%pattern%'` 无法使用普通 B-Tree 索引，大数据量考虑全文检索。\n\n### ⚠️ 注意\n`NULL` 不能用 `= NULL` 比较，必须使用 `IS NULL`。",
+  "learningObjectives": ["掌握 LIKE 模糊搜索", "使用 BETWEEN 和 IN 进行范围查询", "正确处理 NULL 值"],
+  "dataset": { "tables": ["users", "orders"], "description": "电商用户与订单数据" },
+  "examples": [
+    { "label": "模糊搜索用户名", "sql": "SELECT * FROM users WHERE name LIKE 'A%';" },
+    { "label": "金额范围查询", "sql": "SELECT * FROM orders WHERE amount BETWEEN 50 AND 200;" },
+    { "label": "状态过滤", "sql": "SELECT * FROM users WHERE status IN ('active', 'inactive');" },
+    { "label": "空值检查", "sql": "SELECT * FROM users WHERE email IS NOT NULL;" }
+  ],
+  "initialSQL": "SELECT * FROM users WHERE name LIKE 'A%';",
+  "clozeTemplate": "SELECT * FROM orders WHERE amount {{operator}} {{value}};"
+}

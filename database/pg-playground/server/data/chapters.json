@@ -1,0 +1,18 @@
+[
+  { "id": "ch_01_basic_select", "title": "查询基础", "category": "基础篇", "order": 1 },
+  { "id": "ch_02_data_filtering", "title": "数据过滤", "category": "基础篇", "order": 2 },
+  { "id": "ch_03_joins", "title": "表连接", "category": "基础篇", "order": 3 },
+  { "id": "ch_04_aggregation", "title": "聚合与分组", "category": "基础篇", "order": 4 },
+  { "id": "ch_05_subqueries", "title": "子查询", "category": "中级篇", "order": 5 },
+  { "id": "ch_06_window_functions", "title": "窗口函数", "category": "中级篇", "order": 6 },
+  { "id": "ch_07_cte_recursive", "title": "CTE 递归", "category": "中级篇", "order": 7 },
+  { "id": "ch_08_indexes", "title": "索引基础", "category": "中级篇", "order": 8 },
+  { "id": "ch_09_transactions", "title": "事务与隔离级别", "category": "高级篇", "order": 9 },
+  { "id": "ch_10_locks", "title": "锁机制", "category": "高级篇", "order": 10 },
+  { "id": "ch_11_mvcc", "title": "MVCC 与 VACUUM", "category": "高级篇", "order": 11 },
+  { "id": "ch_12_jsonb", "title": "JSONB 高级操作", "category": "高级篇", "order": 12 },
+  { "id": "ch_13_migration_basics", "title": "迁移基础", "category": "迁移篇", "order": 13 },
+  { "id": "ch_14_migration_practice", "title": "迁移实战", "category": "迁移篇", "order": 14 },
+  { "id": "ch_15_explain_tune", "title": "执行计划调优", "category": "性能优化篇", "order": 15 },
+  { "id": "ch_16_perf_tools", "title": "性能诊断工具", "category": "性能优化篇", "order": 16 }
+]

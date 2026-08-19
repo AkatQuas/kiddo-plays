@@ -1,0 +1,16 @@
+{
+  "id": "ch_15_explain_tune",
+  "title": "执行计划调优",
+  "category": "性能优化篇",
+  "order": 15,
+  "theory": "## EXPLAIN ANALYZE\n\n执行计划展示 PostgreSQL 优化器如何执行查询。\n\n### 关键指标\n- **Cost**: 启动成本 ~ 总成本（相对值）\n- **Rows**: 估计/实际行数\n- **Actual Time**: 实际执行时间\n- **Buffers**: 缓存命中情况\n\n### 常见问题\n- **Seq Scan**: 全表扫描，大数据量需关注\n- **高 Cost 节点**: 占总成本 >30% 的节点需优化\n\n### 🎯 最佳实践\n开启「执行计划」模式后，每次查询自动附带 EXPLAIN ANALYZE。",
+  "learningObjectives": ["阅读 EXPLAIN 输出", "识别 Seq Scan 和 Index Scan", "通过索引优化慢查询"],
+  "dataset": { "tables": ["users", "orders"], "description": "10000 用户 + 50000 订单，适合性能分析" },
+  "examples": [
+    { "label": "慢查询分析", "sql": "SELECT * FROM users WHERE email = 'user5000@example.com';" },
+    { "label": "JOIN 计划", "sql": "SELECT u.name, o.amount FROM users u JOIN orders o ON u.id = o.user_id WHERE u.region = 'north' LIMIT 100;" },
+    { "label": "创建优化索引", "sql": "CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);" },
+    { "label": "对比优化效果", "sql": "EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'user5000@example.com';" }
+  ],
+  "initialSQL": "EXPLAIN ANALYZE SELECT * FROM users WHERE region = 'north' AND status = 'active' LIMIT 100;"
+}
