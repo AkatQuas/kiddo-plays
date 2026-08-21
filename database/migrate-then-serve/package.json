@@ -1,0 +1,12 @@
+{
+  "name": "migrate-then-serve",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "do-migration": "node scripts/do-migration.mjs",
+    "verify": "node scripts/do-migration.mjs verify",
+    "up": "node scripts/do-migration.mjs up",
+    "reset": "node scripts/reset.mjs",
+    "verify-flow": "node scripts/verify-flow.mjs"
+  }
+}
