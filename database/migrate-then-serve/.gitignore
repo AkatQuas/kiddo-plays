@@ -1,0 +1,9 @@
+node_modules/
+.env
+.tmp/
+.migration-gen/
+
+# do-migration / verify-flow 生成；基线 001/002 始终跟踪
+migrator/migrations/*.sql
+!migrator/migrations/001_init.sql
+!migrator/migrations/002_add_status.sql
