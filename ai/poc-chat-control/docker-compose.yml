@@ -1,0 +1,72 @@
+# docker-compose —— Redis(共享真相) + 控制面 + 房间服务 + Kong 网关
+# 用法：docker compose up --build
+#   Redis     :6379   （控制面与房间服务共享数据源：房间注册表 + token TTL + 在线）
+#   Kong 网关 :8000    （统一入口）
+#   控制面    :3030
+#   房间服务  :8080
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"           # 本地调试用（不想暴露可去掉）
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    networks: [poc]
+
+  control-plane:
+    build:
+      context: .            # 上下文是仓库根（Dockerfile 里 COPY shared/）
+      dockerfile: control-plane/Dockerfile
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      REDIS_URL: redis://redis:6379
+      PORT: "3030"
+      # 告诉客户端经网关/直连的入口
+      GATEWAY_SOCKET: http://gateway:8000
+      DIRECT_SOCKET: http://room-service:8080
+    expose: ["3030"]
+    networks: [poc]
+
+  room-service:
+    build:
+      context: .            # 也要 COPY shared/，上下文是仓库根
+      dockerfile: room-service/Dockerfile
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      REDIS_URL: redis://redis:6379
+      PORT: "8080"
+    ports:
+      - "8080:8080"           # 直连调试入口
+    networks: [poc]
+
+  gateway:
+    image: kong:3.9
+    depends_on:
+      - control-plane
+      - room-service
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /config/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+    volumes:
+      - ./kong/kong.yml:/config/kong.yml:ro
+    ports:
+      - "8000:8000"           # 代理
+      - "8001:8001"          # admin API（调试）
+    networks: [poc]
+
+networks:
+  poc:
+    driver: bridge

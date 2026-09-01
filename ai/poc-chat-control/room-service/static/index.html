@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <title>PoC — 控制面 + 房间服务 + Kong 网关</title>
+    <style>
+      body { font: 14px/1.5 system-ui; margin: 24px auto; max-width: 720px; }
+      .row { display: flex; gap: 8px; margin: 8px 0; align-items: center; }
+      input { flex: 1; padding: 4px 6px; }
+      button { cursor: pointer; pad: 4px 10px; }
+      #log { background: #0d1117; color: #c9d1d9; padding: 10px; border-radius: 6px;
+             height: 300px; overflow-y: auto; white-space: pre-wrap; font: 12px/1.6 ui-monospace, monospace; }
+      .k { color: #58a6ff; } .sys { color: #7ee787; } .err { color: #ff7b72; } .muted { color: #888; }
+    </style>
+  </head>
+  <body>
+    <h2>PoC — 「控制面 + 房间服务 + SQLite/Kong」聊天</h2>
+    <p class="muted">
+      <b>控制面</b>(:3030 建房+发token) → <b>房间服务</b>(:8080 token 认证 + 广播)。页面由房间服务托管，
+      跨域调控制面拿 token。开两个标签页用不同昵称即可互聊。
+    </p>
+
+    <div class="row">
+      <b>房间名</b><input id="roomName" value="demo room" />
+      <button id="createBtn">创建房间</button>
+      <span class="muted">token 有效期 <b>1 分钟</b></span>
+    </div>
+    <div class="row"><b>昵称</b><input id="userName" value="alice" /></div>
+    <div class="row"><span id="meta" class="muted">未创建</span></div>
+
+    <div class="row">
+      <button id="joinBtn" disabled>连接/重连</button>
+      <b>房间服务 :8080</b>
+    </div>
+
+    <div class="row"><input id="msg" placeholder="输入消息，回车发送"/><button id="sendBtn" disabled>发送</button></div>
+    <div id="log"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const $ = (id) => document.getElementById(id)
+      const CONTROL = new URL(location.href).searchParams.get('control') || 'http://localhost:3030'
+      const logBox = $('log'), meta = $('meta')
+      const log = (line, cls='') => { logBox.textContent += line + '\n'; logBox.scrollTop = logBox.scrollHeight }
+      let sock = null, token = '', roomId = ''
+
+      $('createBtn').addEventListener('click', async () => {
+        const name = encodeURIComponent($('roomName').value || 'demo')
+        const res = await fetch(`${CONTROL}/api/rooms?name=${name}`, { method: 'POST' })
+        const room = await res.json()
+        roomId = room.roomId; token = room.token
+        meta.textContent = `${room.roomId} · token(${(room.ttlMs/1000)}s) · 房间服务=${room.connectUrlDirect}`
+        $('createBtn').disabled = true
+        $('joinBtn').disabled = false
+        log(`房间已建 ${roomId}（token 有效期 ${room.ttlMs/1000}s）`, 'k')
+      })
+
+      function connect() {
+        if (sock) sock.disconnect()
+        // 连到"房间服务"（本页面所在 origin）。token 走 auth 通道。
+        sock = io(undefined, {
+          auth: { token, user: $('userName').value || 'anon' },
+          transports: ['websocket'],
+        })
+        sock.on('connect', () => { log('已连接（token 校验通过）', 'k'); $('sendBtn').disabled = false })
+        sock.on('connect_error', (err) => { log('连接被拒: ' + err.message, 'err') })
+        sock.on('system', (t) => log(t, 'sys'))
+        sock.on('chat', ({ user, text }) => log(`[${user}] ${text}`))
+        sock.on('presence', ({ users }) => log('在线: ' + users.join(', '), 'k'))
+      }
+
+      const sendNow = () => {
+        const t = $('msg').value; if (!t || !sock) return
+        sock.emit('chat:send', t); $('msg').value = ''
+      }
+      $('joinBtn').addEventListener('click', connect)
+      $('sendBtn').addEventListener('click', sendNow)
+      $('msg').addEventListener('keydown', (e) => e.key === 'Enter' && sendNow())
+    </script>
+  </body>
+</html>

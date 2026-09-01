@@ -1,0 +1,34 @@
+# Kong 声明式配置（db-less）
+# 网关 :8000 —— 按路径把请求路由到对应后端服务。
+#   /api  → 控制面
+#   /socket.io → 房间服务（含 /health 也放这，方便：直接访问 :8080）
+# 注意：Kong 对 websocket 升级默认放行（协议 http/https），无需额外开关。
+
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: control-plane
+    url: http://control-plane:3030
+    routes:
+      - name: control-api
+        paths:
+          - /api
+          - /control/health
+        strip_path: false
+        preserve_host: false
+        protocols: [http]
+
+  - name: room-service
+    url: http://room-service:8080
+    routes:
+      - name: room-http
+        paths:
+          - /socket.io
+        strip_path: false
+        protocols: [http]
+      - name: room-ui
+        paths:
+          - /
+        strip_path: false
+        protocols: [http]

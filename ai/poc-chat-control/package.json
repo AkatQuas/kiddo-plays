@@ -1,0 +1,12 @@
+{
+  "name": "poc-chat-control-root",
+  "version": "1.0.0",
+  "private": true,
+  "//": "仅供本地(非 Docker)运行时共享依赖用到——shared/redis.mjs 在仓库根，需要能在根上解析 redis。Docker 里每个服务有自己的 node_modules，不受影响。",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.19.2",
+    "redis": "^4.6.15",
+    "socket.io": "^4.7.5"
+  }
+}

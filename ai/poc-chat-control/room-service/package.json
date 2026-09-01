@@ -1,0 +1,12 @@
+{
+  "name": "@poc/room-service",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node src/index.mjs" },
+  "dependencies": {
+    "express": "^4.19.2",
+    "redis": "^4.6.15",
+    "socket.io": "^4.7.5"
+  }
+}
