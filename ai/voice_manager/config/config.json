@@ -1,0 +1,33 @@
+{
+  "logger_config": {
+    "level": "INFO",
+    "log_dir": "./logs",
+    "max_file_size": 104857600,
+    "backup_count": 15,
+    "console_output": true
+  },
+  "admin": ["admin_uid"],
+  "asr_config": {
+    "url": "http://some-asr-svc:8000/transcribe",
+    "api_key": "abc123"
+  },
+  "tts_config": {
+    "url": "http://som-tts-svc:8000/v1/audio/speech",
+    "api_key": "abc123"
+  },
+  "database_config": {
+    "url": "postgresql://postgres:postgres@pg-service:5432/voice_manager",
+    "pool_size": 5,
+    "max_overflow": 10,
+    "pool_timeout": 30,
+    "pool_recycle": 3600,
+    "pool_pre_ping": true
+  },
+  "storage_config": {
+    "bucket": "voices",
+    "endpoint": "localhost:9000",
+    "access_key": "minioadmin",
+    "secret_key": "minioadmin",
+    "secure": false
+  }
+}

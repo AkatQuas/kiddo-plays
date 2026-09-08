@@ -1,0 +1,39 @@
+# Development voice-manager: mount source code and enable uvicorn reload.
+
+services:
+  voice-manager:
+    image: python:3.12-slim
+    pull_policy: if_not_present
+    profiles: [app]
+    depends_on:
+      postgres:
+        condition: service_healthy
+        required: false
+      minio-init:
+        condition: service_completed_successfully
+        required: false
+    working_dir: /app
+    command: ["bash", "deploy/docker/dev-entrypoint.sh"]
+    ports:
+      - "${VOICE_MANAGER_PORT:-36800}:36800"
+    environment:
+      UVICORN_RELOAD: "1"
+      CONFIG_PATH: ${CONFIG_PATH:-config/config.docker.json}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/voice_manager}
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT:-minio:9000}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-minioadmin}
+      MINIO_BUCKET: ${MINIO_BUCKET:-voices}
+      MINIO_SECURE: ${MINIO_SECURE:-false}
+      ASR_URL: ${ASR_URL:-}
+      ASR_API_KEY: ${ASR_API_KEY:-}
+      TTS_URL: ${TTS_URL:-}
+      TTS_API_KEY: ${TTS_API_KEY:-}
+      LOG_DIR: ${LOG_DIR:-./logs}
+    volumes:
+      - .:/app
+      - uv_cache:/root/.cache/uv
+    restart: unless-stopped
+
+volumes:
+  uv_cache:
