@@ -1,0 +1,21 @@
+# Docker Compose definition for the Mosquitto MQTT Broker.
+#
+# The broker runs ONLY inside a container. Nothing is installed or left running
+# on the host. Host-side Python clients (publisher/subscriber) connect to the
+# mapped port 1883.
+#
+# Useful commands:
+#   Start broker:              docker compose up -d
+#   Watch broker logs:         docker compose logs -f
+#   Stop + remove container:   docker compose down
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mqtt-broker-demo
+    restart: unless-stopped   # auto-restart unless it is explicitly stopped/down'd
+    ports:
+      # host:container  -- host clients reach the broker via localhost:1883
+      - "1883:1883"
+    volumes:
+      # Mount the custom config so the broker listens and allows anonymous access.
+      - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro

@@ -1,0 +1,35 @@
+// sensor.proto
+// Definition of a simulated sensor reading message, serialized with
+// Protocol Buffers and carried over MQTT.
+//
+// Message wire tags are the field_number (1-5) combined with a wire type, so
+// the numeric order below is part of the on-the-wire contract. Do not
+// renumber fields once in use.
+
+
+// proto3 is the modern, language-neutral schema syntax. Scalars get default
+// values (0 / empty string) when not explicitly set, so we don't need
+// optional markers for this demo.
+syntax = "proto3";
+
+// Package used only for namespacing; the generated code defaults to
+// sensor_pb2 regardless.
+package sensor;
+
+// A single simulated reading from one IoT device.
+message SensorReading {
+  // Identifier of the device that produced this reading.
+  string device_id = 1;
+
+  // Unix epoch timestamp (seconds) of when the reading was captured.
+  int64 timestamp = 2;
+
+  // Ambient temperature in degrees Celsius.
+  float temperature = 3;
+
+  // Relative humidity as a percentage (0.0 - 100.0).
+  float humidity = 4;
+
+  // Remaining battery charge as an integer percentage (0 - 100).
+  int32 battery = 5;
+}
