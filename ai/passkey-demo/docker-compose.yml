@@ -1,0 +1,57 @@
+# Passkey Demo — Docker Compose
+#
+# 开发：只起 Redis，前后端在宿主机分别启动
+#   docker compose up redis -d
+#   npm run dev:server    # terminal 1 → Express :3000
+#   npm run dev:client    # terminal 2 → Vite :5173
+#   npm run dev           # or turbo parallel (both)
+#
+# 部署：起完整栈（app + redis）
+#   docker compose --profile deploy up --build -d
+#   访问 http://localhost:3000
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    profiles: ["deploy"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      REDIS_URL: redis://redis:6379
+      PORT: "3000"
+      RP_ID: localhost
+      RP_NAME: Passkey Demo
+      ORIGIN: http://localhost:3000
+      COOKIE_SECURE: "false"
+      SESSION_TTL_SEC: "86400"
+      CHALLENGE_TTL_SEC: "300"
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/auth/me').then(r=>process.exit(r.status===401?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+      retries: 5
+
+volumes:
+  redis_data:

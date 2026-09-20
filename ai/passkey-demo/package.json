@@ -1,0 +1,30 @@
+{
+  "name": "passkey-demo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "npm@10.9.2",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:redis": "docker compose up redis -d",
+    "dev:server": "turbo run dev --filter=passkey-demo-server",
+    "dev:client": "turbo run dev --filter=passkey-demo-client",
+    "build": "turbo run build",
+    "preview:host": "npm run build && NODE_ENV=production ORIGIN=http://localhost:3000 COOKIE_SECURE=false turbo run start --filter=passkey-demo-server",
+    "deploy:up": "docker compose --profile deploy up --build -d",
+    "deploy:down": "docker compose --profile deploy down",
+    "deploy:logs": "docker compose --profile deploy logs -f app",
+    "deploy:build": "docker compose --profile deploy build app",
+    "test:e2e": "node scripts/e2e.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0",
+    "turbo": "^2.5.4"
+  }
+}

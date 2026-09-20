@@ -1,0 +1,10 @@
+node_modules
+.turbo
+**/node_modules
+**/dist
+.git
+.env
+*.log
+.DS_Store
+client/node_modules
+server/node_modules
