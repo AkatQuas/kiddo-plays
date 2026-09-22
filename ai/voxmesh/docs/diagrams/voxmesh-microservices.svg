@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrow-cyan" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0891b2"/>
+    </marker>
+    <marker id="arrow-emerald" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <marker id="arrow-dashed" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <style>
+      text { font-family: Menlo, Monaco, 'Courier New', monospace; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#f8fafc"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <text x="24" y="28" fill="#0f172a" font-size="16" font-weight="700">VoxMesh: Speech-AI Microservices</text>
+  <text x="24" y="48" fill="#64748b" font-size="9">Independent processes, separate ports, shared model files</text>
+
+  <!-- region: clients -->
+  <rect x="24" y="72" width="228" height="308" rx="12" fill="none" stroke="#0891b2" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="36" y="88" fill="#0891b2" font-size="9" font-weight="600">Clients</text>
+
+  <!-- region: services -->
+  <rect x="268" y="72" width="248" height="308" rx="12" fill="none" stroke="#059669" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="280" y="88" fill="#059669" font-size="9" font-weight="600">VoxMesh Services</text>
+
+  <!-- region: shared -->
+  <rect x="532" y="72" width="228" height="308" rx="12" fill="none" stroke="#d97706" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="544" y="88" fill="#d97706" font-size="9" font-weight="600">Shared Resources</text>
+
+  <!-- connections (layer 3) -->
+  <line x1="204" y1="122" x2="280" y2="122" stroke="#0891b2" stroke-width="1.5" stroke-linecap="butt" marker-end="url(#arrow-cyan)"/>
+  <line x1="204" y1="204" x2="280" y2="204" stroke="#0891b2" stroke-width="1.5" stroke-linecap="butt" marker-end="url(#arrow-cyan)"/>
+  <line x1="204" y1="266" x2="280" y2="266" stroke="#0891b2" stroke-width="1.5" stroke-linecap="butt" marker-end="url(#arrow-cyan)"/>
+  <line x1="204" y1="330" x2="280" y2="330" stroke="#0891b2" stroke-width="1.5" stroke-linecap="butt" marker-end="url(#arrow-cyan)"/>
+
+  <line x1="516" y1="122" x2="532" y2="170" stroke="#059669" stroke-width="1.5" stroke-linecap="butt" marker-end="url(#arrow-emerald)"/>
+  <line x1="516" y1="204" x2="532" y2="170" stroke="#059669" stroke-width="1.5" stroke-linecap="butt" marker-end="url(#arrow-emerald)"/>
+  <line x1="516" y1="266" x2="532" y2="170" stroke="#059669" stroke-width="1.5" stroke-linecap="butt" marker-end="url(#arrow-emerald)"/>
+  <line x1="516" y1="330" x2="532" y2="170" stroke="#059669" stroke-width="1.5" stroke-linecap="butt" marker-end="url(#arrow-emerald)"/>
+
+  <path d="M 516 168 L 700 168 L 700 248 L 788 248" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4" stroke-linecap="butt" marker-end="url(#arrow-dashed)"/>
+  <path d="M 516 250 L 680 250 L 680 248 L 788 248" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,4" stroke-linecap="butt"/>
+
+  <!-- clients col0 -->
+  <rect x="44" y="96" width="188" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="44" y="96" width="188" height="50" rx="6" fill="rgba(8,145,178,0.15)" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="138" y="118" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">Web / Mobile</text>
+  <text x="138" y="134" fill="#64748b" font-size="9" text-anchor="middle">browser mic UI</text>
+
+  <rect x="44" y="178" width="188" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="44" y="178" width="188" height="50" rx="6" fill="rgba(8,145,178,0.15)" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="138" y="200" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">Voice Assistant</text>
+  <text x="138" y="216" fill="#64748b" font-size="9" text-anchor="middle">bot runtime</text>
+
+  <rect x="44" y="242" width="188" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="44" y="242" width="188" height="50" rx="6" fill="rgba(8,145,178,0.15)" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="138" y="264" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">Batch Pipeline</text>
+  <text x="138" y="280" fill="#64748b" font-size="9" text-anchor="middle">file transcription</text>
+
+  <rect x="44" y="309" width="188" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="44" y="309" width="188" height="50" rx="6" fill="rgba(8,145,178,0.15)" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="138" y="331" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">Device Firmware</text>
+  <text x="138" y="347" fill="#64748b" font-size="9" text-anchor="middle">wakeup + stream</text>
+
+  <!-- services col1 -->
+  <rect x="288" y="96" width="208" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="288" y="96" width="208" height="50" rx="6" fill="rgba(5,150,105,0.15)" stroke="#059669" stroke-width="1.5"/>
+  <text x="392" y="118" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">Streaming ASR</text>
+  <text x="392" y="134" fill="#64748b" font-size="9" text-anchor="middle">WS :36005</text>
+
+  <rect x="288" y="178" width="208" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="288" y="178" width="208" height="50" rx="6" fill="rgba(5,150,105,0.15)" stroke="#059669" stroke-width="1.5"/>
+  <text x="392" y="200" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">HTTP ASR + Embedding</text>
+  <text x="392" y="216" fill="#64748b" font-size="9" text-anchor="middle">HTTP :36008</text>
+
+  <rect x="288" y="242" width="208" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="288" y="242" width="208" height="50" rx="6" fill="rgba(5,150,105,0.15)" stroke="#059669" stroke-width="1.5"/>
+  <text x="392" y="264" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">Wakeup</text>
+  <text x="392" y="280" fill="#64748b" font-size="9" text-anchor="middle">WS :34010</text>
+
+  <rect x="288" y="309" width="208" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="288" y="309" width="208" height="50" rx="6" fill="rgba(5,150,105,0.15)" stroke="#059669" stroke-width="1.5"/>
+  <text x="392" y="331" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">TTS</text>
+  <text x="392" y="347" fill="#64748b" font-size="9" text-anchor="middle">HTTP :34011</text>
+
+  <!-- shared col2 -->
+  <rect x="552" y="144" width="188" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="552" y="144" width="188" height="50" rx="6" fill="rgba(217,119,6,0.12)" stroke="#d97706" stroke-width="1.5"/>
+  <text x="646" y="166" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">Model Files</text>
+  <text x="646" y="182" fill="#64748b" font-size="9" text-anchor="middle">INPUT_PATH</text>
+
+  <rect x="552" y="222" width="188" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="552" y="222" width="188" height="50" rx="6" fill="rgba(124,58,237,0.12)" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="646" y="244" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">voxmesh library</text>
+  <text x="646" y="260" fill="#64748b" font-size="9" text-anchor="middle">LLM + embedding port</text>
+
+  <!-- external LLM col3 -->
+  <rect x="788" y="222" width="188" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="788" y="222" width="188" height="50" rx="6" fill="rgba(100,116,139,0.12)" stroke="#64748b" stroke-width="1.5"/>
+  <text x="882" y="244" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">LLM (external)</text>
+  <text x="882" y="260" fill="#64748b" font-size="9" text-anchor="middle">Ollama :11434</text>
+
+  <text x="700" y="210" fill="#64748b" font-size="8" text-anchor="middle" stroke="#f8fafc" stroke-width="3" paint-order="stroke fill">correction / advice</text>
+
+  <!-- legend -->
+  <rect x="24" y="400" width="960" height="36" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="580" y1="420" x2="610" y2="420" stroke="#0891b2" stroke-width="1.4" marker-end="url(#arrow-cyan)"/>
+  <text x="616" y="423" fill="#334155" font-size="9">client traffic</text>
+  <line x1="720" y1="420" x2="750" y2="420" stroke="#059669" stroke-width="1.4" marker-end="url(#arrow-emerald)"/>
+  <text x="756" y="423" fill="#334155" font-size="9">service to models</text>
+  <line x1="870" y1="420" x2="900" y2="420" stroke="#94a3b8" stroke-width="1.4" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+  <text x="906" y="423" fill="#334155" font-size="9">optional LLM</text>
+</svg>

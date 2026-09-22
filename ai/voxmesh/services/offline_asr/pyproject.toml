@@ -1,0 +1,24 @@
+[project]
+name = "voxmesh-offline-asr"
+version = "0.1.0"
+description = "VoxMesh HTTP batch ASR and speaker embedding microservice"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "voxmesh",
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.27.0",
+    "funasr>=1.0.0",
+    "pydub>=0.25.0",
+    "ffmpeg-python>=0.2.0",
+    "tqdm>=4.66.0",
+    "requests>=2.31.0",
+]
+
+[tool.uv.sources]
+voxmesh = { workspace = true }
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

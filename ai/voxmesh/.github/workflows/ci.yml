@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  lint-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Python syntax check
+        run: |
+          python3 -m compileall -q voxmesh services deploy/web_server.py
+
+      - name: Shell script syntax check
+        run: |
+          for f in deploy/*.sh; do bash -n "$f"; done
+          bash -n deploy/lib/common.sh
+
+      - name: Sensitive content scan
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ripgrep
+          chmod +x scripts/check_sensitive.sh
+          ./scripts/check_sensitive.sh
+
+      - name: Validate workspace pyproject.toml files
+        run: |
+          python3 <<'PY'
+          import tomllib
+          from pathlib import Path
+          files = [Path("pyproject.toml")] + list(Path("services").glob("*/pyproject.toml"))
+          for f in files:
+              tomllib.loads(f.read_text())
+              print(f"OK {f}")
+          PY
+
+      - name: Ruff
+        run: |
+          pip install ruff
+          ruff check voxmesh services deploy/web_server.py

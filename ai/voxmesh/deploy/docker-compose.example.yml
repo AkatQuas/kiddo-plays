@@ -1,0 +1,96 @@
+# Example: voxmesh microservices on one host
+#
+# Prerequisites:
+#   - NVIDIA Container Toolkit + GPU
+#   - Models mounted at ./models (see README)
+#   - PyTorch / FunASR images or build your own Dockerfiles
+#
+# This file is a REFERENCE layout — not a turnkey production stack.
+# Adjust images, devices, and volumes for your environment.
+
+services:
+  streaming-asr:
+    # build: ../services/streaming_asr
+    image: your-registry/voxmesh-streaming:latest
+    command: python websocket_asr_server.py --port 36005 --max_clients 8
+    working_dir: /app/services/streaming_asr
+    ports:
+      - "36005:36005"
+    volumes:
+      - ../models:/models:ro
+      - ../services/streaming_asr/common/config.json:/app/services/streaming_asr/common/config.json:ro
+      - ../logs/streaming:/app/logs
+      - ../sessions:/app/sessions
+    environment:
+      - INPUT_PATH=/models
+      - LLM_API_URL=http://ollama:11434/v1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    depends_on:
+      - ollama
+
+  http-asr:
+    image: your-registry/voxmesh-offline:latest
+    command: python asr_http_server.py --host 0.0.0.0 --port 36008
+    working_dir: /app/services/offline_asr
+    ports:
+      - "36008:36008"
+    volumes:
+      - ../models:/models:ro
+      - ../temp_dir:/app/temp_dir
+    environment:
+      - INPUT_PATH=/models
+      - ASR_HTTP_PORT=36008
+      - LLM_API_URL=http://ollama:11434/v1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  wakeup:
+    image: your-registry/voxmesh-wakeup:latest
+    command: python wakeup_server.py --port 34010
+    working_dir: /app/services/wakeup
+    ports:
+      - "34010:34010"
+    volumes:
+      - ../models:/models:ro
+    environment:
+      - INPUT_PATH=/models
+
+  tts:
+    image: your-registry/voxmesh-tts:latest
+    command: python api.py --port 34011 --model_name_or_path /models/CosyVoice2-0_5B
+    working_dir: /app/services/tts
+    ports:
+      - "34011:34011"
+    volumes:
+      - ../models:/models:ro
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    # Run once: docker compose exec ollama ollama pull qwen2.5:7b
+
+  web-debug:
+    image: python:3.11-slim
+    command: python /app/deploy/web_server.py --host 0.0.0.0 --port 36004 --no-https
+    working_dir: /app
+    ports:
+      - "36004:36004"
+    volumes:
+      - ..:/app:ro
+
+volumes:
+  ollama_data:

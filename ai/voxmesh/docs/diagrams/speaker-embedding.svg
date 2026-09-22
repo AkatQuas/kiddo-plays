@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <style>
+      text { font-family: Menlo, Monaco, 'Courier New', monospace; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#f8fafc"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <text x="24" y="28" fill="#0f172a" font-size="16" font-weight="700">Speaker Embedding Paths</text>
+  <text x="24" y="48" fill="#64748b" font-size="9">Offline HTTP vs streaming diarization</text>
+
+  <rect x="24" y="72" width="400" height="280" rx="12" fill="none" stroke="#059669" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="36" y="88" fill="#059669" font-size="9" font-weight="600">Offline (HTTP :36008)</text>
+
+  <rect x="476" y="72" width="400" height="280" rx="12" fill="none" stroke="#0891b2" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="488" y="88" fill="#0891b2" font-size="9" font-weight="600">Streaming (WS :36005)</text>
+
+  <!-- offline flow -->
+  <line x1="224" y1="130" x2="224" y2="152" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="224" y1="202" x2="224" y2="224" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="224" y1="274" x2="224" y2="296" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="104" y="104" width="240" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="104" y="104" width="240" height="50" rx="6" fill="rgba(8,145,178,0.15)" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="224" y="126" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">POST /embedding_extract</text>
+  <text x="224" y="142" fill="#64748b" font-size="8" text-anchor="middle">base64 WAV</text>
+
+  <rect x="104" y="152" width="240" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="104" y="152" width="240" height="50" rx="6" fill="rgba(5,150,105,0.15)" stroke="#059669" stroke-width="1.5"/>
+  <text x="224" y="174" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">EmbeddingService</text>
+  <text x="224" y="190" fill="#64748b" font-size="8" text-anchor="middle">CampPlus / SpeechBrain</text>
+
+  <rect x="104" y="224" width="240" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="104" y="224" width="240" height="50" rx="6" fill="rgba(124,58,237,0.12)" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="224" y="246" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">OfflineEmbeddingAdapter</text>
+  <text x="224" y="262" fill="#64748b" font-size="8" text-anchor="middle">voxmesh.embedding port</text>
+
+  <rect x="104" y="296" width="240" height="40" rx="6" fill="#f8fafc"/>
+  <rect x="104" y="296" width="240" height="40" rx="6" fill="rgba(217,119,6,0.12)" stroke="#d97706" stroke-width="1.5"/>
+  <text x="224" y="322" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">Voiceprint enrollment</text>
+
+  <!-- streaming flow -->
+  <line x1="676" y1="130" x2="676" y2="152" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="676" y1="202" x2="676" y2="224" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="676" y1="274" x2="676" y2="296" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="556" y="104" width="240" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="556" y="104" width="240" height="50" rx="6" fill="rgba(8,145,178,0.15)" stroke="#0891b2" stroke-width="1.5"/>
+  <text x="676" y="126" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">init params.speakers</text>
+  <text x="676" y="142" fill="#64748b" font-size="8" text-anchor="middle">pre-registered embeddings</text>
+
+  <rect x="556" y="152" width="240" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="556" y="152" width="240" height="50" rx="6" fill="rgba(5,150,105,0.15)" stroke="#059669" stroke-width="1.5"/>
+  <text x="676" y="174" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">SpeakerClustering</text>
+  <text x="676" y="190" fill="#64748b" font-size="8" text-anchor="middle">per-chunk features</text>
+
+  <rect x="556" y="224" width="240" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="556" y="224" width="240" height="50" rx="6" fill="rgba(124,58,237,0.12)" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="676" y="246" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">IncrementalSpeakerCluster</text>
+  <text x="676" y="262" fill="#64748b" font-size="8" text-anchor="middle">live diarization</text>
+
+  <rect x="556" y="296" width="240" height="40" rx="6" fill="#f8fafc"/>
+  <rect x="556" y="296" width="240" height="40" rx="6" fill="rgba(217,119,6,0.12)" stroke="#d97706" stroke-width="1.5"/>
+  <text x="676" y="322" fill="#0f172a" font-size="10" font-weight="600" text-anchor="middle">Session restore on reconnect</text>
+
+  <rect x="24" y="372" width="852" height="36" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="40" y="395" fill="#334155" font-size="9">SpeakerEmbeddingPort unifies both paths for future service split</text>
+</svg>

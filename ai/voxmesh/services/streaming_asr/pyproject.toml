@@ -1,0 +1,20 @@
+[project]
+name = "voxmesh-streaming-asr"
+version = "0.1.0"
+description = "VoxMesh real-time WebSocket ASR microservice"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "voxmesh",
+    "websockets>=12.0",
+    "funasr>=1.0.0",
+    "pyannote.audio>=3.1.0",
+]
+
+[tool.uv.sources]
+voxmesh = { workspace = true }
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

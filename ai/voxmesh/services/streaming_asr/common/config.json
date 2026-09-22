@@ -1,0 +1,58 @@
+{
+    "knowledge_config": {
+        "api_url": "http://localhost:11434/v1",
+        "model": "qwen2.5:7b",
+        "api_key": "ollama",
+        "max_tokens": 4096,
+        "sensitive_words": ["什么", "如何", "怎么", "为什么", "how", "what", "why", "?", "不会", "不懂", "帮我", "请问", "能否", "建议", "麻烦", "请教"]
+    },
+    "text_corrector_config": {
+        "api_url": "http://localhost:11434/v1",
+        "model": "qwen2.5:7b",
+        "api_key": "ollama",
+        "max_tokens": 4096,
+        "timeout": 1.2,
+        "connection_timeout": 0.5
+    },
+    "asr_model_config": {
+        "streaming_model_dir": "SenseVoiceSmall",
+        "offline_model_dir": "SenseVoiceSmall",
+        "vad_model_path": "segmention/segmention.bin",
+        "segmentation_model_path": "segmention/segmention.bin",
+        "embedding_model_dir": "speech_campplus_sv_zh-cn_16k-common",
+        "streaming_asr_type": "sensevoice",
+        "offline_asr_type": "sensevoice",
+        "detector_type": "pyannote"
+    },
+    "asr_default_params": {
+        "enable_advice": false,
+        "enable_text_correction": false,
+        "text_correction_min_length": 20,
+        "spk_delta_new": 0.5,
+        "spk_max_speakers": 20,
+        "sample_rate": 16000,
+        "min_duration_on": 0.136,
+        "vad_silence_duration_s": 0.6,
+        "vad_threshold": 0.7,
+        "vad_max_speech_duration_s": 30.0,
+        "vad_speech_start_buffer": 1.0,
+        "transcribe_interval": 1.0,
+        "device": "cuda",
+        "enable_volume_detection": true,
+        "volume_threshold_db": -50.0,
+        "volume_check_duration_s": 1.0,
+        "volume_warning_interval_s": 60.0
+    },
+    "logger_config": {
+        "level": "INFO",
+        "log_dir": "./logs",
+        "max_file_size": 104857600,
+        "backup_count": 15,
+        "console_output": true
+    },
+    "network_config": {
+        "host": "0.0.0.0",
+        "port": 36005,
+        "max_clients": 8
+    }
+}

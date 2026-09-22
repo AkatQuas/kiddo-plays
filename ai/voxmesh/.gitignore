@@ -1,0 +1,22 @@
+*.wav
+tests/
+__pycache__/
+.claude/
+logs/
+sync.sh
+diart/
+.idea/
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+ssl/*.key
+ssl/*.crt
+ssl/*.pem
+
+# Runtime
+temp_dir/
+sessions/
+*.pid
+models/
