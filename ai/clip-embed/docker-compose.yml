@@ -1,0 +1,32 @@
+services:
+  clip-embed:
+    build:
+      context: .
+      dockerfile: Dockerfile.cpu
+      args:
+        SKIP_MODEL_DOWNLOAD: "1"
+        UV_INDEX_URL: https://pypi.org/simple
+        HF_ENDPOINT: https://hf-mirror.com
+    image: clip-embed:cpu
+    ports:
+      - "11204:11204"
+    volumes:
+      - ./models:/app/models
+      - ./data/gallery:/app/data/gallery
+    environment:
+      MODEL_PATH: /app/models/clip-vit-large-patch14
+      GALLERY_PATH: /app/data/gallery
+      HF_ENDPOINT: https://hf-mirror.com
+      HF_HUB_DISABLE_XET: "1"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:11204/health', timeout=3)",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s

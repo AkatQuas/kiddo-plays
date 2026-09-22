@@ -1,0 +1,36 @@
+# GPU image — official PyTorch CUDA runtime (requires NVIDIA GPU + nvidia-container-toolkit)
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
+
+ARG HF_ENDPOINT=https://hf-mirror.com
+ARG UV_INDEX_URL=https://pypi.org/simple
+ENV HF_ENDPOINT=${HF_ENDPOINT}
+ENV HF_HUB_DISABLE_XET=1
+ENV UV_INDEX_URL=${UV_INDEX_URL}
+
+WORKDIR /app
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY pyproject.toml uv.lock README.md ./
+COPY src ./src
+
+# Keep CUDA-enabled torch/torchvision from the base image
+RUN uv sync --frozen --no-dev --no-editable \
+    --no-install-package torch \
+    --no-install-package torchvision
+
+ENV MODEL_PATH=/app/models/clip-vit-large-patch14
+ENV UV_NO_SYNC=1
+ENV PATH="/app/.venv/bin:${PATH}"
+
+ARG SKIP_MODEL_DOWNLOAD=1
+RUN if [ "$SKIP_MODEL_DOWNLOAD" = "0" ]; then clip-embed download-model; fi
+
+EXPOSE 11204
+
+CMD ["clip-embed", "serve"]
