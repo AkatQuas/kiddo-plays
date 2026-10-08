@@ -1,0 +1,19 @@
+{
+  "name": "simulib-js-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Hands-on probes for @simular/simulib-js desktop automation APIs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "probe": "node src/probe.mjs",
+    "probe:safe": "node src/probe.mjs safe",
+    "open": "node src/open-url.mjs",
+    "bing": "node src/bing-search.mjs"
+  },
+  "dependencies": {
+    "@simular/simulib-js": "3.4.0"
+  }
+}
