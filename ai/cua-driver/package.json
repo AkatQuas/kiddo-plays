@@ -1,0 +1,17 @@
+{
+  "name": "cua-driver",
+  "version": "1.0.0",
+  "description": "Local probes for @trycua/cua-driver",
+  "type": "module",
+  "main": "test-capabilities.mjs",
+  "scripts": {
+    "test": "node test-capabilities.mjs",
+    "test:interact": "node test-capabilities.mjs --interact"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trycua/cua-driver": "^0.34.1"
+  }
+}
