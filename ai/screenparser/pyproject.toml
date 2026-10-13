@@ -1,0 +1,17 @@
+[project]
+name = "screenparser"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "onnx>=1.23.2",
+    "onnxruntime>=1.31.0",
+    "onnxslim>=0.1.98",
+    "torch==2.11.0",
+    "ultralytics==8.4.126",
+]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+default = true
