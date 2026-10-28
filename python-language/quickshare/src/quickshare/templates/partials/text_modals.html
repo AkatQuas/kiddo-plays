@@ -1,0 +1,43 @@
+<div class="modal fade" id="viewTextModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewTextTitle">查看文本</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="border rounded p-3 bg-light pre-wrap" id="viewContent"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-action="copy-text">
+                    <i class="bi bi-clipboard"></i> 复制内容
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editTextModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑文本</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editTextForm">
+                    <input type="hidden" id="editTextId">
+                    <div class="mb-3">
+                        <label for="editTextContent" class="form-label">内容</label>
+                        <textarea class="form-control" id="editTextContent" rows="10" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-warning" data-action="update-text">更新</button>
+            </div>
+        </div>
+    </div>
+</div>

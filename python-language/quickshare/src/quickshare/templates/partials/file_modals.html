@@ -1,0 +1,68 @@
+<div class="modal fade" id="categoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">分类管理</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <h6>创建新分类</h6>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="newCategoryName" placeholder="输入分类名称">
+                        <button class="btn btn-primary" type="button" data-action="create-category">
+                            <i class="bi bi-plus"></i> 创建
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <h6>现有分类</h6>
+                    <div id="categoryList"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changeCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">修改文件分类</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <label class="form-label" for="changeCategorySelect">选择分类</label>
+                <select class="form-select" id="changeCategorySelect">
+                    <option value="未分类">未分类</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-action="confirm-file-category">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑分类</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <label class="form-label" for="editCategoryName">分类名称</label>
+                <input type="text" class="form-control" id="editCategoryName" placeholder="输入分类名称">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-action="confirm-edit-category">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

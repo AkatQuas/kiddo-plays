@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quickshare"
+version = "1.0.0"
+description = "局域网文件与文本共享"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+dependencies = [
+    "flask==2.3.3",
+    "werkzeug==2.3.7",
+    "python-multipart==0.0.6",
+]
+
+[project.scripts]
+quickshare = "quickshare.app:main"
+
+[dependency-groups]
+dev = [
+    "pytest==8.3.3",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/quickshare"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

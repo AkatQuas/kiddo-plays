@@ -1,0 +1,93 @@
+<form id="createTextForm" class="mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <label for="textContent" class="form-label mb-0">内容</label>
+    <button type="button" class="btn btn-success btn-sm" data-action="create-text">创建文本</button>
+  </div>
+  <textarea class="form-control" id="textContent" rows="4" required></textarea>
+</form>
+
+<div
+  class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"
+>
+  <div class="input-group input-group-sm flex-grow-1" style="max-width: 28rem">
+    <span class="input-group-text"><i class="bi bi-search"></i></span>
+    <input
+      type="search"
+      class="form-control"
+      id="textSearchInput"
+      placeholder="搜索内容"
+      aria-label="搜索文本"
+    />
+    <button
+      class="btn btn-outline-secondary"
+      type="button"
+      data-action="clear-text-search"
+      aria-label="清除搜索"
+    >
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+  <div class="d-flex gap-2">
+    <button
+      class="btn btn-outline-secondary btn-sm"
+      type="button"
+      data-action="refresh-texts"
+    >
+      刷新
+    </button>
+    <button
+      class="btn btn-outline-danger btn-sm"
+      type="button"
+      data-action="clear-texts"
+    >
+      删除全部
+    </button>
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-3" id="textList">
+  {% if texts %} {% for text in texts %}
+  <div class="col text-item">
+    <div class="card h-100">
+      <div class="card-body">
+        <p class="text-excerpt text-muted small mb-2">
+          {{ text.content[:100] }}{% if text.content|length > 100 %}...{% endif
+          %}
+        </p>
+        <small class="text-muted">{{ text.created }}</small>
+      </div>
+      <div class="card-footer bg-transparent d-flex gap-2">
+        <button
+          class="btn btn-outline-primary btn-sm"
+          type="button"
+          data-action="copy-text-item"
+          data-text-id="{{ text.id }}"
+        >
+          复制
+        </button>
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          type="button"
+          data-action="edit-text"
+          data-text-id="{{ text.id }}"
+        >
+          编辑
+        </button>
+        <button
+          class="btn btn-outline-danger btn-sm"
+          type="button"
+          data-action="delete-text"
+          data-text-id="{{ text.id }}"
+        >
+          删除
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endfor %} {% else %}
+  <div class="col-12 list-empty text-center text-muted py-4">
+    <i class="bi bi-text-paragraph display-4"></i>
+    <h6 class="mt-3">暂无文本</h6>
+  </div>
+  {% endif %}
+</div>

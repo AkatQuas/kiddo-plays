@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - 局域网文件共享{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="mainTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button" role="tab">
+                    <i class="bi bi-files"></i> 文件
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="texts-tab" data-bs-toggle="tab" data-bs-target="#texts" type="button" role="tab">
+                    <i class="bi bi-text-paragraph"></i> 文本
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="files" role="tabpanel">
+                {% include "partials/files_panel.html" %}
+            </div>
+            <div class="tab-pane fade" id="texts" role="tabpanel">
+                {% include "partials/texts_panel.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "partials/file_modals.html" %}
+{% include "partials/text_modals.html" %}
+{% endblock %}

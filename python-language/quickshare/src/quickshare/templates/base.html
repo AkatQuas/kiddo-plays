@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}局域网文件共享{% endblock %}</title>
+    <link
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='css/bootstrap-icons.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+    />
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body data-port="{{ server_port }}">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+          <i class="bi bi-share"></i> QuickShare
+        </a>
+        <div class="d-flex align-items-center gap-2 ms-auto">
+          <span class="navbar-text share-url mb-0" id="shareUrl"></span>
+          <button
+            class="btn btn-outline-light btn-sm"
+            type="button"
+            data-action="copy-share-url"
+            aria-label="复制地址"
+          >
+            <i class="bi bi-clipboard"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container mt-2">{% block content %}{% endblock %}</main>
+
+    <footer class="bg-light mt-3 py-1">
+      <div class="container text-center text-muted">
+        <small>&copy; 2026 QuickShare - 局域网文件共享服务器</small>
+      </div>
+    </footer>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="uploadToast" class="toast" role="alert">
+        <div class="toast-header">
+          <strong class="me-auto">文件上传</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+        <div class="toast-body">
+          <div class="progress mb-2">
+            <div
+              id="uploadProgress"
+              class="progress-bar"
+              role="progressbar"
+              style="width: 0%"
+            ></div>
+          </div>
+          <span id="uploadStatus">准备上传...</span>
+        </div>
+      </div>
+      <div id="successToast" class="toast" role="alert">
+        <div class="toast-header bg-success text-white">
+          <strong class="me-auto">成功</strong>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+        <div class="toast-body" id="successMessage">操作成功！</div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/share.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>
