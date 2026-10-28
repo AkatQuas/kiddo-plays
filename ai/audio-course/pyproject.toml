@@ -1,0 +1,34 @@
+[project]
+name = "audio-course"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+authors = []
+requires-python = ">=3.12"
+dependencies = [
+    "datasets[audio]>=5.1.0",
+    "evaluate>=0.4.6",
+    "gradio>=6.30.0",
+    "ipython>=9.17.1",
+    "jiwer>=4.0.0",
+    "librosa>=1.0.0",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.4",
+    "pyannote-audio>=4.0.7",
+    "soundfile>=0.14.0",
+    "speechbox>=0.2.1",
+    "torchcodec>=0.17.0",
+    "tqdm>=4.70.1",
+    "transformers>=5.21.0",
+]
+
+[project.scripts]
+audio-course = "audio_course:main"
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+default = true
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14.0"]
+build-backend = "uv_build"
