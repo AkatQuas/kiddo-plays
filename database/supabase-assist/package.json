@@ -1,0 +1,31 @@
+{
+  "name": "supabase-assist",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "description": "Supabase sidecar: enterprise SSO → RLS JWT bridge + controlled SQL ops",
+  "type": "module",
+  "packageManager": "pnpm@10.5.0",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start:prod": "node dist/index.js",
+    "gen-totp": "tsx scripts/gen-totp.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.4",
+    "hono": "^4.7.11",
+    "jose": "^6.0.11",
+    "pg": "^8.16.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@types/pg": "^8.15.2",
+    "@types/uuid": "^10.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
