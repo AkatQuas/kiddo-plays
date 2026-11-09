@@ -1,0 +1,17 @@
+*.o
+*.pro.user
+moc_*
+qrc_*
+Makefile*
+.qmake.stash
+*.dylib
+*.so
+*.dll
+.DS_Store
+third_party/
+dist/
+build/
+**/qtbridge-poc
+**/qtbridge-helper
+**/*.app/
+sidecar/__pycache__/

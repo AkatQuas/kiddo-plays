@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>QtBridge PoC</title>
+    <style>
+      body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 24px; max-width: 720px; }
+      h1 { font-size: 1.2rem; }
+      .note { color: #555; font-size: 0.9rem; }
+      button { margin: 0 8px 8px 0; }
+      pre { background: #f4f4f5; padding: 12px; min-height: 200px; overflow: auto; }
+      code { font-size: 0.85rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Qt + CEF Host · QtBridge</h1>
+    <p class="note">
+      Concept proof: CEF injects <code>QtBridge</code> (four-argument protocol);
+      the host dispatches via BridgeBus. Sidecar is optional and language-replaceable.
+    </p>
+    <div>
+      <button type="button" id="btnVersion">system.getVersion</button>
+      <button type="button" id="btnNode">sidecar.start (node)</button>
+      <button type="button" id="btnPython">sidecar.start (python)</button>
+      <button type="button" id="btnSend">sidecar.send</button>
+      <button type="button" id="btnStop">sidecar.stop</button>
+    </div>
+    <pre id="log"></pre>
+    <script src="app.js"></script>
+  </body>
+</html>
