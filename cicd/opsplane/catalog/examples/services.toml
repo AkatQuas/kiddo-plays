@@ -1,0 +1,35 @@
+# Example service catalog for Opsplane.
+# Map each service to its Kubernetes workload for /monitor/*.
+
+default = "example-api"
+
+[[services]]
+id = "example-api"
+title = "Example API"
+enabled = true
+
+[services.monitor]
+deployment = "example-api"
+container = "api"
+namespace = "default"
+hosting = "deployment"
+noise_patterns = ["healthz", "readyz"]
+
+[[services]]
+id = "example-worker"
+title = "Example Worker"
+enabled = true
+
+[services.monitor]
+deployment = "example-worker"
+container = "worker"
+namespace = "default"
+hosting = "deployment"
+
+[[services]]
+id = "example-static"
+title = "Example Static Site"
+enabled = true
+
+[services.monitor]
+hosting = "static"

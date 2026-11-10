@@ -1,0 +1,16 @@
+default = "dev"
+
+[[envs]]
+id = "dev"
+title = "Development"
+enabled = true
+
+[[envs]]
+id = "staging"
+title = "Staging"
+enabled = true
+
+[[envs]]
+id = "prod"
+title = "Production"
+enabled = true

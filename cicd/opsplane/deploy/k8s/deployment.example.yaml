@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opsplane
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opsplane
+  template:
+    metadata:
+      labels:
+        app: opsplane
+    spec:
+      serviceAccountName: opsplane-monitor
+      containers:
+        - name: opsplane
+          image: opsplane:0.1.0
+          ports:
+            - containerPort: 43200
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "43200"
+            - name: K8S_NAMESPACE
+              value: "default"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 43200
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 43200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opsplane
+  namespace: default
+spec:
+  selector:
+    app: opsplane
+  ports:
+    - port: 43200
+      targetPort: 43200
