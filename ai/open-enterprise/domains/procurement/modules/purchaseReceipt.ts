@@ -1,0 +1,377 @@
+import { defineModule } from "@open-erp/metamodel";
+
+/** A purchase receipt records only a real stock-in. The purchase payable is formed when the purchase payable is confirmed. */
+export default defineModule({
+  label: "Purchase receipt",
+  numbering: { prefix: "GR", seqScope: "day" },
+
+  fields: [
+    { key: "code", label: "Receipt no.", type: "string", primary: true, auto: true },
+    { key: "supplierId", label: "Supplier", type: "ref", ref: "supplier", required: true },
+    { key: "warehouseId", label: "Receiving warehouse", type: "ref", ref: "warehouse", required: true },
+    // Do not write `required: true`. That change was tried: `tables/src` drifted from the declaration,
+    // two cross-module gates went red, and a pending-review document pushed by `purchaseOrder.receive` is necessarily missing this cell, so save returns 400.
+    // "Optional while pending review, required on confirm" is carried by the `receipt_date_required` `required_fields` rule below.
+    { key: "receiptDate", label: "Receipt date", type: "date" },
+    {
+      // References a system account. The value is the platform userId. via:self means the value is already an account.
+      key: "receiver", label: "Receiver", type: "ref", ref: "subject",
+      refFilter: { status: "active" },
+      person: { role: "receiver", via: "self" },
+    },
+    { key: "totalAmount", label: "Receipt amount", type: "money", lineAgg: { of: "lines", measure: "sum(amount)" } },
+    { key: "requestedBaseQty", label: "Requested quantity (primary unit)", type: "number", hidden: true, lineAgg: { of: "lines", measure: "sum(baseQty)" } },
+    {
+      key: "returnedBaseQty",
+      label: "Returned or exchanged quantity (primary unit)",
+      type: "number",
+      hidden: true,
+      derive: {
+        kind: "rollup",
+        from: "purchaseReturn",
+        through: "lines",
+        match: "receiptId",
+        measure: "sum(baseQty)",
+        where: { status: ["returnedGoods", "exchanged"] },
+      },
+    },
+    {
+      key: "remainingReturnBaseQty",
+      label: "Quantity still returnable (primary unit)",
+      type: "number",
+      derive: { kind: "formula", expr: { op: "sub", args: [{ field: "requestedBaseQty" }, { field: "returnedBaseQty" }] } },
+    },
+    {
+      key: "lines",
+      label: "Receipt lines",
+      type: "subtable",
+      ref: "purchaseReceiptLine",
+      help: "Enter what actually arrived in this batch. It may be less than the order quantity. What is not yet received can be received again from the order.",
+      fields: [
+        {
+          key: "orderId",
+          label: "Purchase order",
+          type: "ref",
+          ref: "purchaseOrder",
+          required: true,
+          // The candidate list uses the same rule as receipt_orders_receiving / receipt_suppliers_match_orders on confirm.
+          // Without the projection the dropdown lists every purchase order in the tenant, including pendingReview.
+          // The user picks one that looks right, it saves, and only Confirm receipt rejects it. That rejection talks about the order's status.
+          // The reader thinks it is talking about this receipt (the business wording was: "the status is already pending review when it is submitted").
+          refFilter: { status: "receiving", supplierId: { from: "$bill.supplierId" } },
+        },
+        { key: "orderLineId", label: "Order line", type: "refLine", ref: "purchaseOrder", through: "lines", hidden: true },
+        { key: "productId", label: "Product", type: "ref", ref: "product", required: true },
+        {
+          key: "unit",
+          label: "Unit",
+          type: "enum",
+          required: true,
+          refDefault: { from: "purchaseOrder", match: "orderLineId", through: "lines", field: "unit" },
+          unitChoice: { match: "productId", factorInto: "unitFactor" },
+          pushFrom: "unit",
+        },
+        { key: "unitFactor", label: "Unit factor", type: "number" },
+        {
+          key: "qty",
+          label: "Quantity received this time",
+          type: "number",
+          required: true,
+          // Quantity still to receive is a formula on the order line. It has no column, so refDefault cannot point at it.
+          // The push covers this-time quantity from the order edge remaining + billLines (default is still-to-receive, and it may be reduced).
+          help: "Enter what actually arrived in this batch. It may be less than what is still to receive. What is not finished can be received again from the order",
+        },
+        {
+          key: "expectedQty",
+          label: "Quantity expected this time",
+          type: "number",
+          refDefault: { from: "purchaseOrder", match: "orderLineId", through: "lines", field: "qty" },
+          pushFrom: "qty",
+          help: "The quantity this batch was planned to receive. When empty, the quantity actually received is the cap for this warehouse demand",
+        },
+        {
+          key: "baseQty",
+          label: "Quantity received (primary unit)",
+          type: "number",
+          calculate: { op: "mul", args: [{ field: "qty" }, { field: "unitFactor" }] },
+        },
+        {
+          key: "returnedBaseQty",
+          label: "Returned or exchanged quantity (primary unit)",
+          type: "number",
+          derive: {
+            kind: "rollup",
+            from: "purchaseReturn",
+            through: "lines",
+            match: "receiptLineId",
+            measure: "sum(baseQty)",
+            where: { status: ["returnedGoods", "exchanged"] },
+          },
+        },
+        {
+          key: "remainingReturnBaseQty",
+          label: "Quantity still returnable (primary unit)",
+          type: "number",
+          derive: { kind: "formula", expr: { op: "sub", args: [{ field: "baseQty" }, { field: "returnedBaseQty" }] } },
+        },
+        {
+          key: "effectiveExpectedQty",
+          label: "Expected quantity (calculation basis)",
+          type: "number",
+          derive: {
+            kind: "formula",
+            expr: { orElse: { of: { field: "expectedQty" }, whenEmpty: 0 } },
+          },
+        },
+        {
+          key: "expectedBaseQty",
+          label: "Expected quantity (primary unit)",
+          type: "number",
+          calculate: { op: "mul", args: [{ field: "effectiveExpectedQty" }, { field: "unitFactor" }] },
+        },
+        { key: "batchNo", label: "Batch no.", type: "string", help: "Recorded only. It does not enter the stock calculation. The ledger coordinate stops at the warehouse, and stock by batch is not supported yet" },
+        {
+          key: "baseUnitPrice",
+          label: "Tax-inclusive price (primary unit)",
+          type: "money",
+          required: true,
+          refDefault: { from: "purchaseOrder", match: "orderLineId", through: "lines", field: "baseUnitPrice" },
+          pushFrom: "baseUnitPrice",
+        },
+        {
+          key: "taxPrice",
+          label: "Tax-inclusive price",
+          type: "money",
+          calculate: { op: "mul", args: [{ field: "baseUnitPrice" }, { field: "unitFactor" }] },
+        },
+        {
+          key: "amount",
+          label: "Amount incl. tax",
+          type: "money",
+          derive: { kind: "formula", expr: { op: "mul", args: [{ field: "qty" }, { field: "taxPrice" }] } },
+        },
+        {
+          key: "orderLineBaseQty",
+          label: "Order quantity (primary unit)",
+          type: "number",
+          derive: { kind: "lookup", from: "purchaseOrder", through: "lines", match: "orderLineId", field: "baseQty" },
+        },
+        {
+          key: "orderCode",
+          label: "Purchase order no.",
+          type: "string",
+          derive: { kind: "lookup", from: "purchaseOrder", through: null, match: "orderId", field: "code" },
+        },
+      ],
+    },
+    {
+      key: "supplierName",
+      label: "Supplier name",
+      type: "string",
+      derive: { kind: "lookup", from: "supplier", through: null, match: "supplierId", field: "name" },
+    },
+    { key: "remark", label: "Remarks", type: "text" },
+  ],
+
+  lifecycle: {
+    statuses: [
+      // Create and push are pending review. Do not set editable: "none". Pending review must be able to fill the receipt date.
+      { key: "pendingReview", label: "pendingReview", color: "amber", initial: true },
+      { key: "received", label: "received", color: "green", terminal: true, editable: "whitelist", editableFields: ["remark"] },
+      { key: "cancelled", label: "cancelled", color: "red", terminal: true, editable: "none" },
+    ],
+    transitions: [
+      {
+        code: "confirm",
+        from: "pendingReview",
+        to: "received",
+        action: "Confirm receipt",
+        primary: true,
+        effects: [
+          {
+            target: "stock",
+            op: "in",
+            subject: "$line.productId",
+            scope: "$bill.warehouseId",
+            amount: "{$line.baseQty}",
+            reverseOn: [],
+          },
+        ],
+      },
+      // This document cannot be created by hand, so the declaration layer does not allow delete. A push that wrote lineage also cannot be deleted at runtime, so cancel is the exit from pending review.
+      // There is no draft and no submit. Confirming receipt completes it.
+      { code: "cancel", from: "pendingReview", to: "cancelled", action: "Cancel", confirm: true },
+    ],
+  },
+
+  preconditions: [
+    {
+      id: "lines_required",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "A receipt with no lines cannot say which product entered which warehouse",
+      check: { primitive: "lines_not_empty" },
+    },
+    {
+      id: "receipt_date_required",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "When the order pushes, the real receipt date has not happened yet, so pending review may leave it empty. It must be filled before receipt is confirmed",
+      check: { primitive: "required_fields", fields: ["receiptDate"] },
+    },
+    {
+      id: "qty_positive",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "Receipt quantity must be positive. A return is a separate document. A negative number must not be mixed into the receipt fact",
+      check: { primitive: "lines_all", left: { ref: "$line.qty" }, op: "gt", right: { value: 0 } },
+    },
+    {
+      id: "expected_qty_non_negative",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "Quantity expected this time cannot be negative. Existing lines that never recorded an expected quantity are treated as 0 by an explicit compatibility rule",
+      check: {
+        primitive: "lines_all",
+        left: { ref: "$line.effectiveExpectedQty" },
+        op: "gte",
+        right: { value: 0 },
+      },
+    },
+    {
+      id: "confirmed_received_qty_positive",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "Quantity is checked positive again before it is handed to the warehouse. The awaiting-receipt status is not editable, and warehouse demand uses this frozen quantity as its cap",
+      check: { primitive: "lines_all", left: { ref: "$line.qty" }, op: "gt", right: { value: 0 } },
+    },
+    {
+      id: "receipt_orders_receiving",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "A purchase receipt can only carry an order that has been pushed and is still receiving. An order awaiting receipt, completed, or closed cannot form a new receipt fact",
+      check: {
+        primitive: "ref_field_compare",
+        via: "$line.orderId",
+        entity: "purchaseOrder",
+        through: null,
+        field: "status",
+        op: "eq",
+        right: { value: "receiving" },
+      },
+    },
+    {
+      id: "receipt_suppliers_match_orders",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "The receipt supplier must match every source purchase order, or stock-in responsibility lands on the wrong supplier",
+      check: {
+        primitive: "ref_field_compare",
+        via: "$line.orderId",
+        entity: "purchaseOrder",
+        through: null,
+        field: "supplierId",
+        op: "eq",
+        right: { ref: "$bill.supplierId" },
+      },
+    },
+    {
+      id: "receipt_products_match_order_lines",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "The received product must follow the source order line. The order-line reference cannot be kept while adding stock of a different product",
+      check: {
+        primitive: "ref_field_compare",
+        via: "$line.orderLineId",
+        entity: "purchaseOrder",
+        through: "lines",
+        field: "productId",
+        op: "eq",
+        right: { ref: "$line.productId" },
+      },
+    },
+    {
+      id: "receipt_prices_match_order_lines",
+      onTransition: "confirm",
+      source: "invariant",
+      level: "block",
+      why: "The tax-inclusive receipt price must follow the source order line, so the stock-in fact can be checked against the purchase order",
+      check: {
+        primitive: "ref_field_compare",
+        via: "$line.orderLineId",
+        entity: "purchaseOrder",
+        through: "lines",
+        field: "baseUnitPrice",
+        op: "eq",
+        right: { ref: "$line.baseUnitPrice" },
+      },
+    },
+    {
+      id: "not_over_receive",
+      onTransition: "confirm",
+      source: "gate",
+      level: "block",
+      why: "Cumulative confirmed receipt quantity cannot exceed the order-line quantity. An excess is usually a receipt or entry error, and the document must be corrected first",
+      check: {
+        primitive: "related_agg",
+        from: "purchaseReceipt",
+        through: "lines",
+        match: "orderLineId",
+        on: "$line.orderLineId",
+        agg: "sum",
+        measure: "baseQty",
+        where: { status: ["received"] },
+        op: "lte",
+        right: { ref: "$line.orderLineBaseQty" },
+        plus: { ref: "$line.baseQty" },
+      },
+    },
+    {
+      id: "warehouse_matches_order",
+      onTransition: "confirm",
+      source: "gate",
+      level: "warn",
+      message: "The receiving warehouse does not match the warehouse named on the purchase order. Confirm it.",
+      why: "A temporary warehouse change can be legal. Stock is still posted to the real warehouse on this receipt. Departing from the source plan needs an explicit confirm and must not block",
+      check: {
+        primitive: "ref_field_compare",
+        via: "$line.orderId",
+        entity: "purchaseOrder",
+        through: null,
+        field: "warehouseId",
+        op: "eq",
+        right: { ref: "$bill.warehouseId" },
+      },
+    },
+  ],
+
+  views: {
+    list: {
+      columns: [
+        "code",
+        "supplierName",
+        "receiptDate",
+        "warehouseId",
+        "totalAmount",
+        "remainingReturnBaseQty",
+      ],
+      filters: ["status", "supplierId", "warehouseId", "receiptDate"],
+      searchable: ["code", "supplierName"],
+      defaultSort: { field: "createdAt", desc: true },
+    },
+    form: [
+      { title: "Receipt", fields: ["code", "supplierId", "warehouseId", "receiptDate", "receiver"] },
+      { title: "Receipt lines", fields: ["lines"] },
+      { title: "Amount total", fields: ["totalAmount"] },
+      { title: "Other", fields: ["remark"] },
+    ],
+  },
+});

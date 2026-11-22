@@ -1,0 +1,10 @@
+{
+  "name": "@open-erp/domain-commerce-catalog",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Commerce pack: products, warehouses, suppliers, and customers.",
+  "dependencies": {
+    "@open-erp/metamodel": "0.1.0"
+  }
+}

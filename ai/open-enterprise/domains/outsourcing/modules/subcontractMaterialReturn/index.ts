@@ -1,0 +1,100 @@
+import { defineModule } from "@open-erp/metamodel";
+
+export default defineModule({
+  label: "Subcontract material return",
+  numbering: { prefix: "SCMAT", seqScope: "day" },
+  fields: [
+    { key: "code", label: "Leftover handling no.", type: "string", primary: true, auto: true },
+    { key: "issueId", label: "Subcontract issue", type: "ref", ref: "subcontractIssue", required: true },
+    { key: "handlingType", label: "How to handle leftover", type: "enum", options: ["Return to warehouse", "Confirm loss"], help: "Confirming a leftover return posts immediately: out of the subcontract WIP warehouse and into the return warehouse. Confirming scrap only deducts the subcontract WIP warehouse." },
+    // The production task moved down onto the line with the issue (the issue header no longer has one): one issue can cover several tasks,
+    // and only the line can say which task each returned row belongs to.
+    { key: "supplierId", label: "Subcontract supplier", type: "ref", ref: "supplier", snapshot: { from: "subcontractIssue", match: "issueId", through: null, field: "supplierId" } },
+    { key: "warehouseId", label: "Return to warehouse", type: "ref", ref: "warehouse", required: true, refDefault: { from: "subcontractIssue", match: "issueId", through: null, field: "warehouseId" } },
+    { key: "returnDate", label: "Handled on", type: "date", createDefault: "today" },
+    {
+      key: "materialLines",
+      label: "Leftover lines",
+      type: "subtable",
+      ref: "subcontractMaterialReturnLine",
+      fields: [
+        { key: "issueId", label: "Subcontract issue", type: "ref", ref: "subcontractIssue", required: true },
+        { key: "issueLineId", label: "Subcontract issue line", type: "refLine", ref: "subcontractIssue", through: "materialLines", required: true },
+        { key: "productionTaskId", label: "Production task", type: "ref", ref: "productionTask", snapshot: { from: "subcontractIssue", match: "issueLineId", through: "materialLines", field: "productionTaskId" } },
+        { key: "productId", label: "Leftover product", type: "ref", ref: "product", snapshot: { from: "subcontractIssue", match: "issueLineId", through: "materialLines", field: "productId" } },
+        { key: "unit", label: "Unit", type: "enum", required: true, refDefault: { from: "subcontractIssue", match: "issueLineId", through: "materialLines", field: "unit" }, unitChoice: { match: "productId", factorInto: "unitFactor" } },
+        { key: "unitFactor", label: "Unit factor", type: "number" },
+        { key: "warehouseId", label: "From warehouse", type: "ref", ref: "warehouse", snapshot: { from: "subcontractIssue", match: "issueId", through: null, field: "targetWarehouseId" } },
+        { key: "targetWarehouseId", label: "To warehouse", type: "ref", ref: "warehouse", snapshot: { from: "subcontractIssue", match: "issueId", through: null, field: "warehouseId" } },
+        { key: "qty", label: "Handled quantity", type: "number", required: true, pushFrom: "returnQty" },
+        { key: "baseQty", label: "Handled quantity in main unit", type: "number", calculate: { op: "mul", args: [{ field: "qty" }, { field: "unitFactor" }] } },
+        { key: "baseUnitPrice", label: "Business price in main unit", type: "money", hidden: true, derive: { kind: "formula", expr: { value: 0 } } },
+        { key: "issueLineBaseQty", label: "Original issue-out quantity (main unit)", type: "number", derive: { kind: "lookup", from: "subcontractIssue", through: "materialLines", match: "issueLineId", field: "baseQty" } },
+        { key: "batchNo", label: "Lot number", type: "string" },
+        { key: "remark", label: "Line remark", type: "text" },
+      ],
+    },
+    { key: "remark", label: "Handling note", type: "text", help: "When confirming scrap, say why the material cannot come back, for example transit damage or loss at the supplier. A warehouse return may include a return note." },
+  ],
+  lifecycle: {
+    statuses: [
+      // Create and push start at pending. Do not set editable: "none": pending must stay editable, or the form cannot be filled.
+      { key: "pending", label: "pending", color: "amber", initial: true },
+      { key: "returned", label: "returned", color: "green", terminal: true, editable: "whitelist", editableFields: ["remark"] },
+      { key: "lossConfirmed", label: "lossConfirmed", color: "green", terminal: true, editable: "whitelist", editableFields: ["remark"] },
+      { key: "cancelled", label: "cancelled", color: "red", terminal: true, editable: "none" },
+    ],
+    transitions: [
+      {
+        code: "releaseDemand",
+        from: "pending",
+        to: "returned",
+        action: "Confirm leftover return",
+        primary: true,
+        when: { primitive: "field_compare", left: { ref: "$bill.handlingType" }, op: "eq", right: { value: "Return to warehouse" } },
+        effects: [
+          { target: "stock", op: "in", subject: "$line.productId", scope: "$line.targetWarehouseId", amount: "{$line.baseQty}", reverseOn: [] },
+          { target: "stock", op: "out", subject: "$line.productId", scope: "$line.warehouseId", amount: "{$line.baseQty}", reverseOn: [] },
+        ],
+      },
+      {
+        code: "releaseLossDemand",
+        from: "pending",
+        to: "lossConfirmed",
+        action: "Confirm leftover loss",
+        primary: true,
+        when: { primitive: "field_compare", left: { ref: "$bill.handlingType" }, op: "eq", right: { value: "Confirm loss" } },
+        effects: [
+          { target: "stock", op: "out", subject: "$line.productId", scope: "$line.warehouseId", amount: "{$line.baseQty}", reverseOn: [] },
+        ],
+      },
+      { code: "cancel", from: "pending", to: "cancelled", action: "Cancel", confirm: true },
+    ],
+  },
+  preconditions: [
+    { id: "lines_required", onTransition: "releaseDemand", source: "invariant", level: "block", why: "Leftover handling must name the source issue line", check: { primitive: "lines_not_empty" } },
+    { id: "lines_required_for_loss", onTransition: "releaseLossDemand", source: "invariant", level: "block", why: "Leftover handling must name the source issue line", check: { primitive: "lines_not_empty" } },
+    { id: "handling_required", onTransition: "releaseDemand", source: "invariant", level: "block", why: "Say whether the leftover returns to the warehouse or is confirmed as scrap", check: { primitive: "required_fields", fields: ["handlingType"] } },
+    { id: "handling_required_for_loss", onTransition: "releaseLossDemand", source: "invariant", level: "block", why: "Say whether the leftover returns to the warehouse or is confirmed as scrap", check: { primitive: "required_fields", fields: ["handlingType"] } },
+    { id: "loss_reason_required", onTransition: "releaseLossDemand", source: "invariant", level: "block", when: { primitive: "field_compare", left: { ref: "$bill.handlingType" }, op: "eq", right: { value: "Confirm loss" } }, message: "Before confirming material scrap, write the reason in the handling note", why: "Scrap actually deducts subcontract WIP. The reason must be readable at a glance", check: { primitive: "required_fields", fields: ["remark"] } },
+    { id: "date_required", onTransition: "releaseDemand", source: "invariant", level: "block", why: "An actual date is required before confirming the material return", check: { primitive: "required_fields", fields: ["returnDate"] } },
+    { id: "date_required_for_loss", onTransition: "releaseLossDemand", source: "invariant", level: "block", why: "An actual date is required before confirming scrap", check: { primitive: "required_fields", fields: ["returnDate"] } },
+    { id: "qty_positive", onTransition: "releaseDemand", source: "invariant", level: "block", why: "Return quantity must be positive", check: { primitive: "lines_all", left: { ref: "$line.qty" }, op: "gt", right: { value: 0 } } },
+    { id: "qty_positive_for_loss", onTransition: "releaseLossDemand", source: "invariant", level: "block", why: "Scrap quantity must be positive", check: { primitive: "lines_all", left: { ref: "$line.qty" }, op: "gt", right: { value: 0 } } },
+    { id: "issue_posted", onTransition: "releaseDemand", source: "gate", level: "block", why: "Only material from a completed issue can be returned", check: { primitive: "ref_field_compare", via: "issueId", entity: "subcontractIssue", field: "status", op: "eq", right: { value: "issuedOut" } } },
+    { id: "issue_posted_for_loss", onTransition: "releaseLossDemand", source: "gate", level: "block", why: "Leftover scrap can be confirmed only after the issue is completed", check: { primitive: "ref_field_compare", via: "issueId", entity: "subcontractIssue", field: "status", op: "eq", right: { value: "issuedOut" } } },
+    { id: "lines_match_issue", onTransition: "releaseDemand", source: "invariant", level: "block", why: "Each return line must belong to the issue on the header", check: { primitive: "lines_all", left: { ref: "$line.issueId" }, op: "eq", right: { ref: "$bill.issueId" } } },
+    { id: "return_stock_available", onTransition: "releaseDemand", source: "gate", level: "block", message: "Stock is short, so the leftover cannot be returned. Check that the subcontract WIP warehouse still has enough on hand.", why: "Returning leftover deducts the subcontract WIP warehouse. There is no negative-stock switch, so confirm the balance is still enough", check: { primitive: "available_sufficient", target: "stock", subject: "$line.productId", scope: "$line.warehouseId", need: "$line.baseQty" } },
+    { id: "loss_stock_available", onTransition: "releaseLossDemand", source: "gate", level: "block", message: "Stock is short, so leftover scrap cannot be confirmed. Check that the subcontract WIP warehouse still has enough on hand.", why: "Confirming scrap deducts the subcontract WIP warehouse. There is no negative-stock switch, so confirm the balance is still enough", check: { primitive: "available_sufficient", target: "stock", subject: "$line.productId", scope: "$line.warehouseId", need: "$line.baseQty" } },
+    { id: "not_over_issue", onTransition: "releaseDemand", source: "gate", level: "block", why: "Cumulative leftover handling cannot exceed the source issue line. Final close also checks standard consumption", check: { primitive: "related_agg", from: "subcontractMaterialReturn", through: "materialLines", match: "issueLineId", on: "$line.issueLineId", agg: "sum", measure: "baseQty", where: { status: ["returned", "lossConfirmed"] }, op: "lte", right: { ref: "$line.issueLineBaseQty" }, plus: { ref: "$line.baseQty" } } },
+    { id: "not_over_issue_for_loss", onTransition: "releaseLossDemand", source: "gate", level: "block", why: "Cumulative leftover handling cannot exceed the source issue line. Final close also checks standard consumption", check: { primitive: "related_agg", from: "subcontractMaterialReturn", through: "materialLines", match: "issueLineId", on: "$line.issueLineId", agg: "sum", measure: "baseQty", where: { status: ["returned", "lossConfirmed"] }, op: "lte", right: { ref: "$line.issueLineBaseQty" }, plus: { ref: "$line.baseQty" } } },
+  ],
+  handoff: [
+    { id: "notify_production", kind: "notify", onTransition: "releaseDemand", to: "production-planner", title: "Subcontract leftover returned", why: "Production must track subcontract leftovers" },
+    { id: "notify_production_loss", kind: "notify", onTransition: "releaseLossDemand", to: "production-planner", title: "Subcontract leftover loss confirmed", why: "Production must track subcontract material close-out" },
+  ],
+  views: {
+    list: { columns: ["code", "issueId", "returnDate", "supplierId", "warehouseId", "status"], filters: ["status", "issueId", "supplierId", "warehouseId", "returnDate"], searchable: ["code"], defaultSort: { field: "createdAt", desc: true } },
+    form: [{ title: "Leftover handling", fields: ["code", "issueId", "supplierId", "handlingType", "returnDate", "remark"] }, { title: "Leftover lines", fields: ["materialLines"] }],
+  },
+});

@@ -1,0 +1,22 @@
+{
+  "name": "@open-erp/runtime-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Commands, transitions, and ledger posting. Depends on the metamodel and injected ports.",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@open-erp/metamodel": "0.1.0"
+  }
+}

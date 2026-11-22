@@ -1,0 +1,68 @@
+:root {
+  color-scheme: light;
+  --ink: #1c1915;
+  --muted: #5c564c;
+  --line: #e4dccf;
+  --paper: #f6f1e8;
+  --card: #fffdf8;
+  --accent: #0f6b4c;
+  --danger: #8d2b2b;
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+button, input { font: inherit; }
+button {
+  background: var(--accent);
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+button.secondary { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.top, .gate, .desk { width: min(880px, calc(100% - 2rem)); margin: 0 auto; }
+.top { display: flex; justify-content: space-between; gap: 1rem; align-items: end; padding: 2rem 0 1rem; }
+.eyebrow { margin: 0; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.75rem; color: var(--muted); font-family: ui-sans-serif, system-ui, sans-serif; }
+h1 { margin: 0.2rem 0 0; font-weight: 500; }
+h2 { margin: 0 0 0.4rem; font-weight: 500; font-size: 1.25rem; }
+.lead, .hint, .who { color: var(--muted); }
+.who { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 0.95rem; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem 1.2rem;
+  margin-bottom: 1rem;
+}
+form { display: grid; gap: 0.7rem; }
+label { display: grid; gap: 0.25rem; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 0.9rem; }
+input { border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem 0.6rem; background: white; }
+.accounts { margin: 1rem 0 0; padding-left: 1.1rem; color: var(--muted); }
+.error { color: var(--danger); min-height: 1.2rem; }
+.hidden { display: none; }
+.out {
+  white-space: pre-wrap;
+  background: #f3eee4;
+  border-radius: 8px;
+  padding: 0.8rem;
+  min-height: 0;
+}
+.out:empty { display: none; }
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding: 0.7rem 0;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+#links { margin: 0; padding-left: 1.2rem; }
+#links li { margin: 0.35rem 0; }

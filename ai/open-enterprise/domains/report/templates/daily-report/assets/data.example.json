@@ -1,0 +1,528 @@
+{
+  "header": {
+    "title": "Factory operating daily report",
+    "date": "August 10, 2026",
+    "weekday": "Monday"
+  },
+  "healthScore": {
+    "score": 62,
+    "fullScore": 100,
+    "change": -8,
+    "label": "Operating health"
+  },
+  "aiJudge": {
+    "status": "Tight",
+    "statusColor": "orange",
+    "description": "Operating pressure is concentrated on late delivery, critical material shortages, and a backlog of order approvals.",
+    "highlightParts": ["Late delivery", "Critical material shortage", "Order-approval backlog"]
+  },
+  "overview": {
+    "title": "AI operating overview",
+    "indicators": [
+      {
+        "name": "Plan attainment",
+        "value": "52.1",
+        "unit": "%",
+        "change": 6.3,
+        "changeUnit": "%",
+        "trend": "up"
+      },
+      {
+        "name": "Product pass rate",
+        "value": "123",
+        "unit": "%",
+        "change": 3,
+        "changeUnit": "%",
+        "trend": "up"
+      },
+      {
+        "name": "Order lead time",
+        "value": "90.9",
+        "unit": "days",
+        "change": 6.7,
+        "changeUnit": "days",
+        "trend": "up"
+      },
+      {
+        "name": "Sales for the report month to date",
+        "value": "66.7",
+        "unit": "10k CNY",
+        "change": 11.1,
+        "changeUnit": "%",
+        "trend": "down"
+      },
+      {
+        "name": "On-time purchase delivery",
+        "value": "18.5",
+        "unit": "%",
+        "change": 1.2,
+        "changeUnit": "%",
+        "trend": "up"
+      },
+      {
+        "name": "Material readiness",
+        "value": "680",
+        "unit": "%",
+        "change": 12.1,
+        "changeUnit": "%",
+        "trend": "up"
+      }
+    ],
+    "dataQuality": {
+      "status": "complete",
+      "message": "Core operating figures for this period are complete"
+    }
+  },
+  "summary": {
+    "title": "AI summary",
+    "paragraphs": [
+      {
+        "type": "text",
+        "content": "Yesterday (August 9) the plant ran only fair, and several exceptions need attention."
+      },
+      {
+        "type": "text",
+        "highlightParts": [
+          { "text": "Yesterday's collections were ¥0. Collections for the report month to date are ¥384,000, well short of the target. New orders yesterday were 0. Open work orders total 222, of which 25 are overdue", "highlight": ["Yesterday's collections were ¥0", "Collections for the report month to date are ¥384,000", "New orders yesterday were 0", "Open work orders total 222", "25 work orders are overdue"] }
+        ]
+      },
+      {
+        "type": "followUp",
+        "icon": "💰",
+        "dotColor": "#F5222D",
+        "label": "Follow up today",
+        "labelColor": "#F5222D",
+        "content": "Among unpaid customers, YS-20260825-0001 (¥1,200) is 3 days overdue and YS-20260819-0002 (¥1,050) is 1 day overdue. Finance should follow up on collections today."
+      },
+      {
+        "type": "alert",
+        "icon": "🏭",
+        "dotColor": "#F5222D",
+        "label": "Production exception",
+        "labelColor": "#FA8C16",
+        "content": "Yesterday's production output was ¥0 and the 5-day completion rate was 0%. Efficiency is low. The workshop lead should find out why."
+      },
+      {
+        "type": "risk",
+        "icon": "📦",
+        "dotColor": "#FA8C16",
+        "label": "Purchasing risk",
+        "labelColor": "#FA8C16",
+        "content": "YF-20260807-0002 (¥1,672) is 3 days overdue and has not arrived. It affects delivery of 3 work orders. Purchasing should chase the supplier today."
+      }
+    ]
+  },
+  "bottomStats": [
+    {
+      "icon": "✅",
+      "iconBg": "#D9F7BE",
+      "bg": "#F6FFED",
+      "borderColor": "#B7EB8F",
+      "countColor": "#389E0D",
+      "titleColor": "#389E0D",
+      "title": "Normal items",
+      "count": 5,
+      "unit": "items",
+      "description": "Production-task completion and similar measures"
+    },
+    {
+      "icon": "⚠️",
+      "iconBg": "#FFE7BA",
+      "bg": "#FFF7E6",
+      "borderColor": "#FFD591",
+      "countColor": "#D46B08",
+      "titleColor": "#D46B08",
+      "title": "Watch items",
+      "count": 4,
+      "unit": "items",
+      "description": "Inventory days on hand are rising"
+    },
+    {
+      "icon": "🔴",
+      "iconBg": "#FFCCC7",
+      "bg": "#FFF1F0",
+      "borderColor": "#FFA39E",
+      "countColor": "#CF1322",
+      "titleColor": "#CF1322",
+      "title": "Warning items",
+      "count": 7,
+      "unit": "items",
+      "description": "Late delivery, shortages, and approvals"
+    }
+  ],
+  "bossFocus": [
+    {
+      "number": "01",
+      "title": "Delivery risk",
+      "subtitle": "4 orders are past the promised date",
+      "bg": "#FFF1F0",
+      "borderColor": "#FFCCC7",
+      "headerColor": "#CF1322",
+      "contents": [
+        {
+          "type": "section-title",
+          "text": "Highest-risk order"
+        },
+        {
+          "type": "highlight-card",
+          "customer": "Shanghai Xinrui Workwear",
+          "amount": "13,600",
+          "amountUnit": "CNY",
+          "tags": [
+            "Customer chased 2 times",
+            "5 days overdue"
+          ]
+        },
+        {
+          "type": "trend",
+          "title": "Overdue-order trend (last 7 days)",
+          "chartId": "trendChart1",
+          "data": {
+            "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+            "values": [2, 3, 3, 5, 5, 4, 4],
+            "yUnit": "orders",
+            "peakIndex": 3,
+            "peakLabel": "5 orders",
+            "endLabel": "4 orders"
+          }
+        },
+        {
+          "type": "suggestion",
+          "text": "Suggestion: Confirm stock and the shipment plan today, and give the customer a clear date."
+        }
+      ]
+    },
+    {
+      "number": "02",
+      "title": "Production risk",
+      "subtitle": "The women's commuter suit is short of material",
+      "bg": "#FFF7E6",
+      "borderColor": "#FFE7BA",
+      "headerColor": "#D46B08",
+      "contents": [
+        {
+          "type": "section-title",
+          "text": "Missing these critical materials"
+        },
+        {
+          "type": "table",
+          "columns": ["Material to issue", "To issue", "Shortage", "Affected task"],
+          "rows": [
+            ["Charcoal interlining", "111 m", "111 m", "Production task 001"],
+            ["Fusible woven interlining", "111 m", "111 m", "Production task 001"]
+          ]
+        },
+        {
+          "type": "text",
+          "text": "Affects work order 20266805-0002 · 111 pieces"
+        },
+        {
+          "type": "bar-chart",
+          "title": "Shortage trend (last 7 days)",
+          "chartId": "barChart2",
+          "data": {
+            "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+            "values": [0, 0, 28, 56, 80, 80, 111],
+            "yLabels": ["0 pcs", "28 pcs", "56 pcs", "83 pcs", "111 pcs"],
+            "yUnit": "pcs"
+          }
+        },
+        {
+          "type": "suggestion",
+          "text": "Buy now. The cutoff is August 12."
+        }
+      ]
+    },
+    {
+      "number": "03",
+      "title": "Approval risk",
+      "subtitle": "Sales-order approval is badly backlogged",
+      "bg": "#F9F0FF",
+      "borderColor": "#D3ADF7",
+      "headerColor": "#722ED1",
+      "contents": [
+        {
+          "type": "big-number",
+          "value": "119",
+          "unit": "orders",
+          "label": "pendingReview"
+        },
+        {
+          "type": "section-title",
+          "text": "Order to watch"
+        },
+        {
+          "type": "highlight-card",
+          "customer": "Ningbo Haifeng Hotel",
+          "amount": "156,000",
+          "amountUnit": "CNY",
+          "tags": [
+            "Due today"
+          ]
+        },
+        {
+          "type": "trend",
+          "title": "Orders awaiting approval (last 7 days)",
+          "chartId": "trendChart3",
+          "data": {
+            "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+            "values": [80, 80, 80, 99.5, 105, 109.9, 119],
+            "yUnit": "orders",
+            "peakIndex": 6,
+            "peakLabel": "119 orders",
+            "endLabel": ""
+          }
+        },
+        {
+          "type": "suggestion",
+          "text": "Approve high-value and tight-date orders first."
+        }
+      ]
+    }
+  ],
+  "businessChain": {
+    "title": "Operating chain",
+    "sections": [
+      {
+        "icon": "📋",
+        "title": "Sales orders",
+        "metrics": [
+          { "value": "123", "unit": "orders" },
+          { "value": "521", "unit": "10k CNY" }
+        ],
+        "subInfo": "Day over day, down 3 orders",
+        "chartId": "chainChart1",
+        "chartColor": "#1677FF",
+        "chartData": {
+          "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+          "values": [100, 92, 115, 96, 118, 120, 123],
+          "peakIndex": 6,
+          "peakLabel": "123"
+        },
+        "aiText": "AI: Order volume is down. Watch the dates for high-risk customers."
+      },
+      {
+        "icon": "🏭",
+        "title": "Production plan",
+        "metrics": [
+          { "value": "10", "unit": "items" },
+          { "value": "6", "unit": "items waiting to start" }
+        ],
+        "subInfo": "Unchanged day over day",
+        "chartId": "chainChart2",
+        "chartColor": "#52C41A",
+        "chartData": {
+          "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+          "values": [6, 5, 7, 8, 6, 9, 10],
+          "peakIndex": 6,
+          "peakLabel": "10"
+        },
+        "aiText": "AI: The plan is on schedule. Tasks waiting to start need a timely follow-up."
+      },
+      {
+        "icon": "📦",
+        "title": "Material preparation",
+        "metrics": [
+          { "value": "9", "unit": "item demand" },
+          { "value": "Short 2", "unit": "items" }
+        ],
+        "subInfo": "Unchanged day over day",
+        "chartId": "chainChart3",
+        "chartColor": "#FA8C16",
+        "chartData": {
+          "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+          "values": [5, 3, 7, 6, 8, 6, 9],
+          "peakIndex": 6,
+          "peakLabel": "9"
+        },
+        "aiText": "AI: 2 critical materials are short, and there is a delay risk."
+      },
+      {
+        "icon": "🔧",
+        "title": "Production execution",
+        "metrics": [
+          { "value": "11", "unit": "items" },
+          { "value": "1", "unit": "item delayed" }
+        ],
+        "subInfo": "Day over day, up 1 item",
+        "chartId": "chainChart4",
+        "chartColor": "#722ED1",
+        "chartData": {
+          "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+          "values": [7, 6, 7, 8, 9, 9, 11],
+          "peakIndex": 6,
+          "peakLabel": "11"
+        },
+        "aiText": "AI: The men's business suit is 3 days late. Watch its progress."
+      },
+      {
+        "icon": "🚚",
+        "title": "Delivery and collections",
+        "metrics": [
+          { "value": "4", "unit": "items overdue" },
+          { "value": "Risk ¥2,240", "unit": "" }
+        ],
+        "subInfo": "Unchanged day over day",
+        "chartId": "chainChart5",
+        "chartColor": "#F5222D",
+        "chartData": {
+          "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+          "values": [1, 1, 2, 3, 3, 3, 4],
+          "peakIndex": 6,
+          "peakLabel": "4"
+        },
+        "aiText": "AI: There is overdue shipment and collection risk. Handle it soon."
+      }
+    ]
+  },
+  "businessRisk": {
+    "title": "Risks identified by AI",
+    "distribution": {
+      "chartId": "riskDonut",
+      "data": [
+        { "name": "High risk", "value": 3, "color": "#F5222D" },
+        { "name": "Medium risk", "value": 3, "color": "#FA8C16" },
+        { "name": "Low risk", "value": 1, "color": "#52C41A" }
+      ],
+      "totalLabel": "7 items"
+    },
+    "trend": {
+      "title": "Total risk trend (last 7 days)",
+      "chartId": "riskTrend",
+      "dates": ["8-04", "8-05", "8-06", "8-07", "8-08", "8-09", "8-10"],
+      "values": [5, 5, 5.5, 6, 6.5, 7, 7],
+      "yLabels": ["5 items", "5.5 items", "6 items", "6.5 items", "7 items"],
+      "peakIndex": [0, 6],
+      "peakLabels": ["5 items", "7 items"]
+    },
+    "riskList": [
+      {
+        "level": "high",
+        "levelColor": "#F5222D",
+        "desc": "Order overdue by 26 days",
+        "scope": "Customer delivery",
+        "amount": "¥2,240",
+        "trend": [3, 4, 5, 6, 7, 8, 10]
+      },
+      {
+        "level": "high",
+        "levelColor": "#F5222D",
+        "desc": "Women's commuter suit is short of a critical material",
+        "scope": "Production plan",
+        "amount": "Affects 111 pieces",
+        "trend": [1, 2, 3, 5, 8, 10, 12]
+      },
+      {
+        "level": "high",
+        "levelColor": "#F5222D",
+        "desc": "Men's business suit is 3 days overdue",
+        "scope": "Production progress",
+        "amount": "Affects 1 task",
+        "trend": [2, 3, 3, 4, 5, 5, 6]
+      },
+      {
+        "level": "medium",
+        "levelColor": "#FA8C16",
+        "desc": "119 orders awaiting approval",
+        "scope": "Order flow",
+        "amount": "¥156,000",
+        "trend": [5, 5, 6, 6, 7, 8, 9]
+      },
+      {
+        "level": "medium",
+        "levelColor": "#FA8C16",
+        "desc": "¥680 overdue receivable",
+        "scope": "Cash flow",
+        "amount": "¥680",
+        "trend": [1, 2, 2, 3, 3, 4, 5]
+      },
+      {
+        "level": "medium",
+        "levelColor": "#FA8C16",
+        "desc": "¥680 overdue receivable",
+        "scope": "Cash flow",
+        "amount": "¥680",
+        "trend": [2, 2, 3, 3, 4, 4, 5]
+      },
+      {
+        "level": "medium",
+        "levelColor": "#FA8C16",
+        "desc": "¥680 overdue receivable",
+        "scope": "Cash flow",
+        "amount": "¥680",
+        "trend": [1, 3, 3, 4, 4, 5, 5]
+      }
+    ]
+  },
+  "actionList": {
+    "title": "Today's action list",
+    "sections": [
+      {
+        "title": "Due today",
+        "items": [
+          {
+            "time": "09:00",
+            "person": "Sales owner",
+            "task": "Confirm the shipment plan for Shanghai Xinrui Workwear",
+            "level": "high",
+            "levelColor": "#F5222D",
+            "dotColor": "#F5222D"
+          },
+          {
+            "time": "11:00",
+            "person": "Purchasing owner",
+            "task": "Confirm the charcoal interlining purchase",
+            "level": "high",
+            "levelColor": "#F5222D",
+            "dotColor": "#F5222D"
+          },
+          {
+            "time": "14:00",
+            "person": "Approval owner",
+            "task": "Approve the Ningbo Haifeng Hotel order of ¥156,000",
+            "level": "medium",
+            "levelColor": "#FA8C16",
+            "dotColor": "#FA8C16"
+          },
+          {
+            "time": "17:00",
+            "person": "Sales owner",
+            "task": "Confirm the collection plan (¥680)",
+            "level": "low",
+            "levelColor": "#52C41A",
+            "dotColor": "#52C41A"
+          }
+        ]
+      },
+      {
+        "title": "Follow up tomorrow",
+        "items": [
+          {
+            "time": "09:00",
+            "person": "Production supervisor",
+            "task": "Confirm the rework plan for the men's business suit",
+            "level": "medium",
+            "levelColor": "#FA8C16",
+            "dotColor": "#FA8C16"
+          },
+          {
+            "time": "10:00",
+            "person": "Sales owner",
+            "task": "Confirm collection of the receivable (¥680)",
+            "level": "low",
+            "levelColor": "#52C41A",
+            "dotColor": "#52C41A"
+          },
+          {
+            "time": "14:00",
+            "person": "Sales owner",
+            "task": "Confirm collection of the receivable (¥1,680)",
+            "level": "low",
+            "levelColor": "#52C41A",
+            "dotColor": "#52C41A"
+          }
+        ]
+      }
+    ]
+  }
+}

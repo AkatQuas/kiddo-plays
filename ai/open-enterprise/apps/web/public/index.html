@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open Enterprise</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="eyebrow">Architecture reference</p>
+      <h1>Open Enterprise</h1>
+    </div>
+    <div id="who" class="who"></div>
+  </header>
+
+  <main id="gate" class="gate">
+    <section class="card">
+      <h2>Sign in</h2>
+      <p class="lead">The browser never asserts who you are. The API issues an HttpOnly session after checking the local user directory.</p>
+      <form id="login">
+        <label>Email <input name="email" type="email" value="clerk@sample.test" autocomplete="username" required /></label>
+        <label>Password <input name="password" type="password" value="demo-pass" autocomplete="current-password" required /></label>
+        <button type="submit">Continue</button>
+      </form>
+      <ul class="accounts">
+        <li><code>clerk@sample.test</code> can stage a write</li>
+        <li><code>manager@sample.test</code> can confirm it</li>
+      </ul>
+      <p id="login-error" class="error"></p>
+    </section>
+  </main>
+
+  <main id="desk" class="desk hidden">
+    <section class="links card">
+      <h2>Service links</h2>
+      <ol id="links"></ol>
+    </section>
+
+    <section class="card">
+      <h2>Stage an order</h2>
+      <p class="lead">This call stores a pending action. It does not open the order.</p>
+      <form id="stage">
+        <label>Customer <input name="customerName" value="Harbor Office Supply" required /></label>
+        <label>SKU <input name="sku" value="sheet" required /></label>
+        <label>Qty <input name="qty" type="number" min="1" value="4" required /></label>
+        <button type="submit">Stage</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Pending actions</h2>
+      <div id="actions"></div>
+    </section>
+
+    <section class="card">
+      <h2>Open orders</h2>
+      <div id="orders"></div>
+    </section>
+
+    <section class="card">
+      <h2>Ask the agent</h2>
+      <p class="lead">The API sends the goal and the acting user. The agent calls a tool with a service token. The reply is a summary plus an evidence id. Row bodies stay on the evidence route.</p>
+      <form id="goal">
+        <label>Goal <input name="goal" value="stage 2 sheet for Cedar Clinic" required /></label>
+        <button type="submit">Run</button>
+      </form>
+      <p class="hint">A goal that does not start with <code>stage &lt;qty&gt; &lt;sku&gt; for &lt;customer&gt;</code> queries orders instead. If the agent host is down, the API runs the same plan itself and says so.</p>
+      <pre id="goal-out" class="out"></pre>
+      <button id="load-evidence" type="button" class="secondary hidden">Load evidence</button>
+      <pre id="evidence-out" class="out"></pre>
+    </section>
+
+    <section class="card">
+      <h2>Attachment</h2>
+      <p class="lead">Files land only when <code>ATTACHMENT_BACKEND=file</code> points at a directory. There is no silent disk fallback.</p>
+      <form id="file">
+        <label>Name <input name="filename" value="note.txt" required /></label>
+        <label>Text <input name="text" value="sample note" required /></label>
+        <button type="submit">Store</button>
+      </form>
+      <div id="files"></div>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

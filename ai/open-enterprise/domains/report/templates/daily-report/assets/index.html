@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Factory operating daily report</title>
+  <!-- Inlined at render time (render.ts): style, report data, and app. ECharts is a shared object-storage link. -->
+  <style>/*__INLINE_STYLE__*/</style>
+  <!--__ECHARTS_TAG__-->
+  <script>window.__REPORT_DATA__ = /*__INLINE_DATA__*/{};</script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <h1 class="title">Factory operating daily report</h1>
+        <p class="date" id="date"></p>
+      </div>
+      <div class="health-chart-wrapper">
+        <div id="healthChart" class="health-chart"></div>
+        <div class="health-info">
+<!--          <span class="health-label">Operating health</span>-->
+        </div>
+      </div>
+    </div>
+    <div class="header-inner">
+      <section class="ai-judge">
+        <div class="judge-header">
+          <span class="judge-icon">🤖</span>
+          <span class="judge-label">AI operating judgment: operating status</span>
+          <span class="status-badge" id="statusBadge"></span>
+        </div>
+        <p class="judge-desc" id="judgeDesc"></p>
+      </section>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <section class="main-card card">
+      <h2 class="section-title">
+        <span class="title-number">01</span>
+        <span class="title-text" id="overviewTitle"></span>
+      </h2>
+      <div class="indicators" id="indicators"></div>
+
+      <div class="summary-content">
+        <h2 class="section-title no-border">
+          <span class="title-icon">🤖</span>
+          <span class="title-text" id="summaryTitle"></span>
+        </h2>
+        <div id="summaryContent"></div>
+      </div>
+      <div class="bottom-stats" id="bottomStats"></div>
+    </section>
+
+    <section class="boss-card card">
+      <h2 class="section-title">
+        <span class="title-number">02</span>
+        <span class="title-text">3 things the owner must watch today</span>
+      </h2>
+      <div class="boss-focus-list" id="bossFocusList"></div>
+    </section>
+
+    <section class="chain-card card">
+      <h2 class="section-title">
+        <span class="title-number">03</span>
+        <span class="title-text" id="chainTitle"></span>
+      </h2>
+      <div class="chain-grid" id="chainGrid"></div>
+    </section>
+
+    <div class="bottom-row">
+      <section class="risk-card card">
+        <h2 class="section-title">
+          <span class="title-number">04</span>
+          <span class="title-text" id="riskTitle"></span>
+        </h2>
+        <div class="risk-header">
+          <div class="risk-dist">
+            <div class="risk-subtitle">Risk level distribution</div>
+            <div id="riskDonut" class="risk-donut"></div>
+          </div>
+          <div class="risk-trend-wrap">
+            <div class="risk-subtitle" id="riskTrendTitle"></div>
+            <div id="riskTrend" class="risk-trend"></div>
+          </div>
+        </div>
+        <div class="risk-table-wrap">
+          <div class="risk-table">
+            <div class="risk-table-header">
+              <div class="rt-col rt-level">Level</div>
+              <div class="rt-col rt-desc">Risk</div>
+              <div class="rt-col rt-scope">Scope</div>
+              <div class="rt-col rt-amount">Amount / quantity</div>
+              <div class="rt-col rt-owner">Owner</div>
+            </div>
+            <div id="riskTableBody"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="action-card card">
+        <h2 class="section-title">
+          <span class="title-number">05</span>
+          <span class="title-text" id="actionTitle"></span>
+        </h2>
+        <div id="actionSections"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>/*__INLINE_APP__*/</script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+{
+  "version": 1,
+  "choiceSets": [
+    {
+      "code": "inventory.productCategory",
+      "items": [
+        {
+          "code": "cutPiece",
+          "retired": false
+        },
+        {
+          "code": "fabric",
+          "retired": false
+        },
+        {
+          "code": "garmentAccessory",
+          "retired": false
+        },
+        {
+          "code": "interlining",
+          "retired": false
+        },
+        {
+          "code": "lining",
+          "retired": false
+        },
+        {
+          "code": "other",
+          "retired": false
+        },
+        {
+          "code": "packaging",
+          "retired": false
+        },
+        {
+          "code": "suit",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "inventory.stockInType",
+      "items": [
+        {
+          "code": "inventoryGain",
+          "retired": false
+        },
+        {
+          "code": "other",
+          "retired": false
+        },
+        {
+          "code": "productionReceipt",
+          "retired": false
+        },
+        {
+          "code": "sampleReturn",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "inventory.stockOutType",
+      "items": [
+        {
+          "code": "inventoryLoss",
+          "retired": false
+        },
+        {
+          "code": "other",
+          "retired": false
+        },
+        {
+          "code": "sampleLoan",
+          "retired": false
+        },
+        {
+          "code": "scrap",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "inventory.unit",
+      "items": [
+        {
+          "code": "barrel",
+          "retired": false
+        },
+        {
+          "code": "box",
+          "retired": false
+        },
+        {
+          "code": "bundle",
+          "retired": false
+        },
+        {
+          "code": "g",
+          "retired": false
+        },
+        {
+          "code": "item",
+          "retired": false
+        },
+        {
+          "code": "kg",
+          "retired": false
+        },
+        {
+          "code": "liter",
+          "retired": false
+        },
+        {
+          "code": "machine",
+          "retired": false
+        },
+        {
+          "code": "meter",
+          "retired": false
+        },
+        {
+          "code": "pack",
+          "retired": false
+        },
+        {
+          "code": "piece",
+          "retired": false
+        },
+        {
+          "code": "rod",
+          "retired": false
+        },
+        {
+          "code": "roll",
+          "retired": false
+        },
+        {
+          "code": "set",
+          "retired": false
+        },
+        {
+          "code": "sheet",
+          "retired": false
+        },
+        {
+          "code": "slice",
+          "retired": false
+        },
+        {
+          "code": "strip",
+          "retired": false
+        },
+        {
+          "code": "ton",
+          "retired": false
+        },
+        {
+          "code": "unit",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "manufacturing.equipmentType",
+      "items": [
+        {
+          "code": "cutting",
+          "retired": false
+        },
+        {
+          "code": "embroidery",
+          "retired": false
+        },
+        {
+          "code": "inspection",
+          "retired": false
+        },
+        {
+          "code": "ironing",
+          "retired": false
+        },
+        {
+          "code": "other",
+          "retired": false
+        },
+        {
+          "code": "packaging",
+          "retired": false
+        },
+        {
+          "code": "printing",
+          "retired": false
+        },
+        {
+          "code": "sewing",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "manufacturing.moldType",
+      "items": [
+        {
+          "code": "cuttingTemplate",
+          "retired": false
+        },
+        {
+          "code": "embroideryFrame",
+          "retired": false
+        },
+        {
+          "code": "other",
+          "retired": false
+        },
+        {
+          "code": "pressingTemplate",
+          "retired": false
+        },
+        {
+          "code": "printingScreen",
+          "retired": false
+        },
+        {
+          "code": "sewingJig",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "manufacturing.orgType",
+      "items": [
+        {
+          "code": "factory",
+          "retired": false
+        },
+        {
+          "code": "function",
+          "retired": false
+        },
+        {
+          "code": "line",
+          "retired": false
+        },
+        {
+          "code": "team",
+          "retired": false
+        },
+        {
+          "code": "workshop",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "ops.messageType",
+      "items": [
+        {
+          "code": "activity",
+          "retired": false
+        },
+        {
+          "code": "product",
+          "retired": false
+        },
+        {
+          "code": "security",
+          "retired": false
+        },
+        {
+          "code": "service",
+          "retired": false
+        },
+        {
+          "code": "system",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "procurement.supplierLevel",
+      "items": [
+        {
+          "code": "eliminated",
+          "retired": false
+        },
+        {
+          "code": "preferred",
+          "retired": false
+        },
+        {
+          "code": "standard",
+          "retired": false
+        },
+        {
+          "code": "strategic",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "production.operatingCostType",
+      "items": [
+        {
+          "code": "labor",
+          "retired": false
+        },
+        {
+          "code": "other",
+          "retired": false
+        },
+        {
+          "code": "rent",
+          "retired": false
+        },
+        {
+          "code": "utilities",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "production.unitCostSource",
+      "items": [
+        {
+          "code": "manual",
+          "retired": false
+        },
+        {
+          "code": "movingAverage",
+          "retired": false
+        },
+        {
+          "code": "standardPrice",
+          "retired": false
+        },
+        {
+          "code": "subcontractSettlement",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "sales.customerServicePriority",
+      "items": [
+        {
+          "code": "key",
+          "retired": false
+        },
+        {
+          "code": "normal",
+          "retired": false
+        },
+        {
+          "code": "urgent",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "sales.orderSource",
+      "items": [
+        {
+          "code": "afterSales",
+          "retired": false
+        },
+        {
+          "code": "b2b",
+          "retired": false
+        },
+        {
+          "code": "export",
+          "retired": false
+        },
+        {
+          "code": "retail",
+          "retired": false
+        },
+        {
+          "code": "trial",
+          "retired": false
+        }
+      ]
+    },
+    {
+      "code": "sales.paymentMethod",
+      "items": [
+        {
+          "code": "bankAcceptance",
+          "retired": false
+        },
+        {
+          "code": "bankTransfer",
+          "retired": false
+        },
+        {
+          "code": "cash",
+          "retired": false
+        },
+        {
+          "code": "other",
+          "retired": false
+        }
+      ]
+    }
+  ]
+}

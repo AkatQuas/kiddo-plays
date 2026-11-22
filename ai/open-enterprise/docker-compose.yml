@@ -1,0 +1,102 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: open_enterprise
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d open_enterprise"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  api:
+    build:
+      context: ./apps/api
+    environment:
+      DATABASE_URL: postgres://app:app@postgres:5432/open_enterprise
+      RELEASE_ENV: local
+      IDENTITY_ISSUER: local
+      SESSION_SECRET: local-session-secret
+      SERVICE_TOKEN: local-service-token
+      ATTACHMENT_BACKEND: file
+      ATTACHMENT_DIR: /data/attachments
+      API_PORT: "8080"
+      AGENT_HOST_URL: http://agent:8090
+    volumes:
+      - attachments:/data/attachments
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  agent:
+    build:
+      context: ./apps/agent
+    environment:
+      API_BASE_URL: http://api:8080
+      SERVICE_TOKEN: local-service-token
+      AGENT_PORT: "8090"
+    depends_on:
+      - api
+
+  web:
+    build:
+      context: ./apps/web
+    environment:
+      WEB_PORT: "80"
+      API_UPSTREAM: http://api:8080
+    ports:
+      - "${WEB_PORT:-8088}:80"
+    depends_on:
+      - api
+      - agent
+
+  catalog-api:
+    build:
+      context: .
+      dockerfile: apps/catalog-api/Dockerfile
+    ports:
+      - "8091:8091"
+
+  web-manufacturing:
+    build:
+      context: ./apps/web-manufacturing
+    environment:
+      API_UPSTREAM: http://catalog-api:8091
+      WEB_PORT: "80"
+    ports:
+      - "8092:80"
+    depends_on:
+      - catalog-api
+
+  web-commerce:
+    build:
+      context: ./apps/web-commerce
+    environment:
+      API_UPSTREAM: http://catalog-api:8091
+      WEB_PORT: "80"
+    ports:
+      - "8093:80"
+    depends_on:
+      - catalog-api
+
+  reference-api:
+    build:
+      context: .
+      dockerfile: apps/reference-api/Dockerfile
+    environment:
+      DATABASE_URL: postgres://app:app@postgres:5432/open_enterprise
+      OE_TIMEZONE: UTC
+      PORT: "8094"
+    ports:
+      - "8094:8094"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  attachments:

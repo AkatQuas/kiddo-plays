@@ -1,0 +1,20 @@
+{
+  "name": "@open-erp/domain-production",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Manufacturing pack: production orders and material requirements.",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit",
+    "test": "yarn --cwd ../.. vitest run domains/production/test/modules.test.ts"
+  },
+  "dependencies": {
+    "@open-erp/metamodel": "0.1.0"
+  },
+  "devDependencies": {
+    "@open-erp/loader": "0.1.0",
+    "@open-erp/runtime-core": "0.1.0",
+    "vitest": "^3.2.4"
+  }
+}

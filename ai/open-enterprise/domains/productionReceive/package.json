@@ -1,0 +1,18 @@
+{
+  "name": "@open-erp/domain-production-receive",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Manufacturing pack: material issue, return, and completion receipt.",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@open-erp/metamodel": "0.1.0"
+  },
+  "devDependencies": {
+    "@open-erp/loader": "0.1.0",
+    "vitest": "^3.2.4"
+  }
+}

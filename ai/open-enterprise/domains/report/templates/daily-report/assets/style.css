@@ -1,0 +1,1131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: #F7F8FC;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Header - full width on page */
+.header {
+  width: 100%;
+  position: relative;
+  /* Opening the daily report from the home entry still keeps the factory scene. The gradient sits above the image so the title, judgment, and gauge stay clear. */
+  background:
+    linear-gradient(180deg, rgba(0, 51, 204, 0.96) 0%, rgba(0, 57, 227, 0.9) 27.5%, rgba(0, 65, 255, 0.78) 55%, rgba(68, 115, 252, 0.82) 66.25%, rgba(130, 161, 250, 0.9) 77.5%, rgba(221, 229, 252, 0.96) 88.75%, #F7F8FC 100%),
+    url("/erp-web/console/factory/scene.png") center 28% / cover no-repeat,
+    url("/factory/scene.png") center 28% / cover no-repeat;
+  color: #fff;
+}
+
+.header-inner {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  align-items: center;
+  padding: 24px 28px;
+}
+
+.header-inner:first-child {
+  min-height: 160px;
+  position: relative;
+  padding-bottom: 0;
+}
+.header-inner:last-child {
+  padding-top: 0;
+}
+
+.header-left {
+  flex: 1;
+  padding-right: 180px;
+}
+
+.header-left .title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.header-left .date {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.health-chart-wrapper {
+  position: absolute;
+  /* The gauge score lines up vertically with the title and date group on the left, and stays inside the content area's right edge. */
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.health-chart {
+  width: 180px;
+  height: 130px;
+}
+
+.health-info {
+  text-align: center;
+  margin-top: -8px;
+}
+
+.health-label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* Container for card content */
+.container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 16px 30px;
+}
+
+/* Card base */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 24px 28px;
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+
+/* AI Judge in header */
+.ai-judge {
+  padding: 0;
+}
+
+.judge-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.judge-icon {
+  font-size: 18px;
+}
+
+.judge-label {
+  font-size: 15px;
+  color: #fff;
+}
+
+.status-badge {
+  padding: 4px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.status-badge.orange {
+  background: #FF6B35;
+}
+
+.status-badge.green {
+  background: #52C41A;
+}
+
+.status-badge.red {
+  background: #F5222D;
+}
+
+.judge-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.judge-highlight {
+  color: #ffd666;
+  font-weight: 600;
+}
+
+/* Section title */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+  padding-left: 10px;
+  border-left: 3px solid #1677FF;
+}
+
+.title-number {
+  color: #1677FF;
+  font-size: 18px;
+}
+
+.section-title.no-border {
+  border-left: none;
+  padding-left: 0;
+}
+
+.title-icon {
+  font-size: 18px;
+}
+
+/* Overview - indicators */
+.indicators {
+  display: grid;
+  /* When the number of indicators changes with the basis, they still fill the row. No ghost column is reserved, and the cards keep clear space between them. */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  column-gap: 20px;
+  row-gap: 16px;
+}
+
+.data-quality {
+  margin: 12px 0 16px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.data-quality.complete { background: #F6FFED; color: #237804; border: 1px solid #B7EB8F; }
+.data-quality.partial { background: #FFFBE6; color: #874D00; border: 1px solid #FFE58F; }
+
+.indicator-card {
+  background: #F8FAFE;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+
+.indicator-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.indicator-name {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.indicator-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.2;
+}
+
+.indicator-unit {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+}
+
+.indicator-supplementary {
+  margin-top: 6px;
+  min-height: 16px;
+  color: #595959;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.indicator-change {
+  font-size: 12px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.indicator-change.positive {
+  color: #389e0d;
+}
+
+.indicator-change.negative {
+  color: #cf1322;
+}
+
+.indicator-change.neutral { color: #999; }
+
+.indicator-change .arrow {
+  font-size: 10px;
+}
+
+.indicator-change .no-baseline { color: #999; }
+
+.chart-empty { min-height: 140px; display: flex; align-items: center; justify-content: center; color: #8c8c8c; font-size: 13px; }
+
+/* Summary */
+.summary-content {
+  line-height: 1.8;
+  background: #F0F6FF;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.summary-paragraph {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+  line-height: 1.8;
+}
+
+.summary-item-inline {
+  display: flex;
+  align-items: flex-start;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+
+.summary-item-inline:last-child {
+  margin-bottom: 0;
+}
+
+.summary-item-inline .item-icon {
+  flex: 0 0 auto;
+  margin-right: 6px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.summary-item-inline .item-dot {
+  flex: 0 0 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 7px;
+  margin-right: 6px;
+}
+
+.summary-item-inline .item-label {
+  flex: 0 0 auto;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.summary-item-inline .item-content-text {
+  flex: 1;
+}
+
+/* Bottom stats */
+.bottom-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.stat-card {
+  background: #F8FAFE;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 12px;
+  text-align: left;
+  transition: box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.stat-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-emoji {
+  font-size: 14px;
+}
+
+.stat-title {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.stat-count {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-unit {
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: 2px;
+}
+
+.stat-desc {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Boss focus card */
+.boss-card {
+  padding: 20px 24px;
+}
+
+.boss-focus-list {
+  display: grid;
+  /* A narrow container (dialog or small screen) wraps when three columns do not fit, so the third column is not clipped. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+}
+
+.boss-item {
+  border-radius: 10px;
+  border: 1px solid;
+  padding: 16px;
+  min-width: 0;
+}
+
+.boss-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.boss-item-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.boss-item-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.boss-item-subtitle {
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.boss-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  margin: 14px 0 10px;
+}
+
+.boss-highlight-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.boss-highlight-card .customer {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.boss-highlight-card .amount-row {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.boss-highlight-card .amount {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.boss-highlight-card .amount-unit {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.boss-highlight-card .tags {
+  display: flex;
+  gap: 14px;
+}
+
+.boss-highlight-card .tag {
+  font-size: 12px;
+  color: #999;
+}
+
+.boss-trend {
+  margin-bottom: 12px;
+}
+
+.boss-trend-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.boss-trend-chart {
+  width: 100%;
+  height: 120px;
+}
+
+.boss-suggestion {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.boss-suggestion-text {
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.boss-suggestion-label {
+  font-weight: 600;
+}
+
+.boss-table {
+  margin-bottom: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.boss-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.boss-table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 500;
+  color: #999;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.boss-table th.highlight {
+  color: #CF1322;
+}
+
+.boss-table td {
+  padding: 10px 12px;
+  color: #333;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.boss-table td.highlight {
+  color: #CF1322;
+  font-weight: 600;
+}
+
+.boss-table tr:last-child td {
+  border-bottom: none;
+}
+
+.boss-text {
+  font-size: 14px;
+  color: #333;
+  margin: 12px 0;
+}
+
+.boss-big-number {
+  text-align: center;
+  padding: 16px 0 8px;
+}
+
+.boss-big-number .big-num {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.boss-big-number .big-num-label {
+  font-size: 14px;
+  color: #999;
+  margin-top: 6px;
+}
+
+/* Chain analysis card */
+.chain-card {
+  padding: 20px 24px;
+}
+
+.chain-grid {
+  display: grid;
+  /* Shrinks with the container. A fixed five columns would clip the right-hand cards in a dialog or on a small screen. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 10px;
+}
+
+.chain-item {
+  background: #F8FAFE;
+  border-radius: 10px;
+  padding: 14px 16px;
+  border: 0;
+  position: relative;
+  min-width: 0;
+}
+
+.chain-item:last-child {
+  grid-column: auto;
+}
+
+.chain-item-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.chain-item-icon {
+  font-size: 14px;
+}
+
+.chain-item-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.chain-metrics {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.chain-metric {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.chain-metric-unit {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+}
+
+.chain-sub-info {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.chain-chart {
+  width: 100%;
+  height: 112px;
+  margin: 6px 0 8px;
+}
+
+.chain-ai-text {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+  background: #F9F9F9;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+/* Bottom row: risk + action */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .header-inner { padding: 20px; }
+  .header-left { padding-right: 140px; }
+  .container { padding-inline: 12px; }
+  .bottom-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .header-inner:first-child { min-height: 132px; }
+  .header-left { padding-right: 108px; }
+  .health-chart-wrapper { right: 12px; }
+  .health-chart { width: 112px; height: 92px; }
+  .indicators, .bottom-stats, .boss-focus-list, .chain-grid { grid-template-columns: 1fr; }
+  .risk-header { grid-template-columns: 1fr; }
+  .card, .boss-card, .chain-card, .risk-card { padding: 18px; }
+}
+
+/* Risk card */
+.risk-card {
+  padding: 20px 24px;
+}
+
+.risk-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.risk-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.risk-donut {
+  width: 100%;
+  height: 150px;
+}
+
+.risk-trend {
+  width: 100%;
+  height: 150px;
+}
+
+.risk-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.risk-table {
+  width: 100%;
+  min-width: 600px;
+  border: 1px solid #F0F0F0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.risk-table-header {
+  display: flex;
+  padding: 10px 0;
+  background: #FAFAFA;
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.risk-table-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid #F0F0F0;
+  font-size: 13px;
+  color: #333;
+}
+
+.risk-table-row:first-of-type {
+  border-top: none;
+}
+
+.rt-col {
+  padding: 0 8px;
+}
+
+.rt-level {
+  flex: 0 0 60px;
+  padding-left: 0;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+
+.rt-desc {
+  flex: 1;
+  min-width: 120px;
+}
+
+.rt-scope {
+  flex: 0 0 90px;
+  color: #666;
+}
+
+.rt-amount {
+  flex: 0 0 100px;
+  color: #333;
+  font-weight: 500;
+}
+
+.rt-trend {
+  flex: 0 0 80px;
+  padding-right: 0;
+}
+
+.rt-owner { flex: 0 0 90px; color: #666; }
+
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.row-trend-chart {
+  width: 80px;
+  height: 30px;
+}
+
+.action-evidence { margin-top: 4px; color: #8C8C8C; font-size: 11px; line-height: 1.45; }
+.report-error { margin: 16px; padding: 12px; border-radius: 8px; background: #FFF1F0; color: #A8071A; }
+.charts-unavailable .chain-chart,
+.charts-unavailable .risk-donut,
+.charts-unavailable .risk-trend { display: none; }
+
+/* Action card */
+.action-card {
+  padding: 20px 24px;
+}
+
+.action-section {
+  margin-bottom: 20px;
+}
+
+.action-section:last-child {
+  margin-bottom: 0;
+}
+
+.action-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.action-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+.action-item:last-child {
+  border-bottom: none;
+}
+
+.action-time {
+  flex: 0 0 56px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #999;
+  padding-top: 2px;
+}
+
+.action-dot {
+  flex: 0 0 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-top: 4px;
+  margin-right: 12px;
+}
+
+.action-content {
+  flex: 1;
+}
+
+.action-person {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.action-task {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.action-level {
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 2px;
+}
+
+/* Mobile: < 768px */
+@media (max-width: 767px) {
+  .risk-card {
+    padding: 16px 20px;
+    overflow: hidden;
+  }
+
+  .risk-header {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .risk-donut {
+    height: 150px;
+  }
+
+  .risk-trend {
+    height: 150px;
+  }
+
+  .risk-subtitle {
+    font-size: 12px;
+  }
+
+  .risk-table {
+    min-width: 0;
+  }
+
+  .risk-table-row {
+    font-size: 12px;
+    padding: 12px 0;
+  }
+
+  .rt-level {
+    flex: 0 0 54px;
+  }
+
+  .rt-desc {
+    min-width: 100px;
+  }
+
+  .rt-scope {
+    display: none;
+  }
+
+  .rt-amount {
+    flex: 0 0 84px;
+  }
+
+  .rt-trend {
+    flex: 0 0 68px;
+  }
+
+  .rt-owner { display: block; flex: 1 1 50%; }
+
+  .row-trend-chart {
+    width: 68px;
+    height: 26px;
+  }
+
+  .level-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+
+  .action-card {
+    padding: 16px 20px;
+  }
+
+  .action-section {
+    margin-bottom: 16px;
+  }
+
+  .action-section-title {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .action-item {
+    padding: 12px 0;
+  }
+
+  .action-time {
+    flex: 0 0 48px;
+    font-size: 13px;
+  }
+
+  .action-dot {
+    width: 12px;
+    height: 12px;
+    margin-top: 3px;
+    margin-right: 10px;
+  }
+
+  .action-person {
+    font-size: 12px;
+  }
+
+  .action-task {
+    font-size: 13px;
+  }
+
+  .action-level {
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+}
+
+/* Mobile: < 768px */
+@media (max-width: 767px) {
+  .header-inner {
+    padding: 16px 20px;
+  }
+
+  .header-inner:first-child {
+    min-height: auto;
+    padding-bottom: 40px;
+  }
+
+  .header-inner:last-child {
+    padding-top: 10px;
+  }
+
+  .header-left {
+    padding-right: 0;
+  }
+
+  .header-left .title {
+    font-size: 20px;
+  }
+
+  .health-chart-wrapper {
+    right: 20px;
+    top: 12px;
+    transform: none;
+  }
+
+  .health-chart {
+    width: 140px;
+    height: 100px;
+  }
+
+  .card {
+    padding: 16px 20px;
+    border-radius: 12px;
+  }
+
+  .section-title {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+
+  .indicators {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .stat-row {
+    flex-wrap: wrap;
+  }
+
+  .stat-count {
+    width: 100%;
+    font-size: 20px;
+  }
+
+  .summary-content {
+    padding: 12px;
+  }
+
+  .summary-paragraph {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+
+  .summary-item-inline {
+    font-size: 11px;
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+
+  .summary-item-inline .item-icon {
+    font-size: 13px;
+  }
+
+  .summary-item-inline .item-dot {
+    width: 6px;
+    height: 6px;
+    margin-top: 6px;
+    margin-right: 4px;
+  }
+
+  .chain-card {
+    padding: 16px 20px;
+  }
+
+  .chain-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .chain-item:last-child {
+    grid-column: auto;
+  }
+
+  .chain-item {
+    padding: 12px 14px;
+  }
+
+  .chain-item-header {
+    margin-bottom: 6px;
+  }
+
+  .chain-item-title {
+    font-size: 12px;
+  }
+
+  .chain-metric {
+    font-size: 18px;
+  }
+
+  .chain-metric-unit {
+    font-size: 11px;
+  }
+
+  .chain-sub-info {
+    font-size: 10px;
+  }
+
+  .chain-chart {
+    height: 140px;
+  }
+
+  .chain-ai-text {
+    font-size: 10px;
+    padding: 5px 7px;
+    line-height: 1.4;
+  }
+
+  .boss-focus-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .bottom-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

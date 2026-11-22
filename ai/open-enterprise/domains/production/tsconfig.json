@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "rewriteRelativeImportExtensions": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["dist"],
+  "references": [
+    { "path": "../../packages/metamodel" },
+    { "path": "../../packages/loader" },
+    { "path": "../../packages/runtime-core" }
+  ]
+}

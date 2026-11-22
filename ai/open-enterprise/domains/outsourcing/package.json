@@ -1,0 +1,17 @@
+{
+  "name": "@open-erp/domain-outsourcing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Manufacturing pack: subcontract orders, issues, receipts, and returns.",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@open-erp/metamodel": "0.1.0"
+  },
+  "devDependencies": {
+    "@open-erp/loader": "0.1.0"
+  }
+}

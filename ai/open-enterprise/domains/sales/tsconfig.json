@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "./dist",
+    "rewriteRelativeImportExtensions": true,
+    "tsBuildInfoFile": "./dist/.tsbuildinfo"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["dist"],
+  // The loader imports types only (`DomainSeed`), so the seed shape is fixed at compile time
+  // instead of throwing later inside `normalizeSeed`. A business package depending on a framework
+  // package is the normal direction. The forbidden edge is the framework importing the business package.
+  "references": [{ "path": "../../packages/metamodel" }, { "path": "../../packages/loader" }]
+}

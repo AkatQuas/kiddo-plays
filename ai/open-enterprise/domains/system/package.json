@@ -1,0 +1,14 @@
+{
+  "name": "@open-erp/domain-system",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Manufacturing pack: system settings.",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@open-erp/builder": "0.1.0"
+  }
+}

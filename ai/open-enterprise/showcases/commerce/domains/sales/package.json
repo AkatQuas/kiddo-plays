@@ -1,0 +1,9 @@
+{
+  "name": "@open-erp/domain-commerce-sales",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@open-erp/metamodel": "0.1.0"
+  }
+}

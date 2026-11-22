@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+
+  // 🔴 This file exists only for the **editor**. The command-line type gate uses the root `tsconfig.tests.json` (both extend
+  // the same tsconfig.tests.base.json, so the criterion is one set).
+  //
+  // WebStorm picks a tsconfig by directory distance: without this file, the nearest is the package
+  // `tsconfig.json` one level up, and its include is only `src/**/*.ts` ⇒ test files are judged outside the project, and the editor falls back
+  // to tsc defaults (module: commonjs, no esModuleInterop). An `import path from "node:path"`
+  // and the like report a screen of false-red TS1259, while the command line is green.
+  //
+  // Do not add compilerOptions here — one extra option and the editor and the type gate each judge by a different set.
+  "extends": "../../../tsconfig.tests.base.json",
+  "include": ["**/*.ts", "**/*.tsx"]
+}

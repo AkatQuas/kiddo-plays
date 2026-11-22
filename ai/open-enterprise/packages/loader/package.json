@@ -1,0 +1,22 @@
+{
+  "name": "@open-erp/loader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Load and validate a domains tree into an in-memory catalog. The only package that reads that tree.",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@open-erp/metamodel": "0.1.0"
+  }
+}

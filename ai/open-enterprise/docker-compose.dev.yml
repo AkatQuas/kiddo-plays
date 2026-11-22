@@ -1,0 +1,18 @@
+# Bind source into the running containers. The deploy file stays the base.
+services:
+  api:
+    command: ["node", "--watch", "src/server.js"]
+    volumes:
+      - ./apps/api/src:/app/src
+      - attachments:/data/attachments
+
+  agent:
+    command: ["node", "--watch", "src/server.js"]
+    volumes:
+      - ./apps/agent/src:/app/src
+
+  web:
+    command: ["node", "--watch", "src/server.js"]
+    volumes:
+      - ./apps/web/src:/app/src
+      - ./apps/web/public:/app/public

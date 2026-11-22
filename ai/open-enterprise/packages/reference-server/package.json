@@ -1,0 +1,28 @@
+{
+  "name": "@open-erp/reference-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Minimal HTTP shell for create and transition against Postgres (reference integration).",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "migrate": "node --import tsx src/migrate.ts",
+    "start": "node --import tsx src/main.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.0.12",
+    "@open-erp/loader": "0.1.0",
+    "@open-erp/metamodel": "0.1.0",
+    "@open-erp/runtime-core": "0.1.0",
+    "@open-erp/storage-pg": "0.1.0",
+    "drizzle-kit": "^0.31.11",
+    "drizzle-orm": "^0.44.7",
+    "hono": "^4.12.32",
+    "postgres": "^3.4.7"
+  }
+}

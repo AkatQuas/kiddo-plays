@@ -1,0 +1,30 @@
+{
+  "name": "open-enterprise",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Open engine for schema, ledgers, and transition posting; manufacturing + commerce showcases; reference HTTP write API and service-link demo.",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "domains/*",
+    "tables"
+  ],
+  "scripts": {
+    "test": "node --test apps/api/test/*.test.js && vitest run",
+    "test:engine": "vitest run",
+    "test:link": "node --test apps/api/test/*.test.js",
+    "showcases": "node --import tsx apps/catalog-api/src/server.ts",
+    "reference": "node --import tsx apps/reference-api/src/server.ts",
+    "reference:migrate": "node --import tsx packages/reference-server/src/migrate.ts",
+    "up": "docker compose up --build",
+    "dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build",
+    "down": "docker compose -f docker-compose.yml -f docker-compose.dev.yml down"
+  },
+  "devDependencies": {
+    "jsdom": "^31.0.1",
+    "typescript": "^5.9.3",
+    "tsx": "^4.20.3",
+    "vitest": "^3.2.4"
+  }
+}

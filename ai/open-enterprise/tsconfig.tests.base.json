@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+
+  // Single source for test compiler options. Two consumers:
+  //   1. Root `tsconfig.tests.json`, used by typecheck for every test file.
+  //   2. The `tsconfig.json` in each test directory, which exists for the editor.
+  //
+  // The editor picks a tsconfig by directory distance. It will not walk up to a
+  // root project that includes the file. For `packages/loader/test/loader.test.ts`
+  // the nearest config is `packages/loader/tsconfig.json`, whose include is only
+  // `src/**/*.ts`, so the editor treats the test as outside the project and falls
+  // back to tsc defaults (module: commonjs, no esModuleInterop).
+  // `import path from "node:path"` then shows a false TS1259, while
+  // `tsc -p tsconfig.tests.json` is clean. Following the editor would change the
+  // wrong side.
+  //
+  // Options belong only in this file. Test-directory configs are extends + include
+  // and must not set their own compilerOptions.
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "useUnknownInCatchVariables": true,
+
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Not composite, noEmit: the test project only typechecks. composite would
+    // require a single rootDir, and tests sit outside each package rootDir (./src), which is TS6059.
+    "composite": false,
+    "declaration": false,
+    "noEmit": true
+  }
+}

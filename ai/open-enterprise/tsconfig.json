@@ -1,0 +1,25 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/metamodel" },
+    { "path": "./packages/loader" },
+    { "path": "./packages/runtime-core" },
+    { "path": "./packages/storage-pg" },
+    { "path": "./packages/builder" },
+    { "path": "./tables" },
+    { "path": "./domains/sales" },
+    { "path": "./domains/inventory" },
+    { "path": "./domains/manufacturing" },
+    { "path": "./domains/procurement" },
+    { "path": "./domains/production" },
+    { "path": "./domains/productionProcess" },
+    { "path": "./domains/productionReceive" },
+    { "path": "./domains/outsourcing" },
+    { "path": "./domains/ops" },
+    { "path": "./domains/platform" },
+    { "path": "./domains/report" },
+    { "path": "./domains/insights" },
+    { "path": "./domains/ledgers" },
+    { "path": "./domains/system" }
+  ]
+}

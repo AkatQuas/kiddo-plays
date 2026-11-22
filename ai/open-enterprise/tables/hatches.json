@@ -1,0 +1,155 @@
+{
+  "banner": "open-erp hatches v1 — generated from domains/; do not hand-edit",
+  "escapeHatches": [
+    {
+      "code": "bom",
+      "file": "manufacturing/modules/bom/index.ts"
+    },
+    {
+      "code": "processAssignment",
+      "file": "productionProcess/modules/processAssignment/index.ts"
+    },
+    {
+      "code": "processReport",
+      "file": "productionProcess/modules/processReport/index.ts"
+    },
+    {
+      "code": "productionOrder",
+      "file": "production/modules/productionOrder/index.ts"
+    },
+    {
+      "code": "productionReceipt",
+      "file": "productionReceive/modules/productionReceipt/index.ts"
+    },
+    {
+      "code": "productionTask",
+      "file": "productionProcess/modules/productionTask/index.ts"
+    },
+    {
+      "code": "salesOrder",
+      "file": "sales/modules/salesOrder/index.ts"
+    },
+    {
+      "code": "subcontractMaterialReturn",
+      "file": "outsourcing/modules/subcontractMaterialReturn/index.ts"
+    },
+    {
+      "code": "subcontractOrder",
+      "file": "outsourcing/modules/subcontractOrder/index.ts"
+    },
+    {
+      "code": "subcontractReceipt",
+      "file": "outsourcing/modules/subcontractReceipt/index.ts"
+    }
+  ],
+  "surfaces": [
+    {
+      "code": "deliveryReport",
+      "domain": "report",
+      "file": "report/surfaces.ts"
+    },
+    {
+      "code": "productionReport",
+      "domain": "report",
+      "file": "report/surfaces.ts"
+    },
+    {
+      "code": "stockBelowSafety",
+      "domain": "inventory",
+      "file": "inventory/surfaces.ts"
+    },
+    {
+      "code": "stockLedgerDetail",
+      "domain": "inventory",
+      "file": "inventory/surfaces.ts"
+    },
+    {
+      "code": "stockQuery",
+      "domain": "inventory",
+      "file": "inventory/surfaces.ts"
+    },
+    {
+      "code": "stockQueryBreakdown",
+      "domain": "inventory",
+      "file": "inventory/surfaces.ts"
+    }
+  ],
+  "insights": [
+    {
+      "code": "delayedTask",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "factory_today",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "material_shortage",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "month_over_month",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "overdueUnshipped",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "pendingRequirement",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "production_progress",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "production_risk",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "purchase_due",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "purchase_requirement",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "quality_defect",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "sales_month",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "sales_orders",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "stock_idle",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "stock_onhand",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "supplier_delivery",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "todo_inbox",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "wipTask",
+      "file": "insights/insights.ts"
+    },
+    {
+      "code": "worker_efficiency",
+      "file": "insights/insights.ts"
+    }
+  ]
+}

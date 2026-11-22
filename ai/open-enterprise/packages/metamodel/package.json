@@ -1,0 +1,22 @@
+{
+  "name": "@open-erp/metamodel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Declaration language: normalize, validate, and evaluate lifecycles. No IO.",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^4.1.13"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@open-erp/reference-api",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@open-erp/reference-server": "0.1.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+
+  // This file exists for the editor. The command-line typecheck uses the root `tsconfig.tests.json`.
+  // Both extend the same tsconfig.tests.base.json, so they judge by the same options.
+  //
+  // The editor picks a tsconfig by directory distance. Without this file the nearest one is the
+  // package `tsconfig.json`, whose include is only `src/**/*.ts`, so tests are treated as outside
+  // the project and the editor falls back to tsc defaults (module: commonjs, no esModuleInterop).
+  // `import path from "node:path"` then shows a false TS1259 while the command line is clean.
+  //
+  // Do not add compilerOptions here. One extra option makes the editor and the typecheck disagree.
+  "extends": "../../../tsconfig.tests.base.json",
+  "include": ["**/*.ts", "**/*.tsx"]
+}
