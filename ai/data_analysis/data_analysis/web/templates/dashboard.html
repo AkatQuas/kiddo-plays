@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>data_analysis — pipeline demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      slate: { 950:'#0D0E11', 900:'#14161A', 850:'#1A1D22', 800:'#21252B', 700:'#2E333A', 600:'#3C424A', 500:'#565D67', 400:'#818892', 300:'#A6ADB6', 200:'#C9CFD6', 100:'#E9ECEF' },
+      indigo:{ 600:'#6366F1', 500:'#818CF8', 400:'#A5B4FC' },
+      emerald:{ 600:'#10B981', 500:'#34D399' },
+      rose:{ 600:'#F43F5E', 500:'#FB7185' },
+      amber:{ 500:'#F59E0B' },
+    }}}};
+  </script>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .card { background:#14161A; border:1px solid rgba(255,255,255,.07); border-radius:.75rem; }
+    .subcard { background:#0D0E11; border:1px solid rgba(255,255,255,.06); border-radius:.5rem; }
+    .stage-pill { transition:all .15s; border:1px solid rgba(255,255,255,.08); }
+    .stage-pill.active { border-color:#6366F1; background:rgba(99,102,241,.12); }
+    .stage-pill.done .stage-dot { background:#10B981; }
+    .flow-arrow { color:#3C424A; }
+    .fld { background:#0D0E11; border:1px solid #2E333A; border-radius:.375rem; padding:.375rem .5rem; font-size:.72rem; color:#C9CFD6; width:100%; }
+    .btn { border-radius:.375rem; font-size:.72rem; font-weight:600; padding:.4rem .6rem; }
+    .btn-p { background:#6366F1; color:#fff; }
+    .btn-p:hover { background:#818CF8; }
+    .btn-g { background:#10B981; color:#fff; }
+    .btn-s { background:#21252B; color:#C9CFD6; }
+    .btn-s:hover { background:#2E333A; }
+    pre.out { white-space:pre-wrap; word-break:break-word; }
+    .markdown-body h1 { font-size:1.05rem; font-weight:700; margin:.6rem 0 .3rem; }
+    .markdown-body h2 { font-size:.9rem; font-weight:700; color:#A5B4FC; margin:.9rem 0 .3rem; }
+    .markdown-body table { width:100%; font-size:.72rem; border-collapse:collapse; margin:.4rem 0; }
+    .markdown-body th, .markdown-body td { border:1px solid rgba(255,255,255,.08); padding:.25rem .5rem; text-align:left; }
+    .markdown-body blockquote { color:#818892; border-left:2px solid #2E333A; padding-left:.6rem; margin:.4rem 0; }
+    .markdown-body ul { list-style:disc; padding-left:1.1rem; }
+    .markdown-body code { background:#0D0E11; padding:0 .25rem; border-radius:3px; }
+    .markdown-body strong { color:#E9ECEF; }
+    table.tbl { width:100%; font-size:.72rem; }
+    table.tbl th { text-align:left; color:#818892; font-weight:600; padding:.35rem .5rem; border-bottom:1px solid rgba(255,255,255,.08); }
+    table.tbl td { padding:.35rem .5rem; border-bottom:1px solid rgba(255,255,255,.04); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+  <header class="sticky top-0 z-40 bg-slate-950/95 border-b border-white/[0.07] backdrop-blur">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
+      <div class="flex items-baseline gap-3">
+        <h1 class="text-[0.95rem] font-bold tracking-wide">DATA<span class="text-indigo-500">/</span>AGENT</h1>
+        <p class="text-[0.7rem] text-slate-500">现代数据栈数据处理管道 · DuckDB 向量化 · Arrow 零拷贝</p>
+      </div>
+      <div class="flex items-center gap-3 text-[0.65rem] mono text-slate-500">
+        <span>会话</span><span id="session-badge" class="px-2 py-0.5 rounded bg-slate-800 text-indigo-400">—</span>
+        <a href="/docs" class="text-indigo-400 hover:text-indigo-300">OpenAPI</a>
+      </div>
+    </div>
+    <nav class="max-w-6xl mx-auto px-6 pb-3">
+      <div class="flex items-center gap-1.5 overflow-x-auto text-[0.7rem]">
+        <button data-stage="ingest"    class="stage-pill active px-3 py-1.5 rounded-lg whitespace-nowrap"><span class="stage-dot inline-block w-1.5 h-1.5 rounded-full bg-slate-600 mr-1.5"></span>01 摄取 <span class="text-slate-500">INGEST</span></button>
+        <span class="flow-arrow">→</span>
+        <button data-stage="transform" class="stage-pill px-3 py-1.5 rounded-lg whitespace-nowrap"><span class="stage-dot inline-block w-1.5 h-1.5 rounded-full bg-slate-600 mr-1.5"></span>02 转换 <span class="text-slate-500">TRANSFORM</span></button>
+        <span class="flow-arrow">→</span>
+        <button data-stage="model"     class="stage-pill px-3 py-1.5 rounded-lg whitespace-nowrap"><span class="stage-dot inline-block w-1.5 h-1.5 rounded-full bg-slate-600 mr-1.5"></span>03 目录 <span class="text-slate-500">CATALOG</span></button>
+        <span class="flow-arrow">→</span>
+        <button data-stage="analyze"   class="stage-pill px-3 py-1.5 rounded-lg whitespace-nowrap"><span class="stage-dot inline-block w-1.5 h-1.5 rounded-full bg-slate-600 mr-1.5"></span>04 分析 <span class="text-slate-500">ANALYZE</span></button>
+        <span class="flow-arrow">→</span>
+        <button data-stage="quality"   class="stage-pill px-3 py-1.5 rounded-lg whitespace-nowrap"><span class="stage-dot inline-block w-1.5 h-1.5 rounded-full bg-slate-600 mr-1.5"></span>05 质量 <span class="text-slate-500">QUALITY</span></button>
+        <span class="flow-arrow">→</span>
+        <button data-stage="activate"  class="stage-pill px-3 py-1.5 rounded-lg whitespace-nowrap"><span class="stage-dot inline-block w-1.5 h-1.5 rounded-full bg-slate-600 mr-1.5"></span>06 激活 <span class="text-slate-500">ACTIVATE</span></button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-6 space-y-5">
+    <section class="card p-5">
+      <div class="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h2 class="text-sm font-bold text-slate-200">现代数据栈分层（两条数据入口 → 一个引擎）</h2>
+          <p class="text-xs text-slate-400 mt-1">集成(EL) · 转换(ELT/dbt) · 数据目录/血缘/语义层 · 分析(BI) · 可观测性 · 反向 ETL 激活</p>
+          <p class="text-[0.7rem] text-slate-500 mt-1">当前活跃数据集：<span id="active-ds" class="mono text-indigo-400">（无）</span></p>
+        </div>
+        <button onclick="runFullPipeline()" class="btn btn-p whitespace-nowrap">▶ 用示例数据一键跑通</button>
+      </div>
+    </section>
+
+    <!-- 行业示例 (Examples)：一键在网页里跑真实业务分析管道 -->
+    <section id="examples-card" class="card p-5 space-y-3">
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        <div>
+          <h2 class="text-sm font-bold text-slate-200">🎯 行业示例 (Examples)</h2>
+          <p class="text-xs text-slate-400 mt-1">一键在网页里跑通完整分析管道并生成报告；数据会载入当前会话，可在各阶段继续探索。</p>
+        </div>
+        <span id="examples-status" class="text-[0.7rem] mono text-slate-500"></span>
+      </div>
+      <div id="examples-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      <div id="example-report" class="markdown-body hidden border-t border-white/[0.06] pt-4 text-[0.8rem] text-slate-200 max-h-[560px] overflow-y-auto"></div>
+    </section>
+
+    <!-- 01 摄取：多数据源接入 -->
+    <section id="pane-ingest" data-stage-pane class="card p-5 space-y-4">
+      <div><h3 class="text-sm font-bold text-slate-200">01 摄取 · Ingest <span class="text-slate-500 text-xs">数据集成 (EL)</span></h3>
+        <p class="text-xs text-slate-400 mt-0.5">多个数据源各用一个数据集名接入同一会话；全部登记进 Data Catalog，可自由切换活跃数据集。</p></div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-indigo-400">Path A · DB 连接器（可多次接入多个库）</div>
+          <input id="db-conn" type="text" placeholder="sqlite:///data/x.db 或 postgresql://u:p@host:5432/db" class="fld mono">
+          <input id="db-query" type="text" placeholder="表名或 SQL (orders 或 SELECT ...)" class="fld mono">
+          <div class="flex gap-2">
+            <input id="db-ds" type="text" value="db_source_1" placeholder="数据集名" class="fld mono">
+            <input id="db-limit" type="number" placeholder="limit" class="fld mono" style="width:5rem">
+          </div>
+          <select id="db-mode" class="fld" title="抽取模式">
+            <option value="materialize">materialize（ConnectorX 物化，默认）</option>
+            <option value="scanner">scanner（DuckDB ATTACH 直查下推，PG/MySQL）</option>
+          </select>
+          <button onclick="connectDb()" class="btn btn-p w-full">连接并载入</button>
+        </div>
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-indigo-400">Path A · 文件上传</div>
+          <p class="text-[0.7rem] text-slate-500">Excel / CSV / Parquet 零拷贝建表</p>
+          <input id="file-ds" type="text" value="file_source_1" placeholder="数据集名" class="fld mono">
+          <input id="file-input" type="file" accept=".xlsx,.xls,.csv,.parquet" class="hidden" onchange="uploadFile(this)">
+          <button onclick="document.getElementById('file-input').click()" class="btn btn-p w-full">📁 选择文件上传</button>
+        </div>
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-emerald-500">Path B · trace 导入</div>
+          <input id="trace-ds" type="text" value="traces" placeholder="数据集名" class="fld mono">
+          <input id="trace-source" type="text" placeholder="路径 traces.json / spans.parquet" class="fld mono">
+          <div class="flex gap-2">
+            <button onclick="importTraceSource()" class="btn btn-g flex-1">按路径导入</button>
+            <input id="trace-file" type="file" accept=".json,.ndjson" class="hidden" onchange="importTraceFile(this)">
+            <button onclick="document.getElementById('trace-file').click()" class="btn btn-s flex-1">上传 JSON</button>
+          </div>
+          <button onclick="ingestTraces()" class="w-full text-[0.7rem] text-slate-400 hover:text-slate-200">或载入示例 trace →</button>
+        </div>
+      </div>
+      <div class="subcard p-4">
+        <div class="flex items-center justify-between"><div class="text-xs font-semibold text-slate-200">本会话已接入数据源（多源）</div>
+          <button onclick="loadCatalog()" class="btn btn-s">刷新目录</button></div>
+        <div id="my-sources" class="mt-2 text-[0.72rem] text-slate-400">尚未接入任何数据源。</div>
+      </div>
+      <pre id="out-ingest" class="out mono text-[0.7rem] text-emerald-400 bg-slate-900 rounded p-3 min-h-[2.5rem]">用上面任一入口载入数据，或点“用示例数据一键跑通”。</pre>
+    </section>
+
+    <!-- 02 转换 -->
+    <section id="pane-transform" data-stage-pane class="card p-5 space-y-4 hidden">
+      <div><h3 class="text-sm font-bold text-slate-200">02 转换 · Transform <span class="text-slate-500 text-xs">dbt 风格 ELT</span></h3>
+        <p class="text-xs text-slate-400 mt-0.5">数据清洗（去重/补缺/缩尾）与 SQL DAG 拓扑编排（Kahn 分层物化）。</p></div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-slate-200">数据清洗 Clean</div>
+          <button onclick="runTransform()" class="btn btn-s">对活跃数据集去重/补缺</button>
+          <pre id="out-transform" class="out mono text-[0.7rem] text-slate-300 bg-slate-900 rounded p-3 min-h-[2.5rem]">—</pre>
+        </div>
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-slate-200">DAG 建模编排 (Orchestration)</div>
+          <input id="dag-name" type="text" placeholder="模型名 stg_orders" class="fld mono">
+          <input id="dag-sql" type="text" placeholder="SELECT ... FROM 活跃表" class="fld mono">
+          <div class="flex gap-2">
+            <button onclick="registerDag()" class="btn btn-s flex-1">注册模型</button>
+            <button onclick="runDag()" class="btn btn-p flex-1">▶ 物化执行 DAG</button>
+          </div>
+          <pre id="out-dag" class="out mono text-[0.7rem] text-slate-300 bg-slate-900 rounded p-3 min-h-[2.5rem]">—</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 目录 (Data Catalog) -->
+    <section id="pane-model" data-stage-pane class="card p-5 space-y-4 hidden">
+      <div><h3 class="text-sm font-bold text-slate-200">03 数据目录 · Data Catalog <span class="text-slate-500 text-xs">元数据 · 血缘 · 语义层</span></h3>
+        <p class="text-xs text-slate-400 mt-0.5">资产目录、字段级数据血缘与统一指标语义层——现代数据栈的元数据中枢。</p></div>
+      <div class="subcard p-4 space-y-2">
+        <div class="flex items-center justify-between"><div class="text-xs font-semibold text-slate-200">数据资产目录 (Asset Registry)</div>
+          <button onclick="loadCatalog()" class="btn btn-s">刷新</button></div>
+        <div class="overflow-x-auto"><table class="tbl"><thead><tr><th>数据集</th><th>行</th><th>列</th><th>标签</th><th>描述</th></tr></thead><tbody id="catalog-tbody"></tbody></table></div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="subcard p-4 space-y-2">
+          <div class="flex items-center justify-between"><div class="text-xs font-semibold text-slate-200">数据血缘 (Lineage)</div>
+            <button onclick="loadLineage()" class="btn btn-s">刷新血缘</button></div>
+          <div id="lineage-view" class="text-[0.72rem] text-slate-400">—</div>
+        </div>
+        <div class="subcard p-4 space-y-2">
+          <div class="flex items-center justify-between"><div class="text-xs font-semibold text-slate-200">语义指标层 (Metric Store)</div>
+            <button onclick="loadMetrics()" class="btn btn-s">刷新指标</button></div>
+          <div id="metrics-view" class="text-[0.72rem] text-slate-400 mb-2">—</div>
+          <div class="flex gap-2">
+            <input id="metric-name" type="text" placeholder="指标名 total_sales" class="fld mono">
+            <input id="metric-formula" type="text" placeholder="公式 SUM(sales)" class="fld mono">
+          </div>
+          <button onclick="registerMetric()" class="btn btn-s w-full">注册指标（table=活跃数据集）</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 分析 -->
+    <section id="pane-analyze" data-stage-pane class="card p-5 space-y-2 hidden">
+      <div><h3 class="text-sm font-bold text-slate-200">04 分析 · Analyze <span class="text-slate-500 text-xs">BI / 统计 / 归因</span></h3>
+        <p class="text-xs text-slate-400 mt-0.5">EDA 画像、OLAP、SPSS 检验、归因、挖掘；trace 也能跑漏斗 / span 瀑布——同一套算子。</p></div>
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="runInsights()" class="btn btn-p">🔮 一键洞察 (Insight Copilot)</button>
+        <button onclick="runEDA()" class="btn btn-s">EDA 画像</button>
+        <button onclick="runFunnel()" class="btn btn-s">转化漏斗 (trace)</button>
+        <button onclick="runWaterfall()" class="btn btn-s">Trace 瀑布</button>
+      </div>
+      <p class="text-[0.7rem] text-slate-500">Insight Copilot：编排异常/相关/集中/趋势等 Analysis Actions，产出结构化洞察 + 洞察图谱 + 数据叙事。</p>
+      <pre id="out-analyze" class="out mono text-[0.7rem] text-slate-300 bg-slate-900 rounded p-3 min-h-[2.5rem]">—</pre>
+    </section>
+
+    <!-- 05 质量 -->
+    <section id="pane-quality" data-stage-pane class="card p-5 space-y-4 hidden">
+      <div><h3 class="text-sm font-bold text-slate-200">05 质量 · Quality <span class="text-slate-500 text-xs">数据可观测性</span></h3>
+        <p class="text-xs text-slate-400 mt-0.5">Great-Expectations 风格断言 + Schema 漂移检测。</p></div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-slate-200">质量断言 Assertions</div>
+          <button onclick="runQuality()" class="btn btn-s">运行断言</button>
+          <pre id="out-quality" class="out mono text-[0.7rem] text-slate-300 bg-slate-900 rounded p-3 min-h-[2.5rem]">—</pre>
+        </div>
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-slate-200">Schema 漂移 Drift</div>
+          <div class="flex gap-2">
+            <button onclick="captureBaseline()" class="btn btn-s flex-1">捕获当前 schema 为基线</button>
+            <button onclick="detectDrift()" class="btn btn-p flex-1">检测漂移</button>
+          </div>
+          <pre id="out-drift" class="out mono text-[0.7rem] text-slate-300 bg-slate-900 rounded p-3 min-h-[2.5rem]">先捕获基线，再改动数据源后检测。</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 激活 -->
+    <section id="pane-activate" data-stage-pane class="card p-5 space-y-4 hidden">
+      <div><h3 class="text-sm font-bold text-slate-200">06 激活 · Activate <span class="text-slate-500 text-xs">Reverse ETL</span></h3>
+        <p class="text-xs text-slate-400 mt-0.5">受众导出、反向同步至业务库、异动告警推送。</p></div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-slate-200">受众导出</div>
+          <button onclick="runActivate()" class="btn btn-s w-full">导出活跃数据集 (JSON)</button>
+          <pre id="out-activate" class="out mono text-[0.7rem] text-slate-300 bg-slate-900 rounded p-3 min-h-[2.5rem]">—</pre>
+        </div>
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-slate-200">Reverse ETL 反向同步</div>
+          <input id="sync-dest" type="text" value="sqlite:///data/export_sync.db" class="fld mono">
+          <input id="sync-table" type="text" value="synced_result" placeholder="目标表" class="fld mono">
+          <button onclick="runSync()" class="btn btn-p w-full">同步活跃数据集</button>
+          <pre id="out-sync" class="out mono text-[0.7rem] text-slate-300 bg-slate-900 rounded p-3 min-h-[2rem]">—</pre>
+        </div>
+        <div class="subcard p-4 space-y-2">
+          <div class="text-xs font-semibold text-slate-200">告警 Webhook</div>
+          <select id="alert-platform" class="fld"><option value="feishu">飞书</option><option value="dingtalk">钉钉</option><option value="generic">通用</option></select>
+          <input id="alert-url" type="text" placeholder="webhook_url" class="fld mono">
+          <button onclick="runAlert()" class="btn btn-s w-full">下发告警</button>
+          <pre id="out-alert" class="out mono text-[0.7rem] text-slate-300 bg-slate-900 rounded p-3 min-h-[2rem]">—</pre>
+        </div>
+      </div>
+    </section>
+
+    <p class="text-center text-[0.65rem] text-slate-600 pt-2">遥测采集为可选示例，见 <span class="mono">examples/telemetry-collector-demo</span>；本服务通过 <span class="mono">import_traces</span> 接入 trace 数据源。</p>
+  </main>
+
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>

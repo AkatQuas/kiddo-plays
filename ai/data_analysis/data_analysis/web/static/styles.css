@@ -1,0 +1,206 @@
+/* ==========================================================================
+   DATA/AGENT — 现代数据栈治理台
+   暖石墨墨底 · 信号琥珀（唯一主张色）· 流动青（数据在途）
+   琥珀只出现在三处：阶段号、当前激活阶段、关键分隔。其余一律安静。
+   ========================================================================== */
+
+:root {
+  --ink-950: #121316;
+  --ink-900: #16171A;
+  --ink-850: #1B1D21;
+  --ink-800: #21242A;
+  --ink-700: #2E333A;
+  --ink-600: #3C424A;
+  --ink-500: #565D67;
+  --ink-400: #757D88;
+  --ink-300: #9AA2AD;
+  --ink-200: #C2C9D1;
+  --ink-100: #ECEEF1;
+
+  --signal: #F0A22E;
+  --signal-dim: rgba(240, 162, 46, 0.13);
+  --flow: #4CC8E0;
+  --pass: #7FB069;
+  --fail: #E0574C;
+
+  --rule: rgba(255, 255, 255, 0.07);
+  --rule-strong: rgba(255, 255, 255, 0.13);
+}
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, .display {
+  font-family: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+  letter-spacing: 0.005em;
+}
+
+/* 数据台的数字要能上下对齐比对：等宽表格数字是功能，不是装饰 */
+.font-mono, code, pre, th, [id^="stat-"], .stage-num {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   签名元素：流程轨 (Stack Rail)
+   导航即架构图。六个阶段按数据实际流向排列，方向连接符编码"上游→下游"。
+   编号 01–06 在此成立，因为内容确实是有序管道，而非并列清单。
+   ========================================================================== */
+
+.stack-rail {
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.stack-rail::-webkit-scrollbar { display: none; }
+
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.6rem 1.15rem 0.6rem 0.95rem;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--ink-400);
+  transition: color 0.18s ease, background 0.18s ease;
+}
+.stage:hover { color: var(--ink-100); background: rgba(255, 255, 255, 0.028); }
+
+/* 阶段间方向连接符：数据向下游流动 */
+.stage + .stage::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -3.5px;
+  border-right: 1px solid var(--ink-600);
+  border-bottom: 1px solid var(--ink-600);
+  transform: rotate(-45deg);
+}
+
+.stage-num {
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--ink-600);
+  transition: color 0.18s ease;
+}
+.stage-label {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.stage-sub {
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-600);
+  transition: color 0.18s ease;
+}
+
+/* 激活态：琥珀底轨 —— 整页唯一的强调位置 */
+.stage.active { color: var(--ink-100); background: var(--signal-dim); }
+.stage.active .stage-num { color: var(--signal); }
+.stage.active .stage-sub { color: var(--ink-300); }
+.stage.active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--signal);
+}
+
+/* 阶段内视图切换：安静的次级层，不与流程轨争主张 */
+.view-btn {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-400);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.view-btn:hover { color: var(--ink-100); }
+.view-btn.active {
+  color: var(--ink-100);
+  border-color: var(--rule-strong);
+  background: rgba(255, 255, 255, 0.035);
+}
+.view-btn[hidden] { display: none; }
+
+/* 键盘可达：焦点必须可见 */
+.stage:focus-visible, .view-btn:focus-visible,
+button:focus-visible, a:focus-visible,
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   面板：实底、硬边、无毛玻璃
+   保留 .glass-card 类名（历史 HTML 复用约 20 处），仅重定义视觉，
+   未改动的面板一并换肤，避免半新半旧的拼接感。
+   ========================================================================== */
+
+.glass-card {
+  background: var(--ink-900);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+/* 面板标题：小字号、宽字距、大写 —— 仪器面板的标签语汇 */
+.glass-card h2, .glass-card h3 {
+  font-size: 0.6875rem !important;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-300) !important;
+}
+
+/* 统计位：唯一的大号数字，墨白单色。只有非零错误数才配得上红色 */
+[id^="stat-"] {
+  font-size: 2.25rem !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em;
+  color: var(--ink-100) !important;
+}
+[id^="stat-"].is-alert { color: var(--fail) !important; }
+
+/* 表格：规线分隔，不用斑马纹 */
+th {
+  font-size: 0.625rem !important;
+  letter-spacing: 0.11em;
+  color: var(--ink-400) !important;
+  font-weight: 500 !important;
+}
+tbody tr { border-bottom: 1px solid var(--rule); }
+tbody tr:hover { background: rgba(255, 255, 255, 0.022); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--ink-950); }
+::-webkit-scrollbar-thumb { background: var(--ink-700); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-500); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+

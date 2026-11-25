@@ -1,0 +1,75 @@
+/* Quiet chromatic light on the cover; a single, intentional entry gesture. */
+#cover.divine-cover { background: #0c1114; }
+#cover.divine-cover::before {
+  background: radial-gradient(ellipse at 80% 36%, #71562538, transparent 58%),
+    linear-gradient(135deg, #10222b80, transparent 48%, #34201955);
+}
+.divine-atmosphere { position: absolute; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+.divine-atmosphere i { position: absolute; width: 90%; height: 100%; border-radius: 50%; }
+.divine-atmosphere i:nth-child(1) {
+  top: -28%; right: -25%; background: radial-gradient(ellipse, #bf884838, transparent 65%);
+  animation: sacred-gold 19s ease-in-out infinite alternate;
+}
+.divine-atmosphere i:nth-child(2) {
+  bottom: -45%; left: -30%; background: radial-gradient(ellipse, #245d7948, transparent 65%);
+  animation: sacred-blue 24s ease-in-out infinite alternate;
+}
+.divine-atmosphere i:nth-child(3) {
+  top: -45%; left: 18%; background: radial-gradient(ellipse, #65415e30, transparent 67%);
+  animation: sacred-violet 27s ease-in-out infinite alternate;
+}
+.app .workspace { background: radial-gradient(ellipse at 100% 0%, #82643518, transparent 55%), radial-gradient(ellipse at 0% 100%, #1e4a5c16, transparent 55%), #10130f; }
+@keyframes sacred-gold { from { transform: translate(-5%, 0) scale(.9); opacity: .65; } to { transform: translate(-22%, 15%) scale(1.15); opacity: 1; } }
+@keyframes sacred-blue { from { transform: translate(0, 0); opacity: .55; } to { transform: translate(25%, -20%) scale(1.15); opacity: 1; } }
+@keyframes sacred-violet { from { transform: translate(0, 0); opacity: .35; } to { transform: translate(-18%, 30%); opacity: .85; } }
+.entry-ritual {
+  position: fixed; inset: 0; z-index: 100; display: grid; place-items: center;
+  overflow: hidden; background: #090e11; color: #e9dfcb;
+}
+.entry-ritual[hidden] { display: none; }
+.entry-ritual.is-playing { animation: ritual-veil 2.3s ease both; }
+.ritual-art { position: absolute; inset: 0; }
+.ritual-hand {
+  position: absolute; inset: 0;
+  background: url('/static/cover/creation-touch.webp') center / cover no-repeat;
+}
+.ritual-human { clip-path: inset(0 50% 0 0); }
+.ritual-divine { clip-path: inset(0 0 0 50%); }
+.is-playing .ritual-art { animation: connection-approach 1.5s cubic-bezier(.22,.61,.36,1) both; }
+.ritual-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(#090e1150, transparent 28%, transparent 65%, #090e11cc); }
+.ritual-spark {
+  position: absolute; left: 50%; top: 50%; width: 12px; height: 12px;
+  border-radius: 50%; background: #fff2d1;
+  box-shadow: 0 0 25px 12px #eac17a88, 0 0 100px 45px #c18a4938;
+  opacity: 0;
+}
+.is-playing .ritual-spark { animation: connection-light 2.3s ease both; }
+.ritual-ring { position: absolute; left: 50%; top: 50%; width: 160px; height: 160px; border: 1px solid #dec28b; border-radius: 50%; opacity: 0; }
+.ritual-spark, .ritual-ring { top: calc(50% - max(4.6vh, 2.59vw)); }
+.is-playing .ritual-ring { animation: connection-ring 2.3s ease both; }
+.ritual-caption { position: absolute; top: 74%; width: 100%; padding: 0 24px; text-align: center; }
+.ritual-caption p { margin: 0 0 14px; color: #c6a76d; font-size: 10px; letter-spacing: .32em; }
+.ritual-caption h2 { margin: 0; font: 400 clamp(23px, 2.6vw, 38px)/1.5 var(--serif); letter-spacing: .1em; }
+.is-playing .ritual-caption { animation: ritual-copy 2.3s ease both; }
+.ritual-skip { position: absolute; right: 32px; bottom: 28px; padding: 12px 16px; border: 1px solid #c6a76d55; background: #0a1016aa; color: #d8c9a9; font: 12px var(--sans); cursor: pointer; }
+.ritual-skip span { margin-left: 18px; }
+.ritual-skip:hover { background: #29251b; }
+.ritual-skip:focus-visible { outline: 2px solid #eacb92; outline-offset: 4px; }
+@keyframes ritual-veil { 0% { opacity: 0; } 14%, 78% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes connection-approach { from { transform: scale(1.1); } to { transform: scale(1); } }
+@keyframes connection-light { 0%, 45% { opacity: 0; transform: translate(-50%, -50%) scale(.2); } 65% { opacity: .85; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(3); } }
+@keyframes connection-ring { 0%, 55% { opacity: 0; transform: translate(-50%, -50%) scale(.15); } 65% { opacity: .3; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(3.5); } }
+@keyframes ritual-copy { 0%, 22% { opacity: 0; transform: translateY(10px); } 42%, 78% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-5px); } }
+@media (max-width:760px) {
+  /* Keep both complete hands visible in a wide band on portrait screens. */
+  .ritual-hand {
+    background-size: auto min(60vw, 340px);
+    mask-image: linear-gradient(to bottom, transparent calc(50% - min(30vw, 170px)), #000 calc(50% - min(22vw, 125px)), #000 calc(50% + min(22vw, 125px)), transparent calc(50% + min(30vw, 170px)));
+  }
+  .ritual-spark, .ritual-ring { top: calc(50% - min(2.76vw, 15.64px)); }
+  .ritual-caption { top: 66%; }
+  .ritual-skip { right: 20px; bottom: 24px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .divine-atmosphere i, .entry-ritual, .entry-ritual * { animation: none !important; }
+}

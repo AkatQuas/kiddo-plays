@@ -1,0 +1,13 @@
+Data Agent · 影像来源
+
+首页雅典娜神殿主视觉：为本项目生成的原创 AI 概念艺术，2026-10-15；不是历史场所照片。
+
+阿波罗：Head of the Kassel Apollo type, Louvre Museum
+https://commons.wikimedia.org/wiki/File:Head_Kassel_Apollo_Louvre_Ma692.jpg
+Public domain；沿用项目既有资源。
+
+赫尔墨斯：皮蒂型赫尔墨斯大理石头像，罗马帕拉蒂诺博物馆
+https://commons.wikimedia.org/wiki/File:Head_Hermes_Pitti_Palatino_Inv12433.jpg
+Public domain；沿用项目既有资源。
+
+内页雅典娜来源另见 athena.source.txt；数学图形为项目装饰性几何 SVG。

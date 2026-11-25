@@ -1,0 +1,277 @@
+@font-face{font-family:Scholar;src:url(/static/fonts/cormorant-garamond-500.woff2)}
+#cover{--bg:#090b0b;--surface:#131615;--text:#e5dfd1;--gold:#c3aa77;--muted:#aaa99e;--line:#80765c;--small:16px;--body:18px;--lead:26px;--head:58px}
+#cover *{box-sizing:border-box}
+#cover{scroll-behavior:smooth}
+#cover{margin:0;background:var(--bg);color:var(--text);font:var(--body)/1.7 Arial,sans-serif}
+#cover h1,#cover h2,#cover h3,#cover p,#cover figure{margin:0}
+#cover h1,#cover h2,#cover h3{font-family:Scholar,serif;font-weight:400}
+#cover h1{font-size:clamp(56px,6.2vw,100px);line-height:1.25;letter-spacing:.02em}
+#cover h2{font-size:var(--head);line-height:1.3;letter-spacing:-.02em}
+#cover a{color:inherit;text-decoration:none}
+#cover button{font:inherit;cursor:pointer}
+#cover a,#cover button{transition:color .2s,background .2s,transform .2s}
+#cover a:hover{color:#f4d69d}
+#cover a:focus-visible,#cover button:focus-visible,#cover summary:focus-visible,#cover [tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:6px}
+#cover header{position:absolute;top:0;left:4%;right:4%;height:100px;display:flex;align-items:center;justify-content:space-between;gap:25px;z-index:10}
+#cover .brand{font:26px Scholar,serif;letter-spacing:-.02em}
+#cover nav{display:flex;gap:38px;font-size:var(--small)}
+#cover .motion{background:none;border:0;padding:10px 0;color:var(--muted);font-size:var(--small)}
+#cover .sanctum{min-height:960px;height:100svh;position:relative;overflow:hidden;background:#080a0a}
+#cover .divine-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;animation:presence 25s ease-in-out infinite alternate}
+#cover .scrim{position:absolute;inset:0;background:linear-gradient(90deg,#080a0a99 0%,transparent 52%),linear-gradient(0deg,#080a0a 0%,transparent 32%)} /* taste-skill-ignore: neutral scrim over the approved sculpture photograph. */
+#cover .celestial{position:absolute;inset:0;width:100%;height:100%;color:var(--gold);opacity:.27;pointer-events:none}
+#cover .celestial g{stroke-width:.6}
+#cover .trace{stroke-dasharray:1;stroke-dashoffset:0;animation:trace 28s ease infinite}
+#cover .slow{animation-delay:-19s}
+#cover .late{animation-delay:-9s}
+#cover .hero-copy{position:absolute;left:7%;top:25%;z-index:2}
+#cover .english{font:italic 26px Scholar,serif;color:var(--gold);margin:18px 0 24px}
+#cover .intro{color:#c1c3b9;font-size:18px;line-height:1.9}
+#cover .primary{width:max-content;display:flex;justify-content:space-between;gap:65px;align-items:center;padding:13px 24px;background:var(--gold);color:#121513;font-size:16px;margin-top:30px}
+#cover .primary:hover{background:#e1ca9b;color:#121513;transform:translateY(-2px)}
+#cover .mathematics{position:absolute;bottom:155px;left:7%;width:340px;z-index:1}
+#cover .mathematics .living-mathematics{display:block;width:100%;height:105px;opacity:.38;pointer-events:none}
+#cover .mathematics p{font:18px Scholar,serif;color:var(--gold);margin-top:10px}
+#cover .image-caption{position:absolute;right:13%;bottom:220px;font-size:16px;color:#c3bca9}
+#cover .hero-path{position:absolute;bottom:35px;left:7%;right:7%;display:grid;grid-template-columns:repeat(3,1fr);gap:50px;z-index:3}
+#cover .hero-path a{display:flex;gap:20px;align-items:center;padding:15px 0}
+#cover .symbol{font:26px Scholar,serif;color:var(--gold)}
+#cover .hero-path strong{display:block;font:26px Scholar,serif;font-weight:400}
+#cover .hero-path small{font-size:16px;color:var(--muted);display:block;margin-top:4px}
+#cover .arrow{margin-left:auto;color:var(--gold)}
+#cover .atlas{padding:140px 7% 80px;scroll-margin-top:40px}
+#cover .chapter{display:flex;justify-content:space-between;align-items:flex-end;gap:50px}
+#cover .chapter>p{color:var(--muted);max-width:440px}
+#cover .atlas-layout{display:grid;grid-template-columns:32% 1fr;align-items:center;gap:6%;margin-top:65px}
+#cover .apollo-art{height:440px;position:relative;mix-blend-mode:screen}
+#cover .apollo-art svg{position:absolute;inset:0;width:100%;height:100%;stroke:var(--gold);opacity:.25;stroke-width:.8}
+#cover .apollo-art img{position:absolute;inset:12% 10%;width:80%;height:76%;object-fit:contain;mix-blend-mode:screen;filter:grayscale(1) sepia(.15) contrast(1.2)}
+#cover .apollo-art figcaption{position:absolute;bottom:0;left:0;width:100%;text-align:center;color:var(--gold);font-size:16px}
+#cover .instrument{background:var(--surface);padding:28px 30px;min-width:0;min-height:400px}
+#cover .instrument-tabs{display:flex;gap:28px}
+#cover .instrument-tabs button{color:var(--muted);background:none;border:0;font-size:16px;padding:8px 0 14px}
+#cover .instrument-tabs button[aria-selected=true]{color:var(--gold)}
+#cover #instrument-panel{min-height:270px;padding-top:20px}
+#cover .instrument-bottom{display:flex;justify-content:space-between;gap:20px;font-size:16px}
+#cover .instrument-bottom span{color:var(--muted)}
+#cover .instrument-bottom a{color:var(--gold)}
+#cover .map{position:relative;height:255px}
+#cover .map svg{position:absolute;inset:0;width:100%;height:100%;stroke:var(--gold);stroke-width:1;fill:none;opacity:.6}
+#cover .node{position:absolute;width:43%;background:#202420;padding:16px;color:var(--text);font-size:16px}
+#cover .node span{display:block;color:var(--muted);font-size:16px;margin-top:4px}
+#cover .node.one{left:0;top:0}
+#cover .node.two{right:0;top:0}
+#cover .node.three{left:0;bottom:20px}
+#cover .node.four{right:0;bottom:20px}
+#cover .map .flow{stroke-dasharray:6 15;animation:flow 10s linear infinite}
+#cover .input-list{display:flex;flex-direction:column;gap:15px}
+#cover .input-list>div{display:flex;justify-content:space-between;gap:25px;padding:14px 18px;background:#202420;font-size:16px}
+#cover .input-list span{color:var(--muted)}
+#cover .reason{padding:20px;background:#202420}
+#cover .reason strong{font:48px Scholar,serif;color:var(--gold)}
+#cover .reason p{font-size:16px;margin:10px 0}
+#cover .reason a{color:var(--gold);font-size:16px}
+#cover .evidence{padding:100px 7% 140px}
+#cover .evidence-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
+#cover .evidence-heading p{color:var(--muted)}
+#cover .evidence-body{display:grid;grid-template-columns:1fr 1fr;gap:9%;margin-top:65px;align-items:center}
+#cover .equation{font:58px Scholar,serif;color:var(--gold)}
+#cover .equation .equals{margin:0 18px;color:var(--muted)}
+#cover .equation sub{font-size:26px}
+#cover .equation p{font:18px Arial,sans-serif;color:var(--muted);margin:20px 0 35px}
+#cover .equation img{width:100%;height:140px;opacity:.4}
+#cover .report{font-size:16px}
+#cover .report-top{display:flex;justify-content:space-between;color:var(--muted);gap:20px}
+#cover .finding{font:26px Scholar,serif;margin:25px 0 12px}
+#cover .finding strong{font-weight:400;color:var(--gold)}
+#cover .bars{display:flex;flex-direction:column;gap:18px;margin:30px 0}
+#cover .bars>div{display:grid;grid-template-columns:48px 1fr 110px;gap:14px;align-items:center}
+#cover .bars i{height:9px;background:#a18b62;width:var(--size);transform-origin:left;animation:bars 1s ease}
+#cover .bars b{font-weight:400;text-align:right}
+#cover .bars .positive i{background:#697a77}
+#cover summary{color:var(--gold);cursor:pointer;padding:15px 0}
+#cover details p{margin:10px 0;color:var(--muted)}
+#cover details a{color:var(--gold)}
+#cover .action{display:grid;grid-template-columns:32% 1fr;gap:6%;padding:85px 7% 100px;background:#101312;position:relative}
+#cover .action figure{position:relative;height:380px;mix-blend-mode:screen}
+#cover .action img{width:100%;height:90%;object-fit:contain;filter:grayscale(1) sepia(.15);mix-blend-mode:screen}
+#cover .action figcaption{font-size:16px;text-align:center;color:var(--gold)}
+#cover .action>div{padding-top:30px}
+#cover .action p{color:var(--muted);margin-top:24px}
+#cover .return{position:absolute;right:7%;bottom:35px;font-size:16px;color:var(--muted)}
+#cover footer{padding:40px 7%;display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:16px;color:var(--muted)}
+#cover footer>span:first-child{font:26px Scholar,serif;color:var(--text)}
+#cover.paused *{animation-play-state:paused!important}
+@keyframes presence{to{transform:scale(1.025)}}
+@keyframes trace{0%,5%{stroke-dashoffset:1;opacity:.1}45%,85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:.1}}
+@keyframes flow{to{stroke-dashoffset:-100}}
+@keyframes bars{from{transform:scaleX(.1)}to{transform:scaleX(1)}}
+@media(max-width:1000px){#cover{--head:44px;--body:16px}
+#cover header{left:5%;right:5%}
+#cover nav{gap:20px}
+#cover .motion{display:none}
+#cover .sanctum{min-height:970px}
+#cover .hero-copy{left:6%;top:22%}
+#cover .hero-copy h1{font-size:60px}
+#cover .divine-image{object-position:58% center}
+#cover .hero-path{left:6%;right:6%;gap:22px}
+#cover .hero-path strong{font-size:22px}
+#cover .hero-path small{font-size:16px}
+#cover .symbol{font-size:36px}
+#cover .hero-path a{gap:12px}
+#cover .mathematics{left:6%;width:300px}
+#cover .image-caption{right:10%;bottom:300px}
+#cover .atlas,#cover .evidence{padding-left:6%;padding-right:6%}
+#cover .chapter{gap:35px}
+#cover .chapter>p{max-width:300px}
+#cover .atlas-layout{grid-template-columns:25% 1fr;gap:5%}
+#cover .instrument{padding:22px}
+#cover .instrument-tabs{gap:25px}
+#cover .instrument-bottom{display:block}
+#cover .instrument-bottom a{display:block;margin-top:8px}
+#cover .evidence-body{gap:6%}
+#cover .equation{font-size:48px}
+#cover .equation .equals{margin:0 5px}
+#cover .evidence-heading{align-items:flex-start}
+#cover .evidence-heading p{max-width:300px}
+#cover .bars>div{grid-template-columns:42px 1fr 100px;gap:8px}
+#cover .action{padding-left:6%;padding-right:6%}
+}
+@media(max-width:600px){#cover header{height:80px;left:6%;right:6%}
+#cover .brand{font-size:26px}
+#cover nav{font-size:16px;gap:15px}
+#cover nav a:nth-child(1),#cover nav a:nth-child(2){display:none}
+#cover .sanctum{height:auto;min-height:1120px}
+#cover .divine-image{height:750px;top:205px;object-position:68% center;object-fit:cover}
+#cover .scrim{background:linear-gradient(180deg,#080a0a 18%,#080a0a00 52%,#080a0a 86%)} /* taste-skill-ignore: neutral scrim over the approved sculpture photograph. */
+#cover .hero-copy{top:125px;left:7%;right:7%}
+#cover .hero-copy h1{font-size:46px;line-height:1.3}
+#cover .english{font-size:22px;max-width:270px;margin:14px 0 20px}
+#cover .intro{font-size:16px;max-width:310px}
+#cover .primary{padding:12px 20px;gap:35px;margin-top:24px}
+#cover .celestial{top:340px;left:-85%;width:180%;height:520px;opacity:.22}
+#cover .mathematics{left:7%;bottom:200px;width:230px}
+#cover .mathematics .living-mathematics{height:70px}
+#cover .mathematics p{font-size:16px}
+#cover .image-caption{right:7%;bottom:360px;font-size:16px}
+#cover .hero-path{left:7%;right:7%;bottom:30px;grid-template-columns:1fr;gap:3px}
+#cover .hero-path a{padding:10px 0;gap:18px}
+#cover .hero-path strong{font-size:22px}
+#cover .hero-path small{font-size:16px;margin-top:0}
+#cover .symbol{font-size:26px;width:35px}
+#cover .hero-path a>div{display:flex;gap:15px;align-items:center}
+#cover .arrow{font-size:16px}
+#cover .atlas{padding:75px 7% 40px}
+#cover .chapter{display:block}
+#cover .chapter h2{font-size:36px}
+#cover .chapter>p{margin-top:25px;max-width:none}
+#cover .atlas-layout{display:flex;flex-direction:column;gap:30px;margin-top:30px}
+#cover .apollo-art{width:220px;height:260px}
+#cover .instrument{width:100%;padding:20px 16px}
+#cover .instrument-tabs{justify-content:space-between;gap:8px}
+#cover .instrument-tabs button{font-size:16px}
+#cover .node{padding:12px 10px}
+#cover .node span{font-size:16px}
+#cover .map{height:250px}
+#cover .instrument-bottom{font-size:16px}
+#cover .input-list>div{display:block}
+#cover .input-list span{display:block;margin-top:5px}
+#cover .evidence{padding:65px 7%}
+#cover .evidence-heading{display:block}
+#cover .evidence-heading h2{font-size:36px}
+#cover .evidence-heading p{margin-top:25px;max-width:none}
+#cover .evidence-body{grid-template-columns:1fr;gap:35px;margin-top:40px}
+#cover .equation{font-size:52px}
+#cover .equation p{font-size:16px}
+#cover .equation img{height:90px}
+#cover .report-top{font-size:16px}
+#cover .report>p{font-size:16px}
+#cover .report .finding{font-size:26px}
+#cover .bars>div{font-size:16px}
+#cover .action{padding:55px 7% 90px;grid-template-columns:1fr;gap:20px}
+#cover .action figure{height:230px;width:200px;margin:auto}
+#cover .action>div{padding-top:0}
+#cover .action h2{font-size:40px}
+#cover .action p{font-size:16px}
+#cover .action p br{display:none}
+#cover footer{padding:30px 7%;display:block}
+#cover footer p{margin:15px 0;font-size:16px}
+#cover footer>span:last-child{font-size:16px}
+#cover .return{bottom:30px}
+}
+@media(prefers-reduced-motion:reduce){#cover{scroll-behavior:auto}
+#cover *,#cover *:before,#cover *:after{animation:none!important;transition:none!important}
+#cover .trace{stroke-dashoffset:0}
+}
+@media(max-width:600px){#cover .mathematics{bottom:250px}
+}
+#cover .symbol{font-size:22px}
+@media(max-width:600px){#cover .hero-path a>div{display:block}
+#cover .hero-path strong{white-space:nowrap}
+#cover .hero-path a{padding:8px 0}
+#cover .hero-path small{font-size:14px}
+#cover .hero-path .symbol{flex:0 0 30px}
+#cover .hero-path .arrow{flex:0 0 16px}
+#cover .mathematics{bottom:270px}
+}
+#cover header{height:108px}
+#cover .brand{font-size:32px}
+#cover nav{gap:28px}
+#cover .sanctum{min-height:960px}
+#cover .hero-copy{top:24%;left:7.5%}
+#cover .hero-copy h1{font-size:clamp(56px,5.6vw,90px);letter-spacing:.035em;line-height:1.34}
+#cover .english{font-size:24px;margin-top:18px;color:#c6b58e}
+#cover .intro{font-size:17px;line-height:2;color:#c0bfb2}
+#cover .primary{padding:14px 25px;background:#c8b286;margin-top:28px;min-width:215px}
+#cover .mathematics{width:320px;left:7.5%;bottom:158px}
+#cover .mathematics .living-mathematics{opacity:.45}
+#cover .mathematics p{font-size:17px}
+#cover .hero-path{left:7.5%;right:7.5%;gap:60px;bottom:32px}
+#cover .hero-path strong{font-size:24px}
+#cover .hero-path small{font-size:15px}
+#cover .hero-path .symbol{font-size:28px}
+#cover .hero-path a:hover{transform:translateY(-3px)}
+#cover .hero-path .arrow{transition:transform .25s}
+#cover .hero-path a:hover .arrow{transform:translate(3px,-3px)}
+#cover .celestial{opacity:.18}
+#cover .image-caption{font-size:14px;right:12%;bottom:210px;color:#d0c6ac}
+#cover .atlas,#cover .evidence{scroll-margin-top:20px}
+@media(max-width:1000px){#cover nav{gap:18px}
+#cover nav>a:nth-child(3){display:none}
+#cover .hero-copy h1{font-size:60px}
+#cover .hero-path{gap:20px}
+#cover .hero-path strong{font-size:22px}
+#cover .english{font-size:23px}
+}
+@media(max-width:600px){#cover header{height:80px}
+#cover .brand{font-size:26px}
+#cover nav>a{display:none!important}
+#cover nav>a:last-child{display:block!important}
+#cover .hero-copy{top:120px;left:7%;right:7%}
+#cover .hero-copy h1{font-size:44px}
+#cover .english{font-size:22px}
+#cover .intro{font-size:16px}
+#cover .sanctum{min-height:1140px}
+#cover .mathematics{left:7%;width:230px;bottom:275px}
+#cover .mathematics p{font-size:16px}
+#cover .hero-path{left:7%;right:7%;bottom:28px;gap:5px}
+#cover .hero-path strong{font-size:21px}
+#cover .hero-path small{font-size:14px}
+#cover .image-caption{bottom:370px;right:7%}
+#cover .primary{min-width:205px}
+#cover .hero-path .symbol{font-size:24px}
+}
+
+#cover{position:relative;display:block;padding:0;min-height:100svh;overflow:hidden;font-family:Arial,"PingFang SC",sans-serif}#cover[hidden]{display:none}#cover h1,#cover h2{font-family:Scholar,"Songti SC",STSong,serif}#cover .brand{border:0;padding:0;display:block}#cover .primary{border:0;cursor:pointer}#cover .motion{min-width:80px}#cover .sanctum{width:100%}
+
+
+ .living-mathematics path:not([stroke-dasharray]),.living-mathematics circle:not([fill]){stroke-dasharray:1;stroke-dashoffset:1;animation:construct 24s cubic-bezier(.35,0,.25,1) infinite;}
+.living-mathematics circle:not([fill]){stroke-dasharray:1;stroke-dashoffset:1;}
+.living-mathematics path[stroke-dasharray]{animation:guides 24s ease infinite;}
+.living-mathematics text{opacity:0;animation:annotation 24s ease infinite;}
+.living-mathematics>g:nth-of-type(2) *{animation-delay:3s}
+.living-mathematics>g:nth-of-type(3) *{animation-delay:6s}
+@keyframes construct{0%,5%{stroke-dashoffset:1;opacity:0}9%{opacity:1}43%,78%{stroke-dashoffset:0;opacity:1}94%,100%{stroke-dashoffset:0;opacity:0}}
+@keyframes guides{0%,3%{opacity:0}16%,76%{opacity:.5}94%,100%{opacity:0}}
+@keyframes annotation{0%,37%{opacity:0}49%,78%{opacity:1}94%,100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.living-mathematics path,.living-mathematics circle,.living-mathematics text{animation:none!important;stroke-dashoffset:0!important;opacity:1!important}}

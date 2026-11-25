@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+*.egg-info/
+
+# Local runtime data (uploads, exports, catalog SQLite, test DBs — recreated on run)
+data/*
+!data/.gitkeep
+!data/uploads/
+!data/exports/
+data/uploads/*
+!data/uploads/.gitkeep
+data/exports/*
+!data/exports/.gitkeep
+
+examples/dota2-showcase/data/

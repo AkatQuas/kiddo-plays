@@ -1,0 +1,26 @@
+#app #mount .onto-play{display:grid;gap:18px;min-width:0}
+#app #mount .onto-play-bar{display:flex;flex-wrap:wrap;align-items:end;gap:16px}
+#app #mount .onto-play-bar label{display:grid;gap:6px;color:var(--secondary);font-size:13px}
+#app #mount .onto-play-bar input{background:var(--canvas);color:var(--text);border:1px solid var(--line);padding:8px 10px;min-width:220px}
+#app #mount .onto-play-bar button{background:#222c23;color:var(--text);border:0;min-height:40px;padding:8px 14px}
+#app #mount .onto-play-bar p{margin:0;color:var(--secondary);font-size:13px}
+#app #mount .onto-play-body{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start}
+#app #mount .onto-play-stage{position:relative;overflow:auto;min-height:320px;border:1px solid var(--line);background:#101612}
+#app #mount .onto-play-stage svg{display:block}
+#app #mount .onto-play-stage path{fill:none;stroke:var(--accent);stroke-width:1.25;pointer-events:stroke;cursor:pointer}
+#app #mount .onto-play-stage text{fill:var(--secondary);font-size:12px;pointer-events:none}
+#app #mount .onto-play-stage path.is-on{stroke-width:2.4}
+#app #mount .onto-card{position:absolute;width:248px;height:132px;padding:14px 14px 12px;text-align:left;background:#1b241d;color:var(--text);border:1px solid #3c4638;display:grid;align-content:start;gap:4px;cursor:pointer}
+#app #mount .onto-card span{font-size:18px;line-height:1.2}
+#app #mount .onto-card small,#app #mount .onto-card em,#app #mount .onto-card b{font-style:normal;font-weight:400;color:var(--secondary);font-size:12px}
+#app #mount .onto-card.is-on{border-color:var(--accent)}
+#app #mount .onto-play-inspector,#app #mount .onto-play-broken{border:1px solid var(--line);padding:16px 18px;min-width:0}
+#app #mount .onto-play-inspector h3,#app #mount .onto-play-broken h3{margin:0 0 8px;font-size:20px}
+#app #mount .onto-play-inspector h4{margin:16px 0 6px;font-size:13px;color:var(--secondary)}
+#app #mount .onto-play-inspector p,#app #mount .onto-play-inspector li,#app #mount .onto-play-broken li{font-size:13px;color:var(--secondary)}
+#app #mount .onto-play-inspector dl{display:grid;gap:8px;margin:12px 0}
+#app #mount .onto-play-inspector dt{color:var(--secondary);font-size:12px}
+#app #mount .onto-play-inspector dd{margin:0;color:var(--text)}
+#app #mount .onto-empty{padding:48px 28px}
+#app #mount .onto-empty h3{margin:0 0 8px}
+@media(max-width:1100px){#app #mount .onto-play-body{grid-template-columns:1fr}}

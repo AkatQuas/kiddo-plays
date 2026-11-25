@@ -1,0 +1,49 @@
+/* Geometry is an ornamental layer, never a substitute for analytical output. */
+.dc-math-notes { display: flex; align-items: center; gap: 17px; margin-top: 24px; color: #b7a278; }
+.dc-math-notes img { width: min(270px, 62%); height: 76px; object-fit: contain; opacity: .65; }
+.dc-math-notes span { font: italic 18px/1.8 Georgia,serif; letter-spacing: .16em; }
+.dc-math-notes small { display: block; font: 8px/1.6 var(--sans); letter-spacing: .2em; color: #a8a490; }
+#cover .dc-copy { padding-top: 38px; padding-bottom: 36px; }
+.app .geometry-frieze {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 14px 40px; border-bottom: 1px solid #d0b27920;
+  background: linear-gradient(100deg,#caa66109,transparent 70%); color: #bfa878;
+}
+.geometry-frieze .geometry-study { display: flex; align-items: center; gap: 16px; }
+.geometry-study img { width: 132px; height: 40px; opacity: .65; }
+.geometry-study span { font: 9px/1.7 var(--sans); letter-spacing: .19em; }
+.geometry-frieze .geometry-formula { font: italic 17px/1.5 Georgia,serif; letter-spacing: .13em; }
+.geometry-frieze .geometry-caption { color: #a3a58f; font: 9px/1.5 var(--sans); letter-spacing: .18em; }
+.app .content { position: relative; isolation: isolate; }
+.app .content::before {
+  content: ''; position: absolute; top: 32px; right: 18px; width: min(560px, 80%); height: 160px;
+  background: url('/static/math-sketches.svg') right top / contain no-repeat;
+  opacity: .14; z-index: -1; pointer-events: none;
+}
+.app .group-label { display: flex; align-items: center; gap: 9px; }
+.app .group-label::before { width: 15px; font: italic 15px Georgia,serif; color: #d0b279; opacity: .8; }
+.app [data-group="ingest"] .group-label::before { content: 'α'; }
+.app [data-group="transform"] .group-label::before { content: 'Δ'; }
+.app [data-group="model"] .group-label::before { content: 'φ'; }
+.app [data-group="analyze"] .group-label::before { content: 'Σ'; }
+.app [data-group="quality"] .group-label::before { content: 'θ'; }
+.app [data-group="activate"] .group-label::before { content: 'λ'; }
+.app [data-group="examples"] .group-label::before { content: 'Ω'; }
+.app #mount :is(.sec-ingest-result,.sec-transform-result,.sec-model-result,.sec-analyze-result,.sec-govern-result)::after {
+  content: ''; display: block; width: 150px; height: 44px; margin: 28px 0 0 auto;
+  background: url('/static/math-sketches.svg') center / contain no-repeat; opacity: .28; pointer-events: none;
+}
+.app .sidebar-foot small { display: block; margin-top: 8px; font-size: 8px; }
+@media (max-width:1100px) {
+  .app .geometry-frieze { padding-right: 24px; padding-left: 24px; }
+  .geometry-frieze .geometry-caption { display: none; }
+}
+@media (max-width:760px) {
+  .app .geometry-frieze { padding: 10px 20px; gap: 12px; }
+  .geometry-study img { width: 105px; height: 35px; }
+  .geometry-study span { display: none; }
+  .geometry-frieze .geometry-formula { font-size: 14px; letter-spacing: .04em; }
+  .app .content::before { width: 230px; height: 70px; opacity: .1; }
+  .dc-math-notes { margin-top: 18px; gap: 12px; }
+  .dc-math-notes img { height: 60px; }
+}

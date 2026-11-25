@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data-analysis"
+version = "0.1.0"
+description = "Weekend experiment: in-memory DuckDB + Arrow analytics runtime for agents (not production-ready)."
+authors = [{ name = "data_analysis contributors" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "duckdb==1.5.6",
+    "pyarrow>=17.0.0",
+    "connectorx>=0.3.3",
+    "polars>=1.0.0",
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.29.0",
+    "mcp>=1.0.0",
+    "fastmcp>=0.1.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.2.0",
+    "PyYAML>=6.0",
+    "psycopg[binary]>=3.1.0",
+    "pymysql>=1.1.0",
+    "pymssql>=2.2.0",
+    "scipy>=1.13.0",
+    "statsmodels>=0.14.0",
+    "scikit-learn>=1.5.0",
+    "jinja2>=3.1.0",
+    "numpy>=1.26.0",
+    "pandas>=2.2.0",
+    "boto3>=1.35.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-timeout>=2.3.0",
+    "httpx>=0.27.0",
+    "ruff>=0.8.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["data_analysis*"]
+
+[tool.setuptools.package-data]
+data_analysis = ["web/static/*", "web/templates/*"]
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+timeout = 180
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+exclude = [".venv", "data", "examples"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "RUF"]
+ignore = [
+    "E501",
+    "B008",
+    "RUF001",
+    "RUF003",
+    "RUF043",
+    "E741",
+    "RUF012",
+    "B023",
+    "B904",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "E402"]
+"**/__init__.py" = ["F401"]
+"data_analysis/main.py" = ["E402"]
+"data_analysis/mcp_server.py" = ["E402"]
+"data_analysis/schemas/requests.py" = ["E402"]
+"data_analysis/operators/business_report.py" = ["E402"]
+"data_analysis/schemas/__init__.py" = ["F403"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false

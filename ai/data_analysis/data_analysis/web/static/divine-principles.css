@@ -1,0 +1,58 @@
+/* Wisdom, order, connection: one visual grammar, three purposeful expressions. */
+#cover.divine-cover { background: #0e1111; }
+#cover.divine-cover::before { background: radial-gradient(ellipse at 78% 40%,#936c3036,transparent 58%),linear-gradient(120deg,#15303a28,transparent 55%); }
+.divine-atmosphere i:nth-child(1) { background: radial-gradient(ellipse,#b777343e,transparent 68%); }
+.divine-atmosphere i:nth-child(2) { background: radial-gradient(ellipse,#28556930,transparent 68%); }
+.divine-atmosphere i:nth-child(3) { background: radial-gradient(ellipse,#6a543723,transparent 68%); }
+.dc-orbit { stroke: #d1af78; opacity: .3; }
+.dc-athena { inset: 20px 5% 48px 9%; }
+.dc-athena img { filter: grayscale(1) sepia(.15) contrast(1.08); }
+.dc-latin { color: #bcad97; }
+.dc-copy { max-width: 610px; }
+.cover-principles { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); margin-top: 28px; border-top: 1px solid #c6a15b50; padding-top: 17px; gap: 18px; }
+.cover-principles>div { min-width: 0; }
+.cover-principles span { display: block; color: #b6a388; font: 8px/1.5 var(--sans); letter-spacing: .16em; }
+.cover-principles h2 { margin: 8px 0 6px; color: #e4d9c2; font: 400 23px/1.3 var(--serif); }
+.cover-principles p { margin: 0; font-size: 10px; color: #a8aaa1; line-height: 1.7; }
+#cover .dc-enter { background: #b9844e; border-color: #c79964; color: #100e09; }
+#cover .dc-enter:hover { background: #d0a36d; }
+.app .workspace { position: relative; isolation: isolate; overflow-x: clip; }
+.workspace-aura { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.workspace-aura i { position: absolute; width: 1000px; height: 900px; border-radius: 50%; }
+.workspace-aura i:first-child { right: -380px; top: -160px; background: radial-gradient(ellipse,#a87b3025,transparent 68%); animation: sanctuary-gold 32s ease-in-out infinite alternate; }
+.workspace-aura i:last-child { left: -480px; top: 240px; background: radial-gradient(ellipse,#31576c20,transparent 68%); animation: sanctuary-blue 38s ease-in-out infinite alternate; }
+@keyframes sanctuary-gold { from { transform: translate(0,0); opacity: .65; } to { transform: translate(-120px,100px); opacity: 1; } }
+@keyframes sanctuary-blue { from { transform: translate(0,0); opacity: .65; } to { transform: translate(150px,-90px); opacity: 1; } }
+.app .workspace .content,.app .workspace #mount { background: transparent; }
+.principle-nav { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); margin: 0 40px; padding: 18px 0; border-bottom: 1px solid #d0b2792e; }
+.principle-nav button { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 60px; padding: 8px 22px; border: 0; border-right: 1px solid #d0b27925; background: transparent; color: #b5b2a5; text-align: left; cursor: pointer; transition: color .2s,background .2s; }
+.principle-nav button:first-child { padding-left: 0; }
+.principle-nav button:last-child { border-right: 0; }
+.principle-number { align-self: flex-start; padding-top: 4px; font-size: 9px; color: #a38c63; letter-spacing: .1em; }
+.principle-nav strong { display: block; color: #d9d2bf; font: 400 23px/1.4 var(--serif); }
+.principle-nav small { display: block; margin-top: 4px; color: #a1a497; font-size: 10px; letter-spacing: .06em; }
+.principle-glyph { margin-left: auto; padding-right: 8px; font: italic 35px/1 Georgia,serif; color: #a88d5d66; }
+.principle-nav button:hover { background: #d0b2790b; }
+.principle-nav button.is-active strong { color: #e2ba7d; }
+.principle-nav button.is-active .principle-glyph { color: #c6a15bb0; }
+.app .content::before { top: 24px; right: 26px; width: min(470px,65%); height: 135px; opacity: .08; }
+.app #mount :is(.sec-ingest-result,.sec-transform-result,.sec-model-result,.sec-analyze-result,.sec-govern-result)::after { opacity: .2; }
+@media(max-width:1100px) {
+  .principle-nav { margin: 0 24px; }
+  .principle-nav button { padding: 8px 12px; gap: 10px; }
+  .principle-glyph { display: none; }
+}
+@media(max-width:760px) {
+  .cover-principles { gap: 12px; }
+  .cover-principles span { font-size: 7px; letter-spacing: .07em; }
+  .cover-principles h2 { font-size: 20px; }
+  .cover-principles p { font-size: 9px; }
+  .principle-nav { margin: 0 18px; padding: 12px 0; }
+  .principle-nav button { gap: 7px; padding: 6px 10px; min-height: 50px; }
+  .principle-nav strong { font-size: 20px; }
+  .principle-nav small { font-size: 9px; letter-spacing: 0; line-height: 1.6; }
+  .principle-number { font-size: 8px; }
+  .app .content::before { width: 210px; height: 60px; opacity: .06; }
+  .workspace-aura i { width: 650px; height: 750px; }
+}
+@media(prefers-reduced-motion:reduce) { .workspace-aura i { animation: none; } }
